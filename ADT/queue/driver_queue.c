@@ -1,7 +1,7 @@
 #include "queue.h"
-#include <stdio.h>
+#include "../../std.h"
 
-void tulisQ(Queue q);
+void PrintQueue(Queue q);
 
 int main() {
   Queue  q;
@@ -9,29 +9,36 @@ int main() {
   infotype x;
   printf("Masukan panjang max Q: ");
   scanf("%d",&n);
-  CreateEmpty(&q,n);
-  while (!IsFull(q)) {
-    do {
-      printf("\n1. Add\n2. Del\nInput: ");
-      scanf("%d",&n);
-    } while (n!=1 && n!=2);
-    if (n==1) {
+  CreateEmpty_Queue(&q,n);
+  if (q.T != NULL)
+  do {
+    printf("\n1. Add\n2. Del\n3.Exit\nInput: ");
+    scanf("%d",&n);
+  } while (n!=1 && n!=2 && n!=3);
+  while (n!=3) {
+    if (n==1) { //add
+      //!IsFull_Queue(q)
       printf("\nAdd: ");
       scanf("%d", &x);
-      Add(&q,x);
-      tulisQ(q);
-    } else {
-      Del(&q,&x);
+      Add_Queue(&q,x);
+      PrintQueue(q);
+      printf("Q full\n");
+    } else if (n==2) { //del
+      Del_Queue(&q,&x);
       printf("\nDel: %d\n",x);
-      tulisQ(q);
+      PrintQueue(q);
     }
+    do {
+      printf("\n1. Add\n2. Del\n3.Exit\nInput: ");
+      scanf("%d",&n);
+    } while (n!=1 && n!=2 && n!=3);
   }
-  printf("Q full\n");
+  printf("Exit\n");
   return 0;
 }
 
-void tulisQ(Queue q){
-  if (IsEmpty(q)) printf("Q kosong");
+void PrintQueue(Queue q){
+  if (IsEmpty_Queue(q)) printf("Q kosong");
   else {
     printf("Q= |");
     // if (Tail(q)==Head(q)) printf(" %d |",q.T[1]);
