@@ -1,64 +1,62 @@
 #include "prioqueue.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 /* ********* Prototype ********* */
-boolean IsEmpty (Queue Q)
+boolean PQ_IsEmpty (PrioQueue Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 {
 	//algoritma
-  return (Head(Q)==Nil && Tail(Q)==Nil);
+  return (PQ_Head(Q)==Nol && PQ_Tail(Q)==Nol);
 }
-boolean IsFull (Queue Q)
+boolean PQ_IsFull (PrioQueue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
-/* yaitu mengandung elemen sebanyak MaxEl */
+/* yaitu mengandung elemen sebanyak PQ_MaxEl */
 {
   //algoritma
-	return (NBElmt(Q)==MaxEl(Q));
+	return (PQ_NBElmt(Q)==PQ_MaxEl(Q));
 }
-int NBElmt (Queue Q)
+int PQ_NBElmt (PrioQueue Q)
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 {
 	//kamus
   address count;
   //algoritma
-  if (IsEmpty(Q)) return 0;
+  if (PQ_IsEmpty(Q)) return 0;
   else {
-    count = Tail(Q);
-    if (Tail(Q)<Head(Q)) count += MaxEl(Q);
-    return(count-Head(Q)+1);
+    count = PQ_Tail(Q);
+    if (PQ_Tail(Q)<PQ_Head(Q)) count += PQ_MaxEl(Q);
+    return(count-PQ_Head(Q)+1);
   }
 }
 
 /* *** Kreator *** */
-void CreateEmpty (Queue * Q, int Max)
+void PQ_CreateEmpty (PrioQueue * Q, int Max)
 /* I.S. sembarang */
 /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
-/* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
+/* atau : jika alokasi gagal, Q kosong dg PQ_MaxEl=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 {
 	//algoritma
   (*Q).T = (infotype*) malloc ((Max+1)* sizeof(infotype));
   if ((*Q).T != NULL) {
-    MaxEl(*Q) = Max;
-    Head(*Q) = Tail(*Q) = Nil;
-  } else MaxEl(*Q) = Nil;
+    PQ_MaxEl(*Q) = Max;
+    PQ_Head(*Q) = PQ_Tail(*Q) = Nol;
+  } else PQ_MaxEl(*Q) = Nol;
 }
 
 /* *** Destruktor *** */
-void DeAlokasi(Queue * Q)
+void PQ_DeAlokasi (PrioQueue * Q)
 /* Proses: Mengembalikan memori Q */
 /* I.S. Q pernah dialokasi */
-/* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
+/* F.S. Q menjadi tidak terdefinisi lagi, PQ_MaxEl(Q) diset 0 */
 {
 	//algoritma
   free((*Q).T);
-  MaxEl(*Q) = Nil;
+  PQ_MaxEl(*Q) = Nol;
 }
 
 /* *** Primitif Add/Delete *** */
-void Add (Queue * Q, infotype X)
+void PQ_Add (PrioQueue * Q, infotype X)
 /* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut mengecil berdasarkan prio */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer;
@@ -68,49 +66,49 @@ void Add (Queue * Q, infotype X)
   int i,j;
   int indeks;
 	//algoritma
-  if (IsEmpty(*Q)) {
-		Head(*Q) = 1;
-		Tail(*Q) = 1;
-		InfoTail(*Q) = X;
+  if (PQ_IsEmpty(*Q)) {
+		PQ_Head(*Q) = 1;
+		PQ_Tail(*Q) = 1;
+		PQ_InfoTail(*Q) = X;
 	}
   else {
-    i=Head(*Q);
-    j=Tail(*Q);
-		while (Prio(Elmt(*Q,j))<Prio(X) && j!=i) {
+    i=PQ_Head(*Q);
+    j=PQ_Tail(*Q);
+		while (PQ_Prio(PQ_Elmt(*Q,j))<PQ_Prio(X) && j!=i) {
       indeks = j+1;
-      if (indeks > MaxEl(*Q)) indeks%=MaxEl(*Q);
-			Elmt(*Q,indeks) = Elmt(*Q,j);
+      if (indeks > PQ_MaxEl(*Q)) indeks%=PQ_MaxEl(*Q);
+			PQ_Elmt(*Q,indeks) = PQ_Elmt(*Q,j);
 			j--;
-      if (j==0) j=MaxEl(*Q);
-		} //Prio(Elmt(*Q,j))==Prio(X) || j==i
+      if (j==0) j=PQ_MaxEl(*Q);
+		} //PQ_Prio(PQ_Elmt(*Q,j))==PQ_Prio(X) || j==i
     indeks = j+1;
-    if (indeks > MaxEl(*Q)) indeks%=MaxEl(*Q);
-    if (Prio(Elmt(*Q,j))<Prio(X)) {
-      Elmt(*Q,indeks) = Elmt(*Q,j);
-      Elmt(*Q,j) = X;
+    if (indeks > PQ_MaxEl(*Q)) indeks%=PQ_MaxEl(*Q);
+    if (PQ_Prio(PQ_Elmt(*Q,j))<PQ_Prio(X)) {
+      PQ_Elmt(*Q,indeks) = PQ_Elmt(*Q,j);
+      PQ_Elmt(*Q,j) = X;
     } else {
-      Elmt(*Q,indeks) = X;
+      PQ_Elmt(*Q,indeks) = X;
     }
-		if (Tail(*Q)==MaxEl(*Q)) Tail(*Q) = 1;
-    else Tail(*Q)++;
+		if (PQ_Tail(*Q)==PQ_MaxEl(*Q)) PQ_Tail(*Q) = 1;
+    else PQ_Tail(*Q)++;
   }
 }
-void Del (Queue * Q, infotype * X)
+void PQ_Del (PrioQueue * Q, infotype * X)
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
         Q mungkin kosong */
 {
 	//algoritma
-  *X = InfoHead(*Q);
-  if (Head(*Q)==Tail(*Q)) {
-    Head(*Q) = Nil;
-    Tail(*Q) = Nil;
-  } else if (Head(*Q)==MaxEl(*Q)) Head(*Q) = 1;
-  else Head(*Q)++;
+  *X = PQ_InfoHead(*Q);
+  if (PQ_Head(*Q)==PQ_Tail(*Q)) {
+    PQ_Head(*Q) = Nol;
+    PQ_Tail(*Q) = Nol;
+  } else if (PQ_Head(*Q)==PQ_MaxEl(*Q)) PQ_Head(*Q) = 1;
+  else PQ_Head(*Q)++;
 }
 /* Operasi Tambahan */
-void PrintQueue (Queue Q)
+void PQ_PrintQueue (PrioQueue Q)
 /* Mencetak isi queue Q ke layar */
 /* I.S. Q terdefinisi, mungkin kosong */
 /* F.S. Q tercetak ke layar dengan format:
@@ -123,9 +121,9 @@ void PrintQueue (Queue Q)
   //kamus
 	infotype X;
   //algoritma
-	while (!IsEmpty(Q)) {
-		Del(&Q,&X);
-		printf("%d %d\n",Prio(X),Info(X));
+	while (!PQ_IsEmpty(Q)) {
+		PQ_Del(&Q,&X);
+		printf("%d %d\n",PQ_Prio(X),PQ_Info(X));
 	}
 	printf("#\n");
 }
