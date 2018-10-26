@@ -1,62 +1,83 @@
 #include "queue.h"
 #include "../../std.h"
 
-void PrintQueue(Queue q);
+void PrintQ(Queue q);
 
 int main() {
-  Queue  q;
-  int n;
-  infotype x;
+  //kamus
+  Queue q;
+  int input; //input user
+  infotype elmt; //elmt queue
+  //algoritma
   printf("Masukan panjang max Q: ");
-  scanf("%d",&n);
-  CreateEmpty_Queue(&q,n);
-  if (q.T != NULL)
-  do {
-    printf("\n1. Add\n2. Del\n3.Exit\nInput: ");
-    scanf("%d",&n);
-  } while (n!=1 && n!=2 && n!=3);
-  while (n!=3) {
-    if (n==1) { //add
-      //!IsFull_Queue(q)
-      printf("\nAdd: ");
-      scanf("%d", &x);
-      Add_Queue(&q,x);
-      PrintQueue(q);
-      printf("Q full\n");
-    } else if (n==2) { //del
-      Del_Queue(&q,&x);
-      printf("\nDel: %d\n",x);
-      PrintQueue(q);
-    }
-    do {
+  scanf("%d",&input); //maxel
+  CreateEmptyQ(&q,input);
+
+  if (q.T != NULL) { //CreateEmptyQ berhasil
+    printf("Terbentuk queue kosong dengan maksimum %d elemen\n",MaxElQ(q));
+
+    do { //meminta input hingga benar
       printf("\n1. Add\n2. Del\n3.Exit\nInput: ");
-      scanf("%d",&n);
-    } while (n!=1 && n!=2 && n!=3);
+      scanf("%d",&input);
+    } while (input!=1 && input!=2 && input!=3);
+
+    while (input!=3) {
+      if (input==1) { //add
+        if (!IsFullQ(q)) { //Q tidak penuh
+          printf("\nAdd: ");
+          scanf("%d", &elmt); //input elmt dari user
+          AddQ(&q,elmt); //memasukkan ke queue
+          PrintQueue(q); //print hasil queue
+        } else { // Q penuh
+          printf("Q is full\n");
+        }
+      } else if (input==2) { //del
+        if (!IsEmptyQ(q)) { //Q tidak kosong
+          DelQ(&q,&elmt); //mengeluarkan elmt dari queue
+          printf("\nDel: %d\n",elmt); //menuliskan elmt yang di-del
+          PrintQueue(q); //print hasil queue
+        } else { //Q kosong
+          printf("Q is empty\n");
+        }
+      }
+
+      do { //meminta input hingga benar
+        printf("\n1. Add\n2. Del\n3.Exit\nInput: ");
+        scanf("%d",&input);
+      } while (input!=1 && input!=2 && input!=3);
+
+    } // input == 3 then exit
+    printf("Exit\n");
+
+  } else { //gagal alokasi
+    printf("Queue gagal alokasi memori\n");
   }
-  printf("Exit\n");
+
   return 0;
 }
 
-void PrintQueue(Queue q){
-  if (IsEmpty_Queue(q)) printf("Q kosong");
+void PrintQ(Queue q){
+  if (IsEmptyQ(q)) printf("Q kosong");
   else {
     printf("Q= |");
     // if (Tail(q)==Head(q)) printf(" %d |",q.T[1]);
     // else {
-      for (int i=1;i<=MaxEl(q);i++){
-        if (Tail(q)<Head(q)) {
-          if (i<=Tail(q) || i>=Head(q)) {
+      for (int i=1;i<=MaxElQ(q);i++){ // print semua elemt queue
+        if (TailQ(q)<HeadQ(q)) { //tail dulu baru head
+          if (i<=TailQ(q) || i>=HeadQ(q)) { //print semua elmt antara tail dan head
             printf(" %d",q.T[i]);
-          } else printf(" ~");
-        } else {
-          if (i<=Tail(q) && i>=Head(q)) {
+          } else printf(" ~"); //elmt kosong
+        } else { //head dulu baru tail
+          if (i<=TailQ(q) && i>=HeadQ(q)) { //print semua elmt antara head dan tail
             printf(" %d",q.T[i]);
-          } else printf(" ~");
+          } else printf(" ~"); //elmt kosong
         }
-        printf(" |");
+        printf(" |"); //pemisah antar elemt
       }
     // }
   }
-  printf("\nHead    : %d\nInfoHead: %d",Head(q),InfoHead(q));
-  printf("\nTail    : %d\nInfoTail: %d\n",Tail(q),InfoTail(q));
+  //menampilkan alamat head dan isinya
+  printf("\nHead    : %d\nInfoHead: %d",HeadQ(q),InfoHeadQ(q));
+  //menamilkan alamat tail dan isinya
+  printf("\nTail    : %d\nInfoTail: %d\n",TailQ(q),InfoTailQ(q));
 }

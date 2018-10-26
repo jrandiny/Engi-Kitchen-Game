@@ -29,13 +29,13 @@ typedef struct { infotype * T;   /* tabel penyimpan elemen */
 /* ********* AKSES (Selektor) ********* */
 /* Jika e adalah infotype dan Q adalah Queue, maka akses elemen : */
 #define Prio(e)     (e).prio
-#define Info_PQ(e)     (e).info
-#define Head_PQ(Q)     (Q).HEAD
-#define Tail_PQ(Q)     (Q).TAIL
-#define InfoHead_PQ(Q) (Q).T[(Q).HEAD]
-#define InfoTail_PQ(Q) (Q).T[(Q).TAIL]
-#define MaxEl_PQ(Q)    (Q).MaxEl
-#define Elmt_PQ(Q,i)   (Q).T[(i)]
+#define InfoPQ(e)     (e).info
+#define HeadPQ(Q)     (Q).HEAD
+#define TailPQ(Q)     (Q).TAIL
+#define InfoHeadPQ(Q) (Q).T[(Q).HEAD]
+#define InfoTailPQ(Q) (Q).T[(Q).TAIL]
+#define MaxElPQ(Q)    (Q).MaxEl
+#define ElmtPQ(Q,i)   (Q).T[(i)]
 
 /* ********* Prototype ********* */
 boolean IsEmpty_PrioQueue (PrioQueue Q);
