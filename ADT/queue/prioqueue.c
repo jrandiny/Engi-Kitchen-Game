@@ -5,7 +5,7 @@ boolean IsEmptyPQ (PrioQueue Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 {
 	//algoritma
-  return (HeadPQ(Q)==Nil && TailPQ(Q)==Nil);
+  return (HeadPQ(Q)==Nol && TailPQ(Q)==Nol);
 }
 boolean IsFullPQ (PrioQueue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
@@ -40,8 +40,8 @@ void CreateEmptyPQ (PrioQueue * Q, int Max)
   (*Q).T = (infotype*) malloc ((Max+1)* sizeof(infotype));
   if ((*Q).T != NULL) {
     MaxElPQ(*Q) = Max;
-    HeadPQ(*Q) = TailPQ(*Q) = Nil;
-  } else MaxElPQ(*Q) = Nil;
+    HeadPQ(*Q) = TailPQ(*Q) = Nol;
+  } else MaxElPQ(*Q) = Nol;
 }
 
 /* *** Destruktor *** */
@@ -52,7 +52,7 @@ void DeAlokasiPQ (PrioQueue * Q)
 {
 	//algoritma
   free((*Q).T);
-  MaxElPQ(*Q) = Nil;
+  MaxElPQ(*Q) = Nol;
 }
 
 /* *** Primitif Add/Delete *** */
@@ -102,8 +102,8 @@ void DelPQ (PrioQueue * Q, infotype * X)
 	//algoritma
   *X = InfoHeadPQ(*Q);
   if (HeadPQ(*Q)==TailPQ(*Q)) {
-    HeadPQ(*Q) = Nil;
-    TailPQ(*Q) = Nil;
+    HeadPQ(*Q) = Nol;
+    TailPQ(*Q) = Nol;
   } else if (HeadPQ(*Q)==MaxElPQ(*Q)) HeadPQ(*Q) = 1;
   else HeadPQ(*Q)++;
 }
