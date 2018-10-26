@@ -4,7 +4,6 @@
    Tanggal   : 29-08-2018
    Deskripsi : ADT untuk tipe JAM*/
 
-#include "boolean.h"
 #include "jam.h"
 #include <stdio.h>
 

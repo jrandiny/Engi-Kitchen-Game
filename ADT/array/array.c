@@ -9,7 +9,6 @@
 /* Versi I : dengan banyaknya elemen didefinisikan secara eksplisit,
    memori tabel statik */
 
-#include "boolean.h"
 #include "array.h"
 #include <stdio.h>
 

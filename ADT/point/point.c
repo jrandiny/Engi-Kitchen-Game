@@ -5,7 +5,6 @@
    Deskripsi : ADT untuk tipe POINT*/
 /* *** Definisi ABSTRACT DATA TYPE POINT *** */
 
-#include "boolean.h"
 #include "point.h"
 #include <stdio.h>
 #include <math.h>

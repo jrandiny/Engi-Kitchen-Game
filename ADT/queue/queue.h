@@ -5,7 +5,7 @@
 #ifndef queue_H
 #define queue_H
 
-#include "boolean.h"
+#include "../../boolean.h"
 
 #define Nil 0
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
@@ -62,7 +62,7 @@ void Add (Queue * Q, infotype X);
 void Del (Queue * Q, infotype * X);
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
-/* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
+/* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
         Q mungkin kosong */
 
 #endif

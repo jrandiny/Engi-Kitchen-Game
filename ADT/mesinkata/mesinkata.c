@@ -6,7 +6,6 @@
    Tanggal   : 21-09-2018
    Deskripsi : Implementasi mesin kata*/
 
-#include "boolean.h"
 #include "mesinkar.h"
 #include "mesinkata.h"
 

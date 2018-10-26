@@ -9,7 +9,6 @@
 /* infotype adalah integer */
 
 
-#include "boolean.h"
 #include "listlinier.h"
 #include <stdlib.h>
 #include <stdio.h>

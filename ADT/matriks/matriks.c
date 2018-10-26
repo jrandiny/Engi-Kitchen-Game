@@ -6,7 +6,6 @@
    Deskripsi : ADT untuk tipe Matriks statik*/
 
 #include "matriks.h"
-#include "boolean.h"
 #include <math.h>
 #include <stdio.h>
 
