@@ -7,7 +7,7 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
-#include "../../boolean.h"
+#include "../../std.h"
 
 /*  Kamus Umum */
 #define IdxMax 100

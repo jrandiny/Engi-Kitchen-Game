@@ -6,8 +6,6 @@
    Deskripsi : ADT untuk tipe Matriks statik*/
 
 #include "matriks.h"
-#include <math.h>
-#include <stdio.h>
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk MATRIKS *** */

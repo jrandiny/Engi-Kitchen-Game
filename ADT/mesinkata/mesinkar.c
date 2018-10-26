@@ -2,7 +2,6 @@
 /* Implementasi Mesin Karakter */
 
 #include "mesinkar.h"
-#include <stdio.h>
 
 char CC;
 boolean EOP;
@@ -23,10 +22,10 @@ void START() {
 }
 
 void ADV() {
-/* Pita dimajukan satu karakter. 
-   I.S. : Karakter pada jendela = 
+/* Pita dimajukan satu karakter.
+   I.S. : Karakter pada jendela =
           CC, CC != MARK
-   F.S. : CC adalah karakter berikutnya dari CC yang lama, 
+   F.S. : CC adalah karakter berikutnya dari CC yang lama,
           CC mungkin = MARK.
 		  Jika  CC = MARK maka EOP akan menyala (true) */
 

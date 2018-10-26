@@ -8,10 +8,7 @@
 /* Representasi address dengan pointer */
 /* infotype adalah integer */
 
-
 #include "listlinier.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/

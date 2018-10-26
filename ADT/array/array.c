@@ -10,7 +10,6 @@
    memori tabel statik */
 
 #include "array.h"
-#include <stdio.h>
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */

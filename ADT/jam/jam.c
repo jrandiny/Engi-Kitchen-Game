@@ -5,7 +5,6 @@
    Deskripsi : ADT untuk tipe JAM*/
 
 #include "jam.h"
-#include <stdio.h>
 
 /* ***************************************************************** */
 /* DEFINISI PRIMITIF                                                 */

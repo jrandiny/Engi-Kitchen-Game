@@ -5,7 +5,7 @@
 #ifndef JAM_H
 #define JAM_H
 
-#include "../../boolean.h"
+#include "../../std.h"
 
 /* *** Definisi TYPE JAM <HH:MM:SS> *** */
 typedef struct {
