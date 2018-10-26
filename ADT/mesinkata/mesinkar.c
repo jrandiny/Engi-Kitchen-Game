@@ -1,4 +1,4 @@
-K_K_K_K_ADV/* File: mesinkar.c */
+K_ADV/* File: mesinkar.c */
 /* Implementasi Mesin Karakter */
 /* Kelompok  : UAS
    Nama file : mesinkar.c
