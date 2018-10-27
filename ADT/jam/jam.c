@@ -1,7 +1,7 @@
-/* NIM/Nama  : 13517063/Joshua Christo Randiny
+/* Kelompok  : UAS
    Nama file : jam.c
-   Topik     : Modul Prapraktikum 01
-   Tanggal   : 29-08-2018
+   Topik     : Engi's Kitchen Game
+   Tanggal   : 26-10-2018
    Deskripsi : ADT untuk tipe JAM*/
 
 #include "jam.h"
@@ -11,7 +11,7 @@
 /* ***************************************************************** */
 /* KELOMPOK VALIDASI TERHADAP TYPE                                   */
 /* ***************************************************************** */
-boolean IsJAMValid (int H, int M, int S)
+boolean J_IsJAMValid (int H, int M, int S)
 /* Mengirim true jika H,M,S dapat membentuk J yang valid */
 /* dipakai untuk mentest SEBELUM membentuk sebuah Jam */
 {
@@ -19,7 +19,7 @@ boolean IsJAMValid (int H, int M, int S)
 }
 
 /* *** Konstruktor: Membentuk sebuah JAM dari komponen-komponennya *** */
-JAM MakeJAM (int HH, int MM, int SS)
+JAM J_MakeJAM (int HH, int MM, int SS)
 /* Membentuk sebuah JAM dari komponen-komponennya yang valid */
 /* Prekondisi : HH, MM, SS valid untuk membentuk JAM */
 {
@@ -27,9 +27,9 @@ JAM MakeJAM (int HH, int MM, int SS)
   JAM J;
 
   /* ALGORITMA */
-  Hour(J) = HH;
-  Minute(J) = MM;
-  Second(J) = SS;
+  J_Hour(J) = HH;
+  J_Minute(J) = MM;
+  J_Second(J) = SS;
 
   return J;
 }
@@ -37,7 +37,7 @@ JAM MakeJAM (int HH, int MM, int SS)
 /* ***************************************************************** */
 /* KELOMPOK BACA/TULIS                                               */
 /* ***************************************************************** */
-void BacaJAM (JAM * J)
+void J_BacaJAM (JAM * J)
 /* I.S. : J tidak terdefinisi */
 /* F.S. : J terdefinisi dan merupakan jam yang valid */
 /* Proses : mengulangi membaca komponen HH, MM, SS sehingga membentuk J */
@@ -58,29 +58,29 @@ void BacaJAM (JAM * J)
   /* ALGORITMA */
   while(true){
     scanf("%d %d %d",&H,&M,&S);
-    if(IsJAMValid(H,M,S)){
+    if(J_IsJAMValid(H,M,S)){
       break;
     }
     printf("Jam tidak valid\n");
   }
   /* IsJAMValid(H,M,S)*/
 
-  *J = MakeJAM(H,M,S);
+  *J = J_MakeJAM(H,M,S);
 }
 
-void TulisJAM (JAM J)
+void J_TulisJAM (JAM J)
 /* I.S. : J sembarang */
 /* F.S. :   Nilai J ditulis dg format HH:MM:SS */
 /* Proses : menulis nilai setiap komponen J ke layar dalam format HH:MM:SS
    tanpa karakter apa pun di depan atau belakangnya, termasuk spasi, enter, dll.*/
 {
-  printf("%02d:%02d:%02d",Hour(J),Minute(J),Second(J));
+  printf("%02d:%02d:%02d",J_Hour(J),J_Minute(J),J_Second(J));
 }
 
 /* ***************************************************************** */
 /* KELOMPOK KONVERSI TERHADAP TYPE                                   */
 /* ***************************************************************** */
-long JAMToDetik (JAM J)
+long J_JAMToDetik (JAM J)
 /* Diberikan sebuah JAM, mengkonversi menjadi jumlah detik dari pukul 0:0:0 */
 /* Rumus : detik = 3600*HH + 60*MM + SS */
 /* Nilai maksimum = 3600*23+59*60+59 */
@@ -89,14 +89,14 @@ long JAMToDetik (JAM J)
   long durasi;
 
   /* ALGORITMA */
-  durasi = Hour(J) * 3600;
-  durasi += Minute(J) * 60;
-  durasi += Second(J);
+  durasi = J_Hour(J) * 3600;
+  durasi += J_Minute(J) * 60;
+  durasi += J_Second(J);
 
   return durasi;
 }
 
-JAM DetikToJAM (long N)
+JAM J_DetikToJAM (long N)
 /* Mengirim  konversi detik ke JAM */
 /* Catatan: Jika N >= 86400, maka harus dikonversi dulu menjadi jumlah detik yang
    mewakili jumlah detik yang mungkin dalam 1 hari, yaitu dengan rumus:
@@ -116,102 +116,102 @@ JAM DetikToJAM (long N)
 
   S = N;
 
-  return MakeJAM(H,M,S);
+  return J_MakeJAM(H,M,S);
 }
 
 /* ***************************************************************** */
 /* KELOMPOK OPERASI TERHADAP TYPE                                    */
 /* ***************************************************************** */
 /* *** Kelompok Operator Relational *** */
-boolean JEQ (JAM J1, JAM J2)
+boolean J_JEQ (JAM J1, JAM J2)
 /* Mengirimkan true jika J1=J2, false jika tidak */
 {
-  return ((Hour(J1) == Hour(J2)) && (Minute(J1) ==  Minute(J2)) && (Second(J1) == Second(J2)));
+  return ((J_Hour(J1) == J_Hour(J2)) && (J_Minute(J1) ==  J_Minute(J2)) && (J_Second(J1) == J_Second(J2)));
 }
-boolean JNEQ (JAM J1, JAM J2)
+boolean J_JNEQ (JAM J1, JAM J2)
 /* Mengirimkan true jika J1 tidak sama dengan J2 */
 {
-  return ((Hour(J1) != Hour(J2)) || (Minute(J1) !=  Minute(J2)) || (Second(J1) != Second(J2)));
+  return ((J_Hour(J1) != J_Hour(J2)) || (J_Minute(J1) !=  J_Minute(J2)) || (J_Second(J1) != J_Second(J2)));
 }
-boolean JLT (JAM J1, JAM J2)
+boolean J_JLT (JAM J1, JAM J2)
 /* Mengirimkan true jika J1<J2, false jika tidak */
 {
   /* KAMUS */
   long N1,N2; /* J1 dan J2 dalam detik */
 
   /* ALGORITMA */
-  N1 = JAMToDetik(J1);
-  N2 = JAMToDetik(J2);
+  N1 = J_JAMToDetik(J1);
+  N2 = J_JAMToDetik(J2);
 
   return (N1<N2);
 }
-boolean JGT (JAM J1, JAM J2)
+boolean J_JGT (JAM J1, JAM J2)
 /* Mengirimkan true jika J1>J2, false jika tidak */
 {
   /* KAMUS */
   long N1,N2; /* J1 dan J2 dalam detik */
 
   /* ALGORITMA */
-  N1 = JAMToDetik(J1);
-  N2 = JAMToDetik(J2);
+  N1 = J_JAMToDetik(J1);
+  N2 = J_JAMToDetik(J2);
 
   return (N1>N2);
 }
 /* *** Operator aritmatika JAM *** */
-JAM NextDetik (JAM J)
+JAM J_NextDetik (JAM J)
 /* Mengirim 1 detik setelah J dalam bentuk JAM */
 {
   /* KAMUS */
   long detik; /* J dalam detik*/
 
   /* ALGORITMA */
-  detik = JAMToDetik(J);
+  detik = J_JAMToDetik(J);
 
   detik++;
 
-  return DetikToJAM(detik);
+  return J_DetikToJAM(detik);
 }
-JAM NextNDetik (JAM J, int N)
+JAM J_NextNDetik (JAM J, int N)
 /* Mengirim N detik setelah J dalam bentuk JAM */
 {
   /* KAMUS */
   long detik; /* J dalam detik*/
 
   /* ALGORITMA */
-  detik = JAMToDetik(J);
+  detik = J_JAMToDetik(J);
 
   detik = detik + N;
 
-  return DetikToJAM(detik);
+  return J_DetikToJAM(detik);
 }
-JAM PrevDetik (JAM J)
+JAM J_PrevDetik (JAM J)
 /* Mengirim 1 detik sebelum J dalam bentuk JAM */
 {
   /* KAMUS */
   long detik; /* J dalam detik*/
 
   /* ALGORITMA */
-  detik = JAMToDetik(J);
+  detik = J_JAMToDetik(J);
 
   detik--;
 
-  return DetikToJAM(detik);
+  return J_DetikToJAM(detik);
 }
-JAM PrevNDetik (JAM J, int N)
+JAM J_PrevNDetik (JAM J, int N)
 /* Mengirim N detik sebelum J dalam bentuk JAM */
 {
   /* KAMUS */
   long detik; /* J dalam detik*/
 
   /* ALGORITMA */
-  detik = JAMToDetik(J);
+  detik = J_JAMToDetik(J);
 
   detik = detik - N;
 
-  return DetikToJAM(detik);
+  return J_DetikToJAM(detik);
 }
 /* *** Kelompok Operator Aritmetika *** */
-long Durasi (JAM JAw, JAM JAkh)
+long J_Durasi (JAM JAw, JAM JAkh)
 /* Mengirim JAkh-JAw dlm Detik, dengan kalkulasi */
 /* Jika JAw > JAkh, maka JAkh adalah 1 hari setelah JAw */
 {
@@ -220,8 +220,8 @@ long Durasi (JAM JAw, JAM JAkh)
   long selisih;
 
   /* ALGORITMA */
-  Naw = JAMToDetik(JAw);
-  Nakh = JAMToDetik(JAkh);
+  Naw = J_JAMToDetik(JAw);
+  Nakh = J_JAMToDetik(JAkh);
 
   selisih = Nakh - Naw;
 
