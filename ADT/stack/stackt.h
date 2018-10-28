@@ -5,7 +5,7 @@
 #ifndef stackt_H
 #define stackt_H
 
-#include "../../std.h"
+#include "../../header/std.h"
 
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */

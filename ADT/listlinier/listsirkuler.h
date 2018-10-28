@@ -6,11 +6,11 @@
 #ifndef listlinier_H
 #define listlinier_H
 
-#include "../../std.h"
+#include "../../header/std.h"
 
 typedef int infotype;
 typedef struct tElmtlist *address;
-typedef struct tElmtlist { 
+typedef struct tElmtlist {
 	infotype info;
 	address next;
 } ElmtList;

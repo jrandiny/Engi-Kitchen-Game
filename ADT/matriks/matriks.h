@@ -3,7 +3,7 @@
 #ifndef MATRIKS_H
 #define MATRIKS_H
 
-#include "../../std.h"
+#include "../../header/std.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 1

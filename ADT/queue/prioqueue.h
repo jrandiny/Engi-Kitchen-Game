@@ -6,7 +6,7 @@
 #ifndef prioqueue_H
 #define prioqueue_H
 
-#include "../../std.h"
+#include "../../header/std.h"
 
 /* Definisi elemen dan address */
 typedef struct { int prio;  /* [1..3], prioritas dengan nilai 1..3 (3 adalah prioritas tertinggi) */

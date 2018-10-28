@@ -9,7 +9,7 @@
 #ifndef __MESINKATA_H__
 #define __MESINKATA_H__
 
-#include "../../std.h"
+#include "../../header/std.h"
 #include "mesinkar.h"
 
 #define NMax 50

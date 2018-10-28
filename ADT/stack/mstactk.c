@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "stackt.h"
 
 void printStack(Stack S){
@@ -24,7 +23,7 @@ void printStack(Stack S){
 		}
 	}
 	printf("]");
-	
+
 }
 
 int main(){
@@ -41,7 +40,7 @@ int main(){
 					S_Push(&S,X);
 				}else{
 					printf("stack full\n");
-				}				
+				}
 				break;
 			case 2:
 				if(!S_IsEmpty(S)){

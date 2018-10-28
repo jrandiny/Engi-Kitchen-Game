@@ -6,12 +6,12 @@
 #ifndef listdp_H
 #define listdp_H
 
-#include "../../std.h"
+#include "../../header/std.h"
 
 /* Definisi Type Data */
 typedef int infotype;
 typedef struct tElmtlist *address;
-typedef struct tElmtlist { 
+typedef struct tElmtlist {
 	infotype info;
 	address next;
 	address prev;

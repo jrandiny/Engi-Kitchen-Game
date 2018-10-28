@@ -6,8 +6,6 @@
    Tanggal   : 25 Oktober 2018
    Deskripsi : Driver mesin kata*/
 
-#include <stdio.h>
-#include "boolean.h"
 #include "mesinkata.h"
 #include "mesinkar.h"
 

@@ -1,4 +1,4 @@
-#include <stdio.h>
+
 #include "listlinier.h"
 
 int main(){
@@ -58,7 +58,7 @@ int main(){
 					i++;
 				}
 				LL_PrintInfo(L1);printf("\n");
-				
+
 				printf("make the 2nd list\ninsert noe:");scanf("%d",&n);
 				i=0;
 				while(i<n){

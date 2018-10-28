@@ -1,5 +1,4 @@
 #include "array.h"
-#include <stdio.h>
 
 void MenuTerurut(TabInt Tin);
 /*I.S. : Bebas */

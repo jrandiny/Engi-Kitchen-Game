@@ -5,7 +5,7 @@
 #ifndef queue_H
 #define queue_H
 
-#include "../../std.h"
+#include "../../header/std.h"
 
 /* Definisi elemen dan address */
 typedef int infotype;
