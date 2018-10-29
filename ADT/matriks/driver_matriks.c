@@ -2,13 +2,13 @@
    Nama file : driver_matriks.c
    Topik     : Engi's Kitchen Game
    Tanggal   : 27-10-2018
-   Deskripsi : driver untuk ADT tipe MATRIKS*/
+   Deskripsi : driver untuk ADT tipe Matriks*/
 
 #include "matriks.h"
 
 int main () {
 	// Kamus driver_matriks
-	MATRIKS M1,M2,MCopy;
+	Matriks M1,M2,MCopy;
 	int menu;
 	indeks NB,NK,IdxBrs,IdxKol;
 
@@ -20,7 +20,7 @@ int main () {
 	printf("4. M_GetLastIdxBrs\n");
 	printf("5. M_GetLastIdxKol\n");
 	printf("6. M_IsIdxEff\n");
-	printf("7. M_CopyMATRIKS\n");
+	printf("7. M_CopyMatriks\n");
 	printf("8. M_EQ\n");
 	printf("9. M_NEQ\n");
 	printf("10. M_NBElmt\n");
@@ -33,7 +33,7 @@ int main () {
 	scanf("%d", &NB);
 	printf("Masukkan NK matriks : ");
 	scanf("%d", &NK);
-	M_BacaMATRIKS(&M1,NB,NK);
+	M_BacaMatriks(&M1,NB,NK);
 
 	switch (menu) {
 		case 1 :
@@ -88,8 +88,8 @@ int main () {
 		case 7 :
 		{
 			printf("Salinan matriks M1 : \n");
-			M_CopyMATRIKS(M1,&MCopy);
-			M_TulisMATRIKS(MCopy);
+			M_CopyMatriks(M1,&MCopy);
+			M_TulisMatriks(MCopy);
 		}
 		break;
 
@@ -100,7 +100,7 @@ int main () {
 			scanf("%d", &NB);
 			printf("Masukkan NK matriks : ");
 			scanf("%d", &NK);
-			M_BacaMATRIKS(&M2,NB,NK);
+			M_BacaMatriks(&M2,NB,NK);
 			if (M_EQ(M1,M2)) {
 				printf("EQUAL");
 			} else {
@@ -115,7 +115,7 @@ int main () {
 			scanf("%d", &NB);
 			printf("Masukkan NK matriks : ");
 			scanf("%d", &NK);
-			M_BacaMATRIKS(&M2,NB,NK);
+			M_BacaMatriks(&M2,NB,NK);
 			if (M_NEQ(M1,M2)) {
 				printf("NOT EQUAL");
 			} else {

@@ -2,8 +2,8 @@
 /* Tanggal: 26 Oktober 2018 */
 /* Definisi ADT Jam */
 
-#ifndef Jam_H
-#define Jam_H
+#ifndef JAM_H
+#define JAM_H
 
 #include "../../header/std.h"
 
