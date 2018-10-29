@@ -2,25 +2,25 @@
    Nama file : driver_point.c
    Topik     : Engi's Kitchen Game
    Tanggal   : 26-10-2018
-   Deskripsi : driver untuk ADT tipe POINT*/
+   Deskripsi : driver untuk ADT tipe Point*/
 
 #include "point.h"
 
 int main () {
 	/* Kamus driver_point */
-	POINT p1,p2;
+	Point p1,p2;
 	int menu;
 	int deltaX, deltaY;
 
 	/* Algoritma driver_point */
 	// baca tulis point
 	printf("Masukkan point pertama : ");
-	P_BacaPOINT(&p1);
-	P_TulisPOINT(p1);
+	P_BacaPoint(&p1);
+	P_TulisPoint(p1);
 	printf("\n");
 	printf("Masukkan point kedua : ");
-	P_BacaPOINT(&p2);
-	P_TulisPOINT(p2);
+	P_BacaPoint(&p2);
+	P_TulisPoint(p2);
 	printf("\n");
 
 	printf("MENU :\n");
@@ -52,17 +52,17 @@ int main () {
 		break;
 		case 3 :
 		{
-			printf("NextX "); P_TulisPOINT(p1); printf(" adalah "); P_TulisPOINT(P_NextX(p1));
+			printf("NextX "); P_TulisPoint(p1); printf(" adalah "); P_TulisPoint(P_NextX(p1));
 			printf("\n");
-			printf("NextX "); P_TulisPOINT(p2); printf(" adalah "); P_TulisPOINT(P_NextX(p2));
+			printf("NextX "); P_TulisPoint(p2); printf(" adalah "); P_TulisPoint(P_NextX(p2));
 			printf("\n");
 		}
 		break;
 		case 4 :
 		{
-			printf("NextY "); P_TulisPOINT(p1); printf(" adalah "); P_TulisPOINT(P_NextY(p1));
+			printf("NextY "); P_TulisPoint(p1); printf(" adalah "); P_TulisPoint(P_NextY(p1));
 			printf("\n");
-			printf("NextY "); P_TulisPOINT(p2); printf(" adalah "); P_TulisPOINT(P_NextY(p2));
+			printf("NextY "); P_TulisPoint(p2); printf(" adalah "); P_TulisPoint(P_NextY(p2));
 			printf("\n");
 		}
 		break;
@@ -72,9 +72,9 @@ int main () {
 			scanf("%d", &deltaX);
 			printf("Masukkan deltaY : ");
 			scanf("%d", &deltaY);
-			printf("PlusDelta : "); P_TulisPOINT(p1); printf(" adalah "); P_TulisPOINT(P_PlusDelta(p1,deltaX,deltaY));
+			printf("PlusDelta : "); P_TulisPoint(p1); printf(" adalah "); P_TulisPoint(P_PlusDelta(p1,deltaX,deltaY));
 			printf("\n");
-			printf("PlusDelta : "); P_TulisPOINT(p2); printf(" adalah "); P_TulisPOINT(P_PlusDelta(p2,deltaX,deltaY));
+			printf("PlusDelta : "); P_TulisPoint(p2); printf(" adalah "); P_TulisPoint(P_PlusDelta(p2,deltaX,deltaY));
 			printf("\n");
 		}
 		break;
@@ -84,9 +84,9 @@ int main () {
 			scanf("%d", &deltaX);
 			printf("Masukkan deltaY geser : ");
 			scanf("%d", &deltaY);
-			P_TulisPOINT(p1); printf(" digeser sejauh delta : "); P_Geser(&p1,deltaX,deltaY); P_TulisPOINT(p1);
+			P_TulisPoint(p1); printf(" digeser sejauh delta : "); P_Geser(&p1,deltaX,deltaY); P_TulisPoint(p1);
 			printf("\n");
-			P_TulisPOINT(p2); printf(" digeser sejauh delta : "); P_Geser(&p2,deltaX,deltaY); P_TulisPOINT(p2);
+			P_TulisPoint(p2); printf(" digeser sejauh delta : "); P_Geser(&p2,deltaX,deltaY); P_TulisPoint(p2);
 			printf("\n");
 		}
 		break;
