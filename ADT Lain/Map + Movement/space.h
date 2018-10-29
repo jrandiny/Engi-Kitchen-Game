@@ -8,7 +8,7 @@
 #include "../../header/std.h"
 #include "../../ADT/matriks/matriks.h"
 #include "../../ADT/point/point.h"
-#include "../../ADT/listlinier/listlinier.h"
+#include "../../ADT/listlinier/multilist.h"
 
 typedef struct {
   int ruangan; //nomor ruangan yang sedang digunakan
@@ -19,10 +19,12 @@ typedef struct {
   List hubungan; //mapping
 } restoran;
 //tipe restoran dengan 4 ruangan berukuran 8x8
-// dengan terdapat 8 pintu yang menghubungkan keempat ruangan tersebut
+// dengan terdapat 4 pintu yang menghubungkan keempat ruangan tersebut
 /*
   room1 (5,8) -> (2,1) room2
-  roome1
+  room1 (8,5) -> (1,5) room4
+  room2 (8,5) -> (1,5) room3
+  room3 (2,1) -> (5,8) room4
 */
 
 #define Ruangan(R) (R).ruangan
@@ -31,9 +33,8 @@ typedef struct {
 #define Room3(R) (R).room3
 #define Room4(R) (R).room4
 
-
 typedef struct {
-  POINT posisi; //posisi pelayan mengikuti baris dan kolom matriks
+  Point posisi; //posisi pelayan mengikuti baris dan kolom matriks
   char up;      // menyatakan karakter di posisi atas pelayan
   char down;    // menyatakan karakter di posisi bawah pelayan
   char left;    // menyatakan karakter di posisi kiri pelayan
@@ -62,7 +63,7 @@ void InitPelayan(pelayan *P);
 /* membuat pelayan baru
   I.S. Sembarang
   F.S. terbentuk pelayan dengan posisi di 1,1 dan karakter lain '\0' */
-void PlacePelayan(pelayan *P,float x,float y, restoran *R);
+void PlacePelayan(pelayan *P,float x,float y, restoran R);
 /*
   menaruh pelayan di posisi (x,y) di ruangan di restoran r
   I.S. pelayan,x,y,R terdefinisi
@@ -78,22 +79,22 @@ void InitRuangan(restoran *R);
 */
 
 // *** PINDAH ***
-void MoveUp(pelayan *P,restoran *R);
+void MoveUp(pelayan *P,restoran R);
 /*
   I.S. pelayan dan restoran terdifinsi, pelayan masih dapat naik
   F.S. pelayan pindah ke posisi di atasnya dan update semua karakter
 */
-void MoveDown(pelayan *P,restoran *R);
+void MoveDown(pelayan *P,restoran R);
 /*
   I.S. pelayan dan restoran terdifinsi, pelayan masih dapat turun
   F.S. pelayan pindah ke posisi di bawahnya dan update semua karakter
 */
-void MoveLeft(pelayan *P,restoran *R);
+void MoveLeft(pelayan *P,restoran R);
 /*
   I.S. pelayan dan restoran terdifinsi, pelayan masih dapat bergerak ke kiri
   F.S. pelayan pindah ke posisi di kirinya dan update semua karakter
 */
-void MoveRight(pelayan *P,restoran *R);
+void MoveRight(pelayan *P,restoran R);
 /*
   I.S. pelayan dan restoran terdifinsi, pelayan masih dapat bergerak ke kanan
   F.S. pelayan pindah ke posisi di kanannya dan update semua karakter

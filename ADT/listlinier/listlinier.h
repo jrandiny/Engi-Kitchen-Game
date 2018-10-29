@@ -1,6 +1,6 @@
 /* File : listlinier.h */
 /* contoh ADT list berkait dengan representasi fisik pointer  */
-/* Representasi address dengan pointer */
+/* Representasi L_address dengan pointer */
 /* infotype adalah integer */
 
 #ifndef listlinier_H
@@ -8,19 +8,22 @@
 
 #include "../../header/std.h"
 
-typedef int infotype;
-typedef struct tElmtlist *address;
+typedef struct{
+	int simpul;
+	Point warp;
+} infotype;
+typedef struct tElmtlist *L_address;
 typedef struct tElmtlist {
 	infotype info;
-	address next;
+	L_address next;
 } ElmtList;
 typedef struct {
-	address First;
+	L_address First;
 } List;
 
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
-/* Setiap elemen dengan address P dapat diacu Info(P), Next(P) */
+/* Setiap elemen dengan L_address P dapat diacu Info(P), Next(P) */
 /* Elemen terakhir list : jika addressnya Last, maka Next(Last)=Nil */
 
 #define Info(P) (P)->info
@@ -38,20 +41,20 @@ void LL_CreateEmpty (List *L);
 /* F.S. Terbentuk list kosong */
 
 /****************** Manajemen Memori ******************/
-address LL_Alokasi (infotype X);
-/* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
+L_address LL_Alokasi (infotype X);
+/* Mengirimkan L_address hasil alokasi sebuah elemen */
+/* Jika alokasi berhasil, maka L_address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
-void LL_Dealokasi (address *P);
+void LL_Dealokasi (L_address *P);
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
-/* Melakukan dealokasi/pengembalian address P */
+/* Melakukan dealokasi/pengembalian L_address P */
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address LL_Search (List L, infotype X);
+L_address LL_Search (List L, infotype X);
 /* Mencari apakah ada elemen list dengan Info(P)= X */
-/* Jika ada, mengirimkan address elemen tersebut. */
+/* Jika ada, mengirimkan L_address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
@@ -78,19 +81,19 @@ void LL_DelVLast (List *L, infotype *X);
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void LL_InsertFirst (List *L, address P);
+void LL_InsertFirst (List *L, L_address P);
 /* I.S. Sembarang, P sudah dialokasi  */
-/* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
-void LL_InsertAfter (List *L, address P, address Prec);
+/* F.S. Menambahkan elemen ber-L_address P sebagai elemen pertama */
+void LL_InsertAfter (List *L, L_address P, L_address Prec);
 /* I.S. Prec pastilah elemen list dan bukan elemen terakhir, */
 /*      P sudah dialokasi  */
 /* F.S. Insert P sebagai elemen sesudah elemen beralamat Prec */
-void LL_InsertLast (List *L, address P);
+void LL_InsertLast (List *L, L_address P);
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
 
 /*** PENGHAPUSAN SEBUAH ELEMEN ***/
-void LL_DelFirst (List *L, address *P);
+void LL_DelFirst (List *L, L_address *P);
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen pertama list sebelum penghapusan */
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
@@ -101,13 +104,13 @@ void LL_DelP (List *L, infotype X);
 /* Maka P dihapus dari list dan di-dealokasi */
 /* Jika tidak ada elemen list dengan Info(P)=X, maka list tetap */
 /* List mungkin menjadi kosong karena penghapusan */
-void LL_DelLast (List *L, address *P);
+void LL_DelLast (List *L, L_address *P);
 /* I.S. List tidak kosong */
 /* F.S. P adalah alamat elemen terakhir list sebelum penghapusan  */
 /*      Elemen list berkurang satu (mungkin menjadi kosong) */
 /* Last element baru adalah predesesor elemen pertama yg lama, */
 /* jika ada */
-void LL_DelAfter (List *L, address *Pdel, address Prec);
+void LL_DelAfter (List *L, L_address *Pdel, L_address Prec);
 /* I.S. List tidak kosong. Prec adalah anggota list  */
 /* F.S. Menghapus Next(Prec): */
 /*      Pdel adalah alamat elemen list yang dihapus  */
