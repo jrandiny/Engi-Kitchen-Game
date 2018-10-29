@@ -37,7 +37,7 @@ void PQ_CreateEmpty (PrioQueue * Q, int Max)
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 {
 	//algoritma
-  (*Q).T = (infotype*) malloc ((Max+1)* sizeof(infotype));
+  (*Q).T = (PQ_infotype*) malloc ((Max+1)* sizeof(PQ_infotype));
   if ((*Q).T != NULL) {
     PQ_MaxEl(*Q) = Max;
     PQ_Head(*Q) = PQ_Tail(*Q) = Nol;
@@ -56,7 +56,7 @@ void PQ_DeAlokasi (PrioQueue * Q)
 }
 
 /* *** Primitif Add/Delete *** */
-void PQ_Add (PrioQueue * Q, infotype X)
+void PQ_Add (PrioQueue * Q, PQ_infotype X)
 /* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut mengecil berdasarkan prio */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer;
@@ -93,7 +93,7 @@ void PQ_Add (PrioQueue * Q, infotype X)
     else PQ_Tail(*Q)++;
   }
 }
-void PQ_Del (PrioQueue * Q, infotype * X)
+void PQ_Del (PrioQueue * Q, PQ_infotype * X)
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
@@ -119,7 +119,7 @@ void PQ_PrintQueue (PrioQueue Q)
 */
 {
   //kamus
-	infotype X;
+	PQ_infotype X;
   //algoritma
 	while (!PQ_IsEmpty(Q)) {
 		PQ_Del(&Q,&X);

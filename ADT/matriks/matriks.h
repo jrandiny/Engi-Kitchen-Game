@@ -7,15 +7,15 @@
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 1
-#define BrsMax 100
+#define BrsMax 8
 #define KolMin 1
-#define KolMax 100
+#define KolMax 8
 
 typedef int indeks; /* indeks baris, kolom */
-typedef int ElType;
+typedef char ElType;
 typedef struct {
 	ElType Mem[BrsMax+1][KolMax+1];
-    int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
+  int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
 	int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
 } MATRIKS;
 /* NBrsEff <= 1 dan NKolEff <= 1 */
@@ -49,8 +49,6 @@ indeks M_GetLastIdxKol (MATRIKS M);
 /* Mengirimkan indeks kolom terbesar M */
 boolean M_IsIdxEff (MATRIKS M, indeks i, indeks j);
 /* Mengirimkan true jika i, j adalah indeks efektif bagi M */
-ElType M_GetElmtDiagonal (MATRIKS M, indeks i);
-/* Mengirimkan elemen M(i,i) */
 
 /* ********** Assignment  MATRIKS ********** */
 void M_CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl);
@@ -78,21 +76,6 @@ void M_TulisMATRIKS (MATRIKS M);
 8 9 10
 */
 
-/* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */
-MATRIKS M_TambahMATRIKS (MATRIKS M1, MATRIKS M2);
-/* Prekondisi : M1  berukuran sama dengan M2 */
-/* Mengirim hasil penjumlahan matriks: M1 + M2 */
-MATRIKS M_KurangMATRIKS (MATRIKS M1, MATRIKS M2);
-/* Prekondisi : M berukuran sama dengan M */
-/* Mengirim hasil pengurangan matriks: salinan M1 – M2 */
-MATRIKS M_KaliMATRIKS (MATRIKS M1, MATRIKS M2);
-/* Prekondisi : Ukuran kolom efektif M1 = ukuran baris efektif M2 */
-/* Mengirim hasil perkalian matriks: salinan M1 * M2 */
-MATRIKS M_KaliKons (MATRIKS M, ElType X);
-/* Mengirim hasil perkalian setiap elemen M dengan X */
-void M_PKaliKons (MATRIKS * M, ElType K);
-/* I.S. M terdefinisi, K terdefinisi */
-/* F.S. Mengalikan setiap elemen M dengan K */
 
 /* ********** KELOMPOK OPERASI RELASIONAL TERHADAP MATRIKS ********** */
 boolean M_EQ (MATRIKS M1, MATRIKS M2);
@@ -102,36 +85,10 @@ boolean M_EQ (MATRIKS M1, MATRIKS M2);
    dan GetLastIdxKol(M1) = GetLastIdxKol(M2) */
 boolean M_NEQ (MATRIKS M1, MATRIKS M2);
 /* Mengirimkan true jika M1 tidak sama dengan M2 */
-boolean M_EQSize (MATRIKS M1, MATRIKS M2);
-/* Mengirimkan true jika ukuran efektif matriks M1 sama dengan ukuran efektif M2 */
-/* yaitu GetBrsEff(M1) = GetNBrsEff (M2) dan GetNKolEff (M1) = GetNKolEff (M2) */
 
 /* ********** Operasi lain ********** */
 int M_NBElmt (MATRIKS M);
 /* Mengirimkan banyaknya elemen M */
 
-/* ********** KELOMPOK TEST TERHADAP MATRIKS ********** */
-boolean M_IsBujurSangkar (MATRIKS M);
-/* Mengirimkan true jika M adalah matriks dg ukuran baris dan kolom sama */
-boolean M_IsSimetri (MATRIKS M);
-/* Mengirimkan true jika M adalah matriks simetri : IsBujurSangkar(M)
-   dan untuk setiap elemen M, M(i,j)=M(j,i) */
-boolean M_IsSatuan (MATRIKS M);
-/* Mengirimkan true jika M adalah matriks satuan: IsBujurSangkar(M) dan
-   setiap elemen diagonal M bernilai 1 dan elemen yang bukan diagonal bernilai 0 */
-boolean M_IsSparse (MATRIKS M);
-/* Mengirimkan true jika M adalah matriks sparse: mariks “jarang” dengan definisi:
-   hanya maksimal 5% dari memori matriks yang efektif bukan bernilai 0 */
-MATRIKS M_Inverse1 (MATRIKS M);
-/* Menghasilkan salinan M dengan setiap elemen "di-invers", yaitu dinegasikan (dikalikan -1) */
-float M_Determinan (MATRIKS M);
-/* Prekondisi: IsBujurSangkar(M) */
-/* Menghitung nilai determinan M */
-void M_PInverse1 (MATRIKS * M);
-/* I.S. M terdefinisi */
-/* F.S. M di-invers, yaitu setiap elemennya dinegasikan (dikalikan -1) */
-void M_Transpose (MATRIKS * M);
-/* I.S. M terdefinisi dan IsBujursangkar(M) */
-/* F.S. M "di-transpose", yaitu setiap elemen M(i,j) ditukar nilainya dengan elemen M(j,i) */
 
 #endif

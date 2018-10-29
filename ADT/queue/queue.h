@@ -7,14 +7,14 @@
 
 #include "../../header/std.h"
 
-/* Definisi elemen dan address */
-typedef int infotype;
-typedef int address;   /* indeks tabel */
+/* Definisi elemen dan Q_address */
+typedef int Q_infotype;
+typedef int Q_address;   /* indeks tabel */
 /* Contoh deklarasi variabel bertype Queue : */
 /* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
-typedef struct { infotype * T;   /* tabel penyimpan elemen */
-                 address HEAD;  /* alamat penghapusan */
-                 address TAIL;  /* alamat penambahan */
+typedef struct { Q_infotype * T;   /* tabel penyimpan elemen */
+                 Q_address HEAD;  /* alamat penghapusan */
+                 Q_address TAIL;  /* alamat penambahan */
                  int MaxEl;     /* Max elemen queue */
                } Queue;
 /* Definisi Queue kosong: HEAD=Nol; TAIL=Nol. */
@@ -52,11 +52,11 @@ void Q_DeAlokasi (Queue * Q);
 /* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
 
 /* *** Primitif Add/Delete *** */
-void Q_Add (Queue * Q, infotype X);
+void Q_Add (Queue * Q, Q_infotype X);
 /* Proses: Menambahkan X pada Q dengan aturan FIFO */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer */
-void Q_Del (Queue * Q, infotype * X);
+void Q_Del (Queue * Q, Q_infotype * X);
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;

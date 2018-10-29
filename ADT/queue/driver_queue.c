@@ -28,7 +28,7 @@ int main() {
   //kamus
   Queue q;
   int input; //input user
-  infotype elmt; //elmt queue
+  Q_infotype elmt; //elmt queue
   //algoritma
   printf("Masukan panjang max Q: ");
   scanf("%d",&input); //maxel

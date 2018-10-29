@@ -4,12 +4,11 @@ int main() {
   //kamus
   PrioQueue q;
   int input,prio,info; //input user
-  infotype elmt; //elmt queue
+  PQ_infotype elmt; //elmt queue
   //algoritma
   printf("Masukan panjang max Q: ");
   scanf("%d",&input); //maxel
   PQ_CreateEmpty(&q,input);
-
   if (q.T != NULL) { //Q_NBElmt berhasil
     printf("Terbentuk queue kosong dengan maksimum %d elemen\n",PQ_MaxEl(q));
 
