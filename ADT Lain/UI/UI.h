@@ -99,7 +99,6 @@ void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel atas */
 
-
 void RefreshCommandPanel(GameScreen *gs);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel command */
@@ -107,7 +106,6 @@ void RefreshCommandPanel(GameScreen *gs);
 /* KELOMPOK INPUT */
 Kata GetInput(GameScreen *gs);
 /* I.S. : Bebas sudah initScreen */
-/* F.S. : Mengembalikan input user (command), mengembalikan ARROW jika
-          yang ditekan adalah arrow key */
+/* F.S. : Mengembalikan input user (command) dalam huruf besar */
 
 #endif

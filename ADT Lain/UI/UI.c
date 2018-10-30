@@ -4,7 +4,10 @@
 #include "../../header/boolean.h"
 
 
-void DrawBorders(WINDOW *screen){
+void DrawBorders(WINDOW *screen)
+/* I.S. : screen sudah diinisialisasi */
+/* F.S. : Digambar border pada screen yang dimau, tipe border standar */
+{
   BorderType standardBorder;
 
   UL(standardBorder) = ACS_ULCORNER;
@@ -15,7 +18,10 @@ void DrawBorders(WINDOW *screen){
   DrawBordersCC(screen, standardBorder);
 }
 
-void DrawBordersCC(WINDOW *screen, BorderType border) {
+void DrawBordersCC(WINDOW *screen, BorderType border)
+/* I.S. : Screen sudah diinisialisasi, border terdefinisi */
+/* F.S. : Digambar border pada screen yanh dimau, tipe border sesuai input*/
+{
   /* KAMUS LOKAL */
   int x, y, i;
 
@@ -41,7 +47,10 @@ void DrawBordersCC(WINDOW *screen, BorderType border) {
   }
 }
 
-void InitScreen(GameScreen *gs){
+void InitScreen(GameScreen *gs)
+/* I.S. : Bebas */
+/* F.S. : Terinisialisai layar kosong dengan window diset ke gs */
+{
   /* KAMUS LOKAL */
   int parentX,parentY;
   int sidePanelWidth;
@@ -99,7 +108,10 @@ void InitScreen(GameScreen *gs){
   wrefresh(Food_Panel(*gs));
 }
 
-void RefreshWaiter(GameScreen *gs, Point waiter){
+void RefreshWaiter(GameScreen *gs, Point waiter)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar sebuah pelayan pada posisi tertentu di layar */
+{
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
@@ -107,7 +119,10 @@ void RefreshWaiter(GameScreen *gs, Point waiter){
 
 }
 
-void RefreshMap(GameScreen *gs, Matriks peta){
+void RefreshMap(GameScreen *gs, Matriks peta)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar peta kosong */
+{
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
@@ -116,7 +131,10 @@ void RefreshMap(GameScreen *gs, Matriks peta){
 }
 
 
-void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue){
+void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar panel daftar pelanggan menunggu */
+{
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
@@ -124,7 +142,10 @@ void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue){
   DrawBorders(Waiting_Panel(*gs));
 }
 
-void RefreshFoodPanel(GameScreen *gs, Stack foodStack){
+void RefreshFoodPanel(GameScreen *gs, Stack foodStack)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar panel stack makanan */
+{
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
@@ -132,7 +153,10 @@ void RefreshFoodPanel(GameScreen *gs, Stack foodStack){
   DrawBorders(Food_Panel(*gs));
 }
 
-void RefreshHandPanel(GameScreen *gs, Stack handStack){
+void RefreshHandPanel(GameScreen *gs, Stack handStack)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar panel stack di tangan */
+{
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
@@ -140,7 +164,10 @@ void RefreshHandPanel(GameScreen *gs, Stack handStack){
   DrawBorders(Hand_Panel(*gs));
 }
 
-void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time){
+void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar panel atas */
+{
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
@@ -166,7 +193,10 @@ void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time){
 
 }
 
-void RefreshCommandPanel(GameScreen *gs){
+void RefreshCommandPanel(GameScreen *gs)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar panel command */
+{
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
@@ -176,7 +206,10 @@ void RefreshCommandPanel(GameScreen *gs){
   wrefresh(Command_Panel(*gs));
 }
 
-Kata GetInput(GameScreen *gs){
+Kata GetInput(GameScreen *gs)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Mengembalikan input user (command) dalam huruf besar */
+{
   /* KAMUS LOKAL */
   Kata output;
   int tempInput;
@@ -199,26 +232,30 @@ Kata GetInput(GameScreen *gs){
       i++;
     }
 
-
     tempInput = wgetch(Command_Panel(*gs));
 
     if((tempInput==13)||(tempInput==10)||(tempInput==KEY_ENTER)){
       finishReading =true;
     }else if(tempInput == KEY_BACKSPACE){
       output.Length--;
-    }else{
-      switch(tempInput){
-        case KEY_UP:
-          output.TabKata[0] = 'G';
-          output.TabKata[1] = 'U';
-          output.Length = 2;
-          finishReading = true;
-          break;
-        default:
-          output.TabKata[output.Length] = tempInput;
-          output.Length++;
-          break;
-      }
+    }else if(tempInput == KEY_UP){
+      output = K_MakeKata("GU");
+      finishReading = true;
+    }else if(tempInput == KEY_DOWN){
+      output = K_MakeKata("GD");
+      finishReading = true;
+    }else if(tempInput == KEY_LEFT){
+      output = K_MakeKata("GL");
+      finishReading = true;
+    }else if(tempInput == KEY_RIGHT){
+      output = K_MakeKata("GR");
+      finishReading = true;
+    }else if((tempInput>=65)&&(tempInput<=90)){
+      output.TabKata[output.Length] = tempInput;
+      output.Length++;
+    }else if((tempInput>=97)&&(tempInput<=122)){
+      output.TabKata[output.Length] = tempInput-32;
+      output.Length++;
     }
 
   }
