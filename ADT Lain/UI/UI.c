@@ -193,20 +193,23 @@ void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time)
 
 }
 
-void RefreshCommandPanel(GameScreen *gs)
+void RefreshCommandPanel(GameScreen *gs,Kata prompt)
 /* I.S. : Bebas sudah initScreen */
-/* F.S. : Digambar panel command */
+/* F.S. : DigambarKata panel command */
 {
   /* KAMUS LOKAL */
+  int i;
 
   /* ALGORITMA */
   wclear(Command_Panel(*gs));
   DrawBorders(Command_Panel(*gs));
-  mvwprintw(Command_Panel(*gs),1,2,"Command : ");
+  for(i = 1;i<=prompt.Length;i++){
+    mvwaddch(Command_Panel(*gs),1,2+i,prompt.TabKata[i]);
+  }
   wrefresh(Command_Panel(*gs));
 }
 
-Kata GetInput(GameScreen *gs)
+Kata GetInput(GameScreen *gs,Kata prompt)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Mengembalikan input user (command) dalam huruf besar */
 {
@@ -225,10 +228,10 @@ Kata GetInput(GameScreen *gs)
   output.Length = 0;
 
   while(!finishReading){
-    RefreshCommandPanel(gs);
-    i = 0;
-    while(i<output.Length){
-      mvwaddch(Command_Panel(*gs),1,12+i,output.TabKata[i]);
+    RefreshCommandPanel(gs,prompt);
+    i = 1;
+    while(i<=output.Length){
+      mvwaddch(Command_Panel(*gs),1,prompt.Length+2+i,output.TabKata[i]);
       i++;
     }
 
@@ -251,16 +254,16 @@ Kata GetInput(GameScreen *gs)
       output = K_MakeKata("GR");
       finishReading = true;
     }else if((tempInput>=65)&&(tempInput<=90)){
-      output.TabKata[output.Length] = tempInput;
+      output.TabKata[output.Length+1] = tempInput;
       output.Length++;
     }else if((tempInput>=97)&&(tempInput<=122)){
-      output.TabKata[output.Length] = tempInput-32;
+      output.TabKata[output.Length+1] = tempInput-32;
       output.Length++;
     }
 
   }
 
-  RefreshCommandPanel(gs);
+  RefreshCommandPanel(gs,prompt);
 
   return output;
 }

@@ -99,12 +99,12 @@ void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel atas */
 
-void RefreshCommandPanel(GameScreen *gs);
+void RefreshCommandPanel(GameScreen *gs, Kata prompt);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel command */
 
 /* KELOMPOK INPUT */
-Kata GetInput(GameScreen *gs);
+Kata GetInput(GameScreen *gs,Kata prompt);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Mengembalikan input user (command) dalam huruf besar */
 

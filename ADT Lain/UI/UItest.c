@@ -15,10 +15,13 @@ int main(){
 
   wrefresh(Hand_Panel(gs));
 
+  Kata prompt;
+  prompt = K_MakeKata("Command : ");
+
 
   while(true){
     RefreshTopPanel(&gs,orig3,1,2,3);
-    abc  = GetInput(&gs);
+    abc  = GetInput(&gs,prompt);
 
     if(K_IsKataSama(abc, up)){
       break;
