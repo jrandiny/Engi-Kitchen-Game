@@ -93,3 +93,62 @@ void K_SalinKata()
   }
   CKata.Length = i;
 }
+
+Kata K_MakeKata(char* S)
+/* Membuat kata dari string */
+{
+  Kata hasil;
+  int i=0;
+  while(S[i]!="\0"){
+    hasil.TabKata[i+1]=S[i];
+    i++;
+  }
+  hasil.Length=i;
+  return hasil;
+}
+
+void K_LowercaseKata(Kata *input)
+/* I.S. input tidak kosong
+   F.S. input menjadi K_LowercaseKata
+*/
+{
+  int i;
+  for(i=1;i<=*input.Length;i++){
+      if(*input.TabKata[i]>=65)&&(*input.TabKata[i]<=90){
+        *input.TabKata[i]+=32;
+      }
+  }
+}
+
+boolean K_IsKataSama(Kata kata1,Kata kata2)
+/*true jika kata1 sama kata2, dan sebaliknya*/
+{
+  boolean sama;
+  if(kata1.Length==kata2.Length){
+    sama=true;
+    int i=1;
+    while(i<=kata1.Length&&sama){
+      if(kata1.TabKata[i]!=kata2.TabKata[i]){
+        sama=false
+      }else{
+        i++;
+      }
+    }
+  }else{
+    sama=false;
+  }
+  return sama;
+}
+
+procedure K_CopyKata(Kata sumber,Kata* hasil)
+/*I.S. sumber terdefinisi
+  F.S. hasil terisi sumber
+*/
+{
+  int i=1;
+  *hasil.Length=sumber.Length;
+  while(i<=sumber.Length){
+    *hasil.TabKata[i]=sumber.TabKata[i];
+    i++;
+  }
+}

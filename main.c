@@ -3,6 +3,12 @@
 #include "header/std.h"
 #include "header/ADT.h"
 
+void initGame(Kata *new,Kata *exit,Kata *load,Kata *start);
+/*
+I.S. parameter2 belum berisi
+F.S. parameter2 berisi sesuai value awal default
+*/
+
 
 /*Main Progam*/
 int main () {
@@ -14,29 +20,9 @@ int main () {
   Kata input,new,exit,start,load,username;
 
   //ALGORITMA
-  new.Length=3;
-  new.TabKata[1]='N';
-  new.TabKata[1]='E';
-  new.TabKata[1]='W';
-  exit.Length=4;
-  exit.TabKata[1]='E';
-  exit.TabKata[2]='X';
-  exit.TabKata[3]='I';
-  exit.TabKata[4]='T';
-  start.Length=5;
-  start.TabKata[1]='S';
-  start.TabKata[1]='T';
-  start.TabKata[1]='A';
-  start.TabKata[1]='R';
-  start.TabKata[1]='T';
-  load.Length=4;
-  load.TabKata[1]='L';
-  load.TabKata[2]='O';
-  load.TabKata[3]='A';
-  load.TabKata[4]='D';
-
-    input=getInput();
+    initGame(&new,&exit,&load,&start);
     do{
+      input=getInput();
       if(K_IsKataSama(input,new)||K_IsKataSama(input,start)){
         if(K_IsKataSama(input,new)){
             username=getInput();
@@ -85,4 +71,16 @@ int main () {
 
 
   return 0;
+}
+
+void initGame(Kata *new,Kata *exit,Kata *load,Kata *start)
+/*
+I.S. parameter2 belum berisi
+F.S. parameter2 berisi sesuai value awal default
+*/
+{
+  *new=K_MakeKata("new");
+  *exit=K_MakeKata("exit");
+  *load=K_MakeKata("load");
+  *start=K_MakeKata("start");
 }

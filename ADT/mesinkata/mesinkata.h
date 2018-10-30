@@ -50,4 +50,21 @@ void K_SalinKata();
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
+Kata K_MakeKata(String S);
+/* Membuat kata dari string */
+
+void K_LowercaseKata(Kata *input);
+/* I.S. input tidak kosong
+   F.S. input menjadi K_LowercaseKata
+*/
+
+boolean K_IsKataSama(Kata kata1,Kata kata2);
+/*true jika kata1 sama kata2, dan sebaliknya*/
+
+procedure K_CopyKata(Kata sumber,Kata* hasil);
+/*I.S. sumber terdefinisi
+  F.S. hasil terisi sumber
+*/
+
+
 #endif

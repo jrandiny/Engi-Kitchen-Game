@@ -16,7 +16,12 @@
 extern char CC;
 extern boolean EOP;
 
-void K_START();
+void K_MakeNamaFile(char* nama);
+/* I.S. nama terdefinisi
+   F.S. nama dikonkat dengan  .txt
+*/
+
+void K_START(char* namafile);
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
    Karakter pertama yang ada pada pita posisinya adalah pada jendela.
    I.S. : sembarang

@@ -14,7 +14,19 @@ boolean EOP;
 static FILE * pita;
 static int retval;
 
-void K_START() {
+void K_MakeNamaFile(char* nama){
+  int i=0;
+  while(nama[i]!='\0'){
+    i++;
+  }
+  nama[i]='.';
+  nama[i+1]='t';
+  nama[i+2]='x';
+  nama[i+3]='t';
+  nama[i+4]='\0';
+}
+
+void K_START(char* namafile) {
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
    Karakter pertama yang ada pada pita posisinya adalah pada jendela.
    I.S. : sembarang
@@ -22,7 +34,8 @@ void K_START() {
           Jika CC = MARK maka EOP akan menyala (true) */
 
 	/* Algoritma */
-	pita = fopen("pitakar.txt","r");
+	K_MakeNamaFile(namafile);
+	pita = fopen(namafile,"r");
 	K_ADV();
 }
 
