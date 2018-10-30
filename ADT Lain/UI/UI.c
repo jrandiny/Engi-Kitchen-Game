@@ -1,6 +1,7 @@
 #include "UI.h"
 #include <ncurses.h>
 #include "../../ADT/point/point.h"
+#include "../../header/boolean.h"
 
 
 void DrawBorders(WINDOW *screen){
@@ -50,6 +51,7 @@ void InitScreen(GameScreen *gs){
 
   /* ALGORITMA */
   initscr();
+  noecho();
   getmaxyx(stdscr, parentY, parentX);
 
   sidePanelWidth = 20;
@@ -95,4 +97,133 @@ void InitScreen(GameScreen *gs){
   wrefresh(Hand_Panel(*gs));
   wrefresh(Order_Panel(*gs));
   wrefresh(Food_Panel(*gs));
+}
+
+void RefreshWaiter(GameScreen *gs, Point waiter){
+  /* KAMUS LOKAL */
+
+  /* ALGORITMA */
+  mvwaddch(Main_Panel(*gs),P_Ordinat(waiter),P_Absis(waiter),'P');
+
+}
+
+void RefreshMap(GameScreen *gs, Matriks peta){
+  /* KAMUS LOKAL */
+
+  /* ALGORITMA */
+  wclear(Main_Panel(*gs));
+  DrawBorders(Main_Panel(*gs));
+}
+
+
+void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue){
+  /* KAMUS LOKAL */
+
+  /* ALGORITMA */
+  wclear(Waiting_Panel(*gs));
+  DrawBorders(Waiting_Panel(*gs));
+}
+
+void RefreshFoodPanel(GameScreen *gs, Stack foodStack){
+  /* KAMUS LOKAL */
+
+  /* ALGORITMA */
+  wclear(Food_Panel(*gs));
+  DrawBorders(Food_Panel(*gs));
+}
+
+void RefreshHandPanel(GameScreen *gs, Stack handStack){
+  /* KAMUS LOKAL */
+
+  /* ALGORITMA */
+  wclear(Hand_Panel(*gs));
+  DrawBorders(Hand_Panel(*gs));
+}
+
+void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time){
+  /* KAMUS LOKAL */
+
+  /* ALGORITMA */
+  wclear(Top_1_Panel(*gs));
+  wclear(Top_2_Panel(*gs));
+  wclear(Top_3_Panel(*gs));
+  wclear(Top_4_Panel(*gs));
+
+  DrawBorders(Top_1_Panel(*gs));
+  DrawBorders(Top_2_Panel(*gs));
+  DrawBorders(Top_3_Panel(*gs));
+  DrawBorders(Top_4_Panel(*gs));
+
+  mvwprintw(Top_1_Panel(*gs),1,2,"nama","Aa");
+  mvwprintw(Top_2_Panel(*gs),1,2,"Money: ",money);
+  mvwprintw(Top_3_Panel(*gs),1,2,"Life: ",life);
+  mvwprintw(Top_4_Panel(*gs),1,2,"Time: ",time);
+
+  wrefresh(Top_1_Panel(*gs));
+  wrefresh(Top_2_Panel(*gs));
+  wrefresh(Top_3_Panel(*gs));
+  wrefresh(Top_4_Panel(*gs));
+
+}
+
+void RefreshCommandPanel(GameScreen *gs){
+  /* KAMUS LOKAL */
+
+  /* ALGORITMA */
+  wclear(Command_Panel(*gs));
+  DrawBorders(Command_Panel(*gs));
+  mvwprintw(Command_Panel(*gs),1,2,"Command : ");
+  wrefresh(Command_Panel(*gs));
+}
+
+Kata GetInput(GameScreen *gs){
+  /* KAMUS LOKAL */
+  Kata output;
+  int tempInput;
+  boolean finishReading;
+  int kataLength;
+  int i;
+
+  /* ALGORITMA */
+  finishReading = false;
+
+  keypad(Command_Panel(*gs),true);
+
+  output.Length = 0;
+
+  while(!finishReading){
+    RefreshCommandPanel(gs);
+    i = 0;
+    while(i<output.Length){
+      mvwaddch(Command_Panel(*gs),1,12+i,output.TabKata[i]);
+      i++;
+    }
+
+
+    tempInput = wgetch(Command_Panel(*gs));
+
+    if((tempInput==13)||(tempInput==10)||(tempInput==KEY_ENTER)){
+      finishReading =true;
+    }else if(tempInput == KEY_BACKSPACE){
+      output.Length--;
+    }else{
+      switch(tempInput){
+        case KEY_UP:
+          output.TabKata[0] = 'G';
+          output.TabKata[1] = 'U';
+          output.Length = 2;
+          finishReading = true;
+          break;
+        default:
+          output.TabKata[output.Length] = tempInput;
+          output.Length++;
+          break;
+      }
+    }
+
+  }
+
+  RefreshCommandPanel(gs);
+
+  return output;
 }

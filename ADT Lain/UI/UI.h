@@ -95,9 +95,14 @@ void RefreshHandPanel(GameScreen *gs, Stack handStack);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel stack di tangan */
 
-//void RefeshTopPanel(GameScreen *gs, Kata name, int money, int life, int time);
+void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel atas */
+
+
+void RefreshCommandPanel(GameScreen *gs);
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar panel command */
 
 /* KELOMPOK INPUT */
 Kata GetInput(GameScreen *gs);
