@@ -6,11 +6,14 @@
 #define Nil NULL
 #define Nol 0
 
+#define IdxUndeff -999 /* Indeks tak terdefinisi*/
+#define ValUndeff -999 /* Value tak terdefinisi*/
+#define CharUndeff '\0' /* Char tak terdefinisi*/
+
 #include "boolean.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <string.h>
 #include <float.h>
 
 #endif

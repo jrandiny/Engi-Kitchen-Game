@@ -1,6 +1,6 @@
 //File: space.h
 /*merupakan implementasi bentuk lokasi ruangan dengan map dan matriks dan posisi
-  pelayan dengan menggunakan point */
+  Pelayan dengan menggunakan point */
 
 #ifndef SPACE_H
 #define SPACE_H
@@ -12,13 +12,13 @@
 
 typedef struct {
   int ruangan; //nomor ruangan yang sedang digunakan [1..4]
-  MATRIKS room1; //data ruangan pertama
-  MATRIKS room2; //data ruangan kedua
-  MATRIKS room3; //data ruangan ketiga
-  MATRIKS room4; //data ruangan keempat/ dapur
+  Matriks room1; //data ruangan pertama
+  Matriks room2; //data ruangan kedua
+  Matriks room3; //data ruangan ketiga
+  Matriks room4; //data ruangan keempat/ dapur
   List hubungan; //mapping
-} restoran;
-//tipe restoran dengan 4 ruangan berukuran 8x8
+} Restoran;
+//tipe Restoran dengan 4 ruangan berukuran 8x8
 // dengan terdapat 4 pintu yang menghubungkan keempat ruangan tersebut
 /*
   room1 (5,8) -> (2,1) room2
@@ -34,22 +34,17 @@ typedef struct {
 #define Room4(R) (R).room4
 
 typedef struct {
-  Point posisi; //posisi pelayan mengikuti baris dan kolom matriks
-  char up;      // menyatakan karakter di posisi atas pelayan
-  char down;    // menyatakan karakter di posisi bawah pelayan
-  char left;    // menyatakan karakter di posisi kiri pelayan
-  char right;   // menyatakan karakter di posisi kanan pelayan
-} pelayan;
-//merupakan tipe pelayan dengan posisi dan karakter disekitarnya
+  Point posisi; //posisi Pelayan mengikuti baris dan kolom matriks
+  Tile up;      // menyatakan karakter di posisi atas Pelayan
+  Tile down;    // menyatakan karakter di posisi bawah Pelayan
+  Tile left;    // menyatakan karakter di posisi kiri Pelayan
+  Tile right;   // menyatakan karakter di posisi kanan Pelayan
+} Pelayan;
+//merupakan tipe Pelayan dengan posisi dan karakter disekitarnya
 
 
 /* up down left right akan bernilai
-    '' kosong jika dia lantai kosong
-    x jika bangku kosong
-    c jika ada pelanggan
-    m jika meja
-    t jika nampan
-    '\0' jika dekat pintu atau tembok
+    sesuai dengan definisi Tile di matriks.h
 */
 // *** SELEKTOR ***
 #define Posisi(P) (P).posisi
@@ -59,70 +54,125 @@ typedef struct {
 #define Right(P) (P).right
 
 // *** KONSTRUKTOR ***
-void InitPelayan(pelayan *P);
-/* membuat pelayan baru
+void InitPelayan(Pelayan *P);
+/* membuat Pelayan baru
   I.S. Sembarang
-  F.S. terbentuk pelayan dengan posisi di 1,1 dan karakter lain '\0' */
-void PlacePelayan(pelayan *P,float x,float y, restoran R);
-/*
-  menaruh pelayan di posisi (x,y) di ruangan di restoran r
-  I.S. pelayan,x,y,R terdefinisi
-  F.S. pelayan terletak di posisi x,y di ruangan di R
+  F.S. terbentuk Pelayan dengan posisi di 0,0
+      semua karakter bernilai CharUndeff
+      semua value bernilai ValUndeff
+      semua deskripsi berniali ""
 */
-void InitRuangan(restoran *R);
+void PlacePelayan(Pelayan *P,int x,int y, Matriks M);
+/*
+  menaruh Pelayan di posisi (x,y) di ruangan di Restoran r
+  I.S. Pelayan,x,y,R terdefinisi
+  F.S. Pelayan terletak di posisi x,y di ruangan di R
+*/
+void InitRuangan(Restoran *R);
 /*
   menyiapkan ruangan kosong dan menghubungkan semua ruangan
   I.S. R Sembarang
-  F.S. setiap room terisi karakter kosong, lokasi pusat meja sudah ada nomornya
-      ruangan berniali 0
+  F.S. setiap room.karakter terisi "",
+      room.value berisi ValUndeff
+      room.deskripsi berisi ""
+      lokasi pusat meja sudah ada nomornya,
+      ruangan berniali 0,
       hubungan telah menghubungkan semua ruangan.
 */
 
 // *** PINDAH ***
-void MoveUp(pelayan *P,restoran R);
+void MoveUp(Pelayan *P,Matriks M);
 /*
-  I.S. pelayan dan restoran terdifinsi, pelayan masih dapat naik
-  F.S. pelayan pindah ke posisi di atasnya dan update semua karakter
+  I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat naik
+  F.S. Pelayan pindah ke posisi di atasnya dan update semua karakter
 */
-void MoveDown(pelayan *P,restoran R);
+void MoveDown(Pelayan *P,Matriks M);
 /*
-  I.S. pelayan dan restoran terdifinsi, pelayan masih dapat turun
-  F.S. pelayan pindah ke posisi di bawahnya dan update semua karakter
+  I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat turun
+  F.S. Pelayan pindah ke posisi di bawahnya dan update semua karakter
 */
-void MoveLeft(pelayan *P,restoran R);
+void MoveLeft(Pelayan *P,Matriks M);
 /*
-  I.S. pelayan dan restoran terdifinsi, pelayan masih dapat bergerak ke kiri
-  F.S. pelayan pindah ke posisi di kirinya dan update semua karakter
+  I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat bergerak ke kiri
+  F.S. Pelayan pindah ke posisi di kirinya dan update semua karakter
 */
-void MoveRight(pelayan *P,restoran R);
+void MoveRight(Pelayan *P,Matriks M);
 /*
-  I.S. pelayan dan restoran terdifinsi, pelayan masih dapat bergerak ke kanan
-  F.S. pelayan pindah ke posisi di kanannya dan update semua karakter
+  I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat bergerak ke kanan
+  F.S. Pelayan pindah ke posisi di kanannya dan update semua karakter
+*/
+
+// *** Tile Set ***
+void SetUpTile(Pelayan *P,Matriks M);
+/*
+  I.S. P dan M terdefinisi
+  F.S. Tile Up pada pelayan diisi dengan elemt yang sesuai dengan M
+*/
+void SetDownTile(Pelayan *P,Matriks M);
+/*
+  I.S. P dan M terdefinisi
+  F.S. Tile Down pada pelayan diisi dengan elemt yang sesuai dengan M
+*/
+void SetLeftTile(Pelayan *P,Matriks M);
+/*
+  I.S. P dan M terdefinisi
+  F.S. Tile Left pada pelayan diisi dengan elemt yang sesuai dengan M
+*/
+void SetRightTile(Pelayan *P,Matriks M);
+/*
+  I.S. P dan M terdefinisi
+  F.S. Tile Right pada pelayan diisi dengan elemt yang sesuai dengan M
 */
 
 // *** RUANGAN ***
-void IsiRuang(restoran *R, int ruangan, MATRIKS M);
+void IsiRuang(Restoran *R, int ruangan, Matriks M);
 /*
   I.S. R sudah terdeinisi, ruangan dan M juga terdefinisi
   F.S. room ke-(ruangan) di set menjadi seperti M
 */
-void PlaceTable(restoran *R,int nomorMeja, int jumlahBangku);
-/*
-  I.S. R, nomorMeja, dan jumlahBangku terdefinisi, nomoMeja antara 1-12
-       jumlahBangku antara 2 atau 4
-  F.S. meja dengan nomor nomorMeja terdapat bangku kosong sejumlah jumlahBangku
-*/
+// void PlaceTable(Restoran *R,int nomorMeja, int jumlahBangku);
+// /*
+//   I.S. R, nomorMeja, dan jumlahBangku terdefinisi, nomoMeja antara 1-12
+//        jumlahBangku antara 2 atau 4
+//   F.S. meja dengan nomor nomorMeja terdapat bangku kosong sejumlah jumlahBangku
+// */
 
 // *** LAIN LAIN ***
-int GetTableNumber(pelayan P, restoran R);
+Tile GetTableTile(Pelayan P, Matriks M);
 /*
-  mengembalikan nilai meja yang bersebelahan dengan pelayan
-  di sebelah pelayan hanya ada satu pelanggan atau 2 pelanggan dari meja yang sama
+  mengembalikan Tile meja yang bersebelahan dengan Pelayan
+  di sebelah Pelayan hanya ada satu pelanggan atau 2 pelanggan dari meja yang sama
 */
-void Placing(int pelanggan,pelayan P, restoran *R);
+void Placing(int pelanggan,int kesabaran, Kata menu,Pelayan *P, Matriks *M);
 /*
-  I.S. pelanggan, pelayan, retoran terdefinisi, meja sebelah pelayan adalah kosong
-  F.S. pelanggan di tempat di meja sesuai jumlahnya
+  I.S. pelanggan,kesabaran,menu, Pelayan, retoran terdefinisi,
+      meja sebelah Pelayan adalah kosong
+      pelanggan merupakan jumlah pelanggan yang akan duduk
+      kesabaran merupakan jumlah tik kesabaran pelanggan
+      menu merupakan nama makanan yang akan dipesan
+  F.S. pelanggan di tempatkan di meja sesuai jumlahnya deskripsi akan bernilai menu
+      karakter jadi 'c', value jadi kesabaran, deskripsi nomor meja berubah dari
+      kosong menjadi isi
+*/
+Matriks GetRuangSekarang(Restoran R);
+/*
+  fungsi mengembalikan suatu matriks yang sedang digunakan berdasarkan Ruangan(R)
+*/
+boolean IsTableEmpty(int nomor, Matriks M);
+/*
+  mengirimkan true jika meja dengan nomor meja nomor adalah kosong dan bisa
+  di duduki, mengirimkan false jika tidak
+*/
+void KesabaranBerkurang(Restoran *R);
+/*
+  I.S. R terdefinisi
+  F.S. untuk setiap tile dengan katakter c, nilai kesabarannya berkurang 1
+*/
+int PelangganKabur(Restoran *R);
+/*
+  fungsi yang mengembalikan jumlah pelanggan yang kesabarannya mencapai 0
+  sekaligus mengembalikan status meja menjadi kosong, karakter menjadi x
+  deskripsi menjadi "" dan Value menjadi ValUndeff
 */
 
 #endif

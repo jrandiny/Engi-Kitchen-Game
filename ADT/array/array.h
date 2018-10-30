@@ -14,8 +14,6 @@
 /* Indeks maksimum array, sekaligus ukuran maksimum array dalam C */
 #define IdxMin 1
 /* Indeks minimum array */
-#define IdxUndef -999
-/* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
 typedef int IdxType;  /* type indeks */

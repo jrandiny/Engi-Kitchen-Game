@@ -4,6 +4,7 @@
 #define MATRIKS_H
 
 #include "../../header/std.h"
+#include "../mesinkata/mesinkata.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define BrsMin 1
@@ -13,10 +14,35 @@
 
 typedef int indeks; /* indeks baris, kolom */
 typedef struct {
-	char karakter;
+	char karakter; //merupakan karakter yang ditampilkan di layar
 	int value;
-	char deskripsi[50];
+	/* angka kesabaran untuk pengunjung duduk, ValUndeff untuk tile, nomor meja
+	dan nampan, id makanan untuk meja di dapur
+	*/
+	Kata deskripsi; //berisi nama makanan|| customer|| nomor meja|| lantai|| nampan
 } Tile;
+/*
+	karakter bernilai
+		' '(spasi) kosong jika dia lantai kosong
+		x jika bangku kosong
+		c jika ada pelanggan
+		m jika meja
+		n jika nomor meja
+		t jika nampan
+		CharUndeff jika dekat pintu atau tembok
+	value bernilai (bergantung karakter)
+		kesabaran pelanggan
+		id makanan
+		[1..12] jika nomor meja
+		ValUndeff untuk sisanya
+	Deskripsi bernilai (bergantung karakter)
+		"" jika lantai, pintu, atau tembok
+		nama makanan berdasarkan id makanan
+		customer jika ada pelanggan
+		isi||kosong jika karakter== n
+		nampan jika karakter==t
+*/
+
 typedef struct {
 	Tile Mem[BrsMax+1][KolMax+1];
   int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
@@ -37,6 +63,10 @@ void M_MakeMatriks (int NB, int NK, Matriks * M);
 #define M_NBrsEff(M) (M).NBrsEff
 #define M_NKolEff(M) (M).NKolEff
 #define M_Elmt(M,i,j) (M).Mem[(i)][(j)]
+
+#define Karakter(M) (M).karakter
+#define Value(M) (M).value
+#define Deskripsi(M) (M).deskripsi
 
 /* *** Selektor "DUNIA Matriks" *** */
 boolean M_IsIdxValid (int i, int j);
