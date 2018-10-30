@@ -3,27 +3,40 @@
 #include "../../ADT/point/point.h"
 
 
-void draw_borders(WINDOW *screen) {
+void DrawBorders(WINDOW *screen){
+  BorderType standardBorder;
+
+  UL(standardBorder) = ACS_ULCORNER;
+  UR(standardBorder) = ACS_URCORNER;
+  LL(standardBorder) = ACS_LLCORNER;
+  LR(standardBorder) = ACS_LRCORNER;
+
+  DrawBordersCC(screen, standardBorder);
+}
+
+void DrawBordersCC(WINDOW *screen, BorderType border) {
+  /* KAMUS LOKAL */
   int x, y, i;
 
+  /* ALGORITMA */
   getmaxyx(screen, y, x);
 
-  // 4 corners
-  mvwprintw(screen, 0, 0, "+");
-  mvwprintw(screen, y - 1, 0, "+");
-  mvwprintw(screen, 0, x - 1, "+");
-  mvwprintw(screen, y - 1, x - 1, "+");
+  // Pojok
+  mvwaddch(screen, 0, 0, UL(border));
+  mvwaddch(screen, y - 1, 0, LL(border));
+  mvwaddch(screen, 0, x - 1, UR(border));
+  mvwaddch(screen, y - 1, x - 1, LR(border));
 
-  // sides
+  // sisi
   for (i = 1; i < (y - 1); i++) {
-    mvwprintw(screen, i, 0, "|");
-    mvwprintw(screen, i, x - 1, "|");
+    mvwaddch(screen, i, 0, ACS_VLINE);
+    mvwaddch(screen, i, x - 1, ACS_VLINE);
   }
 
-  // top and bottom
+  // atas bawah
   for (i = 1; i < (x - 1); i++) {
-    mvwprintw(screen, 0, i, "-");
-    mvwprintw(screen, y - 1, i, "-");
+    mvwaddch(screen, 0, i, ACS_HLINE);
+    mvwaddch(screen, y - 1, i, ACS_HLINE);
   }
 }
 
@@ -60,17 +73,17 @@ void InitScreen(GameScreen *gs){
 
   Main_Panel(*gs) = newwin(2*sidePanelHeight, mainPanelWidth,topBarHeight, sidePanelWidth);
 
-  draw_borders(Top_1_Panel(*gs));
-  draw_borders(Top_2_Panel(*gs));
-  draw_borders(Top_3_Panel(*gs));
-  draw_borders(Top_4_Panel(*gs));
+  DrawBorders(Top_1_Panel(*gs));
+  DrawBorders(Top_2_Panel(*gs));
+  DrawBorders(Top_3_Panel(*gs));
+  DrawBorders(Top_4_Panel(*gs));
 
-  draw_borders(Waiting_Panel(*gs));
-  draw_borders(Food_Panel(*gs));
-  draw_borders(Order_Panel(*gs));
-  draw_borders(Hand_Panel(*gs));
-  draw_borders(Command_Panel(*gs));
-  draw_borders(Main_Panel(*gs));
+  DrawBorders(Waiting_Panel(*gs));
+  DrawBorders(Food_Panel(*gs));
+  DrawBorders(Order_Panel(*gs));
+  DrawBorders(Hand_Panel(*gs));
+  DrawBorders(Command_Panel(*gs));
+  DrawBorders(Main_Panel(*gs));
 
   wrefresh(Main_Panel(*gs));
   wrefresh(Top_1_Panel(*gs));
@@ -87,14 +100,6 @@ void InitScreen(GameScreen *gs){
 
 
 void DrawRectangle(Point orig, int width, int height){
-  BorderType standardBorder;
-
-  UL(standardBorder) = ACS_ULCORNER;
-  UR(standardBorder) = ACS_URCORNER;
-  LL(standardBorder) = ACS_LLCORNER;
-  LR(standardBorder) = ACS_LRCORNER;
-
-  DrawRectangleCC(orig, width, height, standardBorder);
 
 }
 
