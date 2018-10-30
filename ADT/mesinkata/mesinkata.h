@@ -29,7 +29,7 @@ void K_IgnoreBlank();
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 
-void K_STARTKATA();
+void K_STARTKATA(char* nama);
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
@@ -50,7 +50,7 @@ void K_SalinKata();
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
-Kata K_MakeKata(String S);
+Kata K_MakeKata(char* S);
 /* Membuat kata dari string */
 
 void K_LowercaseKata(Kata *input);
@@ -61,10 +61,12 @@ void K_LowercaseKata(Kata *input);
 boolean K_IsKataSama(Kata kata1,Kata kata2);
 /*true jika kata1 sama kata2, dan sebaliknya*/
 
-procedure K_CopyKata(Kata sumber,Kata* hasil);
+void K_CopyKata(Kata sumber,Kata* hasil);
 /*I.S. sumber terdefinisi
   F.S. hasil terisi sumber
 */
 
+int K_KataToInt(Kata input);
+/*mengubah input menjadi tipe integer*/
 
 #endif

@@ -27,7 +27,7 @@ void K_IgnoreBlank()
   /* CC == BLANK atau CC == MARK */
 }
 
-void K_STARTKATA()
+void K_STARTKATA(char* nama)
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
@@ -36,7 +36,7 @@ void K_STARTKATA()
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
-  K_START();
+  K_START(nama);
   K_IgnoreBlank();
   if(CC == MARK){
     EndKata = true;
@@ -51,7 +51,7 @@ void K_ADVKATA()
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika CC = MARK, EndKata = true.
-   Proses : Akuisisi kata menggunakan procedure K_SalinKata */
+   Proses : Akuisisi kata menggunakan void K_SalinKata */
 {
   /* KAMUS LOKAL */
 
@@ -99,7 +99,7 @@ Kata K_MakeKata(char* S)
 {
   Kata hasil;
   int i=0;
-  while(S[i]!="\0"){
+  while(S[i]!='\0'){
     hasil.TabKata[i+1]=S[i];
     i++;
   }
@@ -113,9 +113,9 @@ void K_LowercaseKata(Kata *input)
 */
 {
   int i;
-  for(i=1;i<=*input.Length;i++){
-      if(*input.TabKata[i]>=65)&&(*input.TabKata[i]<=90){
-        *input.TabKata[i]+=32;
+  for(i=1;i<=(*input).Length;i++){
+      if((*input).TabKata[i]>=65&&(*input).TabKata[i]<=90){
+        (*input).TabKata[i]+=32;
       }
   }
 }
@@ -129,7 +129,7 @@ boolean K_IsKataSama(Kata kata1,Kata kata2)
     int i=1;
     while(i<=kata1.Length&&sama){
       if(kata1.TabKata[i]!=kata2.TabKata[i]){
-        sama=false
+        sama=false;
       }else{
         i++;
       }
@@ -140,15 +140,26 @@ boolean K_IsKataSama(Kata kata1,Kata kata2)
   return sama;
 }
 
-procedure K_CopyKata(Kata sumber,Kata* hasil)
+void K_CopyKata(Kata sumber,Kata* hasil)
 /*I.S. sumber terdefinisi
   F.S. hasil terisi sumber
 */
 {
   int i=1;
-  *hasil.Length=sumber.Length;
+  (*hasil).Length=sumber.Length;
   while(i<=sumber.Length){
-    *hasil.TabKata[i]=sumber.TabKata[i];
+    (*hasil).TabKata[i]=sumber.TabKata[i];
     i++;
   }
+}
+
+int K_KataToInt(Kata input)
+/*mengubah input menjadi tipe integer*/
+{
+  int hasil=0,i=input.Length;
+  while(i>0){
+    hasil=hasil*10+(int)(input.TabKata[i]-'0');
+    i--;
+  }
+  return hasil;
 }
