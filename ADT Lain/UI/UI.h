@@ -2,7 +2,7 @@
 #define UI_H
 
 #include "../../ADT/point/point.h"
-//#include "../../ADT/mesinkata/mesinkata.h"
+#include "../../ADT/mesinkata/mesinkata.h"
 #include "../../ADT/matriks/matriks.h"
 #include "../../ADT/queue/queue.h"
 #include "../../ADT/stack/stackt.h"
@@ -70,17 +70,6 @@ void DrawBordersCC(WINDOW *screen,BorderType border);
 /* I.S. : Screen sudah diinisialisasi, border terdefinisi */
 /* F.S. : Digambar border pada screen yanh dimau, tipe border sesuai input*/
 
-/* KEOMPOK GAMBAR */
-void DrawRectangle(Point orig, int width, int height);
-/* I.S. : Bebas sudah initScreen */
-/* F.S. : Digambar persegi denga origin point (kiri atas) pada orig
-          lebar width, tinggi height, border standar (kotak)*/
-
-void DrawRectangleCC(Point orig, int width, int height, BorderType border);
-/* I.S. : Bebas sudah initScreen */
-/* F.S. : Digambar persegi denga origin point (kiri atas) pada orig
-          lebar width, tinggi height, border bisa diubah */
-
 /* Kelompok Refresh*/
 void RefreshWaiter(GameScreen *gs, Point waiter);
 /* I.S. : Bebas sudah initScreen */
@@ -111,7 +100,7 @@ void RefreshHandPanel(GameScreen *gs, Stack handStack);
 /* F.S. : Digambar panel atas */
 
 /* KELOMPOK INPUT */
-//Kata GetInput(GameScreen *gs);
+Kata GetInput(GameScreen *gs);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Mengembalikan input user (command), mengembalikan ARROW jika
           yang ditekan adalah arrow key */
