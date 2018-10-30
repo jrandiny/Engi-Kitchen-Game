@@ -7,6 +7,7 @@
 #define listlinier_H
 
 #include "../../header/std.h"
+#include "../point/point.h"
 
 typedef struct{
 	int simpul;

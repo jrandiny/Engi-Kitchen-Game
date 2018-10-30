@@ -12,9 +12,13 @@
 #define KolMax 8
 
 typedef int indeks; /* indeks baris, kolom */
-typedef char ElType;
 typedef struct {
-	ElType Mem[BrsMax+1][KolMax+1];
+	char karakter;
+	int value;
+	char deskripsi[50];
+} Tile;
+typedef struct {
+	Tile Mem[BrsMax+1][KolMax+1];
   int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
 	int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
 } Matriks;
@@ -55,36 +59,36 @@ void M_CopyMatriks (Matriks MIn, Matriks * MHsl);
 /* Melakukan assignment MHsl  MIn */
 
 /* ********** KELOMPOK BACA/TULIS ********** */
-void M_BacaMatriks (Matriks * M, int NB, int NK);
-/* I.S. IsIdxValid(NB,NK) */
-/* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
-/* Proses: Melakukan MakeMatriks(M,NB,NK) dan mengisi nilai efektifnya */
-/* Selanjutnya membaca nilai elemen per baris dan kolom */
-/* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi matriks :
-1 2 3
-4 5 6
-8 9 10
-*/
-void M_TulisMatriks (Matriks M);
-/* I.S. M terdefinisi */
-/* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
-   dipisahkan sebuah spasi */
-/* Proses: Menulis nilai setiap elemen M ke layar dengan traversal per baris dan per kolom */
-/* Contoh: menulis matriks 3x3 (ingat di akhir tiap baris, tidak ada spasi)
-1 2 3
-4 5 6
-8 9 10
-*/
+// void M_BacaMatriks (Matriks * M, int NB, int NK);
+// /* I.S. IsIdxValid(NB,NK) */
+// /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
+// /* Proses: Melakukan MakeMatriks(M,NB,NK) dan mengisi nilai efektifnya */
+// /* Selanjutnya membaca nilai elemen per baris dan kolom */
+// /* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi matriks :
+// 1 2 3
+// 4 5 6
+// 8 9 10
+// */
+// void M_TulisMatriks (Matriks M);
+// /* I.S. M terdefinisi */
+// /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
+//    dipisahkan sebuah spasi */
+// /* Proses: Menulis nilai setiap elemen M ke layar dengan traversal per baris dan per kolom */
+// /* Contoh: menulis matriks 3x3 (ingat di akhir tiap baris, tidak ada spasi)
+// 1 2 3
+// 4 5 6
+// 8 9 10
+// */
 
 
-/* ********** KELOMPOK OPERASI RELASIONAL TERHADAP Matriks ********** */
-boolean M_EQ (Matriks M1, Matriks M2);
-/* Mengirimkan true jika M1 = M2, yaitu NBElmt(M1) = NBElmt(M2) dan */
-/* untuk setiap i,j yang merupakan indeks baris dan kolom M1(i,j) = M2(i,j) */
-/* Juga merupakan strong EQ karena GetFirstIdxBrs(M1) = GetFirstIdxBrs(M2)
-   dan GetLastIdxKol(M1) = GetLastIdxKol(M2) */
-boolean M_NEQ (Matriks M1, Matriks M2);
-/* Mengirimkan true jika M1 tidak sama dengan M2 */
+// /* ********** KELOMPOK OPERASI RELASIONAL TERHADAP Matriks ********** */
+// boolean M_EQ (Matriks M1, Matriks M2);
+// /* Mengirimkan true jika M1 = M2, yaitu NBElmt(M1) = NBElmt(M2) dan */
+// /* untuk setiap i,j yang merupakan indeks baris dan kolom M1(i,j) = M2(i,j) */
+// /* Juga merupakan strong EQ karena GetFirstIdxBrs(M1) = GetFirstIdxBrs(M2)
+//    dan GetLastIdxKol(M1) = GetLastIdxKol(M2) */
+// boolean M_NEQ (Matriks M1, Matriks M2);
+// /* Mengirimkan true jika M1 tidak sama dengan M2 */
 
 /* ********** Operasi lain ********** */
 int M_NBElmt (Matriks M);

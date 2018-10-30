@@ -11,7 +11,7 @@
 #include "../../ADT/listlinier/multilist.h"
 
 typedef struct {
-  int ruangan; //nomor ruangan yang sedang digunakan
+  int ruangan; //nomor ruangan yang sedang digunakan [1..4]
   MATRIKS room1; //data ruangan pertama
   MATRIKS room2; //data ruangan kedua
   MATRIKS room3; //data ruangan ketiga
