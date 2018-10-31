@@ -156,10 +156,42 @@ void K_CopyKata(Kata sumber,Kata* hasil)
 int K_KataToInt(Kata input)
 /*mengubah input menjadi tipe integer*/
 {
-  int hasil=0,i=input.Length;
-  while(i>0){
-    hasil=hasil*10+(int)(input.TabKata[i]-'0');
-    i--;
+  int hasil=0,i=1;
+  boolean negatif=false;
+  while(i<=input.Length){
+    if(i==1&&input.TabKata[i]=='-'){
+      negatif=true;
+    }else{
+      hasil=hasil*10+(int)(input.TabKata[i]-'0');
+    }
+    i++;
+  }
+  if(negatif){
+    hasil*=-1;
   }
   return hasil;
+}
+
+Kata K_CopySubKata(Kata input,int idxmulai,int idxakhir)
+/*mengcopy sebagian dari input sesuai parameter*/
+{
+  Kata hasil;
+  int i,j;
+  hasil.Length=idxakhir-idxmulai+1;
+  j=1;
+  for(i=idxmulai;i<=idxakhir;i++){
+    hasil.TabKata[j]=input.TabKata[i];
+    j++;
+  }
+  return hasil;
+}
+
+void K_PrintKata(Kata S){
+/* I.S. S valid
+   F.S. S terprint di layar dengan tanpa enter di akhir
+*/
+  int i;
+  for(i=1;i<=S.Length;i++){
+    printf("%c",S.TabKata[i]);
+  }
 }

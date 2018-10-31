@@ -9,7 +9,7 @@
 #ifndef __MESINKATA_H__
 #define __MESINKATA_H__
 
-#include "../../header/std.h"
+#include "boolean.h"
 #include "mesinkar.h"
 
 #define NMax 50
@@ -68,5 +68,13 @@ void K_CopyKata(Kata sumber,Kata* hasil);
 
 int K_KataToInt(Kata input);
 /*mengubah input menjadi tipe integer*/
+
+Kata K_CopySubKata(Kata input,int idxmulai,int idxakhir);
+/*mengcopy sebagian dari input sesuai parameter*/
+
+void K_PrintKata(Kata S);
+/* I.S. S valid
+   F.S. S terprint di layar dengan tanpa enter di akhir
+*/
 
 #endif
