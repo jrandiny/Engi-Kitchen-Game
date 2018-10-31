@@ -275,10 +275,10 @@ Kata GetInput(GameScreen *gs,Kata prompt)
     }else if(tempInput == KEY_RIGHT){
       output = K_MakeKata("GR");
       finishReading = true;
-    }else if((tempInput>=65)&&(tempInput<=90)){
+    }else if(((tempInput>='A')&&(tempInput<='Z'))||((tempInput>='0')&&(tempInput<='9'))){
       output.TabKata[output.Length+1] = tempInput;
       output.Length++;
-    }else if((tempInput>=97)&&(tempInput<=122)){
+    }else if((tempInput>='a')&&(tempInput<='z')){
       output.TabKata[output.Length+1] = tempInput-32;
       output.Length++;
     }

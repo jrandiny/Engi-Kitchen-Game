@@ -19,12 +19,13 @@ int main(){
   prompt = K_MakeKata("Hello : ");
   ArrKata ak;
   AK_CreateEmpty(&ak);
-  AK_AddAsLastEl(&ak,K_MakeKata("Halo"));
-  AK_AddAsLastEl(&ak,K_MakeKata("hehehe"));
+  AK_AddAsLastEl(&ak,K_MakeKata("Menu contoh"));
+  AK_AddAsLastEl(&ak,K_MakeKata("Input 1 untuk lanjut"));
   WriteText(&gs,ak);
 
-  sleep(5);
-
+  do {
+    abc = GetInput(&gs, prompt);
+  } while(!K_IsKataSama(abc, K_MakeKata("1")));
 
   while(true){
     RefreshTopPanel(&gs,orig3,1,2,3);
