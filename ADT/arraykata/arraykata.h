@@ -1,5 +1,5 @@
 /* Kelompok  : UAS
-   Nama file : jam.c
+   Nama file : arraykata.h
    Topik     : Engi's Kitchen Game
    Tanggal   : 31 Oktober 2018
    Deskripsi : ADT untuk tipe array kata*/
@@ -30,6 +30,11 @@ typedef struct{
 void AK_CreateEmpty (ArrKata * T);
 /* I.S. T sembarang */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
+
+/* ********** TEST KOSONG/PENUH ********** */
+/* *** Test tabel kosong *** */
+boolean AK_IsEmpty (ArrKata T);
+/* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */

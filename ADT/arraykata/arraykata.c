@@ -1,5 +1,5 @@
 /* Kelompok  : UAS
-   Nama file : jam.c
+   Nama file : arraykata.c
    Topik     : Engi's Kitchen Game
    Tanggal   : 31 Oktober 2018
    Deskripsi : ADT untuk tipe array kata*/
@@ -45,6 +45,14 @@ AK_IdxType AK_GetLastIdx (ArrKata T)
 /* Mengirimkan indeks elemen T terakhir */
 {
   return (AK_IdxMin + AK_Neff(T) -1);
+}
+
+/* ********** TEST KOSONG/PENUH ********** */
+/* *** Test tabel kosong *** */
+boolean AK_IsEmpty (ArrKata T)
+/* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
+{
+  return (AK_Neff(T) == 0);
 }
 
 /* ********** Test Indeks yang valid ********** */
