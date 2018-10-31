@@ -27,19 +27,19 @@ typedef struct {
 		x jika bangku kosong
 		c jika ada pelanggan
 		m jika meja
-		n jika nomor meja
+		2||4 jika nomor meja
 		t jika nampan
 		CharUndeff jika dekat pintu atau tembok
 	value bernilai (bergantung karakter)
-		kesabaran pelanggan
+		waktu keluar pelanggan
 		id makanan
 		[1..12] jika nomor meja
 		ValUndeff untuk sisanya
 	Deskripsi bernilai (bergantung karakter)
-		"" jika lantai, pintu, atau tembok
-		nama makanan berdasarkan id makanan
-		customer jika ada pelanggan
-		isi||kosong jika karakter== n
+		"-" jika lantai, pintu, atau tembok
+		nama makanan berdasarkan id makanan untuk meja makanan
+		makanan pilihan customer jika pelanggan
+		isi||kosong jika nomor meja
 		nampan jika karakter==t
 */
 
