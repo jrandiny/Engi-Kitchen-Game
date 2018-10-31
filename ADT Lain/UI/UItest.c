@@ -29,6 +29,7 @@ int main(){
 
   while(true){
     RefreshTopPanel(&gs,orig3,1,2,3);
+    RefreshMap(&gs);
     abc  = GetInput(&gs,prompt);
 
     if(K_IsKataSama(abc, up)){

@@ -38,6 +38,7 @@ typedef struct{
 #define Food_Panel(GS) (GS).foodPanel
 
 
+#define MainPanelWidth 48
 
 /* Definisi BorderType untuk gambar persegi panjang */
 typedef struct {
@@ -80,7 +81,8 @@ void RefreshWaiter(GameScreen *gs, Point waiter);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar sebuah pelayan pada posisi tertentu di layar */
 
-void RefreshMap(GameScreen *gs, Matriks peta);
+// void RefreshMap(GameScreen *gs, Matriks peta);
+void RefreshMap(GameScreen *gs);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar peta kosong */
 
