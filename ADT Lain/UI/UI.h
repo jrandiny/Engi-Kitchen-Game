@@ -6,6 +6,7 @@
 #include "../../ADT/matriks/matriks.h"
 #include "../../ADT/queue/queue.h"
 #include "../../ADT/stack/stackt.h"
+#include "../../ADT/arraykata/arraykata.h"
 //#include "../../ADT/listlinier/listlinier.h"
 #include <ncurses.h>
 
@@ -71,6 +72,10 @@ void DrawBordersCC(WINDOW *screen,BorderType border);
 /* F.S. : Digambar border pada screen yanh dimau, tipe border sesuai input*/
 
 /* Kelompok Refresh*/
+void WriteText(GameScreen *gs,ArrKata ak);
+/* I.S. : Bebas sudah initScreen, aka terdefinisi */
+/* F.S. : Ditulis ke layar main isi ak*/
+
 void RefreshWaiter(GameScreen *gs, Point waiter);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar sebuah pelayan pada posisi tertentu di layar */

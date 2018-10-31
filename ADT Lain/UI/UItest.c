@@ -16,7 +16,14 @@ int main(){
   wrefresh(Hand_Panel(gs));
 
   Kata prompt;
-  prompt = K_MakeKata("Command : ");
+  prompt = K_MakeKata("Hello : ");
+  ArrKata ak;
+  AK_CreateEmpty(&ak);
+  AK_AddAsLastEl(&ak,K_MakeKata("Halo"));
+  AK_AddAsLastEl(&ak,K_MakeKata("hehehe"));
+  WriteText(&gs,ak);
+
+  sleep(5);
 
 
   while(true){

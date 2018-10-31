@@ -108,6 +108,26 @@ void InitScreen(GameScreen *gs)
   wrefresh(Food_Panel(*gs));
 }
 
+void WriteText(GameScreen *gs,ArrKata ak)
+/* I.S. : Bebas sudah initScreen, aka terdefinisi */
+/* F.S. : Ditulis ke layar main isi ak*/
+{
+  /* KAMUS LOKAL */
+  AK_IdxType i;
+  int j;
+
+  /* ALGORITMA */
+  wclear(Main_Panel(*gs));
+
+  for(i = AK_GetFirstIdx(ak);i<=AK_GetLastIdx(ak);i++){
+    for(j=1;j<=AK_Elmt(ak, i).Length;j++){
+      mvwaddch(Main_Panel(*gs),2+i,2+j,AK_Elmt(ak,i).TabKata[j]);
+    }
+  }
+
+  wrefresh(Main_Panel(*gs));
+}
+
 void RefreshWaiter(GameScreen *gs, Point waiter)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar sebuah pelayan pada posisi tertentu di layar */
@@ -240,7 +260,9 @@ Kata GetInput(GameScreen *gs,Kata prompt)
     if((tempInput==13)||(tempInput==10)||(tempInput==KEY_ENTER)){
       finishReading =true;
     }else if(tempInput == KEY_BACKSPACE){
-      output.Length--;
+      if(output.Length>0){
+        output.Length--;
+      }
     }else if(tempInput == KEY_UP){
       output = K_MakeKata("GU");
       finishReading = true;
