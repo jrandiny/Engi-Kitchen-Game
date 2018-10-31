@@ -24,13 +24,21 @@ int main(){
   WriteText(&gs,ak);
 
   do {
+    WriteText(&gs,ak);
     abc = GetInput(&gs, prompt);
+    if(K_IsKataSama(abc,K_MakeKata("RESIZE"))){
+      refreshLayout(&gs);
+    }
   } while(!K_IsKataSama(abc, K_MakeKata("1")));
 
   while(true){
     RefreshTopPanel(&gs,orig3,1,2,3);
     RefreshMap(&gs);
     abc  = GetInput(&gs,prompt);
+
+    if(K_IsKataSama(abc,K_MakeKata("RESIZE"))){
+      refreshLayout(&gs);
+    }
 
     if(K_IsKataSama(abc, up)){
       break;

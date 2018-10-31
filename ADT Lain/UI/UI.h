@@ -23,6 +23,11 @@ typedef struct{
   WINDOW *bottomPanel;
   WINDOW *orderPanel;
   WINDOW *foodPanel;
+
+  int mainWidth;
+  int mainHeight;
+  int sideWidth;
+  int sideHeight;
 }GameScreen;
 
 /* Notasi akses: Selektor GameScreen */
@@ -36,9 +41,12 @@ typedef struct{
 #define Hand_Panel(GS) (GS).handPanel
 #define Order_Panel(GS) (GS).orderPanel
 #define Food_Panel(GS) (GS).foodPanel
+#define Main_Panel_Width(GS) (GS).mainWidth
+#define Main_Panel_Height(GS) (GS).mainHeight
+#define Side_Panel_Width(GS) (GS).sideWidth
+#define Side_Panel_Height(GS) (GS).sideHeight
 
-
-#define MainPanelWidth 48
+#define UIC_Side 30/100;
 
 /* Definisi BorderType untuk gambar persegi panjang */
 typedef struct {
@@ -63,6 +71,10 @@ void QuitScreen(GameScreen *gs);
 /* I.S. : gs Terinisialisai */
 /* F.S. : semua gs tertutup*/
 
+void refreshLayout(GameScreen *gs);
+/* I.S. : gs Terinisialisai screen diresize*/
+/* F.S. : layout menyesuaikan*/
+
 /* KELOMPOK BORDER */
 void DrawBorders(WINDOW *screen);
 /* I.S. : screen sudah diinisialisasi */
@@ -76,6 +88,10 @@ void DrawBordersCC(WINDOW *screen,BorderType border);
 void WriteText(GameScreen *gs,ArrKata ak);
 /* I.S. : Bebas sudah initScreen, aka terdefinisi */
 /* F.S. : Ditulis ke layar main isi ak*/
+
+void RefreshBorder(GameScreen *gs);
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Dicetak semua border */
 
 void RefreshWaiter(GameScreen *gs, Point waiter);
 /* I.S. : Bebas sudah initScreen */
@@ -113,6 +129,6 @@ void RefreshCommandPanel(GameScreen *gs, Kata prompt);
 /* KELOMPOK INPUT */
 Kata GetInput(GameScreen *gs,Kata prompt);
 /* I.S. : Bebas sudah initScreen */
-/* F.S. : Mengembalikan input user (command) dalam huruf besar */
+/* F.S. : Mengembalikan input user (command) dalam huruf besar, jika window diresize, kembalikan RESIZE */
 
 #endif

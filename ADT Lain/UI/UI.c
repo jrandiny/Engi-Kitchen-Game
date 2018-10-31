@@ -53,33 +53,62 @@ void InitScreen(GameScreen *gs)
 {
   /* KAMUS LOKAL */
   int parentX,parentY;
-  int sidePanelWidth;
+  int sideWidth, sideHeight;
   int topBarHeight;
-  int sidePanelHeight;
+  int mainWidth, mainHeight;
+  int top2Width;
 
   /* ALGORITMA */
   initscr();
   noecho();
   getmaxyx(stdscr, parentY, parentX);
 
-  sidePanelWidth = 20;
   topBarHeight = 3;
 
-  sidePanelHeight = 12;
+  sideWidth = parentX*UIC_Side;
+  sideHeight = (parentY-(2*topBarHeight))/2;
+  mainWidth = parentX - (2*sideWidth);
+  mainHeight = parentY - 2*topBarHeight;
 
-  Top_1_Panel(*gs) = newwin(topBarHeight,sidePanelWidth,0,0);
-  Top_2_Panel(*gs) = newwin(topBarHeight,sidePanelWidth,0,sidePanelWidth);
-  Top_3_Panel(*gs) = newwin(topBarHeight, MainPanelWidth-sidePanelWidth, 0,2*sidePanelWidth);
-  Top_4_Panel(*gs) = newwin(topBarHeight, sidePanelWidth,0,sidePanelWidth+MainPanelWidth);
+  top2Width = mainWidth*6/10;
 
-  Waiting_Panel(*gs) = newwin(sidePanelHeight,sidePanelWidth,topBarHeight,0);
-  Food_Panel(*gs) = newwin(sidePanelHeight, sidePanelWidth, topBarHeight, sidePanelWidth+MainPanelWidth);
-  Order_Panel(*gs) = newwin(sidePanelHeight,sidePanelWidth,topBarHeight+sidePanelHeight,0);
-  Hand_Panel(*gs) = newwin(sidePanelHeight,sidePanelWidth, topBarHeight+sidePanelHeight, sidePanelWidth+MainPanelWidth);
+  Top_1_Panel(*gs) = newwin(topBarHeight,sideWidth,0,0);
+  Top_2_Panel(*gs) = newwin(topBarHeight,top2Width,0,sideWidth);
+  Top_3_Panel(*gs) = newwin(topBarHeight, mainWidth-top2Width, 0,sideWidth+top2Width);
+  Top_4_Panel(*gs) = newwin(topBarHeight, sideWidth,0,sideWidth+mainWidth);
 
-  Command_Panel(*gs) = newwin(topBarHeight, sidePanelWidth*2 + MainPanelWidth, topBarHeight+2*sidePanelHeight, 0);
+  Waiting_Panel(*gs) = newwin(sideHeight,sideWidth,topBarHeight,0);
+  Food_Panel(*gs) = newwin(sideHeight, sideWidth, topBarHeight, sideWidth+mainWidth);
+  Order_Panel(*gs) = newwin(sideHeight,sideWidth,topBarHeight+sideHeight,0);
+  Hand_Panel(*gs) = newwin(sideHeight,sideWidth, topBarHeight+sideHeight, sideWidth+mainWidth);
 
-  Main_Panel(*gs) = newwin(2*sidePanelHeight, MainPanelWidth,topBarHeight, sidePanelWidth);
+  Command_Panel(*gs) = newwin(topBarHeight, parentX, topBarHeight+mainHeight, 0);
+
+  Main_Panel(*gs) = newwin(2*sideHeight, mainWidth,topBarHeight, sideWidth);
+
+  Main_Panel_Width(*gs) = mainWidth;
+  Main_Panel_Height(*gs) = mainHeight;
+  Side_Panel_Width(*gs) = sideWidth;
+  Side_Panel_Height(*gs) = sideHeight;
+
+  RefreshBorder(gs);
+}
+
+void RefreshBorder(GameScreen *gs)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Dicetak semua border */
+{
+  wclear(Top_1_Panel(*gs));
+  wclear(Top_2_Panel(*gs));
+  wclear(Top_3_Panel(*gs));
+  wclear(Top_4_Panel(*gs));
+
+  wclear(Waiting_Panel(*gs));
+  wclear(Food_Panel(*gs));
+  wclear(Order_Panel(*gs));
+  wclear(Hand_Panel(*gs));
+  wclear(Command_Panel(*gs));
+  wclear(Main_Panel(*gs));
 
   DrawBorders(Top_1_Panel(*gs));
   DrawBorders(Top_2_Panel(*gs));
@@ -103,6 +132,81 @@ void InitScreen(GameScreen *gs)
   wrefresh(Hand_Panel(*gs));
   wrefresh(Order_Panel(*gs));
   wrefresh(Food_Panel(*gs));
+}
+
+void refreshLayout(GameScreen *gs)
+/* I.S. : gs Terinisialisai screen diresize*/
+/* F.S. : layout menyesuaikan*/
+{
+  /* KAMUS LOKAL */
+  int parentX,parentY;
+  int sideWidth, sideHeight;
+  int topBarHeight;
+  int mainWidth, mainHeight;
+  int top2Width;
+
+  /* ALGORITMA */
+  getmaxyx(stdscr, parentY, parentX);
+
+  topBarHeight = 3;
+
+  sideWidth = parentX*UIC_Side;
+  sideHeight = (parentY-(2*topBarHeight))/2;
+  mainWidth = parentX - (2*sideWidth);
+  mainHeight = parentY - 2*topBarHeight;
+
+  top2Width = mainWidth*6/10;
+
+  wresize(Top_1_Panel(*gs), topBarHeight, sideWidth);
+  wresize(Top_2_Panel(*gs), topBarHeight, top2Width);
+  wresize(Top_3_Panel(*gs), topBarHeight, mainWidth-top2Width);
+  wresize(Top_4_Panel(*gs), topBarHeight, sideWidth);
+
+  wresize(Waiting_Panel(*gs), sideHeight, sideWidth);
+  wresize(Food_Panel(*gs), sideHeight, sideWidth);
+  wresize(Order_Panel(*gs), sideHeight, sideWidth);
+  wresize(Hand_Panel(*gs), sideHeight, sideWidth);
+
+  wresize(Command_Panel(*gs), topBarHeight, parentX);
+
+  wresize(Main_Panel(*gs), 2*sideHeight, mainWidth);
+
+  mvwin(Top_2_Panel(*gs), 0, sideWidth);
+  mvwin(Top_3_Panel(*gs), 0, sideWidth+top2Width);
+  mvwin(Top_4_Panel(*gs), 0, sideWidth+mainWidth);
+
+  mvwin(Waiting_Panel(*gs), topBarHeight, 0);
+  mvwin(Food_Panel(*gs), topBarHeight,sideWidth+mainWidth);
+  mvwin(Order_Panel(*gs),topBarHeight+sideHeight,0);
+  mvwin(Hand_Panel(*gs),topBarHeight+sideHeight,sideWidth+mainWidth);
+
+  mvwin(Command_Panel(*gs),topBarHeight+mainHeight,0);
+
+  mvwin(Main_Panel(*gs),topBarHeight,sideWidth);
+
+/*
+  Top_1_Panel(*gs) = newwin(topBarHeight,sideWidth,0,0);
+  Top_2_Panel(*gs) = newwin(topBarHeight,top2Width,0,sideWidth);
+  Top_3_Panel(*gs) = newwin(topBarHeight, mainWidth-top2Width, 0,sideWidth+top2Width);
+  Top_4_Panel(*gs) = newwin(topBarHeight, sideWidth,0,sideWidth+mainWidth);
+
+  Waiting_Panel(*gs) = newwin(sideHeight,sideWidth,topBarHeight,0);
+  Food_Panel(*gs) = newwin(sideHeight, sideWidth, topBarHeight, sideWidth+mainWidth);
+  Order_Panel(*gs) = newwin(sideHeight,sideWidth,topBarHeight+sideHeight,0);
+  Hand_Panel(*gs) = newwin(sideHeight,sideWidth, topBarHeight+sideHeight, sideWidth+mainWidth);
+
+  Command_Panel(*gs) = newwin(topBarHeight, parentX, topBarHeight+mainHeight, 0);
+
+  Main_Panel(*gs) = newwin(2*sideHeight, mainWidth,topBarHeight, sideWidth);
+*/
+
+  Main_Panel_Width(*gs) = mainWidth;
+  Main_Panel_Height(*gs) = mainHeight;
+  Side_Panel_Width(*gs) = sideWidth;
+  Side_Panel_Height(*gs) = sideHeight;
+
+  RefreshBorder(gs);
+
 }
 
 void WriteText(GameScreen *gs,ArrKata ak)
@@ -159,9 +263,9 @@ void RefreshMap(GameScreen *gs)
 
   /* Margin calculation */
   /* (total width - table width)/2 + 1 (border compensation)*/
-  marginX = ((MainPanelWidth-((maxX)*5))/2) +1;
+  marginX = ((Main_Panel_Width(*gs)-((maxX)*5))/2) +1;
   /* (total height - table height)/2 + 1 (border compensation)*/
-  marginY = ((24 - maxY*3)/2)+1;
+  marginY = ((Main_Panel_Height(*gs) - maxY*3)/2)+1;
 
 
   for(i=1;i<=maxY;i++){
@@ -285,7 +389,7 @@ void RefreshCommandPanel(GameScreen *gs,Kata prompt)
 
 Kata GetInput(GameScreen *gs,Kata prompt)
 /* I.S. : Bebas sudah initScreen */
-/* F.S. : Mengembalikan input user (command) dalam huruf besar */
+/* F.S. : Mengembalikan input user (command) dalam huruf besar, jika window diresize, kembalikan RESIZE*/
 {
   /* KAMUS LOKAL */
   Kata output;
@@ -317,6 +421,9 @@ Kata GetInput(GameScreen *gs,Kata prompt)
       if(output.Length>0){
         output.Length--;
       }
+    }else if(tempInput == KEY_RESIZE){
+      output = K_MakeKata("RESIZE");
+      finishReading = true;
     }else if(tempInput == KEY_UP){
       output = K_MakeKata("GU");
       finishReading = true;
