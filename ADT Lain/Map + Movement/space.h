@@ -66,7 +66,7 @@ void PlacePelayan(Pelayan *P,int x,int y, Matriks M);
 /*
   menaruh Pelayan di posisi (x,y) di ruangan di Restoran r
   I.S. Pelayan,x,y,R terdefinisi
-  F.S. Pelayan terletak di posisi x,y di ruangan di R
+  F.S. Pelayan terletak di posisi x,y di ruangan R semua sisi terupdate
 */
 void InitRuangan(Restoran *R);
 /*
@@ -100,6 +100,32 @@ void MoveRight(Pelayan *P,Matriks M);
 /*
   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat bergerak ke kanan
   F.S. Pelayan pindah ke posisi di kanannya dan update semua karakter
+*/
+
+// *** BOOLEAN PELAYAN ***
+boolean CanMoveUp(Pelayan P,Matriks M);
+/*
+  fungsi bernilai true jika pelayan dapat MoveUp dan P bukan di pintu
+*/
+boolean CanMoveDown(Pelayan P,Matriks M);
+/*
+  fungsi bernilai true jika pelayan dapat MoveDown dan P bukan di pintu
+*/
+boolean CanMoveLeft(Pelayan P,Matriks M);
+/*
+  fungsi bernilai true jika pelayan dapat MoveLeft dan P bukan di pintu
+*/
+boolean CanMoveRight(Pelayan P,Matriks M);
+/*
+  fungsi bernilai true jika pelayan dapat MoveRight dan P bukan di pintu
+*/
+boolean IsOnDoor(Pelayan P, Restoran R);
+/*
+  fungsi mengambalikan true jika P berada di pintu
+*/
+boolean IsNearTable (Pelayan P, Matriks M);
+/*
+  fungsi mengembalikan true jika P berada di dekat meja
 */
 
 // *** Tile Set ***
@@ -137,42 +163,73 @@ void IsiRuang(Restoran *R, int ruangan, Matriks M);
 //   F.S. meja dengan nomor nomorMeja terdapat bangku kosong sejumlah jumlahBangku
 // */
 
+// *** BOOLEAN RUANGAN ***
+boolean IsTableEmpty(int nomor, Matriks M);
+/*
+  mengirimkan true jika meja dengan nomor meja nomor adalah kosong dan bisa
+  di duduki, mengirimkan false jika tidak
+*/
+boolean CanPlace(int pelanggan,Pelayan P, Restoran R);
+/*
+  fungsi menghasilkan true jika jumlah kursi di dekat P dapat diduduki oleh Pelanggan
+  P harus sebelah bangku ('x')
+*/
+
+// *** ACTION ***
+Kata Ordering(Pelayan P,Matriks M);
+/*
+  fungsi menghasilkan nama makanan yang diambil, P dipastikan dekat meja
+*/
+Kata Taking(Pelayan P);
+/*
+  menghasilkan nama makanan yang diambil dengan syarat di dekat P hanya ada
+  satu meja bahan ('m')
+*/
+void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, Matriks *M);
+/*
+  I.S. pelanggan,kesabaran,menu, Pelayan, retoran terdefinisi,
+      meja sebelah Pelayan adalah kosong
+      pelanggan merupakan jumlah pelanggan yang akan duduk
+      waktuOut merupakan waktu pelanggan pergi
+      menu merupakan nama makanan yang akan dipesan
+      hanya dipanggil jika yakin pelanggan bisa diletakkan
+  F.S. pelanggan di tempatkan di meja sesuai jumlahnya deskripsi akan bernilai menu
+      karakter jadi 'c', value jadi kesabaran, deskripsi nomor meja berubah dari
+      kosong menjadi isi
+*/
+void Giving(Pelayan *P, Matriks *M);
+/*
+  I.S. P dan M terdefinisi, dipanggil jika give pasti berhasil
+  F.S. pelanggan pergi meninggalakan meja, meja menjadi kosong, update tile P
+*/
+
 // *** LAIN LAIN ***
 Tile GetTableTile(Pelayan P, Matriks M);
 /*
   mengembalikan Tile meja yang bersebelahan dengan Pelayan
   di sebelah Pelayan hanya ada satu pelanggan atau 2 pelanggan dari meja yang sama
 */
-void Placing(int pelanggan,int kesabaran, Kata menu,Pelayan *P, Matriks *M);
-/*
-  I.S. pelanggan,kesabaran,menu, Pelayan, retoran terdefinisi,
-      meja sebelah Pelayan adalah kosong
-      pelanggan merupakan jumlah pelanggan yang akan duduk
-      kesabaran merupakan jumlah tik kesabaran pelanggan
-      menu merupakan nama makanan yang akan dipesan
-  F.S. pelanggan di tempatkan di meja sesuai jumlahnya deskripsi akan bernilai menu
-      karakter jadi 'c', value jadi kesabaran, deskripsi nomor meja berubah dari
-      kosong menjadi isi
-*/
+
 Matriks GetRuangSekarang(Restoran R);
 /*
   fungsi mengembalikan suatu matriks yang sedang digunakan berdasarkan Ruangan(R)
 */
-boolean IsTableEmpty(int nomor, Matriks M);
+void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah);
 /*
-  mengirimkan true jika meja dengan nomor meja nomor adalah kosong dan bisa
-  di duduki, mengirimkan false jika tidak
+  I.S. waktuNow, P, R terdefinisi
+  F.S. jumlah berisi jumlah pelanggan yang waktu keluarnya sudah sama
+    dengan waktuNow sekaligus mengembalikan status meja menjadi kosong, karakter
+    menjadi x deskripsi menjadi "-" dan Value menjadi ValUndeff
 */
-void KesabaranBerkurang(Restoran *R);
+void SetRoomPelangganKabur(Matriks *M,int waktuNow, int *jumlah);
 /*
-  I.S. R terdefinisi
-  F.S. untuk setiap tile dengan katakter c, nilai kesabarannya berkurang 1
+  I.S. M dan waktuNow terdefinisi
+  F.S. jumlah berisi jumlah pelanggan yang waktu keluarnya sudah sama
+    dengan waktuNow sekaligus mengembalikan status meja menjadi kosong, karakter
+    menjadi x deskripsi menjadi "-" dan Value menjadi ValUndeff
 */
-int PelangganKabur(Restoran *R);
-/*
-  fungsi yang mengembalikan jumlah pelanggan yang kesabarannya mencapai 0
-  sekaligus mengembalikan status meja menjadi kosong, karakter menjadi x
-  deskripsi menjadi "" dan Value menjadi ValUndeff
-*/
+Point IndeksMeja(int nomor);
+// mengembalikan koordinat dari nomor meja yang diinput. nomor [1..12]
+
 
 #endif
