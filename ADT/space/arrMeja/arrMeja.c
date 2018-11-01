@@ -4,7 +4,7 @@
    Tanggal   : 1 November 2018
    Deskripsi : ADT untuk tipe array Meja*/
 /* Berisi definisi dan semua primitif pemrosesan tabel meja */
-/* Penempatan elemen selalu rapat kiri */
+/* Idx awal tidak di idxmin */
 /* Versi I : dengan banyaknya elemen didefinisikan secara eksplisit,
    memori tabel statik */
 

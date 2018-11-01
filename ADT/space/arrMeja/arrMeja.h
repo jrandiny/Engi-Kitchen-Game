@@ -1,6 +1,6 @@
 /* MODUL TABEL meja */
 /* Berisi definisi dan semua primitif pemrosesan tabel meja */
-/* Penempatan elemen selalu rapat kiri */
+/* Idx awal tidak di idxmin */
 /* Versi I : dengan banyaknya elemen didefinisikan secara eksplisit,
    memori tabel statik */
 
