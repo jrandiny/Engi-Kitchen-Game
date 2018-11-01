@@ -34,7 +34,7 @@ int main ()
 
   if(input==1)
   {
-    K_STARTKATA();
+    K_STARTKATA("pitakar.txt");
     count = 0;
     while(!EndKata)
     {
@@ -69,8 +69,7 @@ void K_TulisPita()
 
   //Algoritma
   printf("Tuliskan kalimat dibawah untuk ditulis pada pita karakter (maksimal 50 karakter).\n");
-  scanf("\n", &kalimat);
-  scanf("%[^\n]", &kalimat);
+  scanf("%s", kalimat);
 
   FILE *out = fopen("pitakar.txt","w");
 	fprintf(out,"%s.\n", kalimat);
