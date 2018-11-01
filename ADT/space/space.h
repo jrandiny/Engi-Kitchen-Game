@@ -84,9 +84,14 @@ boolean IsOnDoor(Pelayan P, Restoran R);
 /*
   fungsi mengambalikan true jika P berada di pintu
 */
-boolean IsNearTable (Pelayan P, MatTile M);
+boolean CanOrder(Pelayan P, Ruangan R);
 /*
-  fungsi mengembalikan true jika P berada di dekat meja
+  fungsi akan bernialai true jika meja dekat p dapat memesan
+*/
+int IsNearTable (Pelayan P, Ruangan R);
+/*
+  fungsi mengembalikan nomor jika P berada di dekat meja
+  akan mengembalikan 0 jika tidak
 */
 
 // *** Tile Set ***
@@ -117,36 +122,33 @@ void IsiRuang(Restoran *R, int ruangan, MatTile M);
   I.S. R sudah terdeinisi, ruangan dan M juga terdefinisi
   F.S. room ke-(ruangan) di set menjadi seperti M
 */
-// void PlaceTable(Restoran *R,int nomorMeja, int jumlahBangku);
-// /*
-//   I.S. R, nomorMeja, dan jumlahBangku terdefinisi, nomoMeja antara 1-12
-//        jumlahBangku antara 2 atau 4
-//   F.S. meja dengan nomor nomorMeja terdapat bangku kosong sejumlah jumlahBangku
-// */
 
 // *** BOOLEAN RUANGAN ***
-boolean IsTableEmpty(int nomor, MatTile M);
+boolean IsTableEmpty(int nomorMeja, Ruangan R);
 /*
-  mengirimkan true jika meja dengan nomor meja nomor adalah kosong dan bisa
+  mengirimkan true jika meja dengan nomor meja nomorMeja adalah kosong dan bisa
   di duduki, mengirimkan false jika tidak
 */
-boolean CanPlace(int pelanggan,Pelayan P, Restoran R);
+boolean CanPlace(int pelanggan,Pelayan P, Ruangan R);
 /*
-  fungsi menghasilkan true jika jumlah kursi di dekat P dapat diduduki oleh Pelanggan
+  fungsi menghasilkan true jika meja di dekat P dapat diduduki oleh Pelanggan
+  yaitu jumlah bangkunya <= dan sedang kosong
   P harus sebelah bangku ('x')
 */
 
 // *** ACTION ***
-Kata Ordering(Pelayan P,MatTile M);
+void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int *nomorMeja);
 /*
-  fungsi menghasilkan nama makanan yang diambil, P dipastikan dekat meja
+  I.S. P dan *R terdefinisi, dilakukan jika sudah dipastikan dapat order dan P
+    dekat Meja
+  F.S.
 */
-Kata Taking(Pelayan P);
+int Taking(Pelayan P);
 /*
-  menghasilkan nama makanan yang diambil dengan syarat di dekat P hanya ada
+  menghasilkan id makanan yang diambil dengan syarat di dekat P hanya ada
   satu meja bahan ('m')
 */
-void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, MatTile *M);
+void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, Ruangan *R);
 /*
   I.S. pelanggan,kesabaran,menu, Pelayan, retoran terdefinisi,
       meja sebelah Pelayan adalah kosong
@@ -163,7 +165,6 @@ void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, MatTile *M);
 Tile GetTableTile(Pelayan P, Ruangan R);
 /*
   mengembalikan Tile meja yang bersebelahan dengan Pelayan
-  di sebelah Pelayan hanya ada satu pelanggan atau 2 pelanggan dari meja yang sama
 */
 MatTile GetRuangSekarang(Restoran R);
 /*
