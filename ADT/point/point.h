@@ -47,13 +47,18 @@ boolean P_NEQ (Point P1, Point P2);
 /* Mengirimkan true jika P1 tidak sama dengan P2 */
 
 /* *** KELOMPOK OPERASI LAIN TERHADAP TYPE *** */
-Point P_NextX (Point P);
-/* Mengirim salinan P dengan absis ditambah satu */
-Point P_NextY (Point P);
-/* Mengirim salinan P dengan ordinat ditambah satu */
 Point P_PlusDelta (Point P, int deltaX, int deltaY);
 /* Mengirim salinan P yang absisnya adalah Absis(P) + deltaX dan ordinatnya adalah Ordinat(P) + deltaY */
-
+void P_GetXY(Point P, int *x, int *y);
+/*
+	I.S. P terdefinisi
+	F.S. x dan y terisi absis dan ordinat dari P
+*/
+void P_SetXY(Point *P, int x,int y);
+/*
+	I.S. P, x, dan y terdefinisi
+	F.S. absis(p) = x && ordinat(p) = y
+*/
 void P_Geser (Point *P, int deltaX, int deltaY);
 /* I.S. P terdefinisi */
 /* F.S. P digeser, absisnya sebesar deltaX dan ordinatnya sebesar deltaY */

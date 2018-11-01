@@ -69,16 +69,6 @@ boolean P_NEQ (Point P1, Point P2)
 
 
 /* *** KELOMPOK OPERASI LAIN TERHADAP TYPE *** */
-Point P_NextX (Point P)
-/* Mengirim salinan P dengan absis ditambah satu */
-{
-  return P_MakePoint((P_Absis(P)+1), P_Ordinat(P));
-}
-Point P_NextY (Point P)
-/* Mengirim salinan P dengan ordinat ditambah satu */
-{
-  return P_MakePoint(P_Absis(P), (P_Ordinat(P)+1));
-}
 Point P_PlusDelta (Point P, int deltaX, int deltaY)
 /* Mengirim salinan P yang absisnya adalah Absis(P) + deltaX dan ordinatnya adalah Ordinat(P) + deltaY */
 {
@@ -91,13 +81,28 @@ Point P_PlusDelta (Point P, int deltaX, int deltaY)
 
   return P_MakePoint(newX,newY);
 }
-
+void P_GetXY(Point P, int *x, int *y)
+/*
+	I.S. P terdefinisi
+	F.S. x dan y terisi absis dan ordinat dari P
+*/
+{
+  *x = P_Absis(P);
+  *y = P_Ordinat(P);
+}
+void P_SetXY(Point *P, int x,int y)
+/*
+	I.S. P, x, dan y terdefinisi
+	F.S. absis(p) = x && ordinat(p) = y
+*/
+{
+  P_Absis(*P) = x;
+  P_Ordinat(*P) = y;
+}
 void P_Geser (Point *P, int deltaX, int deltaY)
 /* I.S. P terdefinisi */
 /* F.S. P digeser, absisnya sebesar deltaX dan ordinatnya sebesar deltaY */
 {
-  /* KAMUS */
-
   /* ALGORITMA */
   *P = P_PlusDelta(*P, deltaX, deltaY);
 }
