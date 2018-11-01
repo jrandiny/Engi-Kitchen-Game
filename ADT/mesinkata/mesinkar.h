@@ -9,17 +9,12 @@
 #ifndef __MESIN_KAR_H_
 #define __MESIN_KAR_H_
 
-#include "../../boolean.h"
+#include "../../std.h"
 
 #define MARK '.'
 /* State Mesin */
 extern char CC;
 extern boolean EOP;
-
-void K_MakeNamaFile(char* nama);
-/* I.S. nama terdefinisi
-   F.S. nama dikonkat dengan  .txt
-*/
 
 void K_START(char* namafile);
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.

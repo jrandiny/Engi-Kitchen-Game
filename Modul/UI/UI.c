@@ -1,7 +1,7 @@
 #include "UI.h"
 #include <ncurses.h>
 #include "../../ADT/point/point.h"
-#include "../../header/boolean.h"
+#include "../../boolean.h"
 
 
 void DrawBorders(WINDOW *screen)
@@ -299,38 +299,38 @@ void RefreshMap(GameScreen *gs)
 }
 
 
-void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue)
+// void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel daftar pelanggan menunggu */
-{
-  /* KAMUS LOKAL */
+// {
+//   /* KAMUS LOKAL */
+//
+//   /* ALGORITMA */
+//   wclear(Waiting_Panel(*gs));
+//   DrawBorders(Waiting_Panel(*gs));
+// }
 
-  /* ALGORITMA */
-  wclear(Waiting_Panel(*gs));
-  DrawBorders(Waiting_Panel(*gs));
-}
-
-void RefreshFoodPanel(GameScreen *gs, Stack foodStack)
+// void RefreshFoodPanel(GameScreen *gs, Stack foodStack)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel stack makanan */
-{
-  /* KAMUS LOKAL */
+// {
+//   /* KAMUS LOKAL */
+//
+//   /* ALGORITMA */
+//   wclear(Food_Panel(*gs));
+//   DrawBorders(Food_Panel(*gs));
+// }
 
-  /* ALGORITMA */
-  wclear(Food_Panel(*gs));
-  DrawBorders(Food_Panel(*gs));
-}
-
-void RefreshHandPanel(GameScreen *gs, Stack handStack)
+// void RefreshHandPanel(GameScreen *gs, Stack handStack)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel stack di tangan */
-{
-  /* KAMUS LOKAL */
-
-  /* ALGORITMA */
-  wclear(Hand_Panel(*gs));
-  DrawBorders(Hand_Panel(*gs));
-}
+// {
+//   /* KAMUS LOKAL */
+//
+//   /* ALGORITMA */
+//   wclear(Hand_Panel(*gs));
+//   DrawBorders(Hand_Panel(*gs));
+// }
 
 void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time)
 /* I.S. : Bebas sudah initScreen */

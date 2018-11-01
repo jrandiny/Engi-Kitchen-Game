@@ -3,10 +3,10 @@
 
 #include "../../ADT/point/point.h"
 #include "../../ADT/mesinkata/mesinkata.h"
-#include "../../ADT/matriks/matriks.h"
-#include "../../ADT/queue/queue.h"
-#include "../../ADT/stack/stackt.h"
-#include "../../ADT/arraykata/arraykata.h"
+// #include "../../ADT/matriks/matriks.h"
+// #include "../../ADT/queue/queue.h"
+// #include "../../ADT/stack/stackt.h"
+#include "../../ADT/mesinkata/arrKata/arrKata.h"
 //#include "../../ADT/listlinier/listlinier.h"
 #include <ncurses.h>
 
@@ -102,7 +102,7 @@ void RefreshMap(GameScreen *gs);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar peta kosong */
 
-void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue);
+// void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel daftar pelanggan menunggu */
 
@@ -110,11 +110,11 @@ void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel daftar order */
 
-void RefreshFoodPanel(GameScreen *gs, Stack foodStack);
+// void RefreshFoodPanel(GameScreen *gs, Stack foodStack);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel stack makanan */
 
-void RefreshHandPanel(GameScreen *gs, Stack handStack);
+// void RefreshHandPanel(GameScreen *gs, Stack handStack);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel stack di tangan */
 
