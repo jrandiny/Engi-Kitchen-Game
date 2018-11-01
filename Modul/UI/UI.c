@@ -350,9 +350,9 @@ void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time)
   DrawBorders(Top_4_Panel(*gs));
 
   mvwprintw(Top_1_Panel(*gs),1,2,"nama","Aa");
-  mvwprintw(Top_2_Panel(*gs),1,2,"Money: ",money);
-  mvwprintw(Top_3_Panel(*gs),1,2,"Life: ",life);
-  mvwprintw(Top_4_Panel(*gs),1,2,"Time: ",time);
+  mvwprintw(Top_2_Panel(*gs),1,2,"Money: %d",money);
+  mvwprintw(Top_3_Panel(*gs),1,2,"Life: %d",life);
+  mvwprintw(Top_4_Panel(*gs),1,2,"Time: %d",time);
 
   wrefresh(Top_1_Panel(*gs));
   wrefresh(Top_2_Panel(*gs));
