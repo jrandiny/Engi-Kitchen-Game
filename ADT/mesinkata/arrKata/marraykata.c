@@ -4,7 +4,7 @@
    Tanggal   : 31 Oktober 2018
    Deskripsi : driver untuk ADT untuk tipe array kata*/
 
-#include "arraykata.h"
+#include "arrKata.h"
 #include <stdio.h>
 
 Kata K_MakeKata(char* S);

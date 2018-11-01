@@ -6,7 +6,7 @@
 #ifndef POINT_H
 #define POINT_H
 
-#include "../../header/std.h"
+#include "../../std.h"
 
 typedef struct {
 	int X; /* absis   */

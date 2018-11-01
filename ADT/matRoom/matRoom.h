@@ -3,7 +3,7 @@
 #ifndef MATRIKSROOM_H
 #define MATRIKSROOM_H
 
-#include "../../header/std.h"
+#include "../../std.h"
 #include "../mesinkata/mesinkata.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */

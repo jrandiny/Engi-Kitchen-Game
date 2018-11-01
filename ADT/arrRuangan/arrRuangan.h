@@ -7,7 +7,7 @@
 #ifndef ARRAYRUANGAN_H
 #define ARRAYRUANGAN_H
 
-#include "../../header/std.h"
+#include "../../std.h"
 #include "../arrMeja/arrMeja.h"
 #include "../matRoom/matRoom.h"
 

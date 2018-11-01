@@ -7,7 +7,7 @@
 #ifndef ARRAYMEJA_H
 #define ARRAYMEJA_H
 
-#include "../../header/std.h"
+#include "../../std.h"
 #include "../point/point.h"
 
 /*  Kamus Umum */
