@@ -186,12 +186,26 @@ Kata K_CopySubKata(Kata input,int idxmulai,int idxakhir)
   return hasil;
 }
 
-void K_PrintKata(Kata S){
+void K_PrintKata(Kata S)
 /* I.S. S valid
    F.S. S terprint di layar dengan tanpa enter di akhir
 */
+{
   int i;
   for(i=1;i<=S.Length;i++){
     printf("%c",S.TabKata[i]);
   }
+}
+
+char* K_KataToChar(Kata S)
+/*mengubah tipe kata menjadi string*/
+{
+  char* hasil;
+  int i;
+  hasil=(char*)malloc(S.Length*sizeof(char));
+  for(i=1;i<=S.Length;i++){
+    hasil[i-1]=S.TabKata[i];
+  }
+  hasil[i-1]='\0';
+  return hasil;
 }

@@ -332,7 +332,7 @@ void RefreshMap(GameScreen *gs)
 //   DrawBorders(Hand_Panel(*gs));
 // }
 
-void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time)
+void RefreshTopPanel(GameScreen *gs, char* name, int money, int life, int time)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel atas */
 {
@@ -349,7 +349,7 @@ void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time)
   DrawBorders(Top_3_Panel(*gs));
   DrawBorders(Top_4_Panel(*gs));
 
-  mvwprintw(Top_1_Panel(*gs),1,2,"nama","Aa");
+  mvwprintw(Top_1_Panel(*gs),1,2,"%s",name);
   mvwprintw(Top_2_Panel(*gs),1,2,"Money: %d",money);
   mvwprintw(Top_3_Panel(*gs),1,2,"Life: %d",life);
   mvwprintw(Top_4_Panel(*gs),1,2,"Time: %d",time);

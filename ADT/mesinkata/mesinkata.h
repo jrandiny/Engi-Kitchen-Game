@@ -76,4 +76,8 @@ void K_PrintKata(Kata S);
    F.S. S terprint di layar dengan tanpa enter di akhir
 */
 
+
+char* K_KataToChar(Kata S);
+/*mengubah tipe kata menjadi string*/
+
 #endif

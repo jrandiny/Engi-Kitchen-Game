@@ -11,19 +11,14 @@
 int main () {
 
   //KAMUS
-  int money;   //jumlah keuntungan dari restoran
-  int life;    //nyawa pemain
-  int time;    //tik untuk satuan waktu
+  const int maxcost =  5;   //nilai maksimum costumer untuk ngantri
+  int money,life,time;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
   pelayan P;   //pelayan
   restoran R;  //info restoran
-  Stack tray;  //food stack sementara
-  Stack hand;  //hand stack sementara
-  Stack order
+  Stack tray,hand,order;  //food stack sementara //hand stack sementara
   PrioQueue customer; //customer sementara
   Kata input,aksi; //input dan aksi user
-  const int maxcost =  5;   //nilai maksimum costumer untuk ngantri
-  boolean lose; //kalah dari permainan
-  boolean aksivalid; //true jika command yang dimasukan valid
+  boolean lose,aksivalid; //kalah dari permainan //true jika command yang dimasukan valid
 
   //ALGORITMA
   do{

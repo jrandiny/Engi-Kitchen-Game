@@ -118,7 +118,7 @@ void RefreshMap(GameScreen *gs);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel stack di tangan */
 
-void RefreshTopPanel(GameScreen *gs, Kata name, int money, int life, int time);
+void RefreshTopPanel(GameScreen *gs, char* name, int money, int life, int time);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel atas */
 
