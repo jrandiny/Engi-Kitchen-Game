@@ -5,47 +5,14 @@
 #ifndef SPACE_H
 #define SPACE_H
 
-#include "../../header/std.h"
-#include "../../ADT/point/point.h"
-#include "../../ADT/listlinier/multilist.h"
-#include "../../ADT/arrRuangan/arrRuangan.h"
-
-
-typedef struct {
-  int roomNow;
-  ArrRuangan ruangan; //array yang berisi ruangan
-  List hubungan; //mapping
-} Restoran;
-//tipe Restoran dengan 4 ruangan berukuran 8x8
-// dengan terdapat 4 pintu yang menghubungkan keempat ruangan tersebut
-/*
-  room1 (5,8) -> (2,1) room2
-  room1 (8,5) -> (1,5) room4
-  room2 (8,5) -> (1,5) room3
-  room3 (2,1) -> (5,8) room4
-*/
-#define RoomNow(R) (R).roomNow
-#define Ruangan(R) (R).ruangan
-
-typedef struct {
-  Point posisi; //posisi Pelayan mengikuti baris dan kolom matriks
-  Tile up;      // menyatakan karakter di posisi atas Pelayan
-  Tile down;    // menyatakan karakter di posisi bawah Pelayan
-  Tile left;    // menyatakan karakter di posisi kiri Pelayan
-  Tile right;   // menyatakan karakter di posisi kanan Pelayan
-} Pelayan;
-//merupakan tipe Pelayan dengan posisi dan karakter disekitarnya
-
-
-/* up down left right akan bernilai
-    sesuai dengan definisi Tile di matRoom.h
-*/
-// *** SELEKTOR ***
-#define Posisi(P) (P).posisi
-#define Up(P) (P).up
-#define Down(P) (P).down
-#define Left(P) (P).left
-#define Right(P) (P).right
+#include "../../std.h"
+#include "../point/point.h"
+// #include "../../ADT/listlinier/multilist.h"
+#include "arrRuangan/arrRuangan.h"
+#include "matTile/matTile.h"
+#include "arrMeja/arrMeja.h"
+#include "pelayan.h"
+#include "restoran.h"
 
 // *** KONSTRUKTOR ***
 void InitPelayan(Pelayan *P);

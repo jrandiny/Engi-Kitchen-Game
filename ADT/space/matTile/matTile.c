@@ -5,7 +5,7 @@
    Tanggal   : 27-10-2018
    Deskripsi : ADT untuk tipe Matriks*/
 
-#include "matriks.h"
+#include "matTile.h"
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk Matriks *** */
