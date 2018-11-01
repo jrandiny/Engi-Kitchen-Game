@@ -1,3 +1,11 @@
+//File : tile.h
+/* merupakan tipe data tile */
+
+#ifndef TILE_H
+#define TILE_H
+
+#include "../mesinkata/mesinkata.h"
+
 typedef struct {
 	char karakter; //merupakan karakter yang ditampilkan di layar
 	int value;
@@ -27,3 +35,8 @@ typedef struct {
 		isi||kosong jika nomor meja
 		nampan jika karakter==t
 */
+#define Karakter(M) (M).karakter
+#define Value(M) (M).value
+#define Deskripsi(M) (M).deskripsi
+
+#endif
