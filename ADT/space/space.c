@@ -26,24 +26,15 @@ void InitPelayan(Pelayan *P)
 {
   //ALGORITMA
   //posisi
-  P_Absis(Posisi(*P)) = 0;
-  P_Ordinat(Posisi(*P)) = 0;
+  P_SetXY(&Pelayan_Posisi(*P),0,0);
   //up
-  Karakter(Up(*P)) = CharUndeff;
-  Value(Up(*P)) = ValUndeff;
-  Deskripsi(Up(*P)) = K_MakeKata("-");
+  Up(*P) = MT_SetTile(CharUndeff,ValUndeff);
   //down
-  Karakter(Down(*P)) = CharUndeff;
-  Value(Down(*P)) = ValUndeff;
-  Deskripsi(Down(*P)) = K_MakeKata("-");
+  Down(*P) = MT_SetTile(CharUndeff,ValUndeff);
   //left
-  Karakter(Left(*P)) = CharUndeff;
-  Value(Left(*P)) = ValUndeff;
-  Deskripsi(Left(*P)) = K_MakeKata("-");
+  Left(*P) = MT_SetTile(CharUndeff,ValUndeff);
   //right
-  Karakter(Right(*P)) = CharUndeff;
-  Value(Right(*P)) = ValUndeff;
-  Deskripsi(Right(*P)) = K_MakeKata("-");
+  Right(*P) = MT_SetTile(CharUndeff,ValUndeff);
 }
 void PlacePelayan(Pelayan *P,int x,int y, MatTile M)
 /*
@@ -53,8 +44,7 @@ void PlacePelayan(Pelayan *P,int x,int y, MatTile M)
 */
 {
   //ALGORITMA
-  P_Absis(Posisi(*P)) = x;
-  P_Ordinat(Posisi(*P)) = y;
+  P_SetXY(&Pelayan_Posisi(*P),x,y);
   SetUpTile(P,M);
   SetDownTile(P,M);
   SetLeftTile(P,M);
@@ -83,7 +73,7 @@ void MoveUp(Pelayan *P,MatTile M)
 */
 {
   //ALGORITMA
-  P_Geser(&Posisi(*P),-1,0);
+  P_Geser(&Pelayan_Posisi(*P),-1,0);
   SetUpTile(P,M);
 }
 void MoveDown(Pelayan *P,MatTile M)
@@ -93,7 +83,7 @@ void MoveDown(Pelayan *P,MatTile M)
 */
 {
   //ALGORITMA
-  P_Geser(&Posisi(*P),1,0);
+  P_Geser(&Pelayan_Posisi(*P),1,0);
   SetDownTile(P,M);
 }
 void MoveLeft(Pelayan *P,MatTile M)
@@ -103,7 +93,7 @@ void MoveLeft(Pelayan *P,MatTile M)
 */
 {
   //ALGORITMA
-  P_Geser(&Posisi(*P),0,-1);
+  P_Geser(&Pelayan_Posisi(*P),0,-1);
   SetLeftTile(P,M);
 }
 void MoveRight(Pelayan *P,MatTile M)
@@ -113,7 +103,7 @@ void MoveRight(Pelayan *P,MatTile M)
 */
 {
   //ALGORITMA
-  P_Geser(&Posisi(*P),0,1);
+  P_Geser(&Pelayan_Posisi(*P),0,1);
   SetRightTile(P,M);
 }
 
@@ -183,18 +173,17 @@ boolean IsOnDoor(Pelayan P, Restoran R)
   int x,y;
   boolean flag;
   //ALGORITMA
-  x = P_Absis(Posisi(P));
-  y = P_Ordinat(Posisi(P));
+  P_GetXY(Pelayan_Posisi(P),&x,&y);
   flag = false;
-  if (Ruangan(R)==1) { //room1
+  if (RoomNow(R)==1) { //room1
     if ((x==8 && y==5) || (x==5 && y==8)) {
       flag = true;
     }
-  } else if (Ruangan(R)==2) { //room2
+  } else if (RoomNow(R)==2) { //room2
     if ((x==8 && y==5) || (x==2 && y==1)) {
       flag = true;
     }
-  } else if (Ruangan(R)==3) { //room3
+  } else if (RoomNow(R)==3) { //room3
     if ((x==1 && y==5) || (x==2 && y==1)) {
       flag = true;
     }
@@ -205,25 +194,67 @@ boolean IsOnDoor(Pelayan P, Restoran R)
   }
   return flag;
 }
-boolean IsNearTable (Pelayan P, MatTile M)
+boolean CanOrder(Pelayan P, Ruangan R)
 /*
-  fungsi mengembalikan true jika P berada di dekat meja
+  fungsi akan bernialai true jika meja dekat p dapat memesan
 */
 {
   //KAMUS
-  boolean flag;
+  int nomorMeja;
   //ALGORITMA
-  flag = false;
-  if (Karakter(Up(P)) == 'c' || Karakter(Up(P)) == 'x'){ //ada meja di atas
-    flag = true;
-  } else if (Karakter(Down(P)) == 'c' || Karakter(Down(P)) == 'x'){ //ada meja di bawah
-    flag = true;
-  } else if (Karakter(Left(P)) == 'c' || Karakter(Left(P)) == 'x'){ //ada meja di kiri
-    flag = true;
-  } else if (Karakter(Right(P)) == 'c' || Karakter(Right(P)) == 'x'){ //ada meja di kanan
-    flag = true;
+  nomorMeja = IsNearTable(P,R);
+  return Status(AM_Elmt(Meja(R),nomorMeja)) ==  1;
+}
+int IsNearTable (Pelayan P, Ruangan R)
+/*
+  fungsi mengembalikan nomor jika P berada di dekat meja
+  akan mengembalikan 0 jika tidak
+*/
+{
+  //KAMUS
+  ArrMeja arrmeja;
+  Meja meja;
+  int x,y;
+  int i;
+  int a,b;
+  boolean found;
+  int tmp;
+  //ALGORITMA
+  P_GetXY(Pelayan_Posisi(P),&x,&y);
+  arrmeja = Meja(R);
+  found = false;
+  i = AM_GetFirstIdx(arrmeja);
+  while (!found && i <=AM_GetLastIdx(arrmeja)) {
+    meja = AM_Elmt(arrmeja,i);
+    P_GetXY(Meja_Posisi(meja),&a,&b);
+    if (a-1 == x && b ==y) {
+      found = true;
+    } else if (a+1 == x && b ==y) {
+      found = true;
+    } else if (a-2 == x && b ==y) {
+      found = true;
+    } else if (a+2 == x && b ==y) {
+      found = true;
+    } else if (a == x && b ==y-2) {
+      found = true;
+    } else if (a == x && b ==y+2) {
+      found = true;
+    } else if (a-1 == x && b ==y+1) {
+      found = true;
+    } else if (a-1 == x && b ==y-1) {
+      found = true;
+    } else if (a+1 == x && b ==y+1) {
+      found = true;
+    } else if (a+1 == x && b ==y-1) {
+      found = true;
+    } else i++;
+  } //found == true || i > AM_GetLastIdx(arrmeja)
+  if (!found) {
+    tmp = 0;
+  } else {
+    tmp = Value(MT_Elmt(Room(R),a,b));
   }
-  return flag;
+  return tmp;
 }
 
 // *** Tile Set ***
@@ -235,19 +266,15 @@ void SetUpTile(Pelayan *P,MatTile M)
 {
   //KAMUS
   int x,y;
+  Tile tmp;
   //ALGORITMA
-  x = P_Absis(Posisi(*P));
-  y = P_Ordinat(Posisi(*P));
+  P_GetXY(Pelayan_Posisi(*P),&x,&y);
   x -= 1;
   if (MT_IsIdxValid(x,y)) {
-    Karakter(Up(*P)) = Karakter(MT_Elmt(M,x,y));
-    Value(Up(*P)) = Value(MT_Elmt(M,x,y));
-    // K_CopyKata(Deskripsi(MT_Elmt(M,x,y)),&Deskripsi(Up(*P)));
-    Deskripsi(Up(*P)) = Deskripsi(MT_Elmt(M,x,y));
+    tmp = MT_Elmt(M,x,y);
+    Up(*P) = MT_SetTile(Karakter(tmp),Value(tmp));
   } else {
-    Karakter(Up(*P)) = CharUndeff;
-    Value(Up(*P)) = ValUndeff;
-    Deskripsi(Up(*P)) = K_MakeKata("-");
+    Up(*P) = MT_SetTile(CharUndeff,ValUndeff);
   }
 }
 void SetDownTile(Pelayan *P,MatTile M)
@@ -258,18 +285,15 @@ void SetDownTile(Pelayan *P,MatTile M)
 {
   //KAMUS
   int x,y;
+  Tile tmp;
   //ALGORITMA
-  x = P_Absis(Posisi(*P));
-  y = P_Ordinat(Posisi(*P));
+  P_GetXY(Pelayan_Posisi(*P),&x,&y);
   x += 1;
   if (MT_IsIdxValid(x,y)) {
-    Karakter(Down(*P)) = Karakter(MT_Elmt(M,x,y));
-    Value(Down(*P)) = Value(MT_Elmt(M,x,y));
-    Deskripsi(Down(*P)) = Deskripsi(MT_Elmt(M,x,y));
+    tmp = MT_Elmt(M,x,y);
+    Down(*P) = MT_SetTile(Karakter(tmp),Value(tmp));
   } else {
-    Karakter(Down(*P)) = CharUndeff;
-    Value(Down(*P)) = ValUndeff;
-    Deskripsi(Down(*P)) = K_MakeKata("-");
+    Down(*P) = MT_SetTile(CharUndeff,ValUndeff);
   }
 }
 void SetLeftTile(Pelayan *P,MatTile M)
@@ -280,18 +304,15 @@ void SetLeftTile(Pelayan *P,MatTile M)
 {
   //KAMUS
   int x,y;
+  Tile tmp;
   //ALGORITMA
-  x = P_Absis(Posisi(*P));
-  y = P_Ordinat(Posisi(*P));
+  P_GetXY(Pelayan_Posisi(*P),&x,&y);
   y -= 1;
   if (MT_IsIdxValid(x,y)) {
-    Karakter(Left(*P)) = Karakter(MT_Elmt(M,x,y));
-    Value(Left(*P)) = Value(MT_Elmt(M,x,y));
-    Deskripsi(Left(*P)) = Deskripsi(MT_Elmt(M,x,y));
+    tmp = MT_Elmt(M,x,y);
+    Left(*P) = MT_SetTile(Karakter(tmp),Value(tmp));
   } else {
-    Karakter(Left(*P)) = CharUndeff;
-    Value(Left(*P)) = ValUndeff;
-    Deskripsi(Left(*P)) = K_MakeKata("-");
+    Left(*P) = MT_SetTile(CharUndeff,ValUndeff);
   }
 }
 void SetRightTile(Pelayan *P,MatTile M)
@@ -302,18 +323,15 @@ void SetRightTile(Pelayan *P,MatTile M)
 {
   //KAMUS
   int x,y;
+  Tile tmp;
   //ALGORITMA
-  x = P_Absis(Posisi(*P));
-  y = P_Ordinat(Posisi(*P));
+  P_GetXY(Pelayan_Posisi(*P),&x,&y);
   y += 1;
   if (MT_IsIdxValid(x,y)) {
-    Karakter(Right(*P)) = Karakter(MT_Elmt(M,x,y));
-    Value(Right(*P)) = Value(MT_Elmt(M,x,y));
-    Deskripsi(Right(*P)) = Deskripsi(MT_Elmt(M,x,y));
+    tmp = MT_Elmt(M,x,y);
+    Right(*P) = MT_SetTile(Karakter(tmp),Value(tmp));
   } else {
-    Karakter(Right(*P)) = CharUndeff;
-    Value(Right(*P)) = ValUndeff;
-    Deskripsi(Right(*P)) = K_MakeKata("-");
+    Right(*P) = MT_SetTile(CharUndeff,ValUndeff);
   }
 }
 
@@ -325,298 +343,122 @@ void IsiRuang(Restoran *R, int ruangan, MatTile M)
 */
 {
   //ALGORITMA
-  MT_CopyMatTile(M,&AR_Room(AR_Elmt(Ruangan(*R),ruangan)));
+  MT_CopyMatriks(M,&Room(AR_Elmt(Ruangan(*R),ruangan)));
 }
-// void PlaceTable(Restoran *R,int nomorMeja, int jumlahBangku)
-// /*
-//   I.S. R, nomorMeja, dan jumlahBangku terdefinisi, nomoMeja antara 1-12
-//        jumlahBangku antara 2 atau 4
-//   F.S. meja dengan nomor nomorMeja terdapat bangku kosong sejumlah jumlahBangku
-// */
-// {
-//
-// }
 
 // *** BOOLEAN RUANGAN***
-boolean IsTableEmpty(int nomor, MatTile M)
+boolean IsTableEmpty(int nomorMeja, Ruangan R)
 /*
   mengirimkan true jika meja dengan nomor meja nomor adalah kosong dan bisa
   di duduki, mengirimkan false jika tidak
 */
 {
-  //KAMUS
-  boolean tmp;
-  Kata cek;
-  Point indeks;
   //ALGORITMA
-  cek = K_MakeKata("kosong");
-  indeks = IndeksMeja(nomor);
-  tmp = K_IsKataSama(cek,Deskripsi(MT_Elmt(M,P_Absis(indeks),P_Ordinat(indeks))));
-  // switch (nomor%4) {
-  //   case 1:
-  //     //3,2
-  //     tmp = K_IsKataSama(cek,Deskripsi(MT_Elmt(M,3,2)));
-  //     break;
-  //   case 2:
-  //     //2,7
-  //     tmp = K_IsKataSama(cek,Deskripsi(MT_Elmt(M,2,7)));
-  //     break;
-  //   case 3:
-  //     //7,2
-  //     tmp = K_IsKataSama(cek,Deskripsi(MT_Elmt(M,7,2)));
-  //     break;
-  //   case 0:
-  //     //7,7
-  //     tmp = K_IsKataSama(cek,Deskripsi(MT_Elmt(M,7,7)));
-  //     break;
-  // }
-  return tmp;
+  return Status(AM_Elmt(Meja(R),nomorMeja)) ==  0;
 }
-boolean CanPlace(int pelanggan,Pelayan P, Restoran R)
+boolean CanPlace(int pelanggan,Pelayan P, Ruangan R)
 /*
-  fungsi menghasilkan true jika jumlah kursi di dekat P dapat diduduki oleh Pelanggan
+  fungsi menghasilkan true jika meja di dekat P dapat diduduki oleh Pelanggan
+  yaitu jumlah bangkunya <= dan sedang kosong
   P harus sebelah bangku ('x')
 */
 {
   //KAMUS
-  MatTile M;
-  Tile meja;
-  boolean flag;
-  Kata kosong;
+  boolean empty;
+  Tile table;
+  int jumlahBangku;
   //ALGORITMA
-  flag = false;
-  M = GetRuangSekarang(R);
-  meja = GetTableTile(P,M);
-  kosong = K_MakeKata("kosong");
-  if (K_IsKataSama(Deskripsi(meja),kosong)) {
-    flag = (pelanggan <= (int)(Karakter(meja)-'0'));
-  }
-  return flag;
+  table = GetTableTile(P,R);
+  jumlahBangku = Bangku(AM_Elmt(Meja(R),Value(table)));
+  empty = IsTableEmpty(Value(table),R);
+  return empty && (jumlahBangku<=pelanggan);
 }
 
 // *** ACTION ***
-Kata Ordering(Pelayan P,MatTile M)
+void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int *nomorMeja)
 /*
-  fungsi menghasilkan nama makanan yang diambil, P dipastikan dekat meja
+  I.S. P dan *R terdefinisi, dilakukan jika sudah dipastikan dapat order dan P
+    dekat Meja
+  F.S.
 */
 {
   //KAMUS
-  Kata makanan;
+  Tile table;
+  time_t t;
   //ALGORITMA
-  if (Karakter(Up(P)) == 'c' || Karakter(Up(P)) == 'x'){ //ada meja di atas
-    makanan = Deskripsi(Up(P));
-  } else if (Karakter(Down(P)) == 'c' || Karakter(Down(P)) == 'x'){ //ada meja di bawah
-    makanan = Deskripsi(Down(P));
-  } else if (Karakter(Left(P)) == 'c' || Karakter(Left(P)) == 'x'){ //ada meja di kiri
-    makanan = Deskripsi(Left(P));
-  } else { //ada meja di kanan
-    makanan = Deskripsi(Right(P));
-  }
-  return makanan;
+  srand((unsigned) time(&t)); //inisialisasi rnd()
+  *idMakanan = (rand()%24+1);
+  *nomorMeja = IsNearTable(P,*R);
+  Status(AM_Elmt(Meja(*R),*nomorMeja)) = 2;
 }
-Kata Taking(Pelayan P)
+int Taking(Pelayan P)
 /*
-  menghasilkan nama makanan yang diambil dengan syarat di dekat P hanya ada
+  menghasilkan id makanan yang diambil dengan syarat di dekat P hanya ada
   satu meja bahan ('m')
 */
 {
   //KAMUS
-  Kata makanan;
+  int makanan;
   //ALGORITMA
   if (Karakter(Up(P)) == 'm'){ // 'm' ada di atas
-    makanan = Deskripsi(Up(P));
+    makanan = Value(Up(P));
   } else if (Karakter(Down(P)) == 'm'){ // 'm' ada di bawah
-    makanan = Deskripsi(Down(P));
+    makanan = Value(Down(P));
   } else if (Karakter(Left(P)) == 'm'){ // 'm' ada di kiri
-    makanan = Deskripsi(Left(P));
+    makanan = Value(Left(P));
   } else { //'m' ada di kanan
-    makanan = Deskripsi(Right(P));
+    makanan = Value(Right(P));
   }
   return makanan;
 }
-void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, MatTile *M)
+void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, Ruangan *R)
 /*
   I.S. pelanggan, Pelayan, retoran terdefinisi, meja sebelah Pelayan adalah kosong
   F.S. pelanggan di tempat di meja sesuai jumlahnya
 */
 {
   //KAMUS
-  Tile meja;
+  int nomorMeja;
   int x,y;
   int i,j;
-  Kata isi;
-  Point indeks;
   int jumlahBangku;
   //ALGORITMA
-  x = P_Absis(Posisi(*P));
-  y = P_Ordinat(Posisi(*P));
+  P_GetXY(Pelayan_Posisi(*P),&x,&y);
 
-  isi = K_MakeKata("isi");
-  meja = GetTableTile(*P,*M);
-  indeks = IndeksMeja(Value(meja));
-  i = P_Absis(indeks);
-  j = P_Ordinat(indeks);
-  Deskripsi(MT_Elmt(*M,i,j)) = isi;
-  jumlahBangku = (int) (Karakter(meja)-'0');
+  nomorMeja = IsNearTable(*P,*R);
+  P_GetXY(IndeksMeja(nomorMeja,*R),&i,&j);
+  Status(AM_Elmt(Meja(*R),nomorMeja)) = 1;
+  jumlahBangku = Bangku(AM_Elmt(Meja(*R),nomorMeja));
 
   //menaruh minimal 2 pelanggan
-  Karakter(MT_Elmt(*M,i,j+1)) = 'c';
-  Karakter(MT_Elmt(*M,i,j-1)) = 'c';
+  MT_Elmt(Room(*R),i,j+1) = MT_SetTile('c',waktuOut);
+  MT_Elmt(Room(*R),i,j-1) = MT_SetTile('c',waktuOut);
   if (pelanggan == 4) {
     /*jika pelanggannya 4, tambah 2 karakter 'c' lagi
       bukan saat ada 4 jumlahBangku*/
-  Karakter(MT_Elmt(*M,i+1,j)) = 'c';
-  Karakter(MT_Elmt(*M,i-1,j)) = 'c';
+    MT_Elmt(Room(*R),i+1,j) = MT_SetTile('c',waktuOut);
+    MT_Elmt(Room(*R),i-1,j) = MT_SetTile('c',waktuOut);
   }
-
-  //menaruh minial 2 value dan deskripsi
-  Value(MT_Elmt(*M,i,j+1)) = waktuOut;
-  Value(MT_Elmt(*M,i,j-1)) = waktuOut;
-  Deskripsi(MT_Elmt(*M,i,j+1)) = menu;
-  Deskripsi(MT_Elmt(*M,i,j-1)) = menu;
   if (jumlahBangku==4) { //jika bangku ada 4, tambah 2 valur dan deskripsi lagi
-    Value(MT_Elmt(*M,i+1,j)) = waktuOut;
-    Value(MT_Elmt(*M,i-1,j)) = waktuOut;
-    Deskripsi(MT_Elmt(*M,i+1,j)) = menu;
-    Deskripsi(MT_Elmt(*M,i-1,j)) = menu;
+    MT_Elmt(Room(*R),i+1,j) = MT_SetTile('x',waktuOut);
+    MT_Elmt(Room(*R),i-1,j) = MT_SetTile('x',waktuOut);
   }
-  PlacePelayan(P,x,y,*M);
-
-  // if (i+2 == x && j == y) { // nomor meja 2 petak di atas p
-  //   Karakter(MT_Elmt(*M,i+1,j)) = 'c';
-  //   Karakter(MT_Elmt(*M,i-1,j)) = 'c';
-  //   Karakter(Up(*P)) = 'c';
-  //   Value(MT_Elmt(*M,i+1,j)) = ValUndeff;
-  //   Value(MT_Elmt(*M,i-1,j)) = ValUndeff;
-  //   Value(Up(*P)) = ValUndeff;
-  // } else if (i+1 == x && j-1 == y) { //nomor meja di timur laut p
-  //
-  // } else if (i == x && j-2 == y) { //nomor meja 2 petak di kanan p
-  //
-  // } else if (i-1 == x && j-1 == y) { // nomor meja di tenggara p
-  //
-  // } else if (i-2 == x && j == y) { //nomor meja 2 petak di bawah p
-  //
-  // } else if (i-1 == x && j+1 == y) { //nomor meja di barat daya p
-  //
-  // } else if (i== x && j+2 == y) { //nomor meja 2 petak di kiri p
-  //
-  // } else { //nomor meja di barat laut p
-  //
-  // }
-}
-void Giving(Pelayan *P, MatTile *M)
-/*
-  I.S. P dan M terdefinisi, dipanggil jika give pasti berhasil
-  F.S. pelanggan pergi meninggalakan meja, meja menjadi kosong, update tile P
-*/
-{
-  //KAMUS
-  Tile meja;
-  Point indeks;
-  int i,j;
-  int x,y;
-  int jumlahBangku;
-  //ALGORITMA
-  x = P_Absis(Posisi(*P));
-  y = P_Ordinat(Posisi(*P));
-  meja = GetTableTile(*P,*M);
-  indeks = IndeksMeja(Value(meja));
-  i = P_Absis(indeks);
-  j = P_Ordinat(indeks);
-
-  jumlahBangku = (int) (Karakter(MT_Elmt(*M,i,j))-'0');
-
-  //merubah minimal 2 pelanggan
-  Karakter(MT_Elmt(*M,i,j+1)) = 'x';
-  Karakter(MT_Elmt(*M,i,j-1)) = 'x';
-  Value(MT_Elmt(*M,i,j+1)) = ValUndeff;
-  Value(MT_Elmt(*M,i,j-1)) = ValUndeff;
-  Deskripsi(MT_Elmt(*M,i,j+1)) = K_MakeKata("-");
-  Deskripsi(MT_Elmt(*M,i,j-1)) = K_MakeKata("-");
-  if (jumlahBangku==4) { //jika bangku ada 4, tambah 2 valur dan deskripsi lagi
-    Karakter(MT_Elmt(*M,i+1,j)) = 'x';
-    Karakter(MT_Elmt(*M,i-1,j)) = 'x';
-    Value(MT_Elmt(*M,i+1,j)) = ValUndeff;
-    Value(MT_Elmt(*M,i-1,j)) = ValUndeff;
-    Deskripsi(MT_Elmt(*M,i+1,j)) = K_MakeKata("-");
-    Deskripsi(MT_Elmt(*M,i-1,j)) = K_MakeKata("-");
-  }
-  Deskripsi(MT_Elmt(*M,i,j)) = K_MakeKata("kosong");
-
-  PlacePelayan(P,x,y,*M);
+  PlacePelayan(P,x,y,Room(*R));
 }
 
 // *** LAIN LAIN ***
-Tile GetTableTile(Pelayan P, MatTile M)
+Tile GetTableTile(Pelayan P, Ruangan R)
 /*
   mengembalikan nilai meja yang bersebelahan dengan Pelayan
-  di sebelah Pelayan hanya ada satu pelanggan atau 2 pelanggan dari meja yang sama
 */
 {
   //KAMUS
-  Tile tmp;
-  int x,y;
+  int nomor;
+  int i,j;
   //ALGORITMA
-  x = P_Absis(Posisi(P));
-  y = P_Ordinat(Posisi(P));
-  if (Karakter(Up(P)) != ' ') { //up
-    if (Karakter(Left(P)) != ' ') { //depan dan kiri
-      tmp = (MT_Elmt(M,x-1,y-1));
-    } else if (Karakter(Right(P)) != ' ') { //depan dan kanan
-      tmp = (MT_Elmt(M,x-1,y+1));
-    } else { //hanya depan
-      if (Karakter(MT_Elmt(M,x-2,y)) == 'n') {
-        //nomor meja 2 petak di atas
-        tmp = (MT_Elmt(M,x-2,y));
-      } else if (Karakter(MT_Elmt(M,x-1,y+1)) == 'n') {
-        //nomor meja di samping kanan pelanggan
-        tmp = (MT_Elmt(M,x-1,y+1));
-      } else {
-        //nomor meja di samping kiri pelanggan
-        tmp = (MT_Elmt(M,x-1,y-1));
-      }
-    }
-  } else if (Karakter(Down(P)) != ' ') { //down
-    if (Karakter(Left(P)) != ' ') { //bawah dan kiri
-      tmp = (MT_Elmt(M,x+1,y-1));
-    } else if (Karakter(Right(P)) != ' ') { //bawah dan kanan
-      tmp = (MT_Elmt(M,x+1,y+1));
-    } else { //hanya bawah
-      if (Karakter(MT_Elmt(M,x+2,y)) == 'n') {
-        //nomor meja 2 petak di bawah
-        tmp = (MT_Elmt(M,x+2,y));
-      } else if (Karakter(MT_Elmt(M,x+1,y+1)) == 'n') {
-        //nomor meja di samping kanan pelanggan
-        tmp = (MT_Elmt(M,x+1,y+1));
-      } else {
-        //nomor meja di samping kiri pelanggan
-        tmp = (MT_Elmt(M,x+1,y-1));
-      }
-    }
-  } else if (Karakter(Left(P)) != ' ') { //left
-    if (Karakter(MT_Elmt(M,x,y-2)) == 'n') {
-      //nomor meja 2 petak di kiri
-      tmp = (MT_Elmt(M,x,y-2));
-    } else if (Karakter(MT_Elmt(M,x-1,y-1)) == 'n') {
-      //nomor meja di sebelah atas pelanggan
-      tmp = (MT_Elmt(M,x-1,y-1));
-    } else {
-      //nomor meja di sebelah bawah pelanggan
-      tmp = (MT_Elmt(M,x+1,y-1));
-    }
-  } else{ //right
-    if (Karakter(MT_Elmt(M,x,y+2)) == 'n') {
-      //nomor meja 2 petak di kanan
-      tmp = (MT_Elmt(M,x,y+2));
-    } else if (Karakter(MT_Elmt(M,x-1,y+1)) == 'n') {
-      //nomor meja di sebelah atas pelanggan
-      tmp = (MT_Elmt(M,x-1,y+1));
-    } else {
-      //nomor meja di sebelah bawah pelanggan
-      tmp = (MT_Elmt(M,x+1,y+1));
-    }
-  }
+  nomor = IsNearTable(P,R);
+  P_GetXY(IndeksMeja(nomor,R),&i,&j);
+  return MT_Elmt(Room(R),i,j);
 }
 MatTile GetRuangSekarang(Restoran R)
 /*
@@ -624,7 +466,7 @@ MatTile GetRuangSekarang(Restoran R)
 */
 {
   //ALGORITMA
-  return (AR_Room(AR_Elmt(Ruangan(R),RoomNow(R))));
+  return (Room(AR_Elmt(Ruangan(R),RoomNow(R))));
 }
 void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
 /*
@@ -635,89 +477,52 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
 */
 {
   //KAMUS
-  Point indeks;
-  int count;
   int x,y;
-  MatTile M;
+  int a,b;
+  Ruangan tmp;
   //ALGORITMA
   *jumlah = 0;
-  x = P_Absis(Posisi(*P));
-  y = P_Ordinat(Posisi(*P));
-  SetRoomPelangganKabur(&Room1(*R),waktuNow,&count);
-  *jumlah += count;
-  SetRoomPelangganKabur(&Room2(*R),waktuNow,&count);
-  *jumlah += count;
-  SetRoomPelangganKabur(&Room3(*R),waktuNow,&count);
-  *jumlah += count;
-  M = GetRuangSekarang(*R);
-  PlacePelayan(P,x,y,M);
+  for (int j= AR_GetFirstIdx(Ruangan(*R));j<AR_GetLastIdx(Ruangan(*R));j++) {
+    tmp = AR_Elmt(Ruangan(*R),j);
+    for(int i = AM_GetFirstIdx(Meja(tmp));i<=AM_GetLastIdx(Meja(tmp));i++) {
+      P_GetXY(IndeksMeja(i,tmp),&a,&b);
+      if (Value(MT_Elmt(Room(tmp),a,b+1))==waktuNow) {
+        //saatnya keluar
+        *jumlah += 1;
+        SetTableEmpty(i,&AR_Elmt(Ruangan(*R),i));
+      }
+    }
+  }
+  if (*jumlah > 0) { //hanya dilakukan jika ada pelanggan kabur
+    P_GetXY(Pelayan_Posisi(*P),&x,&y);
+    PlacePelayan(P,x,y,Room(AR_Elmt(Ruangan(*R),RoomNow(*R))));
+  }
 }
-void SetRoomPelangganKabur(MatTile *M,int waktuNow, int *jumlah)
+Point IndeksMeja(int nomor,Ruangan R)
+// mengembalikan koordinat dari nomor meja yang diinput. nomor [1..12]
+{
+  //ALGORITMA
+  return Meja_Posisi(AM_Elmt(Meja(R),nomor));
+}
+void SetTableEmpty(int nomorMeja, Ruangan *R)
 /*
-  I.S. M dan waktuNow terdefinisi
-  F.S. menghasilkan jumlah pelanggan yang waktu keluar == waktuNow, dan mengupdate
-      karakter dan value mejanya
+  I.S. P dan R terdefinisi, dipanggil jika p dekat meja
+  F.S. membuat meja dengan nomor meja nomorMeja menjadi kosong
 */
 {
   //KAMUS
-  Point indeks;
   int i,j;
   int jumlahBangku;
   //ALGORITMA
-  *jumlah = 0;
-  for(int i = 1;i<=3;i++) {
-    indeks = IndeksMeja(i);
-    i = P_Absis(indeks);
-    j = P_Ordinat(indeks);
-    if (Value(MT_Elmt(*M,i,j))==waktuNow) {
-      //saatnya keluar
-      *jumlah += 1;
-      jumlahBangku = (int) (Karakter(MT_Elmt(*M,i,j))-'0');
+  P_GetXY(IndeksMeja(nomorMeja,*R),&i,&j);
+  jumlahBangku = Bangku(AM_Elmt(Meja(*R),nomorMeja));
 
-      //merubah minimal 2 pelanggan
-      Karakter(MT_Elmt(*M,i,j+1)) = 'x';
-      Karakter(MT_Elmt(*M,i,j-1)) = 'x';
-      Value(MT_Elmt(*M,i,j+1)) = ValUndeff;
-      Value(MT_Elmt(*M,i,j-1)) = ValUndeff;
-      Deskripsi(MT_Elmt(*M,i,j+1)) = K_MakeKata("-");
-      Deskripsi(MT_Elmt(*M,i,j-1)) = K_MakeKata("-");
-      if (jumlahBangku==4) { //jika bangku ada 4, tambah 2 valur dan deskripsi lagi
-        Karakter(MT_Elmt(*M,i+1,j)) = 'x';
-        Karakter(MT_Elmt(*M,i-1,j)) = 'x';
-        Value(MT_Elmt(*M,i+1,j)) = ValUndeff;
-        Value(MT_Elmt(*M,i-1,j)) = ValUndeff;
-        Deskripsi(MT_Elmt(*M,i+1,j)) = K_MakeKata("-");
-        Deskripsi(MT_Elmt(*M,i-1,j)) = K_MakeKata("-");
-      }
-      Deskripsi(MT_Elmt(*M,i,j)) = K_MakeKata("kosong");
-    }
+  //merubah minimal 2 pelanggan
+  MT_Elmt(Room(*R),i,j+1) = MT_SetTile('x',ValUndeff);
+  MT_Elmt(Room(*R),i,j-1) = MT_SetTile('x',ValUndeff);
+  if (jumlahBangku==4) { //jika bangku ada 4, tambah 2 valur dan deskripsi lagi
+    MT_Elmt(Room(*R),i+1,j) = MT_SetTile('x',ValUndeff);
+    MT_Elmt(Room(*R),i-1,j) = MT_SetTile('x',ValUndeff);
   }
-}
-Point IndeksMeja(int nomor)
-// mengembalikan koordinat dari nomor meja yang diinput. nomor [1..12]
-{
-  //KAMUS
-  Point tmp;
-  int i,j;
-  //ALGORITMA
-  switch (nomor%4) {
-    case 1:
-      i = 3;
-      j = 2;
-      break;
-    case 2:
-      i = 2;
-      j = 7;
-      break;
-    case 3:
-      i = 7;
-      j = 2;
-      break;
-    case 0:
-      i = 7;
-      j = 7;
-      break;
-  }
-  tmp = P_MakePoint(i,j);
-  return tmp;
+  Status(AM_Elmt(Meja(*R),nomorMeja)) = 0;
 }
