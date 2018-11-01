@@ -71,6 +71,17 @@ void M_CopyMatriks (Matriks MIn, Matriks * MHsl)
     }
   }
 }
+Tile MT_SetTile(char karakter,int value,Kata deskripsi)
+/* fungsi menghasilkan tile yang sudah di set berdasarkan input */
+{
+  //KAMUS
+  Tile tmp;
+  //ALGORITMA
+  Karakter(tmp) = karakter;
+  Value(tmp) = value;
+  Deskripsi(tmp) = deskripsi;
+  return tmp;
+}
 
 /* ********** KELOMPOK BACA/TULIS ********** */
 // void M_BacaMatriks (Matriks * M, int NB, int NK)

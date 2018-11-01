@@ -55,6 +55,8 @@ boolean MT_IsIdxEff (MatTile M, indeks i, indeks j);
 /* ********** Assignment  MatTile ********** */
 void MT_CopyMatriks (MatTile MIn, MatTile * MHsl);
 /* Melakukan assignment MHsl  MIn */
+Tile MT_SetTile(char karakter,int value);
+/* fungsi menghasilkan tile yang sudah di set berdasarkan input */
 
 /* ********** KELOMPOK BACA/TULIS ********** */
 // void MT_BacaMatTile (MatTile * M, int NB, int NK);
