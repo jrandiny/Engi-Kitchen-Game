@@ -158,19 +158,13 @@ void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, MatTile *M);
       karakter jadi 'c', value jadi kesabaran, deskripsi nomor meja berubah dari
       kosong menjadi isi
 */
-void Giving(Pelayan *P, MatTile *M);
-/*
-  I.S. P dan M terdefinisi, dipanggil jika give pasti berhasil
-  F.S. pelanggan pergi meninggalakan meja, meja menjadi kosong, update tile P
-*/
 
 // *** LAIN LAIN ***
-Tile GetTableTile(Pelayan P, MatTile M);
+Tile GetTableTile(Pelayan P, Ruangan R);
 /*
   mengembalikan Tile meja yang bersebelahan dengan Pelayan
   di sebelah Pelayan hanya ada satu pelanggan atau 2 pelanggan dari meja yang sama
 */
-
 MatTile GetRuangSekarang(Restoran R);
 /*
   fungsi mengembalikan suatu matriks yang sedang digunakan berdasarkan Ruangan(R)
@@ -182,15 +176,12 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah);
     dengan waktuNow sekaligus mengembalikan status meja menjadi kosong, karakter
     menjadi x deskripsi menjadi "-" dan Value menjadi ValUndeff
 */
-void SetRoomPelangganKabur(MatTile *M,int waktuNow, int *jumlah);
-/*
-  I.S. M dan waktuNow terdefinisi
-  F.S. jumlah berisi jumlah pelanggan yang waktu keluarnya sudah sama
-    dengan waktuNow sekaligus mengembalikan status meja menjadi kosong, karakter
-    menjadi x deskripsi menjadi "-" dan Value menjadi ValUndeff
-*/
-Point IndeksMeja(int nomor);
+Point IndeksMeja(int nomor,Ruangan R);
 // mengembalikan koordinat dari nomor meja yang diinput. nomor [1..12]
-
+void SetTableEmpty(int nomorMeja, Ruangan *R);
+/*
+  I.S. P dan R terdefinisi, dipanggil jika p dekat meja
+  F.S. membuat meja dengan nomor meja nomorMeja menjadi kosong
+*/
 
 #endif
