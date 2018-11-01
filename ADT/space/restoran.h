@@ -1,6 +1,11 @@
 //File : restoran.h
 /* merupakan tipe data restoran */
 
+#ifndef RESTORAN_H
+#define RESTORAN_H
+
+#include "arrRuangan/arrRuangan.h"
+
 typedef struct {
   int roomNow;
   ArrRuangan ruangan; //array yang berisi ruangan
@@ -16,3 +21,5 @@ typedef struct {
 */
 #define RoomNow(R) (R).roomNow
 #define Ruangan(R) (R).ruangan
+
+#endif

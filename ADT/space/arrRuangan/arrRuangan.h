@@ -41,8 +41,6 @@ typedef struct {
 #define AR_Neff(T)   (T).Neff
 #define AR_TI(T)     (T).TI
 #define AR_Elmt(T,i) (T).TI[(i)]
-#define AR_Room(E) (E).room
-#define AR_Meja(E) (E).meja
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */

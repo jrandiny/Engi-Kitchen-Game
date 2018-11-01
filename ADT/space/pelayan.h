@@ -1,6 +1,11 @@
 //File pelayan.h
 /* merupakan tipe data pelayan */
 
+#ifndef PELAYAN_H
+#define PELAYAN_H
+
+#include "../point/point.h"
+
 typedef struct {
   Point posisi; //posisi Pelayan mengikuti baris dan kolom matriks
   Tile up;      // menyatakan karakter di posisi atas Pelayan
@@ -14,8 +19,10 @@ typedef struct {
     sesuai dengan definisi Tile di matRoom.h
 */
 // *** SELEKTOR ***
-#define Posisi(P) (P).posisi
+#define Pelayan_Posisi(P) (P).posisi
 #define Up(P) (P).up
 #define Down(P) (P).down
 #define Left(P) (P).left
 #define Right(P) (P).right
+
+#endif

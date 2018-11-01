@@ -12,13 +12,13 @@
 #include "../meja.h"
 
 /*  Kamus Umum */
-#define AM_IdxMax 50
+#define AM_IdxMax 30
 /* Indeks maksimum array, sekaligus ukuran maksimum array dalam C */
 #define AM_IdxMin 1
 /* Indeks minimum array */
 
 /* Definisi elemen dan koleksi objek */
-
+typedef int IdxType;  /* type indeks */
 typedef struct {
 	Meja TI[AM_IdxMax+1]; /* memori tempat penyimpan elemen (container) */
 	int Neff; /* >=0, banyaknya elemen efektif */
@@ -39,9 +39,6 @@ typedef struct {
 #define AM_Neff(T)   (T).Neff
 #define AM_TI(T)     (T).TI
 #define AM_Elmt(T,i) (T).TI[(i)]
-#define AM_Bangku(E) (E).room
-#define AM_Posisi(E) (E).posisi
-#define AM_Status(E) (E).status
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
