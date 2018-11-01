@@ -19,7 +19,7 @@ typedef struct {
 		x jika bangku kosong
 		c jika ada pelanggan
 		m jika meja
-		2||4 jika nomor meja
+		n jika nomor meja
 		t jika nampan
 		CharUndeff jika dekat pintu atau tembok
 	value bernilai (bergantung karakter)

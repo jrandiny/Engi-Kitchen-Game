@@ -31,20 +31,20 @@ int AM_NbElmt (ArrMeja T)
 int AM_MaxNbEl (ArrMeja T)
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
 {
-  return AM_AM_IdxMax;
+  return AM_IdxMax;
 }
 /* *** Selektor INDEKS *** */
 IdxType AM_GetFirstIdx (ArrMeja T)
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T pertama */
 {
-  return AM_AM_IdxMin;
+  return AM_IdxMin;
 }
 IdxType AM_GetLastIdx (ArrMeja T)
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T terakhir */
 {
-  return (AM_AM_IdxMin + AM_Neff(T) -1);
+  return (AM_IdxMin + AM_Neff(T) -1);
 }
 
 /* ********** Test Indeks yang valid ********** */
@@ -52,7 +52,7 @@ boolean AM_IsIdxValid (ArrMeja T, IdxType i)
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
 {
-  return ((i >= AM_AM_IdxMin)&&(i <= AM_AM_IdxMax));
+  return ((i >= AM_IdxMin)&&(i <= AM_IdxMax));
 }
 boolean AM_IsIdxEff (ArrMeja T, IdxType i)
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
@@ -82,7 +82,7 @@ void AM_CopyTab (ArrMeja Tin, ArrMeja * Tout)
 
 /* ********** MENAMBAH ELEMEN ********** */
 /* *** Menambahkan elemen terakhir *** */
-void AM_AddAsLastEl (ArrMeja * T, ElType X)
+void AM_AddAsLastEl (ArrMeja * T, Meja X)
 /* Proses: Menambahkan X sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. X adalah elemen terakhir T yang baru */
@@ -95,7 +95,7 @@ void AM_AddAsLastEl (ArrMeja * T, ElType X)
 }
 
 /* ********** MENGHAPUS ELEMEN ********** */
-void AM_DelLastEl (ArrMeja * T, ElType * X)
+void AM_DelLastEl (ArrMeja * T, Meja * X)
 /* Proses : Menghapus elemen terakhir tabel */
 /* I.S. Tabel tidak kosong */
 /* F.S. X adalah nilai elemen terakhir T sebelum penghapusan, */
