@@ -9,7 +9,6 @@
 #ifndef __MESINKATA_H__
 #define __MESINKATA_H__
 
-#include "boolean.h"
 #include "mesinkar.h"
 
 #define NMax 50

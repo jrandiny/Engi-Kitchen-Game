@@ -32,7 +32,7 @@ void InitPelayan(Pelayan *P)
   Value(Right(*P)) = ValUndeff;
   Deskripsi(Right(*P)) = K_MakeKata("-");
 }
-void PlacePelayan(Pelayan *P,int x,int y, Matriks M)
+void PlacePelayan(Pelayan *P,int x,int y, MatRoom M)
 /*
   menaruh Pelayan di posisi (x,y) di ruangan di Restoran r
   I.S. Pelayan,x,y,R terdefinisi
@@ -63,7 +63,7 @@ void InitRuangan(Restoran *R)
 }
 
 // *** PINDAH ***
-void MoveUp(Pelayan *P,Matriks M)
+void MoveUp(Pelayan *P,MatRoom M)
 /*
   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat naik
   F.S. Pelayan pindah ke posisi di atasnya dan update semua karakter
@@ -73,7 +73,7 @@ void MoveUp(Pelayan *P,Matriks M)
   P_Geser(&Posisi(*P),-1,0);
   SetUpTile(P,M);
 }
-void MoveDown(Pelayan *P,Matriks M)
+void MoveDown(Pelayan *P,MatRoom M)
 /*
   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat turun
   F.S. Pelayan pindah ke posisi di bawahnya dan update semua karakter
@@ -83,7 +83,7 @@ void MoveDown(Pelayan *P,Matriks M)
   P_Geser(&Posisi(*P),1,0);
   SetDownTile(P,M);
 }
-void MoveLeft(Pelayan *P,Matriks M)
+void MoveLeft(Pelayan *P,MatRoom M)
 /*
   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat bergerak ke kiri
   F.S. Pelayan pindah ke posisi di kirinya dan update semua karakter
@@ -93,7 +93,7 @@ void MoveLeft(Pelayan *P,Matriks M)
   P_Geser(&Posisi(*P),0,-1);
   SetLeftTile(P,M);
 }
-void MoveRight(Pelayan *P,Matriks M)
+void MoveRight(Pelayan *P,MatRoom M)
 /*
   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat bergerak ke kanan
   F.S. Pelayan pindah ke posisi di kanannya dan update semua karakter
@@ -105,7 +105,7 @@ void MoveRight(Pelayan *P,Matriks M)
 }
 
 // *** BOOLEAN PELAYAN ***
-boolean CanMoveUp(Pelayan P,Matriks M)
+boolean CanMoveUp(Pelayan P,MatRoom M)
 /*
   fungsi bernilai true jika pelayan dapat MoveUp dan P bukan di pintu
 */
@@ -119,7 +119,7 @@ boolean CanMoveUp(Pelayan P,Matriks M)
   }
   return flag;
 }
-boolean CanMoveDown(Pelayan P,Matriks M)
+boolean CanMoveDown(Pelayan P,MatRoom M)
 /*
   fungsi bernilai true jika pelayan dapat MoveDown dan P bukan di pintu
 */
@@ -133,7 +133,7 @@ boolean CanMoveDown(Pelayan P,Matriks M)
   }
   return flag;
 }
-boolean CanMoveLeft(Pelayan P,Matriks M)
+boolean CanMoveLeft(Pelayan P,MatRoom M)
 /*
   fungsi bernilai true jika pelayan dapat MoveLeft dan P bukan di pintu
 */
@@ -147,7 +147,7 @@ boolean CanMoveLeft(Pelayan P,Matriks M)
   }
   return flag;
 }
-boolean CanMoveRight(Pelayan P,Matriks M)
+boolean CanMoveRight(Pelayan P,MatRoom M)
 /*
   fungsi bernilai true jika pelayan dapat MoveRight dan P bukan di pintu
 */
@@ -192,7 +192,7 @@ boolean IsOnDoor(Pelayan P, Restoran R)
   }
   return flag;
 }
-boolean IsNearTable (Pelayan P, Matriks M)
+boolean IsNearTable (Pelayan P, MatRoom M)
 /*
   fungsi mengembalikan true jika P berada di dekat meja
 */
@@ -214,7 +214,7 @@ boolean IsNearTable (Pelayan P, Matriks M)
 }
 
 // *** Tile Set ***
-void SetUpTile(Pelayan *P,Matriks M)
+void SetUpTile(Pelayan *P,MatRoom M)
 /*
   I.S. P dan M terdefinisi
   F.S. Tile Up pada pelayan diisi dengan elemt yang sesuai dengan M
@@ -237,7 +237,7 @@ void SetUpTile(Pelayan *P,Matriks M)
     Deskripsi(Up(*P)) = K_MakeKata("-");
   }
 }
-void SetDownTile(Pelayan *P,Matriks M)
+void SetDownTile(Pelayan *P,MatRoom M)
 /*
   I.S. P dan M terdefinisi
   F.S. Tile Down pada pelayan diisi dengan elemt yang sesuai dengan M
@@ -259,7 +259,7 @@ void SetDownTile(Pelayan *P,Matriks M)
     Deskripsi(Down(*P)) = K_MakeKata("-");
   }
 }
-void SetLeftTile(Pelayan *P,Matriks M)
+void SetLeftTile(Pelayan *P,MatRoom M)
 /*
   I.S. P dan M terdefinisi
   F.S. Tile Left pada pelayan diisi dengan elemt yang sesuai dengan M
@@ -281,7 +281,7 @@ void SetLeftTile(Pelayan *P,Matriks M)
     Deskripsi(Left(*P)) = K_MakeKata("-");
   }
 }
-void SetRightTile(Pelayan *P,Matriks M)
+void SetRightTile(Pelayan *P,MatRoom M)
 /*
   I.S. P dan M terdefinisi
   F.S. Tile Right pada pelayan diisi dengan elemt yang sesuai dengan M
@@ -305,28 +305,14 @@ void SetRightTile(Pelayan *P,Matriks M)
 }
 
 // *** RUANGAN ***
-void IsiRuang(Restoran *R, int ruangan, Matriks M)
+void IsiRuang(Restoran *R, int ruangan, MatRoom M)
 /*
   I.S. R sudah terdeinisi, ruangan dan M juga terdefinisi
   F.S. room ke-(ruangan) di set menjadi seperti M
 */
 {
   //ALGORITMA
-  switch ((Ruangan(*R))) {
-    case 1:
-      M_CopyMatriks(M,&Room1(*R));
-      break;
-    case 2:
-      M_CopyMatriks(M,&Room2(*R));
-      break;
-    case 3:
-      M_CopyMatriks(M,&Room3(*R));
-      break;
-    case 4:
-      M_CopyMatriks(M,&Room4(*R));
-      break;
-  }
-
+  M_CopyMatRoom(M,&AR_Room(AR_Elmt(Ruangan(*R),ruangan)));
 }
 // void PlaceTable(Restoran *R,int nomorMeja, int jumlahBangku)
 // /*
@@ -339,7 +325,7 @@ void IsiRuang(Restoran *R, int ruangan, Matriks M)
 // }
 
 // *** BOOLEAN RUANGAN***
-boolean IsTableEmpty(int nomor, Matriks M)
+boolean IsTableEmpty(int nomor, MatRoom M)
 /*
   mengirimkan true jika meja dengan nomor meja nomor adalah kosong dan bisa
   di duduki, mengirimkan false jika tidak
@@ -380,7 +366,7 @@ boolean CanPlace(int pelanggan,Pelayan P, Restoran R)
 */
 {
   //KAMUS
-  Matriks M;
+  MatRoom M;
   Tile meja;
   boolean flag;
   Kata kosong;
@@ -396,7 +382,7 @@ boolean CanPlace(int pelanggan,Pelayan P, Restoran R)
 }
 
 // *** ACTION ***
-Kata Ordering(Pelayan P,Matriks M)
+Kata Ordering(Pelayan P,MatRoom M)
 /*
   fungsi menghasilkan nama makanan yang diambil, P dipastikan dekat meja
 */
@@ -435,7 +421,7 @@ Kata Taking(Pelayan P)
   }
   return makanan;
 }
-void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, Matriks *M)
+void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, MatRoom *M)
 /*
   I.S. pelanggan, Pelayan, retoran terdefinisi, meja sebelah Pelayan adalah kosong
   F.S. pelanggan di tempat di meja sesuai jumlahnya
@@ -506,7 +492,7 @@ void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, Matriks *M)
   //
   // }
 }
-void Giving(Pelayan *P, Matriks *M)
+void Giving(Pelayan *P, MatRoom *M)
 /*
   I.S. P dan M terdefinisi, dipanggil jika give pasti berhasil
   F.S. pelanggan pergi meninggalakan meja, meja menjadi kosong, update tile P
@@ -549,7 +535,7 @@ void Giving(Pelayan *P, Matriks *M)
 }
 
 // *** LAIN LAIN ***
-Tile GetTableTile(Pelayan P, Matriks M)
+Tile GetTableTile(Pelayan P, MatRoom M)
 /*
   mengembalikan nilai meja yang bersebelahan dengan Pelayan
   di sebelah Pelayan hanya ada satu pelanggan atau 2 pelanggan dari meja yang sama
@@ -619,29 +605,13 @@ Tile GetTableTile(Pelayan P, Matriks M)
     }
   }
 }
-Matriks GetRuangSekarang(Restoran R)
+MatRoom GetRuangSekarang(Restoran R)
 /*
   fungsi mengembalikan suatu matriks yang sedang digunakan berdasarkan Ruangan(R)
 */
 {
-  //KAMUS
-  Matriks M;
   //ALGORITMA
-  switch ((Ruangan(R))) {
-    case 1:
-      M_CopyMatriks(Room1(R),&M);
-      break;
-    case 2:
-      M_CopyMatriks(Room2(R),&M);
-      break;
-    case 3:
-      M_CopyMatriks(Room3(R),&M);
-      break;
-    case 4:
-      M_CopyMatriks(Room4(R),&M);
-      break;
-  }
-  return M;
+  return (AR_Room(AR_Elmt(Ruangan(R),RoomNow(R))));
 }
 void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
 /*
@@ -655,7 +625,7 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
   Point indeks;
   int count;
   int x,y;
-  Matriks M;
+  MatRoom M;
   //ALGORITMA
   *jumlah = 0;
   x = P_Absis(Posisi(*P));
@@ -669,7 +639,7 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
   M = GetRuangSekarang(*R);
   PlacePelayan(P,x,y,M);
 }
-void SetRoomPelangganKabur(Matriks *M,int waktuNow, int *jumlah)
+void SetRoomPelangganKabur(MatRoom *M,int waktuNow, int *jumlah)
 /*
   I.S. M dan waktuNow terdefinisi
   F.S. menghasilkan jumlah pelanggan yang waktu keluar == waktuNow, dan mengupdate
