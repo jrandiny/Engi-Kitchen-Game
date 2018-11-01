@@ -4,6 +4,13 @@
 #include "Modul/UI/UI.h"
 #include "ADT/space/tile.h"
 #include "ADT/space/matTile/matTile.h"
+#include "ADT/space/arrMeja/arrMeja.h"
+#include "ADT/space/arrRuangan/arrRuangan.h"
+#include "ADT/space/pelayan.h"
+#include "ADT/space/restoran.h"
+#include "ADT/space/meja.h"
+#include "ADT/space/ruangan"
+
 
 ArrKata MainMenu(){
   ArrKata hasil;
@@ -21,15 +28,14 @@ ArrKata MainMenu(){
 int main (){
   const int maxcost =  5;   //nilai maksimum costumer untuk ngantri
   int money,life,time;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
-  // pelayan P;   //pelayan
-  // restoran R;  //info restoran
+  Pelayan P;   //pelayan
+  Restoran R;  //info restoran
   // Stack tray,hand,order;  //food stack sementara //hand stack sementara
   // PrioQueue customer; //customer sementara
   Kata input,aksi,username; //input dan aksi user
   boolean lose,aksivalid; //kalah dari permainan //true jika command yang dimasukan valid
   GameScreen gs;
-  Restoran R;
-  Pelayan P;
+
 
   InitScreen(&gs);
   do{
@@ -57,43 +63,105 @@ int main (){
       }else if(K_IsKataSama(input,K_MakeKata("LOAD"))){//kalo load game
       }
 
+      aksivalid = false;
+      do{
+        RefreshTopPanel(&gs,K_KataToChar(username),money,life,time);
 
-      if(K_IsKataSama(aksi,K_MakeKata("GU"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("GD"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("GR"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("GL"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("ORDER"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("PUT"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("TAKE"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("CH"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("CT"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("PLACE"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("GIVE"))){
-        time++;
-      }
-      else if(K_IsKataSama(aksi,K_MakeKata("RECIPE"))){
-        time++;
-      }
+        aksi=GetInput(&gs,K_MakeKata("COMMAND : "));
+        if(K_IsKataSama(aksi,K_MakeKata("GU"))){
+          if (CanMoveUp(P,GetRuangSekarang(R))){
+            MoveUp(&P,R);
+            aksivalid = true;
+          }
+          else if(Ruangan(R)==4 && P_Absis(posisi(P))==1 && P_Ordinat(posisi(P))==5){
+            Ruangan(R) = 1;
+            PlacePelayan(&P,8,5,Room1(R));
+            aksivalid = true;
+          }
+          else if(Ruangan(R)==3 && P_Absis(posisi(P))==1 && P_Ordinat(posisi(P))==5){
+            Ruangan(R) = 2;
+            PlacePelayan(&P,8,5,Room2(R));
+            aksivalid = true;
+          }
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("GD"))){
+          if (CanMoveDown(P,GetRuangSekarang(R))){
+            MoveDown(&P,R);
+            aksivalid = true;
+          }
+          else if(Ruangan(R)==1 && P_Absis(posisi(P))==8 && P_Ordinat(posisi(P))==5){
+            Ruangan(R) = 4;
+            PlacePelayan(&P,1,5,Room4(R));
+            aksivalid = true;
+          }
+          else if(Ruangan(R)==2 && P_Absis(posisi(P))==8 && P_Ordinat(posisi(P))==5){
+            Ruangan(R) = 3;
+            PlacePelayan(&P,1,5,Room3(R));
+            aksivalid = true;
+          }
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("GR"))){
+          if (CanMoveRight(P,GetRuangSekarang(R))){
+            MoveRight(&P,R);
+            aksivalid = true;
+          }
+          else if(Ruangan(R)==1 && P_Absis(posisi(P))==5 && P_Ordinat(posisi(P))==8){
+            Ruangan(R) = 2;
+            PlacePelayan(&P,2,1,Room2(R));
+            aksivalid = true;
+          }
+          else if(Ruangan(R)==4 && P_Absis(posisi(P))==5 && P_Ordinat(posisi(P))==8){
+            Ruangan(R) = 3;
+            PlacePelayan(&P,2,1,Room3(R));
+            aksivalid = true;
+          }
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("GL"))){
+          if (CanMoveLeft(P,GetRuangSekarang(R))){
+            MoveLeft(&P,R);
+            aksivalid = true;
+          }
+          else if(Ruangan(R)==2 && P_Absis(posisi(P))==2 && P_Ordinat(posisi(P))==1){
+            Ruangan(R) = 1;
+            PlacePelayan(&P,5,8,Room1(R));
+            aksivalid = true;
+          }
+          else if(Ruangan(R)==3 && P_Absis(posisi(P))==2 && P_Ordinat(posisi(P))==1){
+            Ruangan(R) = 4;
+            PlacePelayan(&P,5,8,Room4(R));
+            aksivalid = true;
+          }
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("ORDER"))){
+          aksivalid = true;
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("PUT"))){
+          aksivalid = true;
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("TAKE"))){
+          aksivalid = true;
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("CH"))){
+          aksivalid = true;
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("CT"))){
+          aksivalid = true;
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("PLACE"))){
+          aksivalid = true;
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("GIVE"))){
+          aksivalid = true;
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("RECIPE"))){
+          aksivalid = true;
+        }
+
+        if(aksivalid){
+          time++;
+        }
+
+      }while(!K_IsKataSama(aksi,K_MakeKata("EXIT")));
     }
 
   }while(!K_IsKataSama(input,K_MakeKata("EXIT")));
