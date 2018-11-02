@@ -9,7 +9,6 @@
 typedef struct {
   int roomNow;
   GrafRuangan ruangan; //array yang berisi ruangan
-  //List hubungan; //mapping
 } Restoran;
 //tipe Restoran dengan 4 ruangan berukuran 8x8
 // dengan terdapat 4 pintu yang menghubungkan keempat ruangan tersebut

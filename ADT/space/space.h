@@ -141,24 +141,23 @@ void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int *nomorMeja);
 /*
   I.S. P dan *R terdefinisi, dilakukan jika sudah dipastikan dapat order dan P
     dekat Meja
-  F.S.
+  F.S. status meja menajadi sudah order, idMakanan berisi id makanan yang dirandom
+    nomorMeja berisi nomor meja yang memesan
 */
 int Taking(Pelayan P);
 /*
   menghasilkan id makanan yang diambil dengan syarat di dekat P hanya ada
   satu meja bahan ('m')
 */
-void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, Ruangan *R);
+void Placing(int pelanggan,int waktuOut, Pelayan *P, Ruangan *R);
 /*
-  I.S. pelanggan,kesabaran,menu, Pelayan, retoran terdefinisi,
+  I.S. pelanggan,waktuOut,Pelayan, retoran terdefinisi,
       meja sebelah Pelayan adalah kosong
       pelanggan merupakan jumlah pelanggan yang akan duduk
       waktuOut merupakan waktu pelanggan pergi
-      menu merupakan nama makanan yang akan dipesan
       hanya dipanggil jika yakin pelanggan bisa diletakkan
-  F.S. pelanggan di tempatkan di meja sesuai jumlahnya deskripsi akan bernilai menu
-      karakter jadi 'c', value jadi kesabaran, deskripsi nomor meja berubah dari
-      kosong menjadi isi
+  F.S. pelanggan di tempatkan di meja sesuai jumlahnya
+      karakter jadi 'c', value jadi waktuOut
 */
 
 // *** LAIN LAIN ***

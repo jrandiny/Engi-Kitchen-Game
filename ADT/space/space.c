@@ -391,7 +391,7 @@ void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int *nomorMeja)
   time_t t;
   //ALGORITMA
   srand((unsigned) time(&t)); //inisialisasi rnd()
-  *idMakanan = (rand()%24+1);
+  *idMakanan = (rand()%8+17); //[17..24]
   *nomorMeja = IsNearTable(P,*R);
   Status(AM_Elmt(Meja(*R),*nomorMeja)) = 2;
 }
@@ -415,10 +415,15 @@ int Taking(Pelayan P)
   }
   return makanan;
 }
-void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, Ruangan *R)
+void Placing(int pelanggan,int waktuOut,Pelayan *P, Ruangan *R)
 /*
-  I.S. pelanggan, Pelayan, retoran terdefinisi, meja sebelah Pelayan adalah kosong
-  F.S. pelanggan di tempat di meja sesuai jumlahnya
+  I.S. pelanggan,waktuOut,Pelayan, retoran terdefinisi,
+      meja sebelah Pelayan adalah kosong
+      pelanggan merupakan jumlah pelanggan yang akan duduk
+      waktuOut merupakan waktu pelanggan pergi
+      hanya dipanggil jika yakin pelanggan bisa diletakkan
+  F.S. pelanggan di tempatkan di meja sesuai jumlahnya
+      karakter jadi 'c', value jadi waktuOut
 */
 {
   //KAMUS
