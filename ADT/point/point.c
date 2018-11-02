@@ -36,7 +36,7 @@ void P_BacaPoint (Point * P)
   int X,Y;
 
   /* ALGORITMA */
-  scanf("%f %f",&X,&Y);
+  scanf("%d %d",&X,&Y);
   *P = P_MakePoint(X,Y);
 }
 
