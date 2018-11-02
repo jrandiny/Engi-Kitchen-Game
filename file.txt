@@ -111,6 +111,6 @@ m/<idmakanan>/<idmakanan>
 
 
 <nama> <banyaknya> <banyak kata> <katanya>
-customer : <jumlah customer>/<prio>/<waktu kedatangan>/<idmakanan>
+customer : <jumlah customer>/<prio>/<waktu kedatangan>
 order : <idmakanan>/<nomeja>
 meja : <bangku>/<pointx>,<pointy>/<status>

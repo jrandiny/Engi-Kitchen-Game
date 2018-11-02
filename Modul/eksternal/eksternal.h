@@ -5,7 +5,7 @@
 #include "../../ADT.h"
 #include "../../ADT/space/space.h"
 
-void ParserLocate(Kata input,int *pos1, int *pos2, int *pos3);
+void ParserLocate(Kata input,int *pos1, int *pos2);
 /*I.S. input valid, pos1 dan pos2 kosong
   F.S. pos1 dan pos2 berisi index letak parse
        jika tidak ditemukan pos berisi -1
@@ -19,6 +19,9 @@ Meja ParseMeja(Kata scanned);
 customer ParseCostumer(Kata scanned);
 /* mengembalikan tipe customer dari hasil parsing kata */
 
+Door ParseDoor(Kata scanned);
+/* mengembalikan tipe door dari hasil parsing kata */
+
 Ruangan ParseRuangan(Kata X);
 /*CKata berada di banyak elemen ruangan/x, mengambil X kata berikutnya menjadi Ruangan*/
 
@@ -28,11 +31,11 @@ MatTile TakeMatTile(Kata X);
 ArrMeja TakeArrMeja(Kata X);
 /*CKata berada di jumlah meja yg akan diambil/X, mengambil X kata berikutnya menjadi elemen ArrMeja*/
 
-ArrRuangan TakeArrRuangan(Kata X);
-/*CKata berada di jumlah ruangan yg akan diambil/X, mengambil X kata berikutnya menjadi elemen ArrRuangan*/
-
 Restoran ParseRestoran();
 /*CKata berada di kata restoran*/
+
+GrafRuangan ParseGrafRuangan(Kata X);
+/*Ckata berada di jumlah komponen rungan, mengambil X bagian berikutnya menjadi grafruangan*/
 
 
 #endif

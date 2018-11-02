@@ -1,13 +1,13 @@
 #include "eksternal.h"
 
-void ParserLocate(Kata input,int *pos1, int *pos2, int *pos3)
+void ParserLocate(Kata input,int *pos1, int *pos2)
 /*I.S. input valid, pos1 dan pos2 kosong
   F.S. pos1 dan pos2 berisi index letak parse
        jika tidak ditemukan pos berisi -1
 */
 {
   int i=1;
-  *pos1=*pos2=*pos3=-1;
+  *pos1=*pos2=-1;
   int jumlah=0;
   while(i<=input.Length){
     if(input.TabKata[i]=='/'){
@@ -15,8 +15,6 @@ void ParserLocate(Kata input,int *pos1, int *pos2, int *pos3)
         *pos1=i;
       }else if(jumlah==1){
         *pos2=i;
-      }else if(jumlah==2){
-        *pos3=i;
       }
       jumlah++;
     }
@@ -24,12 +22,23 @@ void ParserLocate(Kata input,int *pos1, int *pos2, int *pos3)
   }
 }
 
+Door ParseDoor(Kata scanned)
+/* mengembalikan tipe door dari hasil parsing kata */
+{
+  Door hasil;
+  int pos1,pos2;
+  ParserLocate(scanned,&pos1,&pos2);
+  DoorLocation(hasil)=K_KataToPoint(K_CopySubKata(scanned,1,pos1-1));
+  DoorDirection(hasil)=K_KataToInt(K_CopySubKata(scanned,pos1+1,pos2-1));
+  DoorRoomID(hasil)=K_KataToInt(K_CopySubKata(scanned,pos2+1,scanned.Length));
+}
+
 Tile ParseTile(Kata scanned)
 /* mengembalikan tipe tile dari hasil parsing kata */
 {
-  int pos1,pos2,pos3;
+  int pos1,pos2;
   Tile hasil;
-  ParserLocate(scanned,&pos1,&pos2,&pos3);
+  ParserLocate(scanned,&pos1,&pos2);
   Karakter(hasil)=scanned.TabKata[1];
   Value(hasil)=K_KataToInt(K_CopySubKata(scanned,pos1+1,scanned.Length));
   return hasil;
@@ -38,22 +47,21 @@ Tile ParseTile(Kata scanned)
 customer ParseCostumer(Kata scanned)
 /* mengembalikan tipe customer dari hasil parsing kata */
 {
-  int pos1,pos2,pos3;
+  int pos1,pos2;
   customer hasil;
-  ParserLocate(scanned,&pos1,&pos2,&pos3);
-  C_Prio(hasil)=K_KataToInt(K_CopySubKata(scanned,1,pos1-1));
-  C_Jumlah(hasil)=K_KataToInt(K_CopySubKata(scanned,pos1+1,pos2-1));
-  C_Waktu(hasil)=K_KataToInt(K_CopySubKata(scanned,pos2+1,pos3-1));
-  C_ID(hasil)=K_KataToInt(K_CopySubKata(scanned,pos3+1,scanned.Length));
+  ParserLocate(scanned,&pos1,&pos2);
+  PQC_Prio(hasil)=K_KataToInt(K_CopySubKata(scanned,1,pos1-1));
+  PQC_Jumlah(hasil)=K_KataToInt(K_CopySubKata(scanned,pos1+1,pos2-1));
+  PQC_Waktu(hasil)=K_KataToInt(K_CopySubKata(scanned,pos2+1,scanned.Length));
   return hasil;
 }
 
 Meja ParseMeja(Kata scanned)
 /* mengembalikan tipe meja dari hasil parsing kata */
 {
-  int pos1,pos2,pos3;
+  int pos1,pos2;
   Meja hasil;
-  ParserLocate(scanned,&pos1,&pos2,&pos3);
+  ParserLocate(scanned,&pos1,&pos2);
   Bangku(hasil)=K_KataToInt(K_CopySubKata(scanned,1,pos1-1));
   Meja_Posisi(hasil)=K_KataToPoint(K_CopySubKata(scanned,pos1+1,pos2-1));
   Status(hasil)=K_KataToInt(K_CopySubKata(scanned,pos2+1,scanned.Length));
@@ -68,6 +76,17 @@ Ruangan ParseRuangan(Kata X)
   Room(hasil)=TakeMatTile(CKata);//Ckata berada di tile terakhir
   K_ADVKATA();//Ckata menjadi jumlah arrmeja
   Meja(hasil)=TakeArrMeja(CKata);//Ckata berakhir di jumlah elemen arrmeja terakhir;
+  return hasil;
+}
+
+Restoran ParseRestoran()
+/*CKata berada di kata restoran*/
+{
+  Restoran hasil;
+  K_ADVKATA();//Ckata menjadi roomnow;
+  RoomNow(hasil)=K_KataToInt(CKata);
+  K_ADVKATA();//Ckata menjadi jumlah ruangan yg diambil
+  Ruangan(hasil)=ParseGrafRuangan(CKata);
   return hasil;
 }
 
@@ -104,28 +123,38 @@ ArrMeja TakeArrMeja(Kata X)
   return hasil;
 }
 
-
-ArrRuangan TakeArrRuangan(Kata X)
-/*CKata berada di jumlah ruangan yg akan diambil/X, mengambil X kata berikutnya menjadi elemen ArrRuangan*/
+GrafRuangan ParseGrafRuangan(Kata X)
+/*Ckata berada di jumlah komponen rungan, mengambil X bagian berikutnya menjadi grafruangan*/
 {
-  ArrRuangan hasil;
-  int i;
+  GrafRuangan hasil;
+  Ruangan tempR;
+  Door tempD1,tempD2;
+  GR_address GR1,GR2;
+  int i,j;
+  GR_CreateEmpty(&hasil);
   for(i=1;i<=K_KataToInt(X);i++){
-    K_ADVKATA();//dapat jumlah elemen ruangan
-    AR_Elmt(hasil,i)=ParseRuangan(CKata);//Ckata berakhir di komponen elemen arrmeja terakhir
+    K_ADVKATA();//Ckata menjadi idruangan
+    RoomID(tempR)=K_KataToInt(CKata);
+    K_ADVKATA();//Ckata menjadi banyak tile yg akan diambil
+    Room(tempR)=TakeMatTile(CKata);//ckata berada di tile terakhir
+    K_ADVKATA();//Ckata berada di banyak meja
+    Meja(tempR)=TakeArrMeja(CKata);//ckata berada di meja terakhir
+    GR_InsVFirst(&hasil,tempR);
+  }    
+  //di akhir iterasi for Ckata berada di meja dari ruangan terakhir;
+  //saat mencapai sini, semua ruangan sudah menjadi node, namun belum ada door
+  K_ADVKATA();//Ckata berada di banyak pasangan door
+  for(j=1;j<K_KataToInt(CKata);j++){
+      K_ADVKATA();
+      tempD1=ParseDoor(CKata);
+      K_ADVKATA();
+      tempD2=ParseDoor(CKata);
+      GR1=GR_Search(hasil,DoorRoomID(tempD1));
+      GR2=GR_Search(hasil,DoorRoomID(tempD2));
+      GRD_InsertVDoors(&GR1,&GR2,tempD1,tempD2);
   }
-  AR_Neff(hasil)=K_KataToInt(X);
-  return hasil;
-}
-
-Restoran ParseRestoran()
-/*CKata berada di kata restoran*/
-{
-  Restoran hasil;
-  K_ADVKATA();//Ckata menjadi roomnow;
-  RoomNow(hasil)=K_KataToInt(CKata);
-  K_ADVKATA();//Ckata menjadi jumlah ruangan yg diambil
-  Ruangan(hasil)=TakeArrRuangan(CKata);//Ckata menjadi komponen terakhir ruangan
+  //Ckata berada di door terakhir
+  //saat mencapai sini, semua node dan vertex sudah terbentuk
   return hasil;
 }
 
