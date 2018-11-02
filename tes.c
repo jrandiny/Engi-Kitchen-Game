@@ -2,20 +2,7 @@
 #include "std.h"
 // #include "ADT Lain/Map + Movement/space.h"
 #include "Modul/UI/UI.h"
-<<<<<<< HEAD
-#include "Modul/eksternal/eksternal.h"
-// #include "ADT/space/tile.h"
-// #include "ADT/space/matTile/matTile.h"
-// #include "ADT/space/arrMeja/arrMeja.h"
-// #include "ADT/space/arrRuangan/arrRuangan.h"
-// #include "ADT/space/pelayan.h"
-// #include "ADT/space/restoran.h"
-// #include "ADT/space/meja.h"
-// #include "ADT/space/ruangan"
-
-=======
 #include "ADT/space/space.h"
->>>>>>> make tes.c runable, change header + function name
 
 ArrKata MainMenu(){
   ArrKata hasil;
@@ -70,100 +57,6 @@ int main (){
       }
 
       aksivalid = false;
-<<<<<<< HEAD
-    //   do{
-    //     RefreshTopPanel(&gs,K_KataToChar(username),money,life,time);
-
-    //     aksi=GetInput(&gs,K_MakeKata("COMMAND : "));
-    //     if(K_IsKataSama(aksi,K_MakeKata("GU"))){
-    //       if (CanMoveUp(P,GetRuangSekarang(R))){
-    //         MoveUp(&P,R);
-    //         aksivalid = true;
-    //       }
-    //       else if(Ruangan(R)==4 && P_Absis(posisi(P))==1 && P_Ordinat(posisi(P))==5){
-    //         Ruangan(R) = 1;
-    //         PlacePelayan(&P,8,5,Room1(R));
-    //         aksivalid = true;
-    //       }
-    //       else if(Ruangan(R)==3 && P_Absis(posisi(P))==1 && P_Ordinat(posisi(P))==5){
-    //         Ruangan(R) = 2;
-    //         PlacePelayan(&P,8,5,Room2(R));
-    //         aksivalid = true;
-    //       }
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("GD"))){
-    //       if (CanMoveDown(P,GetRuangSekarang(R))){
-    //         MoveDown(&P,R);
-    //         aksivalid = true;
-    //       }
-    //       else if(Ruangan(R)==1 && P_Absis(posisi(P))==8 && P_Ordinat(posisi(P))==5){
-    //         Ruangan(R) = 4;
-    //         PlacePelayan(&P,1,5,Room4(R));
-    //         aksivalid = true;
-    //       }
-    //       else if(Ruangan(R)==2 && P_Absis(posisi(P))==8 && P_Ordinat(posisi(P))==5){
-    //         Ruangan(R) = 3;
-    //         PlacePelayan(&P,1,5,Room3(R));
-    //         aksivalid = true;
-    //       }
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("GR"))){
-    //       if (CanMoveRight(P,GetRuangSekarang(R))){
-    //         MoveRight(&P,R);
-    //         aksivalid = true;
-    //       }
-    //       else if(Ruangan(R)==1 && P_Absis(posisi(P))==5 && P_Ordinat(posisi(P))==8){
-    //         Ruangan(R) = 2;
-    //         PlacePelayan(&P,2,1,Room2(R));
-    //         aksivalid = true;
-    //       }
-    //       else if(Ruangan(R)==4 && P_Absis(posisi(P))==5 && P_Ordinat(posisi(P))==8){
-    //         Ruangan(R) = 3;
-    //         PlacePelayan(&P,2,1,Room3(R));
-    //         aksivalid = true;
-    //       }
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("GL"))){
-    //       if (CanMoveLeft(P,GetRuangSekarang(R))){
-    //         MoveLeft(&P,R);
-    //         aksivalid = true;
-    //       }
-    //       else if(Ruangan(R)==2 && P_Absis(posisi(P))==2 && P_Ordinat(posisi(P))==1){
-    //         Ruangan(R) = 1;
-    //         PlacePelayan(&P,5,8,Room1(R));
-    //         aksivalid = true;
-    //       }
-    //       else if(Ruangan(R)==3 && P_Absis(posisi(P))==2 && P_Ordinat(posisi(P))==1){
-    //         Ruangan(R) = 4;
-    //         PlacePelayan(&P,5,8,Room4(R));
-    //         aksivalid = true;
-    //       }
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("ORDER"))){
-    //       aksivalid = true;
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("PUT"))){
-    //       aksivalid = true;
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("TAKE"))){
-    //       aksivalid = true;
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("CH"))){
-    //       aksivalid = true;
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("CT"))){
-    //       aksivalid = true;
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("PLACE"))){
-    //       aksivalid = true;
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("GIVE"))){
-    //       aksivalid = true;
-    //     }
-    //     else if(K_IsKataSama(aksi,K_MakeKata("RECIPE"))){
-    //       aksivalid = true;
-    //     }
-=======
       do{
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,time);
         M = GetRuangSekarang(R);
@@ -256,7 +149,6 @@ int main (){
         else if(K_IsKataSama(aksi,K_MakeKata("RECIPE"))){
           aksivalid = true;
         }
->>>>>>> make tes.c runable, change header + function name
 
     //     if(aksivalid){
     //       time++;
