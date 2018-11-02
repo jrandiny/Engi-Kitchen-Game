@@ -9,17 +9,12 @@
 
 /* *** DEFINISI PROTOTIPE PRIMITIF *** */
 /* *** Konstruktor membentuk Point *** */
-Point P_MakePoint (int X, int Y)
+void P_CreatePoint (Point *P)
 /* Membentuk sebuah Point dari komponen-komponennya */
 {
-  /* KAMUS */
-  Point P;
-
   /* ALGORITMA */
-  P_Absis(P) = X;
-  P_Ordinat(P) = Y;
-
-  return P;
+  P_Absis(*P) = 0;
+  P_Ordinat(*P) = 0;
 }
 
 /* *** KELOMPOK Interaksi dengan I/O device, BACA/TULIS  *** */
@@ -37,7 +32,7 @@ void P_BacaPoint (Point * P)
 
   /* ALGORITMA */
   scanf("%d %d",&X,&Y);
-  *P = P_MakePoint(X,Y);
+  P_SetXY(P,X,Y);
 }
 
 void P_TulisPoint (Point P)
@@ -74,12 +69,12 @@ Point P_PlusDelta (Point P, int deltaX, int deltaY)
 {
   /* KAMUS */
   int newX, newY;
-
+  Point p;
   /* ALGORITMA */
   newX = P_Absis(P) + deltaX;
   newY = P_Ordinat(P) + deltaY;
-
-  return P_MakePoint(newX,newY);
+  P_SetXY(&p,newX,newY);
+  return p;
 }
 void P_GetXY(Point P, int *x, int *y)
 /*

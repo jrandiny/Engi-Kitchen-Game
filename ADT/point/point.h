@@ -19,7 +19,7 @@ typedef struct {
 
 /* *** DEFINISI PROTOTIPE PRIMITIF *** */
 /* *** Konstruktor membentuk Point *** */
-Point P_MakePoint (int X, int Y);
+void P_CreatePoint (Point *P);
 /* Membentuk sebuah Point dari komponen-komponennya */
 
 /* *** KELOMPOK Interaksi dengan I/O device, BACA/TULIS  *** */
