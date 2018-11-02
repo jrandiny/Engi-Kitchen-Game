@@ -1,8 +1,8 @@
 #include "stacktfood.h"
 
 int main() {
-    int menu;
-    SF_infotype idmkn;
+    int menu,idmkn;
+    SF_infotype X;
     StackFood F;
 
     SF_CreateEmpty(&F);
@@ -40,15 +40,16 @@ int main() {
             break;
             case 3 :
             {
-                printf("Masukkan id makanan : ");
+                printf("id makanan : ");
                 scanf("%d", &idmkn);
-                SF_Push(&F,idmkn);
+                SF_IDMakanan(X) = idmkn;
+                SF_Push(&F,X);
             }
             break;
             case 4 :
             {
-                SF_Pop(&F,&idmkn);
-                printf("Pop : %d\n", idmkn);
+                SF_Pop(&F,&X);
+                printf("Pop : %d\n", SF_IDMakanan(X));
             }
             break;
         }

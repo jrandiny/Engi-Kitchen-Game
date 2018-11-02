@@ -11,7 +11,12 @@
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
 
-typedef int SF_infotype;
+typedef int SF_Indeks;
+typedef char SF_Food[10];
+typedef struct {
+    SF_Indeks idmakanan;
+    SF_Food makanan;
+} SF_infotype;
 typedef int SF_address;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
@@ -27,8 +32,11 @@ typedef struct {
    /* S.TOP adalah alamat elemen TOP */
 
 /* Definisi akses dengan Selektor : Set dan Get */
-#define SF_Top(S) (S).TOP
-#define SF_InfoTop(S) (S).T[(S).TOP]
+#define SF_Top(S)           (S).TOP
+#define SF_InfoTop(S)       (S).T[(S).TOP]
+/** Jika e adalah SF_infotype **/
+#define SF_IDMakanan(e)     (e).idmakanan
+#define SF_NamaMakanan(e)   (e).makanan
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
