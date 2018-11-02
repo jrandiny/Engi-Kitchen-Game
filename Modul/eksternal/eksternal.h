@@ -31,4 +31,8 @@ ArrMeja TakeArrMeja(Kata X);
 ArrRuangan TakeArrRuangan(Kata X);
 /*CKata berada di jumlah ruangan yg akan diambil/X, mengambil X kata berikutnya menjadi elemen ArrRuangan*/
 
+Restoran ParseRestoran();
+/*CKata berada di kata restoran*/
+
+
 #endif

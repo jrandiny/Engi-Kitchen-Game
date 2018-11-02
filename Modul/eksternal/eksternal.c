@@ -45,6 +45,7 @@ customer ParseCostumer(Kata scanned)
   C_Jumlah(hasil)=K_KataToInt(K_CopySubKata(scanned,pos1+1,pos2-1));
   C_Waktu(hasil)=K_KataToInt(K_CopySubKata(scanned,pos2+1,pos3-1));
   C_ID(hasil)=K_KataToInt(K_CopySubKata(scanned,pos3+1,scanned.Length));
+  return hasil;
 }
 
 Meja ParseMeja(Kata scanned)
@@ -66,7 +67,7 @@ Ruangan ParseRuangan(Kata X)
   K_ADVKATA();//Ckata menjadi jumlah MatTile
   Room(hasil)=TakeMatTile(CKata);//Ckata berada di tile terakhir
   K_ADVKATA();//Ckata menjadi jumlah arrmeja
-  Meja(hasil)=TakeArrMeja(CKata)//Ckata berakhir di jumlah elemen arrmeja terakhir;
+  Meja(hasil)=TakeArrMeja(CKata);//Ckata berakhir di jumlah elemen arrmeja terakhir;
   return hasil;
 }
 
@@ -76,9 +77,9 @@ MatTile TakeMatTile(Kata X)
   int i,j;
   MatTile hasil;
   i=1;
-  while(i<(K_KataToInt(X)/8)){
+  while(i<=(K_KataToInt(X)/8)){
     j=1;
-    while(j<(K_KataToInt(X)/8)){
+    while(j<=(K_KataToInt(X)/8)){
       K_ADVKATA();
       MT_Elmt(hasil,i,j)=ParseTile(CKata);
       j++;
@@ -116,3 +117,15 @@ ArrRuangan TakeArrRuangan(Kata X)
   AR_Neff(hasil)=K_KataToInt(X);
   return hasil;
 }
+
+Restoran ParseRestoran()
+/*CKata berada di kata restoran*/
+{
+  Restoran hasil;
+  K_ADVKATA();//Ckata menjadi roomnow;
+  RoomNow(hasil)=K_KataToInt(CKata);
+  K_ADVKATA();//Ckata menjadi jumlah ruangan yg diambil
+  Ruangan(hasil)=TakeArrRuangan(CKata);//Ckata menjadi komponen terakhir ruangan
+  return hasil;
+}
+
