@@ -8,6 +8,7 @@
 // #include "../../ADT/stack/stackt.h"
 #include "../../ADT/mesinkata/arrKata/arrKata.h"
 #include "../../ADT/space/matTile/matTile.h"
+#include "../../ADT/customer/prioqueuecustomer.h"
 //#include "../../ADT/listlinier/listlinier.h"
 #include <ncurses.h>
 
@@ -102,7 +103,7 @@ void RefreshMap(GameScreen *gs, MatTile peta);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar peta sesuai MatTile peta */
 
-// void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue);
+void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel daftar pelanggan menunggu */
 

@@ -3,7 +3,7 @@
 #include "../../ADT/point/point.h"
 #include "../../boolean.h"
 #include "../../ADT/space/matTile/matTile.h"
-
+#include "../../ADT/customer/prioqueuecustomer.h"
 
 void DrawBorders(WINDOW *screen)
 /* I.S. : screen sudah diinisialisasi */
@@ -301,16 +301,28 @@ void RefreshMap(GameScreen *gs, MatTile peta)
 }
 
 
-// void RefreshWaitingPanel(GameScreen *gs, Queue waitQueue)
+void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel daftar pelanggan menunggu */
-// {
-//   /* KAMUS LOKAL */
-//
-//   /* ALGORITMA */
-//   wclear(Waiting_Panel(*gs));
-//   DrawBorders(Waiting_Panel(*gs));
-// }
+{
+  /* KAMUS LOKAL */
+  char ch;
+  int idx;
+
+  /* ALGORITMA */
+  wclear(Waiting_Panel(*gs));
+  DrawBorders(Waiting_Panel(*gs));
+
+  mvwprintw(Waiting_Panel(*gs),1, 2, "Waiting Cust");
+  idx = 1;
+
+  if(!PQC_IsEmpty(waitQueue)){
+    ch = PQC_Jumlah(PQC_Elmt(waitQueue, idx))+'0';
+    mvwaddch(Waiting_Panel(*gs), idx+1, 2, ch);
+  }
+
+  wrefresh(Waiting_Panel(*gs));
+}
 
 // void RefreshFoodPanel(GameScreen *gs, Stack foodStack)
 /* I.S. : Bebas sudah initScreen */

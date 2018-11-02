@@ -5,6 +5,7 @@
 #include "../../ADT/point/point.h"
 #include "../../ADT/mesinkata/mesinkata.h"
 #include "../../ADT/space/matTile/matTile.h"
+#include "../../ADT/customer/prioqueuecustomer.h"
 
 int main(){
   /* KAMUS */
@@ -13,6 +14,8 @@ int main(){
   Kata prompt;
   ArrKata ak;
   MatTile mt;
+  PrioQueueCustomer pqc;
+  customer cust;
 
   int i,j;
 
@@ -34,17 +37,25 @@ int main(){
     }
   } while(!K_IsKataSama(input, K_MakeKata("1")));
 
+  /* Create sample matTile */
   MT_MakeMatriks(8, 8, &mt);
   for(i=1;i<=8;i++){
     for(j=1;j<=8;j++){
-      MT_Elmt(mt, i, j) = MT_SetTile(65+i, 5);
+      MT_Elmt(mt, i, j) = MT_CreateTile(65+i, 5);
     }
   }
 
+  /* Create simple Queue*/
+  PQC_CreateEmpty(&pqc);
+  PQC_Prio(cust) = 1;
+  PQC_Waktu(cust) = 2;
+  PQC_Jumlah(cust) = 2;
+  PQC_Add(&pqc, cust);
 
 
   while(true){
     RefreshTopPanel(&gs,"Nama",1,2,3);
+    RefreshWaitingPanel(&gs, pqc);
     RefreshMap(&gs,mt);
     input  = GetInput(&gs,prompt);
 
