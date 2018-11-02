@@ -29,7 +29,7 @@ void PlacePelayan(Pelayan *P,int x,int y, MatTile M);
   I.S. Pelayan,x,y,R terdefinisi
   F.S. Pelayan terletak di posisi x,y di ruangan R semua sisi terupdate
 */
-void InitRuangan(Restoran *R);
+void InitRestoran(Restoran *R);
 /*
   menyiapkan ruangan kosong dan menghubungkan semua ruangan
   I.S. R Sembarang

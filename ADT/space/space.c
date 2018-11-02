@@ -26,15 +26,15 @@ void InitPelayan(Pelayan *P)
 {
   //ALGORITMA
   //posisi
-  P_SetXY(&Pelayan_Posisi(*P),0,0);
+  P_SetXY(&Pelayan_Posisi(*P),5,5);
   //up
-  Up(*P) = MT_SetTile(CharUndeff,ValUndeff);
+  Up(*P) = MT_CreateTile(CharUndeff,ValUndeff);
   //down
-  Down(*P) = MT_SetTile(CharUndeff,ValUndeff);
+  Down(*P) = MT_CreateTile(CharUndeff,ValUndeff);
   //left
-  Left(*P) = MT_SetTile(CharUndeff,ValUndeff);
+  Left(*P) = MT_CreateTile(CharUndeff,ValUndeff);
   //right
-  Right(*P) = MT_SetTile(CharUndeff,ValUndeff);
+  Right(*P) = MT_CreateTile(CharUndeff,ValUndeff);
 }
 void PlacePelayan(Pelayan *P,int x,int y, MatTile M)
 /*
@@ -50,7 +50,7 @@ void PlacePelayan(Pelayan *P,int x,int y, MatTile M)
   SetLeftTile(P,M);
   SetRightTile(P,M);
 }
-void InitRuangan(Restoran *R)
+void InitRestoran(Restoran *R)
 /*
   menyiapkan ruangan kosong dan menghubungkan semua ruangan
   I.S. R Sembarang
@@ -62,7 +62,11 @@ void InitRuangan(Restoran *R)
       hubungan telah menghubungkan semua ruangan.
 */
 {
-
+  //ALGORITMA
+  for (int i = AR_GetFirstIdx(Ruangan(*R));i <= AR_GetLastIdx(Ruangan(*R));i++) {
+    MT_MakeMatriks(8,8,&Room(AR_Elmt(Ruangan(*R),i)));
+  }
+  RoomNow(*R) = 1;
 }
 
 // *** PINDAH ***
@@ -272,9 +276,9 @@ void SetUpTile(Pelayan *P,MatTile M)
   x -= 1;
   if (MT_IsIdxValid(x,y)) {
     tmp = MT_Elmt(M,x,y);
-    Up(*P) = MT_SetTile(Karakter(tmp),Value(tmp));
+    Up(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
   } else {
-    Up(*P) = MT_SetTile(CharUndeff,ValUndeff);
+    Up(*P) = MT_CreateTile(CharUndeff,ValUndeff);
   }
 }
 void SetDownTile(Pelayan *P,MatTile M)
@@ -291,9 +295,9 @@ void SetDownTile(Pelayan *P,MatTile M)
   x += 1;
   if (MT_IsIdxValid(x,y)) {
     tmp = MT_Elmt(M,x,y);
-    Down(*P) = MT_SetTile(Karakter(tmp),Value(tmp));
+    Down(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
   } else {
-    Down(*P) = MT_SetTile(CharUndeff,ValUndeff);
+    Down(*P) = MT_CreateTile(CharUndeff,ValUndeff);
   }
 }
 void SetLeftTile(Pelayan *P,MatTile M)
@@ -310,9 +314,9 @@ void SetLeftTile(Pelayan *P,MatTile M)
   y -= 1;
   if (MT_IsIdxValid(x,y)) {
     tmp = MT_Elmt(M,x,y);
-    Left(*P) = MT_SetTile(Karakter(tmp),Value(tmp));
+    Left(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
   } else {
-    Left(*P) = MT_SetTile(CharUndeff,ValUndeff);
+    Left(*P) = MT_CreateTile(CharUndeff,ValUndeff);
   }
 }
 void SetRightTile(Pelayan *P,MatTile M)
@@ -329,9 +333,9 @@ void SetRightTile(Pelayan *P,MatTile M)
   y += 1;
   if (MT_IsIdxValid(x,y)) {
     tmp = MT_Elmt(M,x,y);
-    Right(*P) = MT_SetTile(Karakter(tmp),Value(tmp));
+    Right(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
   } else {
-    Right(*P) = MT_SetTile(CharUndeff,ValUndeff);
+    Right(*P) = MT_CreateTile(CharUndeff,ValUndeff);
   }
 }
 
@@ -431,17 +435,17 @@ void Placing(int pelanggan,int waktuOut, Kata menu,Pelayan *P, Ruangan *R)
   jumlahBangku = Bangku(AM_Elmt(Meja(*R),nomorMeja));
 
   //menaruh minimal 2 pelanggan
-  MT_Elmt(Room(*R),i,j+1) = MT_SetTile('c',waktuOut);
-  MT_Elmt(Room(*R),i,j-1) = MT_SetTile('c',waktuOut);
+  MT_Elmt(Room(*R),i,j+1) = MT_CreateTile('c',waktuOut);
+  MT_Elmt(Room(*R),i,j-1) = MT_CreateTile('c',waktuOut);
   if (pelanggan == 4) {
     /*jika pelanggannya 4, tambah 2 karakter 'c' lagi
       bukan saat ada 4 jumlahBangku*/
-    MT_Elmt(Room(*R),i+1,j) = MT_SetTile('c',waktuOut);
-    MT_Elmt(Room(*R),i-1,j) = MT_SetTile('c',waktuOut);
+    MT_Elmt(Room(*R),i+1,j) = MT_CreateTile('c',waktuOut);
+    MT_Elmt(Room(*R),i-1,j) = MT_CreateTile('c',waktuOut);
   }
   if (jumlahBangku==4) { //jika bangku ada 4, tambah 2 valur dan deskripsi lagi
-    MT_Elmt(Room(*R),i+1,j) = MT_SetTile('x',waktuOut);
-    MT_Elmt(Room(*R),i-1,j) = MT_SetTile('x',waktuOut);
+    MT_Elmt(Room(*R),i+1,j) = MT_CreateTile('x',waktuOut);
+    MT_Elmt(Room(*R),i-1,j) = MT_CreateTile('x',waktuOut);
   }
   PlacePelayan(P,x,y,Room(*R));
 }
@@ -518,11 +522,11 @@ void SetTableEmpty(int nomorMeja, Ruangan *R)
   jumlahBangku = Bangku(AM_Elmt(Meja(*R),nomorMeja));
 
   //merubah minimal 2 pelanggan
-  MT_Elmt(Room(*R),i,j+1) = MT_SetTile('x',ValUndeff);
-  MT_Elmt(Room(*R),i,j-1) = MT_SetTile('x',ValUndeff);
+  MT_Elmt(Room(*R),i,j+1) = MT_CreateTile('x',ValUndeff);
+  MT_Elmt(Room(*R),i,j-1) = MT_CreateTile('x',ValUndeff);
   if (jumlahBangku==4) { //jika bangku ada 4, tambah 2 valur dan deskripsi lagi
-    MT_Elmt(Room(*R),i+1,j) = MT_SetTile('x',ValUndeff);
-    MT_Elmt(Room(*R),i-1,j) = MT_SetTile('x',ValUndeff);
+    MT_Elmt(Room(*R),i+1,j) = MT_CreateTile('x',ValUndeff);
+    MT_Elmt(Room(*R),i-1,j) = MT_CreateTile('x',ValUndeff);
   }
   Status(AM_Elmt(Meja(*R),nomorMeja)) = 0;
 }
