@@ -25,7 +25,7 @@ void InitPelayan(Pelayan *P)
 {
   //ALGORITMA
   //posisi
-  P_SetXY(&Pelayan_Posisi(*P),5,5);
+  P_SetXY(&Pelayan_Posisi(*P),0,0);
   //up
   Up(*P) = MT_CreateTile(CharUndeff,ValUndeff);
   //down
@@ -123,6 +123,9 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
         *status =true;
         P_Geser(&Pelayan_Posisi(*P),-1,0);
         SetUpTile(P,M);
+        SetRightTile(P,M);
+        SetDownTile(P,M);
+        SetLeftTile(P,M);
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
@@ -135,7 +138,10 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       if (Karakter(Right(*P))==' ') {
         *status =true;
         P_Geser(&Pelayan_Posisi(*P),0,1);
+        SetUpTile(P,M);
         SetRightTile(P,M);
+        SetDownTile(P,M);
+        SetLeftTile(P,M);
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
@@ -148,7 +154,10 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       if (Karakter(Down(*P))==' ') {
         *status =true;
         P_Geser(&Pelayan_Posisi(*P),1,0);
+        SetUpTile(P,M);
+        SetRightTile(P,M);
         SetDownTile(P,M);
+        SetLeftTile(P,M);
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
@@ -161,6 +170,9 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       if (Karakter(Left(*P))==' ') {
         *status =true;
         P_Geser(&Pelayan_Posisi(*P),0,-1);
+        SetUpTile(P,M);
+        SetRightTile(P,M);
+        SetDownTile(P,M);
         SetLeftTile(P,M);
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
@@ -370,7 +382,7 @@ void SetUpTile(Pelayan *P,MatTile M)
   //ALGORITMA
   P_GetXY(Pelayan_Posisi(*P),&x,&y);
   x -= 1;
-  if (MT_IsIdxValid(x,y)) {
+  if (MT_IsIdxEff(M,x,y)) {
     tmp = MT_Elmt(M,x,y);
     Up(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
   } else {
@@ -389,7 +401,7 @@ void SetDownTile(Pelayan *P,MatTile M)
   //ALGORITMA
   P_GetXY(Pelayan_Posisi(*P),&x,&y);
   x += 1;
-  if (MT_IsIdxValid(x,y)) {
+  if (MT_IsIdxEff(M,x,y)) {
     tmp = MT_Elmt(M,x,y);
     Down(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
   } else {
@@ -408,7 +420,7 @@ void SetLeftTile(Pelayan *P,MatTile M)
   //ALGORITMA
   P_GetXY(Pelayan_Posisi(*P),&x,&y);
   y -= 1;
-  if (MT_IsIdxValid(x,y)) {
+  if (MT_IsIdxEff(M,x,y)) {
     tmp = MT_Elmt(M,x,y);
     Left(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
   } else {
@@ -427,7 +439,7 @@ void SetRightTile(Pelayan *P,MatTile M)
   //ALGORITMA
   P_GetXY(Pelayan_Posisi(*P),&x,&y);
   y += 1;
-  if (MT_IsIdxValid(x,y)) {
+  if (MT_IsIdxEff(M,x,y)) {
     tmp = MT_Elmt(M,x,y);
     Right(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
   } else {
