@@ -19,6 +19,11 @@ void MT_MakeMatriks (int NB, int NK, MatTile * M)
   /* ALGORITMA */
   MT_NBrsEff(*M) = NB;
   MT_NKolEff(*M) = NK;
+  for (int i = MT_GetFirstIdxBrs(*M);i<=MT_GetLastIdxBrs(*M);i++) {
+    for (int j = MT_GetFirstIdxKol(*M);j<=MT_GetLastIdxKol(*M);j++) {
+      MT_Elmt(*M,i,j) = MT_CreateTile(' ',ValUndeff);
+    }
+  }
 }
 
 /* *** Selektor "DUNIA MatTile" *** */
@@ -71,7 +76,7 @@ void MT_CopyMatriks (MatTile MIn, MatTile * MHsl)
     }
   }
 }
-Tile MT_SetTile(char karakter,int value)
+Tile MT_CreateTile(char karakter,int value)
 /* fungsi menghasilkan tile yang sudah di set berdasarkan input */
 {
   //KAMUS
@@ -83,111 +88,65 @@ Tile MT_SetTile(char karakter,int value)
 }
 
 /* ********** KELOMPOK BACA/TULIS ********** */
-// void MT_BacaMatTile (MatTile * M, int NB, int NK)
-// /* I.S. IsIdxValid(NB,NK) */
-// /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
-// /* Proses: Melakukan MakeMatTile(M,NB,NK) dan mengisi nilai efektifnya */
-// /* Selanjutnya membaca nilai elemen per baris dan kolom */
-// /* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi MatTile :
-// 1 2 3
-// 4 5 6
-// 8 9 10
-// */
-// {
-//   /* KAMUS LOKAL */
-//   indeks i,j;
-//   Tile isi;
-//
-//   /* ALGORITMA */
-//   MT_MakeMatTile(NB,NK,M);
-//
-//   for(i=MT_GetFirstIdxBrs(*M);i<=MT_GetLastIdxBrs(*M);i++){
-//     for(j=MT_GetFirstIdxKol(*M);j<=MT_GetLastIdxKol(*M);j++){
-//       scanf("%c",&isi);
-//       MT_Elmt(*M,i,j) = isi;
-//     }
-//   }
-// }
-// void MT_TulisMatTile (MatTile M)
-// /* I.S. M terdefinisi */
-// /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
-//    dipisahkan sebuah spasi */
-// /* Proses: Menulis nilai setiap elemen M ke layar dengan traversal per baris dan per kolom */
-// /* Contoh: menulis MatTile 3x3 (ingat di akhir tiap baris, tidak ada spasi)
-// 1 2 3
-// 4 5 6
-// 8 9 10
-// */
-// {
-//   /* KAMUS LOKAL */
-//   indeks i,j;
-//
-//   /* ALGORTIMA */
-//   for(i=MT_GetFirstIdxBrs(M);i<=MT_GetLastIdxBrs(M);i++){
-//     for(j=MT_GetFirstIdxKol(M);j<=MT_GetLastIdxKol(M);j++){
-//       if(j==MT_GetLastIdxKol(M)){
-//         if(i==MT_GetLastIdxBrs(M)){
-//           printf("%c",MT_Elmt(M,i,j));
-//         }else{
-//           printf("%c\n",MT_Elmt(M,i,j));
-//         }
-//
-//       }else{
-//         printf("%c ",MT_Elmt(M,i,j));
-//       }
-//
-//
-//     }
-//
-//   }
-// }
-
-/* ********** KELOMPOK OPERASI RELASIONAL TERHADAP MatTile ********** */
-// boolean MT_EQ (MatTile M1, MatTile M2)
-// /* Mengirimkan true jika M1 = M2, yaitu NBElmt(M1) = NBElmt(M2) dan */
-// /* untuk setiap i,j yang merupakan indeks baris dan kolom M1(i,j) = M2(i,j) */
-// /* Juga merupakan strong EQ karena GetFirstIdxBrs(M1) = GetFirstIdxBrs(M2)
-//    dan GetLastIdxKol(M1) = GetLastIdxKol(M2) */
-// {
-//   /* KAMUS LOKAL */
-//   boolean sama;
-//   indeks i,j,p,q;
-//
-//   /* ALGORITMA */
-//   if(MT_EQSize(M1,M2)){
-//     sama = true;
-//     i = MT_GetFirstIdxBrs(M1);
-//     j = MT_GetFirstIdxKol(M1);
-//
-//     p = MT_GetFirstIdxBrs(M2);
-//     q = MT_GetFirstIdxKol(M2);
-//
-//     while(sama&&(i<=MT_GetLastIdxBrs(M1))){
-//       while(sama&&(j<=MT_GetLastIdxKol(M1))){
-//         if(MT_Elmt(M1,i,j)!=MT_Elmt(M2,p,q)){
-//           sama = false;
-//         }else{
-//           i++;
-//           j++;
-//
-//           p++;
-//           q++;
-//         }
-//       }
-//
-//     }
-//
-//     return sama;
-//   }else{
-//     return false;
-//   }
-// }
-
-// boolean MT_NEQ (MatTile M1, MatTile M2)
-// /* Mengirimkan true jika M1 tidak sama dengan M2 */
-// {
-//   return !MT_EQ(M1,M2);
-// }
+void MT_BacaMatriks (MatTile * M, int NB, int NK)
+/* I.S. IsIdxValid(NB,NK) */
+/* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
+/* Proses: Melakukan MakeMatTile(M,NB,NK) dan mengisi nilai efektifnya */
+/* Selanjutnya membaca nilai elemen per baris dan kolom */
+/* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi MatTile :
+1 2 3
+4 5 6
+8 9 10
+*/
+{
+  //KAMUS
+  indeks i,j;
+  char kar;
+  int val;
+  Tile elmt;
+  //ALGORITMA
+  MT_MakeMatriks(NB,NK,M);
+  for(i=MT_GetFirstIdxBrs(*M);i<=MT_GetLastIdxBrs(*M);i++){
+    for(j=MT_GetFirstIdxKol(*M);j<=MT_GetLastIdxKol(*M);j++){
+      printf("Karakter[%d][%d]: ",i,j);
+      scanf("\n%c",&kar);
+      printf("Value[%d][%d]: ",i,j);
+      scanf("%d",&val);
+      MT_Elmt(*M,i,j) = MT_CreateTile(kar,val);
+    }
+  }
+}
+void MT_TulisMatriks (MatTile M)
+/* I.S. M terdefinisi */
+/* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
+   dipisahkan sebuah spasi */
+/* Proses: Menulis nilai setiap elemen M ke layar dengan traversal per baris dan per kolom */
+/* Contoh: menulis MatTile 3x3 (ingat di akhir tiap baris, tidak ada spasi)
+1 2 3
+4 5 6
+8 9 10
+*/
+{
+  //KAMUS
+  indeks i,j;
+  //ALGORITMA
+  printf("Karakter:\n");
+  for(i=MT_GetFirstIdxBrs(M);i<=MT_GetLastIdxBrs(M);i++){
+    for(j=MT_GetFirstIdxKol(M);j<=MT_GetLastIdxKol(M);j++){
+      printf("%c",Karakter(MT_Elmt(M,i,j)));
+      if (j<MT_GetLastIdxKol(M)) printf(" ");
+    }
+    printf("\n");
+  }
+  printf("Value:\n");
+  for(i=MT_GetFirstIdxBrs(M);i<=MT_GetLastIdxBrs(M);i++){
+    for(j=MT_GetFirstIdxKol(M);j<=MT_GetLastIdxKol(M);j++){
+      printf("%d",Value(MT_Elmt(M,i,j)));
+      if (j<MT_GetLastIdxKol(M)) printf(" ");
+    }
+    printf("\n");
+  }
+}
 
 /* ********** Operasi lain ********** */
 int MT_NBElmt (MatTile M)

@@ -55,40 +55,30 @@ boolean MT_IsIdxEff (MatTile M, indeks i, indeks j);
 /* ********** Assignment  MatTile ********** */
 void MT_CopyMatriks (MatTile MIn, MatTile * MHsl);
 /* Melakukan assignment MHsl  MIn */
-Tile MT_SetTile(char karakter,int value);
+Tile MT_CreateTile(char karakter,int value);
 /* fungsi menghasilkan tile yang sudah di set berdasarkan input */
 
 /* ********** KELOMPOK BACA/TULIS ********** */
-// void MT_BacaMatTile (MatTile * M, int NB, int NK);
-// /* I.S. IsIdxValid(NB,NK) */
-// /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
-// /* Proses: Melakukan MakeMatTile(M,NB,NK) dan mengisi nilai efektifnya */
-// /* Selanjutnya membaca nilai elemen per baris dan kolom */
-// /* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi MatTile :
-// 1 2 3
-// 4 5 6
-// 8 9 10
-// */
-// void MT_TulisMatTile (MatTile M);
-// /* I.S. M terdefinisi */
-// /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
-//    dipisahkan sebuah spasi */
-// /* Proses: Menulis nilai setiap elemen M ke layar dengan traversal per baris dan per kolom */
-// /* Contoh: menulis MatTile 3x3 (ingat di akhir tiap baris, tidak ada spasi)
-// 1 2 3
-// 4 5 6
-// 8 9 10
-// */
-
-
-// /* ********** KELOMPOK OPERASI RELASIONAL TERHADAP MatTile ********** */
-// boolean MT_EQ (MatTile M1, MatTile M2);
-// /* Mengirimkan true jika M1 = M2, yaitu NBElmt(M1) = NBElmt(M2) dan */
-// /* untuk setiap i,j yang merupakan indeks baris dan kolom M1(i,j) = M2(i,j) */
-// /* Juga merupakan strong EQ karena GetFirstIdxBrs(M1) = GetFirstIdxBrs(M2)
-//    dan GetLastIdxKol(M1) = GetLastIdxKol(M2) */
-// boolean MT_NEQ (MatTile M1, MatTile M2);
-// /* Mengirimkan true jika M1 tidak sama dengan M2 */
+void MT_BacaMatriks (MatTile * M, int NB, int NK);
+/* I.S. IsIdxValid(NB,NK) */
+/* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
+/* Proses: Melakukan MakeMatTile(M,NB,NK) dan mengisi nilai efektifnya */
+/* Selanjutnya membaca nilai elemen per baris dan kolom */
+/* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi MatTile :
+1 2 3
+4 5 6
+8 9 10
+*/
+void MT_TulisMatriks (MatTile M);
+/* I.S. M terdefinisi */
+/* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
+   dipisahkan sebuah spasi */
+/* Proses: Menulis nilai setiap elemen M ke layar dengan traversal per baris dan per kolom */
+/* Contoh: menulis MatTile 3x3 (ingat di akhir tiap baris, tidak ada spasi)
+1 2 3
+4 5 6
+8 9 10
+*/
 
 /* ********** Operasi lain ********** */
 int MT_NBElmt (MatTile M);
