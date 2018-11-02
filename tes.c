@@ -3,6 +3,7 @@
 // #include "ADT Lain/Map + Movement/space.h"
 #include "Modul/UI/UI.h"
 #include "ADT/space/space.h"
+#include "Modul/eksternal/eksternal.h"
 
 ArrKata MainMenu(){
   ArrKata hasil;
@@ -150,13 +151,13 @@ int main (){
           aksivalid = true;
         }
 
-    //     if(aksivalid){
-    //       time++;
-    //     }
+        if(aksivalid){
+          time++;
+        }
 
-    //   }while(!K_IsKataSama(aksi,K_MakeKata("EXIT")));
+      }while(!K_IsKataSama(aksi,K_MakeKata("EXIT")));
      }
 
   }while(!K_IsKataSama(input,K_MakeKata("EXIT")));
-  endwin();
+  QuitScreen(&gs);
 }
