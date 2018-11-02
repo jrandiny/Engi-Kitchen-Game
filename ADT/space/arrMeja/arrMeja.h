@@ -70,11 +70,46 @@ boolean AM_IsIdxEff (ArrMeja T, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
 
+/* ********** TEST KOSONG/PENUH ********** */
+/* *** Test tabel kosong *** */
+boolean AM_IsEmpty (ArrMeja T);
+/* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
+/* *** Test tabel penuh *** */
+
+/* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
+/* *** Mendefinisikan isi tabel dari pembacaan *** */
+void AM_BacaIsi (ArrMeja * T);
+/* I.S. T sembarang */
+/* F.S. Tabel T terdefinisi */
+/* Proses : membaca banyaknya elemen T dan mengisi nilainya */
+/* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
+/*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= MaxNbEl(T) */
+/*    Jika N tidak valid, tidak diberikan pesan kesalahan */
+/* 2. Jika 0 < N <= MaxNbEl(T); Lakukan N kali: Baca elemen mulai dari indeks
+      IdxMin satu per satu diakhiri enter */
+/*    Jika N = 0; hanya terbentuk T kosong */
+void AM_TulisIsi (ArrMeja T);
+/* Proses : Menuliskan isi tabel dengan traversal */
+/* I.S. T boleh kosong */
+/* F.S. Jika T tidak kosong : indeks dan elemen tabel ditulis berderet ke bawah */
+/*      Jika T kosong : Hanya menulis "Tabel kosong" */
+/* Contoh: Jika isi Tabel: [1, 20, 30, 50]
+   Maka tercetak di layar:
+   [1]1
+   [2]20
+   [3]30
+   [4]50
+*/
+
 /* ********** OPERASI LAIN ********** */
 void AM_CopyTab (ArrMeja Tin, ArrMeja * Tout);
 /* I.S. Tin terdefinisi, Tout sembarang */
 /* F.S. Tout berisi salinan dari Tin (elemen dan ukuran identik) */
 /* Proses : Menyalin isi Tin ke Tout */
+Meja AM_CreateMeja(int bangku,Point pos,int status);
+/*
+	fungsi menhasilkan meja yang sudah di set berdasarkan input
+*/
 
 /* ********** MENAMBAH ELEMEN ********** */
 /* *** Menambahkan elemen terakhir *** */
@@ -82,6 +117,14 @@ void AM_AddAsLastEl (ArrMeja * T, Meja X);
 /* Proses: Menambahkan X sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. X adalah elemen terakhir T yang baru */
+void AM_AddEli (ArrMeja * T, Meja X, IdxType i);
+/* Menambahkan X sebagai elemen ke-i tabel tanpa mengganggu kontiguitas
+   terhadap elemen yang sudah ada */
+/* I.S. Tabel tidak kosong dan tidak penuh */
+/*      i adalah indeks yang valid. */
+/* F.S. X adalah elemen ke-i T yang baru */
+/* Proses : Geser elemen ke-i+1 s.d. terakhir */
+/*          Isi elemen ke-i dengan X */
 
 /* ********** MENGHAPUS ELEMEN ********** */
 void AM_DelLastEl (ArrMeja * T, Meja * X);
@@ -90,5 +133,13 @@ void AM_DelLastEl (ArrMeja * T, Meja * X);
 /* F.S. X adalah nilai elemen terakhir T sebelum penghapusan, */
 /*      Banyaknya elemen tabel berkurang satu */
 /*      Tabel T mungkin menjadi kosong */
+void AM_DelEli (ArrMeja * T, IdxType i, Meja * X);
+/* Menghapus elemen ke-i tabel tanpa mengganggu kontiguitas */
+/* I.S. Tabel tidak kosong, i adalah indeks efektif yang valid */
+/* F.S. X adalah nilai elemen ke-i T sebelum penghapusan */
+/*      Banyaknya elemen tabel berkurang satu */
+/*      Tabel T mungkin menjadi kosong */
+/* Proses : Geser elemen ke-i+1 s.d. elemen terakhir */
+/*          Kurangi elemen efektif tabel */
 
 #endif
