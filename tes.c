@@ -3,6 +3,7 @@
 // #include "ADT Lain/Map + Movement/space.h"
 #include "Modul/UI/UI.h"
 #include "ADT/space/space.h"
+#include "ADT/customer/prioqueuecustomer.h"
 #include "Modul/eksternal/eksternal.h"
 
 ArrKata MainMenu(){
@@ -43,8 +44,8 @@ int main (){
   Restoran R;
   MatTile M;
   // Stack tray,hand,order;  //food stack sementara //hand stack sementara
-  // PrioQueue customer; //customer sementara
-  Kata input,aksi,username,tree,kalah; //input dan aksi user
+  PrioQueue customer; //customer sementara
+  Kata input,aksi,username,resep,kalah; //input dan aksi user
   boolean lose,aksivalid; //kalah dari permainan //true jika command yang dimasukan valid
   GameScreen gs;
 
@@ -63,15 +64,15 @@ int main (){
           }
         }
 
-        money = 0;   //keuntungan awal = 0
-        life = 10;   //nyawa awal = 10
-        time = 1;    //waktu awal = 1
+        money = 0;   //inisialisasi keuntungan awal = 0
+        life = 10;   //inisialisasi nyawa awal = 10
+        time = 1;    //inisialisasi waktu awal = 1
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,time);
         InitPelayan(&P);
         InitRuangan(&R);
         // S_CreateEmpty(&tray);
         // S_CreateEmpty(&hand);
-        // PQ_CreateEmpty(&customer,maxcost);
+        PQ_CreateEmpty(&customer,maxcost);
       }
       else if(K_IsKataSama(input,K_MakeKata("LOAD"))){//kalo load game
         //procedure load game
@@ -149,10 +150,16 @@ int main (){
         }
         else if(K_IsKataSama(aksi,K_MakeKata("PUT"))){ //nunggu stack
           aksivalid = true;
-          //push ke hand
+          //1. validasi apakah tumpukan bahan makanan dapat dijadikan makanan
+          //2. cek id makanan sesuai tree
+          //3. pop makanan yang sudah jadi dari hand
+          //4. push makanan yang sudah jadi ke tray
         }
         else if(K_IsKataSama(aksi,K_MakeKata("TAKE"))){ //nunggu stack
           aksivalid = true;
+          //1. validasi apakah berada didekat M / tempat mengolah makanan
+          //2. cek apakah bahan makanan yang akan diambil adalah urutan yang sesuai
+          //3. push bahan makanan ke stack hand
           //manggil function Taking(P);
         }
         else if(K_IsKataSama(aksi,K_MakeKata("CH"))){ //nunggu stack
@@ -170,25 +177,35 @@ int main (){
         else if(K_IsKataSama(aksi,K_MakeKata("RECIPE"))){ //nunggu tree makanan
           aksivalid = true;
           //show tree makanan
-          tree=GetInput(&gs,K_MakeKata("COMMAND : "));
+          resep=GetInput(&gs,K_MakeKata("COMMAND : "));
         }
         else if(nomormeja!=0){
           if(K_IsKataSama(aksi,K_MakeKata("PLACE"))){ //nunggu prioqueue
             if(IsTableEmpty(nomormeja,Room)){
-              // Placing()
+              //1. cek apakah jumlah pelanggan di head prioqueuecustomer memenuhi pada meja yang kosong
+              //2. ulang pengecekan hingga ditemukan jumlah pelanggana yang cocok atau tidak ada sama sekali
+              //3. buat prioqueuecustomer ke dua untuk menampung update antrian Customer
+              //4. jika jumlah customer head memenuhi, set waktu random untuk waktuout costumer menunggu makanan
+              //5. lakukan aksi placing terhadap infohead
+              //6. del prioqueuecustomer
+              //7. pindahkan sisa elemen prioqueuecustomer
+              //Placing()
               aksivalid = true;
             }
           }
           else if(K_IsKataSama(aksi,K_MakeKata("GIVE"))){  //nunggu stack
             aksivalid = true;
-            //pop tray makanan
+            //1. validasi nomormeja yang memesan makanan pada top stack tray
+            //2. search harga makanan di data harga makanan
+            //3. tambahkan money dengan harga makanan
+            //4. pop top stack tray
+            //5. SetTableEmpty(nomormeja,&Room);
           }
-
           else if(K_IsKataSama(aksi,K_MakeKata("ORDER"))){ //nunggu stack dan converter idmakanan
             if(CanOrder(P,Room)){
               aksivalid = true;
               Ordering(P,&Room,&idmakanan,&nomormeja);
-              // S_Push(*order,<idmakanan>);
+              // S_Push(room,idmakanan,nomormeja);
             }
           }
         }
