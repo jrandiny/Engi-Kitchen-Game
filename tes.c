@@ -38,13 +38,15 @@ ArrKata Credit(){
 int main (){
   //KAMUS
   const int maxcost =  10;   //nilai maksimum costumer untuk ngantri
-  int money,life,time,nomormeja,kabur,idmakanan;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
+  int money,life,time,nomormeja,kabur,idmakanan,waktuout;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
+  time_t t;
   Pelayan P;   //pelayan
   Ruangan Room;  //info restoran
   Restoran R;
   MatTile M;
   // Stack tray,hand,order;  //food stack sementara //hand stack sementara
-  PrioQueue customer; //customer sementara
+  PrioQueueCustomer customer1 customer2; //customer sementara
+  customer cust;
   Kata input,aksi,username,resep,kalah; //input dan aksi user
   boolean lose,aksivalid; //kalah dari permainan //true jika command yang dimasukan valid
   GameScreen gs;
@@ -69,10 +71,11 @@ int main (){
         time = 1;    //inisialisasi waktu awal = 1
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,time);
         InitPelayan(&P);
-        InitRuangan(&R);
+        InitRestoran(&R);
         // S_CreateEmpty(&tray);
         // S_CreateEmpty(&hand);
-        PQ_CreateEmpty(&customer,maxcost);
+        PQC_CreateEmpty(&customer1);
+        PQC_CreateEmpty(&customer2);
       }
       else if(K_IsKataSama(input,K_MakeKata("LOAD"))){//kalo load game
         //procedure load game
@@ -190,7 +193,26 @@ int main (){
               //6. del prioqueuecustomer
               //7. pindahkan sisa elemen prioqueuecustomer
               //Placing()
-              aksivalid = true;
+              int i=1;
+              while(!CanPlace(PQC_Jumlah(PQC_Elmt(customer1,i)),P,R) && PQC_Elmt(customer1,i)!=PQC_InfoHead(customer1)){
+                PQC_Del(&customer1,&cust);
+                PQC_Add(&customer2,cust);
+                i++;
+              }//bisa place atau sudah dicek semua
+              customer1 = customer2;
+
+              if(CanPlace(PQC_Jumlah(PQC_Elmt(customer1,i)),P,R){
+                PQC_Del(&customer1,&cust);
+                srand((unsigned) time(&t));
+                if(PQC_Prio(cust)==1){
+                  waktuout = time + (rand()%20+21);
+                }
+                else{
+                  waktuout = time + (rand()%20+31);
+                }
+                aksivalid = true;
+                Placing(PQC_Jumlah(cust),waktuout,&P,&R);
+              }
             }
           }
           else if(K_IsKataSama(aksi,K_MakeKata("GIVE"))){  //nunggu stack
