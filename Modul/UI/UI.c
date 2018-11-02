@@ -2,6 +2,7 @@
 #include <ncurses.h>
 #include "../../ADT/point/point.h"
 #include "../../boolean.h"
+#include "../../ADT/space/matTile/matTile.h"
 
 
 void DrawBorders(WINDOW *screen)
@@ -188,22 +189,6 @@ void refreshLayout(GameScreen *gs)
 
   mvwin(Main_Panel(*gs),topBarHeight,sideWidth);
 
-/*
-  Top_1_Panel(*gs) = newwin(topBarHeight,sideWidth,0,0);
-  Top_2_Panel(*gs) = newwin(topBarHeight,top2Width,0,sideWidth);
-  Top_3_Panel(*gs) = newwin(topBarHeight, mainWidth-top2Width, 0,sideWidth+top2Width);
-  Top_4_Panel(*gs) = newwin(topBarHeight, sideWidth,0,sideWidth+mainWidth);
-
-  Waiting_Panel(*gs) = newwin(sideHeight,sideWidth,topBarHeight,0);
-  Food_Panel(*gs) = newwin(sideHeight, sideWidth, topBarHeight, sideWidth+mainWidth);
-  Order_Panel(*gs) = newwin(sideHeight,sideWidth,topBarHeight+sideHeight,0);
-  Hand_Panel(*gs) = newwin(sideHeight,sideWidth, topBarHeight+sideHeight, sideWidth+mainWidth);
-
-  Command_Panel(*gs) = newwin(topBarHeight, parentX, topBarHeight+mainHeight, 0);
-
-  Main_Panel(*gs) = newwin(2*sideHeight, mainWidth,topBarHeight, sideWidth);
-*/
-
   Main_Panel_Width(*gs) = mainWidth;
   Main_Panel_Height(*gs) = mainHeight;
   Side_Panel_Width(*gs) = sideWidth;
@@ -244,10 +229,9 @@ void RefreshWaiter(GameScreen *gs, Point waiter)
 
 }
 
-// void RefreshMap(GameScreen *gs, Matriks peta)
-void RefreshMap(GameScreen *gs)
+void RefreshMap(GameScreen *gs, MatTile peta)
 /* I.S. : Bebas sudah initScreen */
-/* F.S. : Digambar peta kosong */
+/* F.S. : Digambar peta sesuai MatTile peta */
 {
   /* KAMUS LOKAL */
   int i;
@@ -262,8 +246,8 @@ void RefreshMap(GameScreen *gs)
   DrawBorders(Main_Panel(*gs));
 
   /* Draw tile */
-  maxX = 5;
-  maxY = 5;
+  maxX = MT_NKolEff(peta);
+  maxY = MT_NBrsEff(peta);
 
   /* Margin calculation */
   /* (total width - table width)/2 + 1 (border compensation)*/
@@ -284,7 +268,7 @@ void RefreshMap(GameScreen *gs)
       /* Lokasi posx dan posy berada di kanan P (kotak isi cell paling kanan) */
 
       /* Isi */
-      mvwaddch(Main_Panel(*gs),posy,posx-1,'P');
+      mvwaddch(Main_Panel(*gs),posy,posx-1,Karakter(MT_Elmt(peta, i, j)));
 
       /* Garis bawah */
       if(i!=maxY){

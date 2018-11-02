@@ -4,43 +4,55 @@
 
 #include "../../ADT/point/point.h"
 #include "../../ADT/mesinkata/mesinkata.h"
+#include "../../ADT/space/matTile/matTile.h"
 
 int main(){
+  /* KAMUS */
   GameScreen gs;
-  InitScreen(&gs);
-
-  Kata abc,up,orig3;
-
-  up = K_MakeKata("GU");
-
-  wrefresh(Hand_Panel(gs));
-
+  Kata input,up;
   Kata prompt;
-  prompt = K_MakeKata("Hello : ");
   ArrKata ak;
+  MatTile mt;
+
+  int i,j;
+
+  /* ALGORITMA */
+  up = K_MakeKata("GU");
+  prompt = K_MakeKata("Hello : ");
+
   AK_CreateEmpty(&ak);
   AK_AddAsLastEl(&ak,K_MakeKata("Menu contoh"));
   AK_AddAsLastEl(&ak,K_MakeKata("Input 1 untuk lanjut"));
-  WriteText(&gs,ak);
+
+  InitScreen(&gs);
 
   do {
     WriteText(&gs,ak);
-    abc = GetInput(&gs, prompt);
-    if(K_IsKataSama(abc,K_MakeKata("RESIZE"))){
+    input = GetInput(&gs, prompt);
+    if(K_IsKataSama(input,K_MakeKata("RESIZE"))){
       refreshLayout(&gs);
     }
-  } while(!K_IsKataSama(abc, K_MakeKata("1")));
+  } while(!K_IsKataSama(input, K_MakeKata("1")));
+
+  MT_MakeMatriks(8, 8, &mt);
+  for(i=1;i<=8;i++){
+    for(j=1;j<=8;j++){
+      MT_Elmt(mt, i, j) = MT_SetTile(65+i, 5);
+    }
+  }
+
+
 
   while(true){
-    RefreshTopPanel(&gs,orig3,1,2,3);
-    RefreshMap(&gs);
-    abc  = GetInput(&gs,prompt);
+    RefreshTopPanel(&gs,"Nama",1,2,3);
+    RefreshMap(&gs,mt);
+    input  = GetInput(&gs,prompt);
 
-    if(K_IsKataSama(abc,K_MakeKata("RESIZE"))){
+    if(K_IsKataSama(input,K_MakeKata("RESIZE"))){
       refreshLayout(&gs);
     }
 
-    if(K_IsKataSama(abc, up)){
+    if(K_IsKataSama(input, up)){
       break;
     }
 
