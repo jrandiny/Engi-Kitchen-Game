@@ -38,14 +38,14 @@ ArrKata Credit(){
 int main (){
   //KAMUS
   const int maxcost =  10;   //nilai maksimum costumer untuk ngantri
-  int money,life,time,nomormeja,kabur,idmakanan,waktuout;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
+  int money,life,waktu,nomormeja,kabur,idmakanan,waktuout;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
   time_t t;
   Pelayan P;   //pelayan
   Ruangan Room;  //info restoran
   Restoran R;
   MatTile M;
   // Stack tray,hand,order;  //food stack sementara //hand stack sementara
-  PrioQueueCustomer customer1 customer2; //customer sementara
+  PrioQueueCustomer customer1, customer2; //customer sementara
   customer cust;
   Kata input,aksi,username,resep,kalah; //input dan aksi user
   boolean lose,aksivalid; //kalah dari permainan //true jika command yang dimasukan valid
@@ -68,14 +68,13 @@ int main (){
 
         money = 0;   //inisialisasi keuntungan awal = 0
         life = 10;   //inisialisasi nyawa awal = 10
-        time = 1;    //inisialisasi waktu awal = 1
-        RefreshTopPanel(&gs,K_KataToChar(username),money,life,time);
+        waktu = 1;    //inisialisasi waktu awal = 1
+        RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
         InitPelayan(&P);
         InitRestoran(&R);
         // S_CreateEmpty(&tray);
         // S_CreateEmpty(&hand);
         PQC_CreateEmpty(&customer1);
-        PQC_CreateEmpty(&customer2);
       }
       else if(K_IsKataSama(input,K_MakeKata("LOAD"))){//kalo load game
         //procedure load game
@@ -83,7 +82,7 @@ int main (){
 
       aksivalid = false;
       do{
-        RefreshTopPanel(&gs,K_KataToChar(username),money,life,time);
+        RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
         M = GetRuangSekarang(R);
         nomormeja = IsNearTable(P,Room);
         aksi=GetInput(&gs,K_MakeKata("COMMAND : "));
@@ -194,24 +193,25 @@ int main (){
               //7. pindahkan sisa elemen prioqueuecustomer
               //Placing()
               int i=1;
-              while(!CanPlace(PQC_Jumlah(PQC_Elmt(customer1,i)),P,R) && PQC_Elmt(customer1,i)!=PQC_InfoHead(customer1)){
+              PQC_CreateEmpty(&customer2);
+              while(!CanPlace(PQC_Jumlah(PQC_Elmt(customer1,i)),P,Room) && !PQC_IsEmpty(customer1)){
                 PQC_Del(&customer1,&cust);
                 PQC_Add(&customer2,cust);
                 i++;
               }//bisa place atau sudah dicek semua
               customer1 = customer2;
 
-              if(CanPlace(PQC_Jumlah(PQC_Elmt(customer1,i)),P,R){
+              if(CanPlace(PQC_Jumlah(PQC_Elmt(customer1,i)),P,Room)){
                 PQC_Del(&customer1,&cust);
                 srand((unsigned) time(&t));
                 if(PQC_Prio(cust)==1){
-                  waktuout = time + (rand()%20+21);
+                  waktuout = waktu + (rand()%20+21);
                 }
                 else{
-                  waktuout = time + (rand()%20+31);
+                  waktuout = waktu + (rand()%20+31);
                 }
                 aksivalid = true;
-                Placing(PQC_Jumlah(cust),waktuout,&P,&R);
+                Placing(PQC_Jumlah(cust),waktuout,&P,&Room);
               }
             }
           }
@@ -243,8 +243,8 @@ int main (){
         }
 
         if(aksivalid){
-          time++;
-          PelangganKabur(time,&P,&R,&kabur);
+          waktu++;
+          PelangganKabur(waktu,&P,&R,&kabur);
           life -=kabur;
           if(life==0){
             lose = true;
