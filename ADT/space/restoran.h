@@ -4,11 +4,11 @@
 #ifndef RESTORAN_H
 #define RESTORAN_H
 
-#include "arrRuangan/arrRuangan.h"
+#include "grafRuangan/grafRuangan.h"
 
 typedef struct {
   int roomNow;
-  ArrRuangan ruangan; //array yang berisi ruangan
+  GrafRuangan ruangan; //array yang berisi ruangan
   //List hubungan; //mapping
 } Restoran;
 //tipe Restoran dengan 4 ruangan berukuran 8x8
