@@ -104,6 +104,10 @@ void RefreshBorder(GameScreen *gs)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Dicetak semua border */
 {
+  clear();
+
+  refresh();
+
   wclear(Top_1_Panel(*gs));
   wclear(Top_2_Panel(*gs));
   wclear(Top_3_Panel(*gs));
