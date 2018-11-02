@@ -65,11 +65,16 @@ GRD_address GRD_Alokasi(GRD_infotype doors);
 
 void GRD_Dealokasi(GRD_address *P);
 
+/* Manipulasi Data */
 void GR_InsVFirst(GrafRuangan *GR, GR_infotype X);
 
 void GRD_InsVFirst(GR_address *GRa, GRD_infotype X);
 
 void GRD_InsertVDoors(GR_address *GR1, GR_address *GR2, GRD_infotype D1, GRD_infotype D2);
 
+/* Search */
+GR_address GR_Search(GrafRuangan GR, int roomSearch);
+
+GRD_address GRD_Search(GRD_address pt, Point lokasi);
 
 #endif

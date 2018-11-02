@@ -5,6 +5,8 @@
 
 void printGraf(GrafRuangan GR);
 
+void printGrafInfo(GR_address g);
+
 int main(){
   /* KAMUS */
   GrafRuangan GR;
@@ -16,6 +18,10 @@ int main(){
   ArrMeja am;
 
   GR_address pt,pt2;
+  GRD_address ptd;
+
+  Point p,p2;
+  int rid;
 
   int opsi2;
   int opsi3;
@@ -37,7 +43,7 @@ int main(){
     printGraf(GR);
     printf("\n");
     printf("Menu\n");
-    printf("0) Exit\n1) GR_InsVFirst\n2) GRD_InsVFirst\nChoice = ");
+    printf("0) Exit\n1) GR_InsVFirst\n2) GRD_InsVFirst\n3) Search\nChoice = ");
     scanf("%d",&opsi);
 
     switch (opsi) {
@@ -65,19 +71,54 @@ int main(){
 
           P_Absis(DoorLocation(grdinfo)) = opsi2;
           P_Ordinat(DoorLocation(grdinfo)) = opsi3;
-          // GRD_InsVFirst(&pt, grdinfo);
 
           P_Absis(DoorLocation(grdinfo2)) = opsi4;
           P_Ordinat(DoorLocation(grdinfo2)) = opsi5;
-          // GRD_InsVFirst(&pt2, grdinfo);
 
-          // GRD_To(GR_Doors(pt)) = GR_Doors(pt2);
-          // GRD_To(GR_Doors(pt2)) = GR_Doors(pt);
           GRD_InsertVDoors(&pt,&pt2,grdinfo,grdinfo2);
 
         }else{
           printf("Butuh minimal 2 ruangan\n");
         }
+        break;
+      case 3:
+        printf("Search room id = ");
+        scanf("%d",&opsi2);
+
+        pt = GR_Search(GR, opsi2);
+        if(pt!=Nil){
+          printf("Found\n");
+
+          printGrafInfo(pt);
+
+          if(GR_Doors(pt) != Nil){
+            printf("Search door (x y)= ");
+            scanf("%d %d",&opsi2,&opsi3);
+
+            P_Absis(p) = opsi2;
+            P_Ordinat(p) = opsi3;
+
+            ptd = GRD_Search(GR_Doors(pt), p);
+
+            if(ptd!=Nil){
+              printf("Found\n");
+
+              p = DoorLocation(GRD_Info(ptd));
+              p2 = DoorLocation(GRD_Info(GRD_To(ptd)));
+              rid = RoomID(GR_Info(GRD_Parent(GRD_To(ptd))));
+              printf("(%d,%d) -> %d (%d,%d)\n",P_Absis(p),P_Ordinat(p),rid,P_Absis(p2),P_Ordinat(p2));
+
+            }else{
+              printf("Not found door \n");
+            }
+          }
+
+
+
+        }else{
+          printf("Not found\n");
+        }
+
         break;
     }
 
@@ -93,12 +134,7 @@ void printGraf(GrafRuangan GR)
 {
   /* KAMUS LOKAL */
   GR_address pt;
-  GRD_address ptd;
-  GRD_address ptto;
-  GR_address ptparent;
   Ruangan r;
-  Point p,p2;
-  int rid;
 
   /* ALGORITMA */
   printf("\nIsi Graf\n");
@@ -108,24 +144,34 @@ void printGraf(GrafRuangan GR)
   }else{
     pt = GR_First(GR);
     do {
-      printf("\nRuangan\n");
-      printf("Id = %d",RoomID(GR_Info(pt)));
-      if(GR_Doors(pt)!=Nil){
-        ptd = GR_Doors(pt);
-        printf("Pintu:\n");
-        do {
-          p = DoorLocation(GRD_Info(ptd));
-          p2 = DoorLocation(GRD_Info(GRD_To(ptd)));
-          rid = RoomID(GR_Info(GRD_Parent(GRD_To(ptd))));
-          // rid = 1;
-          printf("(%d,%d) -> %d (%d,%d)\n",P_Absis(p),P_Ordinat(p),rid,P_Absis(p2),P_Ordinat(p2));
-          ptd = GRD_Next(ptd);
-        } while(ptd!=Nil);
-      }
+      printGrafInfo(pt);
       pt = GR_Next(pt);
     } while(pt!=Nil);
   }
 
   printf("\n");
 
+}
+
+void printGrafInfo(GR_address pt){
+  /* KAMUS LOKAL */
+  GRD_address ptd;
+  Point p,p2;
+  int rid;
+
+  /* ALGORITMA */
+  printf("\nRuangan\n");
+  printf("Id = %d\n",RoomID(GR_Info(pt)));
+  if(GR_Doors(pt)!=Nil){
+    ptd = GR_Doors(pt);
+    printf("Pintu:\n");
+    do {
+      p = DoorLocation(GRD_Info(ptd));
+      p2 = DoorLocation(GRD_Info(GRD_To(ptd)));
+      rid = RoomID(GR_Info(GRD_Parent(GRD_To(ptd))));
+      // rid = 1;
+      printf("(%d,%d) -> %d (%d,%d)\n",P_Absis(p),P_Ordinat(p),rid,P_Absis(p2),P_Ordinat(p2));
+      ptd = GRD_Next(ptd);
+    } while(ptd!=Nil);
+  }
 }

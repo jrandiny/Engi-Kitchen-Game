@@ -131,3 +131,43 @@ void GRD_InsVFirst(GR_address *GRa, GRD_infotype X)
   }
 
 }
+
+GR_address GR_Search(GrafRuangan GR, int roomSearch)
+{
+  /* KAMUS LOKAL */
+  GR_address pt;
+  boolean found;
+
+  /* ALGORITMA */
+  pt = GR_First(GR);
+  while(!found && pt!=Nil){
+    if(RoomID(GR_Info(pt))==roomSearch){
+      found = true;
+    }else{
+      pt = GR_Next(pt);
+    }
+  }
+
+  return pt;
+}
+
+GRD_address GRD_Search(GRD_address pt,Point lokasi)
+{
+  /* KAMUS LOKAL */
+  boolean found;
+  Point doorPoint;
+
+  /* ALGORITMA */
+  found = false;
+  while(pt!=Nil && !found){
+    doorPoint = DoorLocation(GRD_Info(pt));
+    if((P_Absis(lokasi)==P_Absis(doorPoint))&&(P_Ordinat(lokasi)==P_Ordinat(doorPoint))){
+      found = true;
+    }else{
+      pt = GRD_Next(pt);
+    }
+
+  }
+
+  return pt;
+}
