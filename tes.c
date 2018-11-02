@@ -35,6 +35,26 @@ ArrKata Credit(){
   return isicredit;
 }
 
+void InitTes(Restoran *R){
+  //KAMUS
+  MatTile mt;
+  ArrMeja am;
+  GR_infotype grinfo;
+  //ALGORITMA
+  GR_CreateEmpty(&Ruangan(*R));
+
+  MT_MakeMatriks(5,5, &mt);
+  AM_CreateEmpty(&am);
+
+  Room(grinfo) = mt;
+  Meja(grinfo) = am;
+  RoomID(grinfo) = 1;
+
+  GR_InsVFirst(&Ruangan(*R),grinfo);
+  RoomNow(*R) = 1;
+
+}
+
 int main (){
   //KAMUS
   const int maxcost =  10;   //nilai maksimum costumer untuk ngantri
@@ -49,9 +69,11 @@ int main (){
   Kata input,aksi,username,resep,kalah; //input dan aksi user
   boolean lose,aksivalid,status; //kalah dari permainan //true jika command yang dimasukan valid
   GameScreen gs;
+  MatTile mt;
 
   //ALGORITMA
   InitScreen(&gs);
+
   do{
     WriteText(&gs,MainMenu());
     input=GetInput(&gs,K_MakeKata("INPUT ANDA : "));
@@ -70,22 +92,31 @@ int main (){
         waktu = 1;    //inisialisasi waktu awal = 1
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
         InitPelayan(&P);
+
+        //input=GetInput(&gs,K_MakeKata("Error"));
         InitRestoran(&R);
+        InitTes(&R);
+        PlacePelayan(&P,2,2,GetMatTileSekarang(R));
         // S_CreateEmpty(&tray);
         // S_CreateEmpty(&hand);
         PQC_CreateEmpty(&customer1);
+
       }
       else if(K_IsKataSama(input,K_MakeKata("LOAD"))){//kalo load game
         //procedure load game
       }
-
-      aksivalid = false;
       do{
+        aksivalid = false;
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
+        //input=GetInput(&gs,K_MakeKata("Error"));
         M = GetRuanganSekarang(R);
         nomormeja = GetTableNumber(P,Room);
+        mt = GetMatTileSekarang(R);
+        RefreshMap(&gs,mt);
+        RefreshWaiter(&gs,Pelayan_Posisi(P));
         aksi=GetInput(&gs,K_MakeKata("COMMAND : "));
         if(aksi.TabKata[1]=='G' && aksi.Length==2){
+          //aksi=GetInput(&gs,K_MakeKata("masuk : "));
           if(aksi.TabKata[2]=='U'){
             code=1;
           }
@@ -99,10 +130,7 @@ int main (){
             code=4;
           }
           Move(&P,&R,code,&status);
-
-          if(status){
-            aksivalid = true;
-          }
+          aksivalid = status;
         }
         else if(K_IsKataSama(aksi,K_MakeKata("PUT"))){ //nunggu stack
           aksivalid = true;
