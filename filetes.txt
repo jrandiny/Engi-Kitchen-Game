@@ -1,0 +1,24 @@
+restoran 2 
+1 1
+1 <arrRuangan>
+
+<arrRuangan>: 4
+2 <MatTile> <arrMeja>
+2 <MatTile> <arrMeja>
+2 <MatTile> <arrMeja>
+2 <MatTile> <arrMeja>
+
+<MatTile>: 64 <tile>
+.
+.
+.
+
+<arrMeja>: 12 <meja>
+.
+.
+.
+
+
+
+
+

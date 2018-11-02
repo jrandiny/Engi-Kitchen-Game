@@ -30,6 +30,7 @@ typedef struct { customer * T;   /* tabel penyimpan elemen */
 #define C_Prio(e)     (e).prio
 #define C_Jumlah(e)   (e).jumlah
 #define C_Waktu(e)    (e).waktu
+#define C_ID(e)       (e).idmakanan
 #define C_Head(Q)     (Q).HEAD
 #define C_Tail(Q)     (Q).TAIL
 #define C_InfoHead(Q) (Q).T[(Q).HEAD]

@@ -10,6 +10,7 @@
 #define __MESINKATA_H__
 
 #include "mesinkar.h"
+#include "../point/point.h"
 
 #define NMax 50
 #define BLANK ' '
@@ -28,7 +29,7 @@ void K_IgnoreBlank();
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 
-void K_STARTKATA(char* nama);
+void K_STARTKATA(char* nama,int *status);
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
@@ -80,4 +81,6 @@ void K_PrintKata(Kata S);
 char* K_KataToChar(Kata S);
 /*mengubah tipe kata menjadi string*/
 
+Point K_KataToPoint(Kata S);
+/*mengubah tipe kata menjadi point*/
 #endif

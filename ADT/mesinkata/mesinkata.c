@@ -27,7 +27,7 @@ void K_IgnoreBlank()
   /* CC == BLANK atau CC == MARK */
 }
 
-void K_STARTKATA(char* nama)
+void K_STARTKATA(char* nama,int *status)
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
@@ -36,7 +36,7 @@ void K_STARTKATA(char* nama)
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
-  K_START(nama);
+  K_START(nama,status);
   K_IgnoreBlank();
   if(CC == MARK){
     EndKata = true;
@@ -207,5 +207,18 @@ char* K_KataToChar(Kata S)
     hasil[i-1]=S.TabKata[i];
   }
   hasil[i-1]='\0';
+  return hasil;
+}
+
+Point K_KataToPoint(Kata S)
+/*mengubah tipe kata menjadi point*/
+{
+  Point hasil;
+  int pos=1;
+  while(S.TabKata[pos]!=','){
+    pos++;
+  }
+  P_Absis(hasil)=K_KataToInt(K_CopySubKata(S,1,pos-1));
+  P_Ordinat(hasil)=K_KataToInt(K_CopySubKata(S,pos+1,S.Length));
   return hasil;
 }
