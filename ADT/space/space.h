@@ -181,9 +181,13 @@ Tile GetTableTile(Pelayan P, Ruangan R);
 /*
   mengembalikan Tile meja yang bersebelahan dengan Pelayan
 */
-MatTile GetRuangSekarang(Restoran R);
+MatTile GetMatTileSekarang(Restoran R);
 /*
-  fungsi mengembalikan suatu matriks yang sedang digunakan berdasarkan Ruangan(R)
+  fungsi mengembalikan suatu tipe MatTile yang sedang digunakan berdasarkan Ruangan(R)
+*/
+Ruangan GetRuanganSekarang(Restoran R);
+/*
+  fungsi mengembalikan suatu tipe Ruangan yang sedang digunakan berdasarkan Ruangan(R)
 */
 void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah);
 /*

@@ -350,7 +350,11 @@ boolean CanGive(Pelayan P, Ruangan R, int nomorMeja)
   meja di dekat P
 */
 {
-
+  //KAMUS
+  Tile lantai;
+  //ALGORITMA
+  lantai = GetTableTile(P,R);
+  return nomorMeja == Value(lantai);
 }
 
 // *** Tile Set ***
@@ -562,7 +566,7 @@ Tile GetTableTile(Pelayan P, Ruangan R)
   P_GetXY(IndeksMeja(nomor,R),&i,&j);
   return MT_Elmt(Room(R),i,j);
 }
-MatTile GetRuangSekarang(Restoran R)
+MatTile GetMatTileSekarang(Restoran R)
 /*
   fungsi mengembalikan suatu matriks yang sedang digunakan berdasarkan Ruangan(R)
 */
@@ -573,6 +577,13 @@ MatTile GetRuangSekarang(Restoran R)
   P = GR_Search(Ruangan(R),RoomNow(R));
   return (Room(GR_Info(P)));
   //return (Room(AR_Elmt(GR_Info(Ruangan(R)),RoomNow(R))));
+}
+Ruangan GetRuanganSekarang(Restoran R)
+/*
+  fungsi mengembalikan suatu tipe Ruangan yang sedang digunakan berdasarkan Ruangan(R)
+*/
+{
+  return(GR_Info(GR_Search(Ruangan(R),RoomNow(R))));
 }
 void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
 /*
@@ -605,8 +616,10 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
   }
   if (*jumlah > 0) { //hanya dilakukan jika ada pelanggan kabur
     P_GetXY(Pelayan_Posisi(*P),&x,&y);
-    p = GR_Search(Ruangan(*R),RoomNow(*R));
-    PlacePelayan(P,x,y,Room(GR_Info(p)));
+    // p = GR_Search(Ruangan(*R),RoomNow(*R));
+    tmp = GetRuanganSekarang(*R);
+    // PlacePelayan(P,x,y,Room(GR_Info(p)));
+    PlacePelayan(P,x,y,Room(tmp));
   }
 }
 Point IndeksMeja(int nomor,Ruangan R)
