@@ -38,17 +38,16 @@ ArrKata Credit(){
 int main (){
   //KAMUS
   const int maxcost =  10;   //nilai maksimum costumer untuk ngantri
-  int money,life,waktu,nomormeja,kabur,idmakanan,waktuout;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
+  int money,life,waktu,nomormeja,kabur,idmakanan,waktuout,code;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
   time_t t;
   Pelayan P;   //pelayan
-  Ruangan Room;  //info restoran
+  Ruangan M, Room;  //info restoran
   Restoran R;
-  MatTile M;
   // Stack tray,hand,order;  //food stack sementara //hand stack sementara
   PrioQueueCustomer customer1, customer2; //customer sementara
   customer cust;
   Kata input,aksi,username,resep,kalah; //input dan aksi user
-  boolean lose,aksivalid; //kalah dari permainan //true jika command yang dimasukan valid
+  boolean lose,aksivalid,status; //kalah dari permainan //true jika command yang dimasukan valid
   GameScreen gs;
 
   //ALGORITMA
@@ -83,70 +82,25 @@ int main (){
       aksivalid = false;
       do{
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
-        M = GetRuangSekarang(R);
-        nomormeja = IsNearTable(P,Room);
+        M = GetRuanganSekarang(R);
+        nomormeja = GetTableNumber(P,Room);
         aksi=GetInput(&gs,K_MakeKata("COMMAND : "));
-        if(K_IsKataSama(aksi,K_MakeKata("GU"))){
-          if (CanMoveUp(P,M)){
-            MoveUp(&P,M);
-            aksivalid = true;
+        if(aksi.TabKata[1]=='G' && aksi.Length==2){
+          if(aksi.TabKata[2]=='U'){
+            code=1;
           }
-          else if(RoomNow(R)==4 && P_Absis(Pelayan_Posisi(P))==1 && P_Ordinat(Pelayan_Posisi(P))==5){
-            RoomNow(R) = 1;
-            PlacePelayan(&P,8,5,Room(AR_Elmt(Ruangan(R),1)));
-            aksivalid = true;
+          else if(aksi.TabKata[2]=='R'){
+            code=2;
           }
-          else if(RoomNow(R)==3 && P_Absis(Pelayan_Posisi(P))==1 && P_Ordinat(Pelayan_Posisi(P))==5){
-            RoomNow(R) = 2;
-            PlacePelayan(&P,8,5,Room(AR_Elmt(Ruangan(R),2)));
-            aksivalid = true;
+          else if(aksi.TabKata[2]=='D'){
+            code=3;
           }
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("GD"))){
-          if (CanMoveDown(P,M)){
-            MoveDown(&P,M);
-            aksivalid = true;
+          else if(aksi.TabKata[2]=='L'){
+            code=4;
           }
-          else if(RoomNow(R)==1 && P_Absis(Pelayan_Posisi(P))==8 && P_Ordinat(Pelayan_Posisi(P))==5){
-            RoomNow(R) = 4;
-            PlacePelayan(&P,1,5,Room(AR_Elmt(Ruangan(R),4)));
-            aksivalid = true;
-          }
-          else if(RoomNow(R)==2 && P_Absis(Pelayan_Posisi(P))==8 && P_Ordinat(Pelayan_Posisi(P))==5){
-            RoomNow(R) = 3;
-            PlacePelayan(&P,1,5,Room(AR_Elmt(Ruangan(R),3)));
-            aksivalid = true;
-          }
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("GR"))){
-          if (CanMoveRight(P,M)){
-            MoveRight(&P,M);
-            aksivalid = true;
-          }
-          else if(RoomNow(R)==1 && P_Absis(Pelayan_Posisi(P))==5 && P_Ordinat(Pelayan_Posisi(P))==8){
-            RoomNow(R) = 2;
-            PlacePelayan(&P,2,1,Room(AR_Elmt(Ruangan(R),2)));
-            aksivalid = true;
-          }
-          else if(RoomNow(R)==4 && P_Absis(Pelayan_Posisi(P))==5 && P_Ordinat(Pelayan_Posisi(P))==8){
-            RoomNow(R) = 3;
-            PlacePelayan(&P,2,1,Room(AR_Elmt(Ruangan(R),3)));
-            aksivalid = true;
-          }
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("GL"))){
-          if (CanMoveLeft(P,M)){
-            MoveLeft(&P,M);
-            aksivalid = true;
-          }
-          else if(RoomNow(R)==2 && P_Absis(Pelayan_Posisi(P))==2 && P_Ordinat(Pelayan_Posisi(P))==1){
-            RoomNow(R) = 1;
-            PlacePelayan(&P,5,8,Room(AR_Elmt(Ruangan(R),1)));
-            aksivalid = true;
-          }
-          else if(RoomNow(R)==3 && P_Absis(Pelayan_Posisi(P))==2 && P_Ordinat(Pelayan_Posisi(P))==1){
-            RoomNow(R) = 4;
-            PlacePelayan(&P,5,8,Room(AR_Elmt(Ruangan(R),4)));
+          Move(&P,&R,code,&status);
+
+          if(status){
             aksivalid = true;
           }
         }
