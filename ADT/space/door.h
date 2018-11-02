@@ -14,6 +14,6 @@ typedef struct{
 
 #define DoorDirection(D) (D).direction
 #define DoorLocation(D) (D).lokasi
-#define DoorRoomID(D) (D).roomid
+#define DoorRoomID(D) (D).roomId
 
 #endif
