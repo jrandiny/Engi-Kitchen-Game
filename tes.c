@@ -20,13 +20,14 @@ ArrKata MainMenu(){
 
 int main (){
   const int maxcost =  5;   //nilai maksimum costumer untuk ngantri
-  int money,life,time;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
+  int money,life,time,nomormeja;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
   Pelayan P;   //pelayan
-  Restoran R;  //info restoran
+  Ruangan Room;  //info restoran
+  Restoran R;
   MatTile M;
   // Stack tray,hand,order;  //food stack sementara //hand stack sementara
   // PrioQueue customer; //customer sementara
-  Kata input,aksi,username; //input dan aksi user
+  Kata input,aksi,username,tree; //input dan aksi user
   boolean lose,aksivalid; //kalah dari permainan //true jika command yang dimasukan valid
   GameScreen gs;
 
@@ -35,7 +36,7 @@ int main (){
   do{
     WriteText(&gs,MainMenu());
     input=GetInput(&gs,K_MakeKata("INPUT ANDA : "));
-    if(!K_IsKataSama(input,K_MakeKata("EXIT"))){
+    if(K_IsKataSama(input,K_MakeKata("NEW"))||K_IsKataSama(input,K_MakeKata("START")) || K_IsKataSama(input,K_MakeKata("LOAD"))){
       if(K_IsKataSama(input,K_MakeKata("NEW"))||K_IsKataSama(input,K_MakeKata("START"))){
         if(K_IsKataSama(input,K_MakeKata("NEW"))){//kalo new game
           username=GetInput(&gs,K_MakeKata("USERNAME : "));
@@ -54,16 +55,18 @@ int main (){
         // S_CreateEmpty(&tray);
         // S_CreateEmpty(&hand);
         // PQ_CreateEmpty(&customer,maxcost);
-      }else if(K_IsKataSama(input,K_MakeKata("LOAD"))){//kalo load game
+      }
+      else if(K_IsKataSama(input,K_MakeKata("LOAD"))){//kalo load game
       }
 
       aksivalid = false;
       do{
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,time);
         M = GetRuangSekarang(R);
+        nomormeja = IsNearTable(P,Room);
         aksi=GetInput(&gs,K_MakeKata("COMMAND : "));
         if(K_IsKataSama(aksi,K_MakeKata("GU"))){
-          if (CanMoveUp(P,GetRuangSekarang(R))){
+          if (CanMoveUp(P,M)){
             MoveUp(&P,M);
             aksivalid = true;
           }
@@ -79,7 +82,7 @@ int main (){
           }
         }
         else if(K_IsKataSama(aksi,K_MakeKata("GD"))){
-          if (CanMoveDown(P,GetRuangSekarang(R))){
+          if (CanMoveDown(P,M)){
             MoveDown(&P,M);
             aksivalid = true;
           }
@@ -95,7 +98,7 @@ int main (){
           }
         }
         else if(K_IsKataSama(aksi,K_MakeKata("GR"))){
-          if (CanMoveRight(P,GetRuangSekarang(R))){
+          if (CanMoveRight(P,M)){
             MoveRight(&P,M);
             aksivalid = true;
           }
@@ -111,7 +114,7 @@ int main (){
           }
         }
         else if(K_IsKataSama(aksi,K_MakeKata("GL"))){
-          if (CanMoveLeft(P,GetRuangSekarang(R))){
+          if (CanMoveLeft(P,M)){
             MoveLeft(&P,M);
             aksivalid = true;
           }
@@ -126,9 +129,6 @@ int main (){
             aksivalid = true;
           }
         }
-        else if(K_IsKataSama(aksi,K_MakeKata("ORDER"))){
-          aksivalid = true;
-        }
         else if(K_IsKataSama(aksi,K_MakeKata("PUT"))){
           aksivalid = true;
         }
@@ -136,26 +136,57 @@ int main (){
           aksivalid = true;
         }
         else if(K_IsKataSama(aksi,K_MakeKata("CH"))){
+          // S_CreateEmpty(&hand);
           aksivalid = true;
         }
         else if(K_IsKataSama(aksi,K_MakeKata("CT"))){
-          aksivalid = true;
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("PLACE"))){
-          aksivalid = true;
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("GIVE"))){
+          // S_CreateEmpty(&tray);
           aksivalid = true;
         }
         else if(K_IsKataSama(aksi,K_MakeKata("RECIPE"))){
           aksivalid = true;
+          //show tree makanan
+          //tree=GetInput(&gs,K_MakeKata("COMMAND : "));
+        }
+        else if(nomormeja!=0){
+          if(K_IsKataSama(aksi,K_MakeKata("PLACE"))){
+            if(IsTableEmpty(nomormeja,Room)){
+              aksivalid = true;
+            }
+          }
+          else if(K_IsKataSama(aksi,K_MakeKata("GIVE"))){
+            aksivalid = true;
+          }
+
+          else if(K_IsKataSama(aksi,K_MakeKata("ORDER"))){
+            if(CanOrder(P,Room))
+              aksivalid = true;
+              // S_Push(*order,<idmakanan>);
+          }
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("SAVE"))){
+          //procedure save
+        }
+        else if(K_IsKataSama(aksi,K_MakeKata("EXIT"))){
+          aksi=GetInput(&gs,K_MakeKata("ARE YOU SURE EXIT WITHOUT SAVE CURRENT FILE ? : "));
+
+          if(K_IsKataSama(aksi,K_MakeKata("YES"))){
+            aksi = K_MakeKata("EXIT");
+          }
         }
 
         if(aksivalid){
           time++;
         }
+        if(life==0){
+          lose = true;
+        }
 
-      }while(!K_IsKataSama(aksi,K_MakeKata("EXIT")));
+      }while(!K_IsKataSama(aksi,K_MakeKata("EXIT")) && !lose);
+
+      if(lose){
+        //show credit pembuat game
+      }
      }
 
   }while(!K_IsKataSama(input,K_MakeKata("EXIT")));
