@@ -8,6 +8,12 @@
 
 typedef struct{
   Point lokasi;
+  int direction;
+  int roomId;
 } Door;
+
+#define DoorDirection(D) (D).direction
+#define DoorLocation(D) (D).lokasi
+#define DoorRoomID(D) (D).roomid
 
 #endif

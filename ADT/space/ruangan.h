@@ -8,6 +8,7 @@
 #include "arrMeja/arrMeja.h"
 
 typedef struct {
+  int id;
   MatTile room; //peta matriks ruangan
   ArrMeja meja; //array of meja
 } Ruangan;
@@ -16,6 +17,7 @@ typedef struct {
   array of ruangan.
 */
 
+#define RoomID(R) (R).id
 #define Room(R) (R).room
 #define Meja(R) (R).meja
 

@@ -44,6 +44,8 @@ void GR_Dealokasi(GR_address *P)
   }
 
   free(*P);
+
+  *P = Nil;
 }
 
 GRD_address GRD_Alokasi(GRD_infotype doors)
@@ -65,6 +67,8 @@ GRD_address GRD_Alokasi(GRD_infotype doors)
 void GRD_Dealokasi(GRD_address *P)
 {
   free(*P);
+
+  *P = Nil;
 }
 
 void GR_InsVFirst(GrafRuangan *GR, GR_infotype X)
@@ -80,6 +84,39 @@ void GR_InsVFirst(GrafRuangan *GR, GR_infotype X)
   }
 }
 
+void GRD_InsertVDoors(GR_address *GR1, GR_address *GR2, GRD_infotype D1, GRD_infotype D2)
+{
+  /* KAMUS LOKAL */
+  GRD_address pt1;
+  GRD_address pt2;
+
+  /* ALGORITMA */
+  pt1 = GRD_Alokasi(D1);
+  pt2 = GRD_Alokasi(D2);
+
+  if(pt1==Nil && pt2!=Nil){
+    GRD_Dealokasi(&pt2);
+  }
+
+  if(pt2==Nil && pt1!=Nil){
+    GRD_Dealokasi(&pt1);
+  }
+
+  if(pt1!=Nil && pt2!=Nil){
+    GRD_Parent(pt1) = *GR1;
+    GRD_Parent(pt2) = *GR2;
+
+    GRD_Next(pt1) = GR_Doors(*GR1);
+    GRD_Next(pt2) = GR_Doors(*GR2);
+
+    GR_Doors(*GR1) = pt1;
+    GR_Doors(*GR2) = pt2;
+
+    GRD_To(pt1) = pt2;
+    GRD_To(pt2) = pt1;
+  }
+}
+
 void GRD_InsVFirst(GR_address *GRa, GRD_infotype X)
 {
   /* KAMUS LOKAL */
@@ -88,6 +125,7 @@ void GRD_InsVFirst(GR_address *GRa, GRD_infotype X)
   /* ALGORITMA */
   pt = GRD_Alokasi(X);
   if(pt!=Nil){
+    GRD_Parent(pt) = *GRa;
     GRD_Next(pt) = GR_Doors(*GRa);
     GR_Doors(*GRa) = pt;
   }

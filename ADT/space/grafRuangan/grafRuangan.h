@@ -8,14 +8,16 @@
 typedef Ruangan GR_infotype;
 typedef Door GRD_infotype;
 
+typedef struct tElmtgraf *GR_address;
 typedef struct tElmtdoor *GRD_address;
+
 typedef struct tElmtdoor{
   GRD_infotype info;
   GRD_address next;
   GRD_address to;
+  GR_address parent;
 } GRD_Elmt;
 
-typedef struct tElmtgraf *GR_address;
 typedef struct tElmtgraf {
   GR_infotype info;
   GR_address next;
@@ -35,6 +37,7 @@ typedef struct{
 #define GRD_Info(PD) (PD)->info
 #define GRD_Next(PD) (PD)->next
 #define GRD_To(PD) (PD)->to
+#define GRD_Parent(PD) (PD)->parent
 
 /* PROTOTYPE */
 /****************** TEST GRAF KOSONG ******************/
@@ -65,6 +68,8 @@ void GRD_Dealokasi(GRD_address *P);
 void GR_InsVFirst(GrafRuangan *GR, GR_infotype X);
 
 void GRD_InsVFirst(GR_address *GRa, GRD_infotype X);
+
+void GRD_InsertVDoors(GR_address *GR1, GR_address *GR2, GRD_infotype D1, GRD_infotype D2);
 
 
 #endif
