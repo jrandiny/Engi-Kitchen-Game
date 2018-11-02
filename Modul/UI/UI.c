@@ -94,11 +94,25 @@ void InitScreen(GameScreen *gs)
   RefreshBorder(gs);
 }
 
+void QuitScreen(GameScreen *gs)
+{
+  endwin();
+}
+
 void RefreshBorder(GameScreen *gs)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Dicetak semua border */
 {
-  wclear(stdscr);
+  wclear(Top_1_Panel(*gs));
+  wclear(Top_2_Panel(*gs));
+  wclear(Top_3_Panel(*gs));
+  wclear(Top_4_Panel(*gs));
+  wclear(Waiting_Panel(*gs));
+  wclear(Food_Panel(*gs));
+  wclear(Order_Panel(*gs));
+  wclear(Hand_Panel(*gs));
+  wclear(Command_Panel(*gs));
+  wclear(Main_Panel(*gs));
 
   DrawBorders(Top_1_Panel(*gs));
   DrawBorders(Top_2_Panel(*gs));
