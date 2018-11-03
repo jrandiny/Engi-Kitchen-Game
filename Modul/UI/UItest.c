@@ -24,7 +24,7 @@ int main(){
   prompt = K_MakeKata("Hello : ");
 
   AK_CreateEmpty(&ak);
-  AK_AddAsLastEl(&ak,K_MakeKata("Menu contoh"));
+  AK_AddAsLastEl(&ak,K_MakeKata("Menu contoh 😁"));
   AK_AddAsLastEl(&ak,K_MakeKata("Input 1 untuk lanjut"));
 
   InitScreen(&gs);

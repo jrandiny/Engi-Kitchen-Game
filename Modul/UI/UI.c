@@ -4,6 +4,7 @@
 #include "../../boolean.h"
 #include "../../ADT/space/matTile/matTile.h"
 #include "../../ADT/customer/prioqueuecustomer.h"
+#include <locale.h>
 
 void DrawBorders(WINDOW *screen)
 /* I.S. : screen sudah diinisialisasi */
@@ -60,6 +61,8 @@ void InitScreen(GameScreen *gs)
   int top2Width;
 
   /* ALGORITMA */
+  setlocale(LC_ALL, "");
+
   initscr();
   noecho();
   getmaxyx(stdscr, parentY, parentX);
@@ -209,14 +212,15 @@ void WriteText(GameScreen *gs,ArrKata ak)
   /* KAMUS LOKAL */
   AK_IdxType i;
   int j;
+  char* output;
 
   /* ALGORITMA */
   wclear(Main_Panel(*gs));
 
   for(i = AK_GetFirstIdx(ak);i<=AK_GetLastIdx(ak);i++){
-    for(j=1;j<=AK_Elmt(ak, i).Length;j++){
-      mvwaddch(Main_Panel(*gs),2+i,2+j,AK_Elmt(ak,i).TabKata[j]);
-    }
+    output = K_KataToChar(AK_Elmt(ak, i));
+    mvwprintw(Main_Panel(*gs), 2+i, 2, output);
+    free(output);
   }
 
   wrefresh(Main_Panel(*gs));
