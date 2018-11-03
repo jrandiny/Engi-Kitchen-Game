@@ -112,8 +112,7 @@ int main (){
         M = GetRuanganSekarang(R);
         nomormeja = GetTableNumber(P,Room);
         mt = GetMatTileSekarang(R);
-        RefreshMap(&gs,mt);
-        RefreshWaiter(&gs,Pelayan_Posisi(P));
+        RefreshMap(&gs,mt,Pelayan_Posisi(P));
         aksi=GetInput(&gs,K_MakeKata("COMMAND : "));
         if(aksi.TabKata[1]=='G' && aksi.Length==2){
           //aksi=GetInput(&gs,K_MakeKata("masuk : "));

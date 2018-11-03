@@ -182,7 +182,7 @@ GRD_address GRD_Search(GRD_address pt,Point lokasi)
   found = false;
   while(pt!=Nil && !found){
     doorPoint = DoorLocation(GRD_Info(pt));
-    if((P_Absis(lokasi)==P_Absis(doorPoint))&&(P_Ordinat(lokasi)==P_Ordinat(doorPoint))){
+    if((P_Baris(lokasi)==P_Baris(doorPoint))&&(P_Kolom(lokasi)==P_Kolom(doorPoint))){
       found = true;
     }else{
       pt = GRD_Next(pt);

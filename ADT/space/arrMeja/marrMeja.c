@@ -41,7 +41,7 @@ int main(){
           case 3:
             printf("Data = \n");
             printf("JumlahBangku: "); scanf("%d",&bangku);
-            printf("Posisi: "); scanf("%d %d",&P_Absis(pos),&P_Ordinat(pos));
+            printf("Posisi: "); scanf("%d %d",&P_Baris(pos),&P_Kolom(pos));
             printf("Status: "); scanf("%d",&status);
             meja = AM_CreateMeja(bangku,pos,status);
             AM_AddAsLastEl(&T,meja);
@@ -49,7 +49,7 @@ int main(){
           case 4:
             printf("Data = \n");
             printf("JumlahBangku: "); scanf("%d",&bangku);
-            printf("Posisi: "); scanf("%d %d",&P_Absis(pos),&P_Ordinat(pos));
+            printf("Posisi: "); scanf("%d %d",&P_Baris(pos),&P_Kolom(pos));
             printf("Status: "); scanf("%d",&status);
             meja = AM_CreateMeja(bangku,pos,status);
             printf("Indeks = ");
@@ -60,7 +60,7 @@ int main(){
             AM_DelLastEl(&T,&meja);
             printf("Deleted = \n");
             printf("JumlahBangku: %d\n",Bangku(meja));
-            printf("Posisi: (%d,%d)\n",P_Absis(Meja_Posisi(meja)),P_Ordinat(Meja_Posisi(meja)));
+            printf("Posisi: (%d,%d)\n",P_Baris(Meja_Posisi(meja)),P_Kolom(Meja_Posisi(meja)));
             printf("Status: %d\n",Status(meja));
             break;
           case 6:
@@ -69,7 +69,7 @@ int main(){
             AM_DelEli(&T,temp,&meja);
             printf("Deleted = \n");
             printf("JumlahBangku: %d\n",Bangku(meja));
-            printf("Posisi: (%d,%d)\n",P_Absis(Meja_Posisi(meja)),P_Ordinat(Meja_Posisi(meja)));
+            printf("Posisi: (%d,%d)\n",P_Baris(Meja_Posisi(meja)),P_Kolom(Meja_Posisi(meja)));
             printf("Status: %d\n",Status(meja));
             break;
         }

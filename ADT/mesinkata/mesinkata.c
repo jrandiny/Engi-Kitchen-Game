@@ -218,7 +218,7 @@ Point K_KataToPoint(Kata S)
   while(S.TabKata[pos]!=','){
     pos++;
   }
-  P_Absis(hasil)=K_KataToInt(K_CopySubKata(S,1,pos-1));
-  P_Ordinat(hasil)=K_KataToInt(K_CopySubKata(S,pos+1,S.Length));
+  P_Baris(hasil)=K_KataToInt(K_CopySubKata(S,1,pos-1));
+  P_Kolom(hasil)=K_KataToInt(K_CopySubKata(S,pos+1,S.Length));
   return hasil;
 }

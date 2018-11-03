@@ -13,8 +13,8 @@ void P_CreatePoint (Point *P)
 /* Membentuk sebuah Point dari komponen-komponennya */
 {
   /* ALGORITMA */
-  P_Absis(*P) = 0;
-  P_Ordinat(*P) = 0;
+  P_Baris(*P) = 0;
+  P_Kolom(*P) = 0;
 }
 
 /* *** KELOMPOK Interaksi dengan I/O device, BACA/TULIS  *** */
@@ -47,19 +47,19 @@ void P_TulisPoint (Point P)
   /* KAMUS */
 
   /* ALGORITMA */
-  printf("(%d,%d)",P_Absis(P),P_Ordinat(P));
+  printf("(%d,%d)",P_Baris(P),P_Kolom(P));
 }
 
 /* *** Kelompok operasi relasional terhadap Point *** */
 boolean P_EQ (Point P1, Point P2)
 /* Mengirimkan true jika P1 = P2 : absis dan ordinatnya sama */
 {
-  return ((P_Absis(P1)==P_Absis(P2)) && (P_Ordinat(P1)==P_Ordinat(P2)));
+  return ((P_Baris(P1)==P_Baris(P2)) && (P_Kolom(P1)==P_Kolom(P2)));
 }
 boolean P_NEQ (Point P1, Point P2)
 /* Mengirimkan true jika P1 tidak sama dengan P2 */
 {
-  return ((P_Absis(P1)!=P_Absis(P2)) && (P_Ordinat(P1)!=P_Ordinat(P2)));
+  return ((P_Baris(P1)!=P_Baris(P2)) && (P_Kolom(P1)!=P_Kolom(P2)));
 }
 
 
@@ -71,8 +71,8 @@ Point P_PlusDelta (Point P, int deltaX, int deltaY)
   int newX, newY;
   Point p;
   /* ALGORITMA */
-  newX = P_Absis(P) + deltaX;
-  newY = P_Ordinat(P) + deltaY;
+  newX = P_Baris(P) + deltaX;
+  newY = P_Kolom(P) + deltaY;
   P_SetXY(&p,newX,newY);
   return p;
 }
@@ -82,8 +82,8 @@ void P_GetXY(Point P, int *x, int *y)
 	F.S. x dan y terisi absis dan ordinat dari P
 */
 {
-  *x = P_Absis(P);
-  *y = P_Ordinat(P);
+  *x = P_Baris(P);
+  *y = P_Kolom(P);
 }
 void P_SetXY(Point *P, int x,int y)
 /*
@@ -91,8 +91,8 @@ void P_SetXY(Point *P, int x,int y)
 	F.S. absis(p) = x && ordinat(p) = y
 */
 {
-  P_Absis(*P) = x;
-  P_Ordinat(*P) = y;
+  P_Baris(*P) = x;
+  P_Kolom(*P) = y;
 }
 void P_Geser (Point *P, int deltaX, int deltaY)
 /* I.S. P terdefinisi */

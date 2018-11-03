@@ -59,12 +59,12 @@ int main () {
             MoveUp(&P,R);
             aksivalid = true;
           }
-          else if(Ruangan(R)==4 && P_Absis(posisi(P))==1 && P_Ordinat(posisi(P))==5){
+          else if(Ruangan(R)==4 && P_Baris(posisi(P))==1 && P_Kolom(posisi(P))==5){
             Ruangan(R) = 1;
             PlacePelayan(&P,8,5,Room1(R));
             aksivalid = true;
           }
-          else if(Ruangan(R)==3 && P_Absis(posisi(P))==1 && P_Ordinat(posisi(P))==5){
+          else if(Ruangan(R)==3 && P_Baris(posisi(P))==1 && P_Kolom(posisi(P))==5){
             Ruangan(R) = 2;
             PlacePelayan(&P,8,5,Room2(R));
             aksivalid = true;
@@ -75,12 +75,12 @@ int main () {
             MoveDown(&P,R);
             aksivalid = true;
           }
-          else if(Ruangan(R)==1 && P_Absis(posisi(P))==8 && P_Ordinat(posisi(P))==5){
+          else if(Ruangan(R)==1 && P_Baris(posisi(P))==8 && P_Kolom(posisi(P))==5){
             Ruangan(R) = 4;
             PlacePelayan(&P,1,5,Room4(R));
             aksivalid = true;
           }
-          else if(Ruangan(R)==2 && P_Absis(posisi(P))==8 && P_Ordinat(posisi(P))==5){
+          else if(Ruangan(R)==2 && P_Baris(posisi(P))==8 && P_Kolom(posisi(P))==5){
             Ruangan(R) = 3;
             PlacePelayan(&P,1,5,Room3(R));
             aksivalid = true;
@@ -91,12 +91,12 @@ int main () {
             MoveRight(&P,R);
             aksivalid = true;
           }
-          else if(Ruangan(R)==1 && P_Absis(posisi(P))==5 && P_Ordinat(posisi(P))==8){
+          else if(Ruangan(R)==1 && P_Baris(posisi(P))==5 && P_Kolom(posisi(P))==8){
             Ruangan(R) = 2;
             PlacePelayan(&P,2,1,Room2(R));
             aksivalid = true;
           }
-          else if(Ruangan(R)==4 && P_Absis(posisi(P))==5 && P_Ordinat(posisi(P))==8){
+          else if(Ruangan(R)==4 && P_Baris(posisi(P))==5 && P_Kolom(posisi(P))==8){
             Ruangan(R) = 3;
             PlacePelayan(&P,2,1,Room3(R));
             aksivalid = true;
@@ -107,12 +107,12 @@ int main () {
             MoveLeft(&P,R);
             aksivalid = true;
           }
-          else if(Ruangan(R)==2 && P_Absis(posisi(P))==2 && P_Ordinat(posisi(P))==1){
+          else if(Ruangan(R)==2 && P_Baris(posisi(P))==2 && P_Kolom(posisi(P))==1){
             Ruangan(R) = 1;
             PlacePelayan(&P,5,8,Room1(R));
             aksivalid = true;
           }
-          else if(Ruangan(R)==3 && P_Absis(posisi(P))==2 && P_Ordinat(posisi(P))==1){
+          else if(Ruangan(R)==3 && P_Baris(posisi(P))==2 && P_Kolom(posisi(P))==1){
             Ruangan(R) = 4;
             PlacePelayan(&P,5,8,Room4(R));
             aksivalid = true;

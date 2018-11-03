@@ -124,7 +124,7 @@ void AM_BacaIsi (ArrMeja * T)
 
   for(i = AM_IdxMin;i<=N;i++){
     printf("JumlahBangku[%d]: ",i); scanf("%d",&bangku);
-    printf("PosisiXY[%d]: ",i); scanf("%d %d",&P_Absis(pos),&P_Ordinat(pos));
+    printf("PosisiXY[%d]: ",i); scanf("%d %d",&P_Baris(pos),&P_Kolom(pos));
     printf("Status[%d]: ",i); scanf("%d",&status);
     meja = AM_CreateMeja(bangku,pos,status);
     AM_Elmt(*T,i) = meja;

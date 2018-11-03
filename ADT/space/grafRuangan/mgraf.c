@@ -69,11 +69,11 @@ int main(){
           pt = GR_First(GR);
           pt2 = GR_Next(pt);
 
-          P_Absis(DoorLocation(grdinfo)) = opsi2;
-          P_Ordinat(DoorLocation(grdinfo)) = opsi3;
+          P_Baris(DoorLocation(grdinfo)) = opsi2;
+          P_Kolom(DoorLocation(grdinfo)) = opsi3;
 
-          P_Absis(DoorLocation(grdinfo2)) = opsi4;
-          P_Ordinat(DoorLocation(grdinfo2)) = opsi5;
+          P_Baris(DoorLocation(grdinfo2)) = opsi4;
+          P_Kolom(DoorLocation(grdinfo2)) = opsi5;
 
           GRD_InsertVDoors(&pt,&pt2,grdinfo,grdinfo2);
 
@@ -95,8 +95,8 @@ int main(){
             printf("Search door (x y)= ");
             scanf("%d %d",&opsi2,&opsi3);
 
-            P_Absis(p) = opsi2;
-            P_Ordinat(p) = opsi3;
+            P_Baris(p) = opsi2;
+            P_Kolom(p) = opsi3;
 
             ptd = GRD_Search(GR_Doors(pt), p);
 
@@ -106,7 +106,7 @@ int main(){
               p = DoorLocation(GRD_Info(ptd));
               p2 = DoorLocation(GRD_Info(GRD_To(ptd)));
               rid = RoomID(GR_Info(GRD_Parent(GRD_To(ptd))));
-              printf("(%d,%d) -> %d (%d,%d)\n",P_Absis(p),P_Ordinat(p),rid,P_Absis(p2),P_Ordinat(p2));
+              printf("(%d,%d) -> %d (%d,%d)\n",P_Baris(p),P_Kolom(p),rid,P_Baris(p2),P_Kolom(p2));
 
             }else{
               printf("Not found door \n");
@@ -170,7 +170,7 @@ void printGrafInfo(GR_address pt){
       p2 = DoorLocation(GRD_Info(GRD_To(ptd)));
       rid = RoomID(GR_Info(GRD_Parent(GRD_To(ptd))));
       // rid = 1;
-      printf("(%d,%d) -> %d (%d,%d)\n",P_Absis(p),P_Ordinat(p),rid,P_Absis(p2),P_Ordinat(p2));
+      printf("(%d,%d) -> %d (%d,%d)\n",P_Baris(p),P_Kolom(p),rid,P_Baris(p2),P_Kolom(p2));
       ptd = GRD_Next(ptd);
     } while(ptd!=Nil);
   }
