@@ -47,8 +47,8 @@ int main(){
   }
 
   /* Create a sample waiter loc */
-  P_Absis(waiter) = 2;
-  P_Ordinat(waiter) = 2;
+  P_Baris(waiter) = 2;
+  P_Kolom(waiter) = 2;
 
 
   /* Create simple Queue*/

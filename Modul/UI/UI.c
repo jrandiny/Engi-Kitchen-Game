@@ -233,7 +233,7 @@ void RefreshWaiter(GameScreen *gs, Point waiter)
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
-  mvwaddch(Main_Panel(*gs),P_Ordinat(waiter),P_Absis(waiter),'P');
+  mvwaddch(Main_Panel(*gs),P_Kolom(waiter),P_Baris(waiter),'P');
   wrefresh(Main_Panel(*gs));
 
 }
@@ -304,8 +304,8 @@ void RefreshMap(GameScreen *gs, MatTile peta, Point waiter)
   }
 
   /* Waiter */
-  posy=P_Ordinat(waiter)*2 + marginY;
-  posx=P_Absis(waiter)*4 + marginX;
+  posx=P_Kolom(waiter)*4 + marginX;
+  posy=P_Baris(waiter)*2 + marginY;
   // mvwprintw(Main_Panel(*gs), posy, posx-1, "\xF0\x9F\x92\x81");
   mvwaddch(Main_Panel(*gs), posy, posx-1, 'P');
 
