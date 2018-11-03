@@ -33,7 +33,8 @@ void K_STARTKATA(char* nama,int *status);
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
-          CC karakter pertama sesudah karakter terakhir kata */
+          CC karakter pertama sesudah karakter terakhir kata 
+          status 1 jika file ada, 0 jika tidak ada*/
 
 void K_ADVKATA();
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
@@ -82,4 +83,10 @@ char* K_KataToChar(Kata S);
 
 Point K_KataToPoint(Kata S);
 /*mengubah tipe kata menjadi point*/
+
+void K_KonkatKata(Kata *kata1, Kata kata2);
+/* I.S. kata1, kata2 terdefenisi
+   F.S. kata1 berisi hasil konkat kata 1 dan kata 2
+*/
+
 #endif

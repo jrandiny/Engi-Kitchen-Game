@@ -10,6 +10,10 @@ void ParserLocate(Kata input,int *pos1, int *pos2);
   F.S. pos1 dan pos2 berisi index letak parse
        jika tidak ditemukan pos berisi -1
 */
+
+Kata ParseNama(Kata scanned);
+/* parsing nama*/
+
 Tile ParseTile(Kata scanned);
 /* mengembalikan tipe tile dari hasil parsing kata */
 
@@ -37,5 +41,9 @@ Restoran ParseRestoran();
 GrafRuangan ParseGrafRuangan(Kata X);
 /*Ckata berada di jumlah komponen rungan, mengambil X bagian berikutnya menjadi grafruangan*/
 
+void LoadFile(char* namafile,int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran);
+/*  F.S. status memberikan status apakah file berhasil di load atau tidak
+  parameter sisanya berisi data sesuai file eksternal
+  */
 
 #endif

@@ -22,6 +22,24 @@ void ParserLocate(Kata input,int *pos1, int *pos2)
   }
 }
 
+Kata ParseNama(Kata scanned)
+/* parsing nama,Ckata berada di Kata name*/
+{
+  Kata hasil;
+  int jumlah,i;
+  K_ADVKATA();//Ckata berada di jumlah kata nama
+  jumlah=K_KataToInt(CKata);
+  K_ADVKATA();//Ckata berada di kata pertama;
+  hasil=CKata;
+  for(i=2;i<=jumlah;i++){
+    K_ADVKATA();
+    K_KonkatKata(&hasil,K_MakeKata(" "));
+    K_KonkatKata(&hasil,CKata);
+  }
+  return hasil;
+  //Ckata berakhir di kata terkahir nama
+}
+
 Door ParseDoor(Kata scanned)
 /* mengembalikan tipe door dari hasil parsing kata */
 {
@@ -31,6 +49,7 @@ Door ParseDoor(Kata scanned)
   DoorLocation(hasil)=K_KataToPoint(K_CopySubKata(scanned,1,pos1-1));
   DoorDirection(hasil)=K_KataToInt(K_CopySubKata(scanned,pos1+1,pos2-1));
   DoorRoomID(hasil)=K_KataToInt(K_CopySubKata(scanned,pos2+1,scanned.Length));
+  return hasil;
 }
 
 Tile ParseTile(Kata scanned)
@@ -85,7 +104,7 @@ Restoran ParseRestoran()
   Restoran hasil;
   K_ADVKATA();//Ckata menjadi roomnow;
   RoomNow(hasil)=K_KataToInt(CKata);
-  K_ADVKATA();//Ckata menjadi jumlah ruangan yg diambil
+  K_ADVKATA();//Ckata menjadi jumlah komponen ruangan yg diambil
   Ruangan(hasil)=ParseGrafRuangan(CKata);
   return hasil;
 }
@@ -95,6 +114,7 @@ MatTile TakeMatTile(Kata X)
 {
   int i,j;
   MatTile hasil;
+  MT_MakeMatriks(8,8,&hasil);
   i=1;
   while(i<=(K_KataToInt(X)/8)){
     j=1;
@@ -105,8 +125,6 @@ MatTile TakeMatTile(Kata X)
     }
     i++;
   }
-  MT_NBrsEff(hasil)=8;
-  MT_NKolEff(hasil)=8;
   return hasil;
 }
 
@@ -115,6 +133,7 @@ ArrMeja TakeArrMeja(Kata X)
 {
   int i;
   ArrMeja hasil;
+  AM_CreateEmpty(&hasil);
   for(i=1;i<=K_KataToInt(X);i++){
     K_ADVKATA();
     AM_Elmt(hasil,i)=ParseMeja(CKata);
@@ -130,7 +149,7 @@ GrafRuangan ParseGrafRuangan(Kata X)
   Ruangan tempR;
   Door tempD1,tempD2;
   GR_address GR1,GR2;
-  int i,j;
+  int i,j,jumlahdoor;
   GR_CreateEmpty(&hasil);
   for(i=1;i<=K_KataToInt(X);i++){
     K_ADVKATA();//Ckata menjadi idruangan
@@ -141,10 +160,12 @@ GrafRuangan ParseGrafRuangan(Kata X)
     Meja(tempR)=TakeArrMeja(CKata);//ckata berada di meja terakhir
     GR_InsVFirst(&hasil,tempR);
   }    
+
   //di akhir iterasi for Ckata berada di meja dari ruangan terakhir;
   //saat mencapai sini, semua ruangan sudah menjadi node, namun belum ada door
   K_ADVKATA();//Ckata berada di banyak pasangan door
-  for(j=1;j<K_KataToInt(CKata);j++){
+  jumlahdoor=K_KataToInt(CKata);
+  for(j=1;j<=jumlahdoor;j++){
       K_ADVKATA();
       tempD1=ParseDoor(CKata);
       K_ADVKATA();
@@ -158,3 +179,31 @@ GrafRuangan ParseGrafRuangan(Kata X)
   return hasil;
 }
 
+void LoadFile(char* namafile,int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran)
+/*I.S. namafile berisi namafile diikuti .txt
+  F.S. status memberikan status apakah file berhasil di load atau tidak
+  parameter sisanya berisi data sesuai file eksternal
+  */
+{ 
+  K_STARTKATA(namafile,status);//Ckata berada di kata FILE_EKSTERNAL
+  if(*status==1){
+    while(!EndKata){
+      K_ADVKATA();
+      if(K_IsKataSama(CKata,K_MakeKata("name"))){
+        *nama=ParseNama(CKata);
+      }else if(K_IsKataSama(CKata,K_MakeKata("money"))){
+        K_ADVKATA();//Ckata berada di value money
+        *money=K_KataToInt(CKata);
+      }else if(K_IsKataSama(CKata,K_MakeKata("life"))){
+        K_ADVKATA();//Ckata berada di value life
+        *life=K_KataToInt(CKata);
+      }else if(K_IsKataSama(CKata,K_MakeKata("time"))){
+        K_ADVKATA();//Ckata berada di value life
+        *waktu=K_KataToInt(CKata);
+      }else if(K_IsKataSama(CKata,K_MakeKata("restoran"))){
+        //Ckata berada di kata restoran
+        *restoran=ParseRestoran();
+      }
+    }
+  }
+}

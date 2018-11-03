@@ -222,3 +222,19 @@ Point K_KataToPoint(Kata S)
   P_Kolom(hasil)=K_KataToInt(K_CopySubKata(S,pos+1,S.Length));
   return hasil;
 }
+
+void K_KonkatKata(Kata *kata1, Kata kata2)
+/* I.S. kata1, kata2 terdefenisi
+   F.S. kata1 berisi hasil konkat kata 1 dan kata 2
+*/
+{
+  int i,j,max;
+  i=(*kata1).Length+1;
+  max=(*kata1).Length+kata2.Length;
+  j=1;
+  for(i;i<=max;i++){
+    (*kata1).TabKata[i]=kata2.TabKata[j];
+    j++;
+  }
+  (*kata1).Length=max;
+}

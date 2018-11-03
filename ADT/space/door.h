@@ -8,7 +8,7 @@
 
 typedef struct{
   Point lokasi;
-  int direction;
+  int direction; //Atas 1, kanan 2, bawah 3, kiri 4
   int roomId;
 } Door;
 
