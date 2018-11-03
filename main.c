@@ -1,244 +1,367 @@
-/*Nama File : main.c */
+/* Kelompok  : UAS
+   Nama file : main.c
+   Tanggal   : 3 November 2018
+   Deskripsi : program utama Engi's Kitchen Expansion */
 
-#include "header/std.h"
-#include "header/ADT.h"
-#include "ADT Lain/Map + Movement/space.h"
+#include "std.h"
+#include "ADT.h"
 
-//void LoadEksternal(*Matriks );
-//void SaveEksternal();
-
-/*Main Progam*/
-int main () {
-
+//tampilan main menu
+ArrKata MainMenu(){
   //KAMUS
-  const int maxcost =  5;   //nilai maksimum costumer untuk ngantri
-  int money,life,time;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
-  pelayan P;   //pelayan
-  restoran R;  //info restoran
-  Stack tray,hand,order;  //food stack sementara //hand stack sementara
-  PrioQueue customer; //customer sementara
-  Kata input,aksi; //input dan aksi user
-  boolean lose,aksivalid; //kalah dari permainan //true jika command yang dimasukan valid
-
+  ArrKata hasil;
   //ALGORITMA
-  do{
-    //show all the fucking things to the screen
-    //show matriks = GetRuangSekarang(R)
-
-    input=GetInput();
-    if(!K_IsKataSama(Input,K_MakeKata("EXIT"))){
-      if(K_IsKataSama(input,K_MakeKata("NEW"))||K_IsKataSama(input,K_MakeKata("START"))){
-        if(K_IsKataSama(input,K_MakeKata("NEW"))){//kalo new game
-          username=GetInput();
-        }else if (K_IsKataSama(input,K_MakeKata("START"))){//kalo start game
-          if(username.Length==0){
-            username=GetInput();
-          }
-        }
-
-        money = 0;   //keuntungan awal = 0
-        life = 10;   //nyawa awal = 10
-        time = 1;    //waktu awal = 1
-        InitScreen();
-        InitPelayan(&P);
-        InitRuangan(&R);
-        S_CreateEmpty(&tray);
-        S_CreateEmpty(&hand);
-        PQ_CreateEmpty(&customer,maxcost);
-      }else if(K_IsKataSama(input,K_MakeKata("LOAD"))){//kalo load game
-
-      }
-
-      lose = false;
-      do {
-        aksi=GetInput();
-        aksivalid = false;
-
-        if(K_IsKataSama(aksi,K_MakeKata("GU"))){
-          if (Up(P)==''){
-            MoveUp(&P,R);
-            aksivalid = true;
-          }
-          else if(Ruangan(R)==4 && P_Baris(posisi(P))==1 && P_Kolom(posisi(P))==5){
-            Ruangan(R) = 1;
-            PlacePelayan(&P,8,5,Room1(R));
-            aksivalid = true;
-          }
-          else if(Ruangan(R)==3 && P_Baris(posisi(P))==1 && P_Kolom(posisi(P))==5){
-            Ruangan(R) = 2;
-            PlacePelayan(&P,8,5,Room2(R));
-            aksivalid = true;
-          }
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("GD"))){
-          if (Down(P)==''){
-            MoveDown(&P,R);
-            aksivalid = true;
-          }
-          else if(Ruangan(R)==1 && P_Baris(posisi(P))==8 && P_Kolom(posisi(P))==5){
-            Ruangan(R) = 4;
-            PlacePelayan(&P,1,5,Room4(R));
-            aksivalid = true;
-          }
-          else if(Ruangan(R)==2 && P_Baris(posisi(P))==8 && P_Kolom(posisi(P))==5){
-            Ruangan(R) = 3;
-            PlacePelayan(&P,1,5,Room3(R));
-            aksivalid = true;
-          }
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("GR"))){
-          if (Right(P)==''){
-            MoveRight(&P,R);
-            aksivalid = true;
-          }
-          else if(Ruangan(R)==1 && P_Baris(posisi(P))==5 && P_Kolom(posisi(P))==8){
-            Ruangan(R) = 2;
-            PlacePelayan(&P,2,1,Room2(R));
-            aksivalid = true;
-          }
-          else if(Ruangan(R)==4 && P_Baris(posisi(P))==5 && P_Kolom(posisi(P))==8){
-            Ruangan(R) = 3;
-            PlacePelayan(&P,2,1,Room3(R));
-            aksivalid = true;
-          }
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("GL"))){
-          if (Left(P)==''){
-            MoveLeft(&P,R);
-            aksivalid = true;
-          }
-          else if(Ruangan(R)==2 && P_Baris(posisi(P))==2 && P_Kolom(posisi(P))==1){
-            Ruangan(R) = 1;
-            PlacePelayan(&P,5,8,Room1(R));
-            aksivalid = true;
-          }
-          else if(Ruangan(R)==3 && P_Baris(posisi(P))==2 && P_Kolom(posisi(P))==1){
-            Ruangan(R) = 4;
-            PlacePelayan(&P,5,8,Room4(R));
-            aksivalid = true;
-          }
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("ORDER"))){
-          //push orderan
-          if((Up(P).karakter=='X' && K_IsKataSama(Up(P).deskripsi,K_MakeKata("<idmakanan>"))) ||
-             (Up(P).karakter=='C' && K_IsKataSama(Up(P).deskripsi,K_MakeKata("<idmakanan>"))) ||
-             (Down(P).karakter=='X' && K_IsKataSama(Down(P).deskripsi,K_MakeKata("<idmakanan>"))) ||
-             (Down(P).karakter=='C' && K_IsKataSama(Down(P).deskripsi,K_MakeKata("<idimakanan>"))) ||
-             (Left(P).karakter=='X' && K_IsKataSama(Left(P).deskripsi,K_MakeKata("<idmakanan>")))||
-             (Left(P).karakter=='C' && K_IsKataSama(Left(P).deskripsi,K_MakeKata("<idmakanan>")))||
-             (Right(P).karakter=='X' && K_IsKataSama(Right(P).deskripsi,K_MakeKata("<idmakanan>"))) ||
-             (Right(P).karakter=='C' && K_IsKataSama(Right(P).deskripsi,K_MakeKata("<idmakanan>")))){
-               S_Push(*order,<idmakanan>);
-          }
-        } //adt makanan dan idmakanan untuk tiap makanan
-        else if(K_IsKataSama(aksi,K_MakeKata("PUT"))){
-          //push makanan ke hand
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("TAKE"))){
-          //push bahan ke hand
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("CH"))){
-          S_CreateEmpty(&hand);
-          aksivalid = true;
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("CT"))){
-            S_CreateEmpty(&tray);
-          aksivalid = true;
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("PLACE"))){ //tu  ple prioqueue pelanggan
-          if((Up(P).karakter=='X' && K_IsKataSama(Up(P).deskripsi,K_MakeKata("-"))) ||
-             (Down(P).karakter=='X' && K_IsKataSama(Down(P).deskripsi,K_MakeKata("-"))) ||
-             (Left(P).karakter=='X' && K_IsKataSama(Left(P).deskripsi,K_MakeKata("-")))||
-             (Right(P).karakter=='X' && K_IsKataSama(Right(P).deskripsi,K_MakeKata("-")))){
-               int i = 1;
-               while(!CanPlace(PQ_Elmt(customer,i).jumlah,P,R) && i<=5){
-                 i++;
-               }
-               //bisa placing / semua customer sudah dicek
-
-               if(CanPlace(PQ_Elmt(customer,i).jumlah,P,R)){
-                 Placing(PQ_Elmt(Customer,i).jumlah, PQ_Elmt(customer,i).waktu,menu,&P,GetRuangSekarang(R))
-                 PQ_Del(&customer,PQ_Elmt(customer,i));
-               }
-
-          }
-
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("GIVE"))){
-          //pop dari tray
-          if((Up(P).karakter=='X' && K_IsKataSama(Up(P).deskripsi,K_MakeKata("<idmakanan>"))) ||
-             (Up(P).karakter=='C' && K_IsKataSama(Up(P).deskripsi,K_MakeKata("<idmakanan>"))) ||
-             (Down(P).karakter=='X' && K_IsKataSama(Down(P).deskripsi,K_MakeKata("<idmakanan>"))) ||
-             (Down(P).karakter=='C' && K_IsKataSama(Down(P).deskripsi,K_MakeKata("<idimakanan>"))) ||
-             (Left(P).karakter=='X' && K_IsKataSama(Left(P).deskripsi,K_MakeKata("<idmakanan>")))||
-             (Left(P).karakter=='C' && K_IsKataSama(Left(P).deskripsi,K_MakeKata("<idmakanan>")))||
-             (Right(P).karakter=='X' && K_IsKataSama(Right(P).deskripsi,K_MakeKata("<idmakanan>"))) ||
-             (Right(P).karakter=='C' && K_IsKataSama(Right(P).deskripsi,K_MakeKata("<idmakanan>")))){
-        }
-        else if(K_IsKataSama(aksi,K_MakeKata("RECIPE"))){
-          //show table makanan
-        }
-
-        if (aksivalid){
-          time++;
-        }
-        //cek semua kesabaran
-
-        if(life==0){
-          lose = true;
-        }
-
-      } while(!K_IsKataSama(aksi,K_MakeKata("SAVE")) && !K_IsKataSama(aksi,K_MakeKata("EXIT")));
-
-      if(K_IsKataSama(aksi,K_MakeKata("SAVE"))){
-        //procedure save
-      }
-
-      if(lose){
-        //show credit pembuat game
-      }
-
-      if(K_IsKataSama(aksi,K_MakeKata("EXIT"))){
-        Input = K_MakeKata("EXIT");
-      }
-    }
-  }while(!K_IsKataSama(Input,K_MakeKata("EXIT")));
-
-
-  return 0;
+  AK_CreateEmpty(&hasil);
+  AK_AddAsLastEl(&hasil,K_MakeKata("Engi's Kitchen"));
+  AK_AddAsLastEl(&hasil,K_MakeKata(""));
+  AK_AddAsLastEl(&hasil,K_MakeKata("MAIN MENU"));
+  AK_AddAsLastEl(&hasil,K_MakeKata("--NEW"));
+  AK_AddAsLastEl(&hasil,K_MakeKata("--START"));
+  AK_AddAsLastEl(&hasil,K_MakeKata("--LOAD"));
+  AK_AddAsLastEl(&hasil,K_MakeKata("--EXIT"));
+  return hasil;
 }
 
-/*//void loadEksternal(*Matriks)
+//tampilan credit
+ArrKata Credit(){
+  //KAMUS
+  ArrKata isicredit;
+  //ALGORITMA
+  AK_CreateEmpty(&isicredit);
+  AK_AddAsLastEl(&isicredit,K_MakeKata("GAME OVER"));
+  AK_AddAsLastEl(&isicredit,K_MakeKata(""));
+  AK_AddAsLastEl(&isicredit,K_MakeKata(""));
+  AK_AddAsLastEl(&isicredit,K_MakeKata("THIS GAME IS CREATED BY :"));
+  AK_AddAsLastEl(&isicredit,K_MakeKata(""));
+  AK_AddAsLastEl(&isicredit,K_MakeKata("13517012 - JOHANES"));
+  AK_AddAsLastEl(&isicredit,K_MakeKata("13517039 - STEVE ANDREAS"));
+  AK_AddAsLastEl(&isicredit,K_MakeKata("13517063 - JOSHUA CHRISTO RANDINY"));
+  AK_AddAsLastEl(&isicredit,K_MakeKata("13517066 - WILLY SANTOSO"));
+  AK_AddAsLastEl(&isicredit,K_MakeKata("13517114 - SEKAR LARASATI MUSLIMAH"));
+  return isicredit;
+}
+
+//fungsi bernilai true jika input adalah salah satu kata dari main menu
+boolean InputBenar(Kata input,Kata new,Kata start,Kata load,Kata keluar){
+  return (K_IsKataSama(input,new)||K_IsKataSama(input,start)||K_IsKataSama(input,load)||K_IsKataSama(input,keluar));
+}
+
+void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
+/*
+  I.S. pqc dan waktuNow terdefinisi
+  F.S. me-random kedatangan pelanggan
+*/
 {
-  username=GetInput();
-  K_STARTKATA(username);
-  username.Length = CKata.Length;
-  for(i=1;i<=CKata.Length;i++)
-  {
-    username.TabKata[i]=CKata.TabKata[i];
+  //KAMUS
+  time_t t;
+  int chance;
+  int jumlah;
+  customer pelanggan;
+  //ALGORITMA
+  srand((unsigned) time(&t));
+  chance = (rand()%15);
+  if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ // 1/15 kemungkinan
+    PQC_Prio(pelanggan) = rand()%2;
+    do {
+      jumlah = rand()%3+2;
+    } while (jumlah ==3);
+    PQC_Jumlah(pelanggan) = jumlah;
+    PQC_Waktu(pelanggan) = waktuNow + 30;
+    PQC_Add(pqc, pelanggan);
   }
-  K_ADVKATA();
+}
 
-  money = 0;
-  while(i<=CKata.Length)
-  {
-    money *= 10;
-    money += (int) CKata.TabKata[i];
+void PelangganPergi(PrioQueueCustomer *pqc,int waktuNow,int *jumlah)
+/*
+  I.S. pqc dan waktuNow terdefinisi
+  F.S. jumlah = jumlah pelanggan yang waktu == waktuNow
+*/
+{
+  //KAMUS
+  PrioQueueCustomer Q2;
+  customer pelanggan;
+  //ALGORITMA
+  PQC_CreateEmpty(&Q2);
+  *jumlah = 0;
+  while (!PQC_IsEmpty(*pqc)) {
+    PQC_Del(pqc,&pelanggan);
+    if (PQC_Waktu(pelanggan)==waktuNow) {
+      *jumlah += 1;
+    } else {
+      PQC_Add(&Q2,pelanggan);
+    }
   }
-  K_ADVKATA();
+  *pqc = Q2;
+}
 
-  life = 0;
-  while(i<=CKata.Length)
-  {
-    life *= 10;
-    life += (int) CKata.TabKata[i];
-  }
-  K_ADVKATA();
+//hanya untuk tes selama belum ada file external
+void InitTes(Restoran *R,PrioQueueCustomer *pqc){
+  //KAMUS
+  MatTile mt;
+  ArrMeja am;
+  GR_infotype grinfo;
+  customer x;
+  Point p;
+  //ALGORITMA
+  GR_CreateEmpty(&Ruangan(*R));
+  //ruangan kosong dan ada 1 meja 4 bangku
+  MT_MakeMatriks(8,8, &mt);
+  MT_Elmt(mt, 2, 2) = MT_CreateTile('x',ValUndeff);
+  MT_Elmt(mt, 3, 1) = MT_CreateTile('x',ValUndeff);
+  MT_Elmt(mt, 3, 3) = MT_CreateTile('x',ValUndeff);
+  MT_Elmt(mt, 4, 2) = MT_CreateTile('x',ValUndeff);
+  MT_Elmt(mt, 3, 2) = MT_CreateTile('n',1);
+  //array meja
+  AM_CreateEmpty(&am);
+  P_CreatePoint(&p);
+  P_SetXY(&p, 3, 2);
+  AM_AddEli(&am, AM_CreateMeja(4, p, 0), 1);
 
-  time = 0;
-  while(i<=CKata.Length)
-  {
-    time *= 10;
-    time += (int) CKata.TabKata[i];
-  }
-} */
+  Room(grinfo) = mt;
+  Meja(grinfo) = am;
+  RoomID(grinfo) = 1;
+  //grafruangan
+  GR_InsVFirst(&Ruangan(*R),grinfo);
+  RoomNow(*R) = 1;
+  //prioqueuecustomer
+  // PQC_CreateEmpty(pqc);
+  // PQC_Prio(x) = 1;
+  // PQC_Jumlah(x) = 2;
+  // PQC_Waktu(x) = 50;
+  // PQC_Add(pqc, x);
+}
+
+int main() {
+  //KAMUS
+  int money,life,waktu; //uang dan nyawa yang dimiliki pemain dan tik waktu
+  int nomorMeja; //nomor meja di dekat pelayan
+  int jumlahKabur; //jumlah pelanggan yang kabur (sudah duduk)
+  int jumlahPergi; //jumlah pelangan yang pergi (belum duduk)
+  int idMakanan; //id dari makanan
+  int waktuOut; //waktu saat pelanggan akan kabur
+  int kodeArah; //1==up, 2==right, 3==down, 4==left
+  int status; //menyatakan berhasil load file atau tidak
+  time_t t; //variabel random
+  Restoran R; //tipe restoran dengan graf
+  Ruangan *room; //tipe ruangan pada restoran
+  MatTile lantai; //tipe MatTile untuk matriks representasi lantai
+  Pelayan P; //tipe pelayan restoran
+  PrioQueueCustomer Q1,Q2; //tipe barisan pelanggan
+  customer pelanggan; //tipe pelanggan
+  Kata input,username; //input dari user
+  Kata new,start,load,keluar; //tipe kata pembanding
+  boolean lose,aksiValid; //tipe validasi
+  boolean loaded; //menyatakan ada file yang di load
+  boolean saved; //menyatakan sudah save di saat bermain
+  GameScreen gs; //tipe untuk GameScreen ncruses
+
+  //ALGORITMA
+
+  //inisialisasi
+  new = K_MakeKata("NEW");
+  start = K_MakeKata("START");
+  load = K_MakeKata("LOAD");
+  keluar = K_MakeKata("EXIT");
+  loaded = false;
+  saved = true;
+
+  do { //looping game
+    InitScreen(&gs);
+    WriteText(&gs,MainMenu()); //main menu
+    do { //meminta input hingga benar
+      input = GetInput(&gs,K_MakeKata("CHOICE: "));
+    }
+    while (!InputBenar(input,new,start,load,keluar));
+
+    if (!K_IsKataSama(input,keluar)) { //inputnya bukan exit
+      if (K_IsKataSama(input,new)) { //NEW
+        username=GetInput(&gs,K_MakeKata("USERNAME : "));
+        //baca file konfigurasi normal
+      }
+      else if (K_IsKataSama(input,start)) { //START
+        //menampilkan username yang tersedia
+        username = GetInput(&gs,K_MakeKata("USERNAME: "));
+        //dibaca diulang hingga daper username yang benar
+        //baca save file dengan nama
+      }
+      else if (K_IsKataSama(input,load)) { //LOAD
+        //prosedure load
+        loaded = true;
+      }
+      if (!loaded) { //tidak ada file yang di load
+        //load konfigurasi normal
+        LoadFile("filetes.txt",&status,&username,&money,&life,&waktu,&R);
+        // money = 0;   //inisialisasi uang awal = 0
+        // life = 10;   //inisialisasi nyawa awal = 10
+        // waktu = 1;   //inisialisasi waktu awal = 1
+      }
+      //inisialisasi game
+      InitPelayan(&P);
+      // InitRestoran(&R);
+      // InitTes(&R,&Q1);
+      PlacePelayan(&P,6,5,GetMatTileSekarang(R));
+      PQC_CreateEmpty(&Q1);
+
+      do{ //looping command di dalam game
+        RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
+        aksiValid = false;
+        lantai = GetMatTileSekarang(R);
+        RandomPelanggan(&Q1,waktu);
+        //refresh tampilan di layar
+        RefreshMap(&gs,lantai,Pelayan_Posisi(P));
+        RefreshWaitingPanel(&gs, Q1);
+        //meminta input perintah
+        input = GetInput(&gs,K_MakeKata("COMMAND : "));
+        if(input.TabKata[1]=='G' && input.Length==2){ //inputnya move
+          if(input.TabKata[2]=='U'){ //GU
+            kodeArah=1;
+          }
+          else if(input.TabKata[2]=='R'){ //GR
+            kodeArah=2;
+          }
+          else if(input.TabKata[2]=='D'){ //GD
+            kodeArah=3;
+          }
+          else if(input.TabKata[2]=='L'){ //GL
+            kodeArah=4;
+          }
+          Move(&P,&R,kodeArah,&aksiValid);
+        }
+        else if(K_IsKataSama(input,K_MakeKata("PUT"))){ //nunggu stack
+          aksiValid = true;
+          //1. validasi apakah tumpukan bahan makanan dapat dijadikan makanan
+          //2. cek id makanan sesuai tree
+          //3. pop makanan yang sudah jadi dari hand
+          //4. push makanan yang sudah jadi ke tray
+        } //akhir command put
+        else if(K_IsKataSama(input,K_MakeKata("TAKE"))){ //nunggu stack
+          if (CanTake(P)) {
+            aksiValid = true;
+          }
+          //1. validasi apakah berada didekat M / tempat mengolah makanan
+          //2. cek apakah bahan makanan yang akan diambil adalah urutan yang sesuai
+          //3. push bahan makanan ke stack hand
+          //manggil function Taking(P);
+        } //akhir command take
+        else if(K_IsKataSama(input,K_MakeKata("CH"))){ //nunggu stack
+          // if(!S_IsEmpty(hand)){
+            // S_CreateEmpty(&hand);
+            aksiValid = true;
+          // }
+        } //akhir command ch
+        else if(K_IsKataSama(input,K_MakeKata("CT"))){ //nunggu stack
+          // if(!S_IsEmpty(tray)){
+            // S_CreateEmpty(&tray);
+            aksiValid = true;
+          // }
+        } //akhir command ct
+        else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ //nunggu tree makanan
+          aksiValid = true;
+          //show tree makanan
+          //input = GetInput(&gs,K_MakeKata("COMMAND : "));
+        } //akhir command recipe
+        else if(K_IsKataSama(input,K_MakeKata("RESIZE"))) {
+          refreshLayout(&gs);
+        } //akhir command resize
+        else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
+          //procedure save
+          saved = true;
+          //save current state
+        }//akhir command save
+        else if(K_IsKataSama(input,K_MakeKata("EXIT"))){
+          if (!saved) { //dipanggil jika belum di save
+            input=GetInput(&gs,K_MakeKata("ARE YOU SURE EXIT WITHOUT SAVE CURRENT FILE ? : "));
+            if(K_IsKataSama(input,K_MakeKata("YES"))){ //jadi exit
+              input = K_MakeKata("EXIT");
+            }
+            else { //batal exit
+              //inisialisasi agar tidak exit game
+              input = K_MakeKata("batalexit");
+            }
+          }
+        } //akhir comman exit
+        else { //aksi2 yang butuh dekat Meja
+          room = GetRuanganSekarang(R);
+          nomorMeja = GetTableNumber(P,*room);
+          if (nomorMeja!=0) { //artinya deket meja
+            if(K_IsKataSama(input,K_MakeKata("PLACE"))){
+              if(IsTableEmpty(nomorMeja,*room)){
+                PQC_CreateEmpty(&Q2);
+                while(!CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room) && !PQC_IsEmpty(Q1)){
+                  PQC_Del(&Q1,&pelanggan);
+                  PQC_Add(&Q2,pelanggan);
+                }//bisa place atau sudah dicek semua
+                if(CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room)){ //ada yang bisa di place
+                  aksiValid = true;
+                  PQC_Del(&Q1,&pelanggan);
+                  srand((unsigned) time(&t)); //inisiasi random
+                  if(PQC_Prio(pelanggan)==1){
+                    // waktuOut = waktu + (rand()%20+21); //[21..40]
+                  }
+                  else{
+                    // waktuOut = waktu + (rand()%20+31); //[31..50]
+                  }
+                  waktuOut = waktu + (rand()%3+3); //[21..40]
+
+                  Placing(PQC_Jumlah(pelanggan),waktuOut,&P,room);
+
+                  while(!PQC_IsEmpty(Q1)) {
+                    PQC_Del(&Q1,&pelanggan);
+                    PQC_Add(&Q2,pelanggan);
+                  } //Q1 pasti kosong
+
+                } //akhir placing
+                Q1 = Q2;
+              } //akhir cek meja kosong
+            } //akhir command place
+            else if(K_IsKataSama(input,K_MakeKata("GIVE"))){  //nunggu stack
+              if (CanGive(P,*room,nomorMeja)) {
+                aksiValid = true;
+              }
+              //1. validasi nomormeja yang memesan makanan pada top stack tray
+              //2. search harga makanan di data harga makanan
+              //3. tambahkan money dengan harga makanan
+              //4. pop top stack tray
+              //5. SetTableEmpty(nomormeja,&Room);
+            } //akhir command give
+            else if(K_IsKataSama(input,K_MakeKata("ORDER"))){ //nunggu stack dan converter idmakanan
+              if(CanOrder(P,*room)){
+                aksiValid = true;
+                Ordering(P,room,&idMakanan,&nomorMeja);
+                // S_Push(room,idmakanan,nomormeja);
+              } //akhir can order
+            } //akhir command order
+          } //akhir cek nomor meja
+        } //akhir proses validasi command
+
+        if(aksiValid){//proses yang terjadi jika inputnya valid
+          waktu++; //tik bertambah
+          PelangganKabur(waktu,&P,&R,&jumlahKabur);
+          PelangganPergi(&Q1,waktu,&jumlahPergi);
+          money = jumlahPergi;
+          life -=jumlahKabur+jumlahPergi;
+          saved = false; //saved false karena ada aksi yang berhasil
+          if(life==0){ //jika nyawa==0 maka kalah
+            lose = true;
+          }
+        }//akhir proses aksiValid
+
+      }
+      while(!K_IsKataSama(input,K_MakeKata("EXIT")) && !lose);
+
+      if(lose){ //pemain kalah tampilkan credit
+        WriteText(&gs,Credit());
+        input = GetInput(&gs,K_MakeKata(""));
+        input = K_MakeKata("EXIT");
+      }
+      else { //pemain menekan exit
+        //kembali ke main menu
+        input = K_MakeKata("mainmenu");
+        //inisialisai agar tidak exit game
+      }
+    } //input == exit
+  } while (!K_IsKataSama(input,K_MakeKata("EXIT")));
+  //input == exit
+  QuitScreen(&gs); //quit game
+  return 0;
+}
