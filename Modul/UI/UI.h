@@ -95,13 +95,9 @@ void RefreshBorder(GameScreen *gs);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Dicetak semua border */
 
-void RefreshWaiter(GameScreen *gs, Point waiter);
+void RefreshMap(GameScreen *gs, MatTile peta,Point waiter);
 /* I.S. : Bebas sudah initScreen */
-/* F.S. : Digambar sebuah pelayan pada posisi tertentu di layar */
-
-void RefreshMap(GameScreen *gs, MatTile peta);
-/* I.S. : Bebas sudah initScreen */
-/* F.S. : Digambar peta sesuai MatTile peta */
+/* F.S. : Digambar peta sesuai MatTile peta dan waiter */
 
 void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue);
 /* I.S. : Bebas sudah initScreen */

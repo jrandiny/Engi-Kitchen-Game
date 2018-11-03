@@ -234,10 +234,11 @@ void RefreshWaiter(GameScreen *gs, Point waiter)
 
   /* ALGORITMA */
   mvwaddch(Main_Panel(*gs),P_Ordinat(waiter),P_Absis(waiter),'P');
+  wrefresh(Main_Panel(*gs));
 
 }
 
-void RefreshMap(GameScreen *gs, MatTile peta)
+void RefreshMap(GameScreen *gs, MatTile peta, Point waiter)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar peta sesuai MatTile peta */
 {
@@ -248,6 +249,8 @@ void RefreshMap(GameScreen *gs, MatTile peta)
   int maxY;
   int marginX;
   int marginY;
+  int posy;
+  int posx;
 
   /* ALGORITMA */
   wclear(Main_Panel(*gs));
@@ -266,8 +269,8 @@ void RefreshMap(GameScreen *gs, MatTile peta)
 
   for(i=1;i<=maxY;i++){
     for(j=1;j<=maxX;j++){
-      int posy=i*2 + marginY;
-      int posx=j*4 + marginX;
+      posy=i*2 + marginY;
+      posx=j*4 + marginX;
 
       /* Membentuk
           | P |
@@ -299,6 +302,12 @@ void RefreshMap(GameScreen *gs, MatTile peta)
 
     }
   }
+
+  /* Waiter */
+  posy=P_Ordinat(waiter)*2 + marginY;
+  posx=P_Absis(waiter)*4 + marginX;
+  // mvwprintw(Main_Panel(*gs), posy, posx-1, "\xF0\x9F\x92\x81");
+  mvwaddch(Main_Panel(*gs), posy, posx-1, 'P');
 
   wrefresh(Main_Panel(*gs));
 

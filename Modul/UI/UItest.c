@@ -16,6 +16,7 @@ int main(){
   MatTile mt;
   PrioQueueCustomer pqc;
   customer cust;
+  Point waiter;
 
   int i,j;
 
@@ -45,6 +46,11 @@ int main(){
     }
   }
 
+  /* Create a sample waiter loc */
+  P_Absis(waiter) = 2;
+  P_Ordinat(waiter) = 2;
+
+
   /* Create simple Queue*/
   PQC_CreateEmpty(&pqc);
   PQC_Prio(cust) = 1;
@@ -56,7 +62,7 @@ int main(){
   while(true){
     RefreshTopPanel(&gs,"Nama",1,2,3);
     RefreshWaitingPanel(&gs, pqc);
-    RefreshMap(&gs,mt);
+    RefreshMap(&gs,mt,waiter);
     input  = GetInput(&gs,prompt);
 
     if(K_IsKataSama(input,K_MakeKata("RESIZE"))){
