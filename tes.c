@@ -35,16 +35,27 @@ ArrKata Credit(){
   return isicredit;
 }
 
-void InitTes(Restoran *R){
+void InitTes(Restoran *R,PrioQueueCustomer *pqc){
   //KAMUS
   MatTile mt;
   ArrMeja am;
   GR_infotype grinfo;
+  customer x;
+  Point p;
   //ALGORITMA
   GR_CreateEmpty(&Ruangan(*R));
 
-  MT_MakeMatriks(5,5, &mt);
+  MT_MakeMatriks(8,8, &mt);
+  MT_Elmt(mt, 2, 2) = MT_CreateTile('x',ValUndeff);
+  MT_Elmt(mt, 3, 1) = MT_CreateTile('x',ValUndeff);
+  MT_Elmt(mt, 3, 3) = MT_CreateTile('x',ValUndeff);
+  MT_Elmt(mt, 4, 2) = MT_CreateTile('x',ValUndeff);
+  MT_Elmt(mt, 3, 2) = MT_CreateTile('n',1);
+
   AM_CreateEmpty(&am);
+  P_CreatePoint(&p);
+  P_SetXY(&p, 3, 2);
+  AM_AddEli(&am, AM_CreateMeja(3, p, 0), 1);
 
   Room(grinfo) = mt;
   Meja(grinfo) = am;
@@ -53,6 +64,11 @@ void InitTes(Restoran *R){
   GR_InsVFirst(&Ruangan(*R),grinfo);
   RoomNow(*R) = 1;
 
+  PQC_CreateEmpty(pqc);
+  PQC_Prio(x) = 1;
+  PQC_Jumlah(x) = 2;
+  PQC_Waktu(x) = 50;
+  PQC_Add(pqc, x);
 }
 
 int main (){
@@ -61,7 +77,7 @@ int main (){
   int money,life,waktu,nomormeja,kabur,idmakanan,waktuout,code;   //jumlah keuntungan dari restoran  //nyawa pemain //tik untuk satuan waktu
   time_t t;
   Pelayan P;   //pelayan
-  Ruangan M, Room;  //info restoran
+  Ruangan *M, Room;  //info restoran
   Restoran R;
   // Stack tray,hand,order;  //food stack sementara //hand stack sementara
   PrioQueueCustomer customer1, customer2; //customer sementara
@@ -92,14 +108,13 @@ int main (){
         waktu = 1;    //inisialisasi waktu awal = 1
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
         InitPelayan(&P);
-
         //input=GetInput(&gs,K_MakeKata("Error"));
         InitRestoran(&R);
-        InitTes(&R);
+        InitTes(&R,&customer1);
         PlacePelayan(&P,2,2,GetMatTileSekarang(R));
         // S_CreateEmpty(&tray);
         // S_CreateEmpty(&hand);
-        PQC_CreateEmpty(&customer1);
+        // PQC_CreateEmpty(&customer1);
 
       }
       else if(K_IsKataSama(input,K_MakeKata("LOAD"))){//kalo load game
@@ -110,9 +125,10 @@ int main (){
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
         //input=GetInput(&gs,K_MakeKata("Error"));
         M = GetRuanganSekarang(R);
-        nomormeja = GetTableNumber(P,Room);
+        nomormeja = GetTableNumber(P,*M);
         mt = GetMatTileSekarang(R);
         RefreshMap(&gs,mt,Pelayan_Posisi(P));
+        RefreshWaitingPanel(&gs, customer1);
         aksi=GetInput(&gs,K_MakeKata("COMMAND : "));
         if(aksi.TabKata[1]=='G' && aksi.Length==2){
           //aksi=GetInput(&gs,K_MakeKata("masuk : "));
@@ -162,6 +178,9 @@ int main (){
           //show tree makanan
           resep=GetInput(&gs,K_MakeKata("COMMAND : "));
         }
+        else if (K_IsKataSama(aksi,K_MakeKata("RESIZE"))) {
+          refreshLayout(&gs);
+        }
         else if(nomormeja!=0){
           if(K_IsKataSama(aksi,K_MakeKata("PLACE"))){ //nunggu prioqueue
             if(IsTableEmpty(nomormeja,Room)){
@@ -180,8 +199,8 @@ int main (){
                 PQC_Add(&customer2,cust);
                 i++;
               }//bisa place atau sudah dicek semua
+              // money = CanPlace(PQC_Jumlah(PQC_Elmt(customer1,i)),P,Room);
               customer1 = customer2;
-
               if(CanPlace(PQC_Jumlah(PQC_Elmt(customer1,i)),P,Room)){
                 PQC_Del(&customer1,&cust);
                 srand((unsigned) time(&t));
@@ -192,7 +211,7 @@ int main (){
                   waktuout = waktu + (rand()%20+31);
                 }
                 aksivalid = true;
-                Placing(PQC_Jumlah(cust),waktuout,&P,&Room);
+                Placing(PQC_Jumlah(cust),waktuout,&P,M);
               }
             }
           }

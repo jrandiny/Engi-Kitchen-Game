@@ -185,7 +185,7 @@ MatTile GetMatTileSekarang(Restoran R);
 /*
   fungsi mengembalikan suatu tipe MatTile yang sedang digunakan berdasarkan Ruangan(R)
 */
-Ruangan GetRuanganSekarang(Restoran R);
+Ruangan* GetRuanganSekarang(Restoran R);
 /*
   fungsi mengembalikan suatu tipe Ruangan yang sedang digunakan berdasarkan Ruangan(R)
 */

@@ -590,12 +590,12 @@ MatTile GetMatTileSekarang(Restoran R)
   return (Room(GR_Info(P)));
   //return (Room(AR_Elmt(GR_Info(Ruangan(R)),RoomNow(R))));
 }
-Ruangan GetRuanganSekarang(Restoran R)
+Ruangan* GetRuanganSekarang(Restoran R)
 /*
   fungsi mengembalikan suatu tipe Ruangan yang sedang digunakan berdasarkan Ruangan(R)
 */
 {
-  return(GR_Info(GR_Search(Ruangan(R),RoomNow(R))));
+  return &(GR_Info(GR_Search(Ruangan(R),RoomNow(R))));
 }
 void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
 /*
@@ -608,17 +608,18 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
   //KAMUS
   int x,y;
   int a,b;
-  Ruangan tmp;
+  Ruangan *tmp;
+  Ruangan room;
   GR_address p;
   GR_address p1;
   //ALGORITMA
   *jumlah = 0;
   p1 = GR_First(Ruangan(*R));
   while (p1!=Nil) {
-    tmp = GR_Info(p1);
-    for(int i = AM_GetFirstIdx(Meja(tmp));i<=AM_GetLastIdx(Meja(tmp));i++) {
-        P_GetXY(IndeksMeja(i,tmp),&a,&b);
-        if (Value(MT_Elmt(Room(tmp),a,b+1))==waktuNow) {
+    room = GR_Info(p1);
+    for(int i = AM_GetFirstIdx(Meja(room));i<=AM_GetLastIdx(Meja(room));i++) {
+        P_GetXY(IndeksMeja(i,room),&a,&b);
+        if (Value(MT_Elmt(Room(room),a,b+1))==waktuNow) {
           //saatnya keluar
           *jumlah += 1;
           SetTableEmpty(i,&GR_Info(p1));
@@ -631,7 +632,7 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
     // p = GR_Search(Ruangan(*R),RoomNow(*R));
     tmp = GetRuanganSekarang(*R);
     // PlacePelayan(P,x,y,Room(GR_Info(p)));
-    PlacePelayan(P,x,y,Room(tmp));
+    PlacePelayan(P,x,y,Room(*tmp));
   }
 }
 Point IndeksMeja(int nomor,Ruangan R)
