@@ -62,9 +62,6 @@ void InitRestoran(Restoran *R)
 */
 {
   //ALGORITMA
-  // for (int i = AR_GetFirstIdx(Ruangan(*R));i <= AR_GetLastIdx(Ruangan(*R));i++) {
-  //   MT_MakeMatriks(8,8,&Room(AR_Elmt(GR_Info(Ruangan(*R)),i)));
-  // }
   GR_CreateEmpty(&Ruangan(*R));
   RoomNow(*R) = 0;
 }
@@ -91,7 +88,7 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
   int arah,nomorRuang;
   MatTile M;
   //ALGORITMA
-  //P_GetXY(Pelayan_Posisi(P),&x,&y);
+
   found = false;
   p = GR_First(Ruangan(*R));
   while (p!=Nil && !found) {
@@ -117,15 +114,13 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
   M = Room(GR_Info(p1));
 
   *status = false;
+  P_GetXY(Pelayan_Posisi(*P),&x,&y);
   switch (code) {
     case 1:
       if (Karakter(Up(*P))==' ') {
         *status =true;
-        P_Geser(&Pelayan_Posisi(*P),-1,0);
-        SetUpTile(P,M);
-        SetRightTile(P,M);
-        SetDownTile(P,M);
-        SetLeftTile(P,M);
+        x-=1;
+        PlacePelayan(P,x,y,M);
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
@@ -137,11 +132,8 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
     case 2:
       if (Karakter(Right(*P))==' ') {
         *status =true;
-        P_Geser(&Pelayan_Posisi(*P),0,1);
-        SetUpTile(P,M);
-        SetRightTile(P,M);
-        SetDownTile(P,M);
-        SetLeftTile(P,M);
+        y+=1;
+        PlacePelayan(P,x,y,M);
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
@@ -153,11 +145,8 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
     case 3:
       if (Karakter(Down(*P))==' ') {
         *status =true;
-        P_Geser(&Pelayan_Posisi(*P),1,0);
-        SetUpTile(P,M);
-        SetRightTile(P,M);
-        SetDownTile(P,M);
-        SetLeftTile(P,M);
+        x+=1;
+        PlacePelayan(P,x,y,M);
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
@@ -169,11 +158,8 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
     case 4:
       if (Karakter(Left(*P))==' ') {
         *status =true;
-        P_Geser(&Pelayan_Posisi(*P),0,-1);
-        SetUpTile(P,M);
-        SetRightTile(P,M);
-        SetDownTile(P,M);
-        SetLeftTile(P,M);
+        y-=1;
+        PlacePelayan(P,x,y,M);
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
@@ -184,167 +170,8 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       break;
   };
 }
-// void MoveUp(Pelayan *P,MatTile M)
-// /*
-//   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat naik
-//   F.S. Pelayan pindah ke posisi di atasnya dan update semua karakter
-// */
-// {
-//   //ALGORITMA
-//   P_Geser(&Pelayan_Posisi(*P),-1,0);
-//   SetUpTile(P,M);
-// }
-// void MoveDown(Pelayan *P,MatTile M)
-// /*
-//   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat turun
-//   F.S. Pelayan pindah ke posisi di bawahnya dan update semua karakter
-// */
-// {
-//   //ALGORITMA
-//   P_Geser(&Pelayan_Posisi(*P),1,0);
-//   SetDownTile(P,M);
-// }
-// void MoveLeft(Pelayan *P,MatTile M)
-// /*
-//   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat bergerak ke kiri
-//   F.S. Pelayan pindah ke posisi di kirinya dan update semua karakter
-// */
-// {
-//   //ALGORITMA
-//   P_Geser(&Pelayan_Posisi(*P),0,-1);
-//   SetLeftTile(P,M);
-// }
-// void MoveRight(Pelayan *P,MatTile M)
-// /*
-//   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat bergerak ke kanan
-//   F.S. Pelayan pindah ke posisi di kanannya dan update semua karakter
-// */
-// {
-//   //ALGORITMA
-//   P_Geser(&Pelayan_Posisi(*P),0,1);
-//   SetRightTile(P,M);
-// }
 
 // *** BOOLEAN PELAYAN ***
-// boolean CanMove(Pelayan P, Restoran R, int code)
-// /*
-//   fungsi bernilai true jika pelayan dapat Move sesuai code
-//   termasuk saat di pintu
-// */
-// {
-//   //KAMUS
-//   boolean flag;
-//   //ALGORITMA
-//   flag = false;
-//   switch (code) {
-//     case 1:
-//       if (Karakter(Up(P))==' ') {
-//         flag = true;
-//       } else if () { //di pintu bisa naik
-//         flag = true;
-//       }
-//     case 2:
-//       if (Karakter(Right(P))==' ') {
-//         flag = true;
-//       } else if () { //di pintu bisa naik
-//         flag = true;
-//       }
-//     case 3:
-//       if (Karakter(Down(P))==' ') {
-//         flag = true;
-//       } else if () { //di pintu bisa naik
-//         flag = true;
-//       }
-//     case 4:
-//       if (Karakter(left(P))==' ') {
-//         flag = true;
-//       } else if () { //di pintu bisa naik
-//         flag = true;
-//       }
-//   };
-//   return flag;
-// }
-// boolean CanMoveUp(Pelayan P,MatTile M)
-// /*
-//   fungsi bernilai true jika pelayan dapat MoveUp dan P bukan di pintu
-// */
-// {
-//   //KAMUS
-//   boolean flag;
-//   //ALGORITMA
-//   flag = false;
-//   if (Karakter(Up(P))==' ') {
-//     flag = true;
-//   }
-//   return flag;
-// }
-// boolean CanMoveDown(Pelayan P,MatTile M)
-// /*
-//   fungsi bernilai true jika pelayan dapat MoveDown dan P bukan di pintu
-// */
-// {
-//   //KAMUS
-//   boolean flag;
-//   //ALGORITMA
-//   flag = false;
-//   if (Karakter(Down(P))==' ') {
-//     flag = true;
-//   }
-//   return flag;
-// }
-// boolean CanMoveLeft(Pelayan P,MatTile M)
-// /*
-//   fungsi bernilai true jika pelayan dapat MoveLeft dan P bukan di pintu
-// */
-// {
-//   //KAMUS
-//   boolean flag;
-//   //ALGORITMA
-//   flag = false;
-//   if (Karakter(Left(P))==' ') {
-//     flag = true;
-//   }
-//   return flag;
-// }
-// boolean CanMoveRight(Pelayan P,MatTile M)
-// /*
-//   fungsi bernilai true jika pelayan dapat MoveRight dan P bukan di pintu
-// */
-// {
-//   //KAMUS
-//   boolean flag;
-//   //ALGORITMA
-//   flag = false;
-//   if (Karakter(Right(P))==' ') {
-//     flag = true;
-//   }
-//   return flag;
-// }
-// boolean IsOnDoor(Pelayan P, Restoran R)
-// /*
-//   fungsi mengambalikan true jika P berada di pintu
-// */
-// {
-//   //KAMUS
-//   int x,y;
-//   boolean found;
-//   GR_address p;
-//   GRD_address pt,door;
-//   //ALGORITMA
-//   P_GetXY(Pelayan_Posisi(P),&x,&y);
-//   found = false;
-//   p = GR_First(Ruangan(R));
-//   while (p!=Nil && !found) {
-//     pt = GR_Doors(p);
-//     door = GRD_Search(pt,Pelayan_Posisi(P));
-//     if (door != Nil) {
-//       found = true;
-//     } else {
-//       p = GR_Next(p);
-//     }
-//   } //found == true || p == nil
-//   return found;
-// }
 boolean CanOrder(Pelayan P, Ruangan R)
 /*
   fungsi akan bernialai true jika meja dekat p dapat memesan
@@ -367,6 +194,20 @@ boolean CanGive(Pelayan P, Ruangan R, int nomorMeja)
   //ALGORITMA
   lantai = GetTableTile(P,R);
   return nomorMeja == Value(lantai);
+}
+boolean CanTake(Pelayan P)
+/*
+  fungsi bernilai true jika di dekat P ada M yang bisa diambil idnya
+*/
+{
+  //KAMUS
+  boolean up,down,left,right;
+  //ALGORITMA
+  up = Karakter(Up(P)) == 'm';
+  down = Karakter(Down(P)) == 'm';
+  left = Karakter(Left(P)) == 'm';
+  right = Karakter(Right(P)) == 'm';
+  return up||down||left||right;
 }
 
 // *** Tile Set ***
@@ -447,18 +288,6 @@ void SetRightTile(Pelayan *P,MatTile M)
   }
 }
 
-// // *** RUANGAN ***
-// void IsiRuang(Restoran *R, int ruangan, Ruangan Ru)
-// /*
-//   I.S. R sudah terdeinisi, ruangan dan M juga terdefinisi
-//   F.S. room ke-(ruangan) di set menjadi seperti M
-// */
-// {
-//   //ALGORITMA
-//
-//   //MT_CopyMatriks(M,&Room(AR_Elmt(GR_Info(Ruangan(*R)),ruangan)));
-// }
-
 // *** BOOLEAN RUANGAN***
 boolean IsTableEmpty(int nomorMeja, Ruangan R)
 /*
@@ -484,7 +313,7 @@ boolean CanPlace(int pelanggan,Pelayan P, Ruangan R)
   table = GetTableTile(P,R);
   jumlahBangku = Bangku(AM_Elmt(Meja(R),Value(table)));
   empty = IsTableEmpty(Value(table),R);
-  return empty && (jumlahBangku<=pelanggan);
+  return empty && (jumlahBangku>=pelanggan && pelanggan != 0);
 }
 
 // *** ACTION ***
@@ -557,7 +386,7 @@ void Placing(int pelanggan,int waktuOut,Pelayan *P, Ruangan *R)
     MT_Elmt(Room(*R),i+1,j) = MT_CreateTile('c',waktuOut);
     MT_Elmt(Room(*R),i-1,j) = MT_CreateTile('c',waktuOut);
   }
-  if (jumlahBangku==4) { //jika bangku ada 4, tambah 2 valur dan deskripsi lagi
+  if (jumlahBangku==4 && pelanggan==2) { //jika bangku ada 4, tambah 2 valur dan deskripsi lagi
     MT_Elmt(Room(*R),i+1,j) = MT_CreateTile('x',waktuOut);
     MT_Elmt(Room(*R),i-1,j) = MT_CreateTile('x',waktuOut);
   }
@@ -588,7 +417,6 @@ MatTile GetMatTileSekarang(Restoran R)
   //ALGORITMA
   P = GR_Search(Ruangan(R),RoomNow(R));
   return (Room(GR_Info(P)));
-  //return (Room(AR_Elmt(GR_Info(Ruangan(R)),RoomNow(R))));
 }
 Ruangan* GetRuanganSekarang(Restoran R)
 /*

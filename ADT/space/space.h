@@ -52,53 +52,8 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status);
         3 = Down
         4 = Left
 */
-// void MoveUp(Pelayan *P,MatTile M);
-// /*
-//   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat naik
-//   F.S. Pelayan pindah ke posisi di atasnya dan update semua karakter
-// */
-// void MoveDown(Pelayan *P,MatTile M);
-// /*
-//   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat turun
-//   F.S. Pelayan pindah ke posisi di bawahnya dan update semua karakter
-// */
-// void MoveLeft(Pelayan *P,MatTile M);
-// /*
-//   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat bergerak ke kiri
-//   F.S. Pelayan pindah ke posisi di kirinya dan update semua karakter
-// */
-// void MoveRight(Pelayan *P,MatTile M);
-// /*
-//   I.S. Pelayan dan Restoran terdifinsi, Pelayan masih dapat bergerak ke kanan
-//   F.S. Pelayan pindah ke posisi di kanannya dan update semua karakter
-// */
 
 // *** BOOLEAN PELAYAN ***
-// boolean CanMove(Pelayan P, Restoran R, int code);
-// /*
-//   fungsi bernilai true jika pelayan dapat Move sesuai code
-//   termasuk saat di pintu
-// */
-// boolean CanMoveUp(Pelayan P,MatTile M);
-// /*
-//   fungsi bernilai true jika pelayan dapat MoveUp dan P bukan di pintu
-// */
-// boolean CanMoveDown(Pelayan P,MatTile M);
-// /*
-//   fungsi bernilai true jika pelayan dapat MoveDown dan P bukan di pintu
-// */
-// boolean CanMoveLeft(Pelayan P,MatTile M);
-// /*
-//   fungsi bernilai true jika pelayan dapat MoveLeft dan P bukan di pintu
-// */
-// boolean CanMoveRight(Pelayan P,MatTile M);
-// /*
-//   fungsi bernilai true jika pelayan dapat MoveRight dan P bukan di pintu
-// */
-// boolean IsOnDoor(Pelayan P, Restoran R);
-// /*
-//   fungsi mengambalikan true jika P berada di pintu
-// */
 boolean CanOrder(Pelayan P, Ruangan R);
 /*
   fungsi akan bernialai true jika meja dekat p dapat memesan
@@ -108,7 +63,10 @@ boolean CanGive(Pelayan P, Ruangan R, int nomorMeja);
   fungsi akan bernilai true jika nomorMeja sama dengan nomor dari
   meja di dekat P
 */
-
+boolean CanTake(Pelayan P);
+/*
+  fungsi bernilai true jika di dekat P ada M yang bisa diambil idnya
+*/
 
 // *** Tile Set ***
 void SetUpTile(Pelayan *P,MatTile M);
@@ -131,13 +89,6 @@ void SetRightTile(Pelayan *P,MatTile M);
   I.S. P dan M terdefinisi
   F.S. Tile Right pada pelayan diisi dengan elemt yang sesuai dengan M
 */
-
-// // *** RUANGAN ***
-// void IsiRuang(Restoran *R, int ruangan, Ruangan Ru);
-// /*
-//   I.S. R sudah terdeinisi, ruangan dan M juga terdefinisi
-//   F.S. room ke-(ruangan) di set menjadi seperti M
-// */
 
 // *** BOOLEAN RUANGAN ***
 boolean IsTableEmpty(int nomorMeja, Ruangan R);
