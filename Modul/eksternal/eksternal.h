@@ -13,6 +13,9 @@ void ParserLocate(Kata input,int *pos1, int *pos2);
        jika tidak ditemukan pos berisi -1
 */
 
+Pelayan ParsePelayan(Kata Scanned);
+/*mengembalikan tipe pelayan dari hasil parsing kata */
+
 Kata ParseNama(Kata scanned);
 /* parsing nama*/
 
@@ -43,7 +46,7 @@ Restoran ParseRestoran();
 GrafRuangan ParseGrafRuangan(Kata X);
 /*Ckata berada di jumlah komponen rungan, mengambil X bagian berikutnya menjadi grafruangan*/
 
-void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran);
+void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan);
 /*I.S. bebas
   F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
   parameter sisanya berisi data sesuai file eksternal
@@ -84,7 +87,7 @@ void WriteArrayMeja(FILE* namafile,ArrMeja arrmeja);
 /* I.S. namafile dan arrmeja terdefinisi
    F.S. tertulis arrmeja di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 
-void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran);
+void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan);
 /*I.S. bebas
   F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
   */

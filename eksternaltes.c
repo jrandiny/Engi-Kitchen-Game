@@ -10,18 +10,19 @@ int main(){
     Kata nama;
     int money,life,waktu;
     Restoran restoran;
+    Pelayan pelayan;
     nama=K_MakeKata("filetes");
-     LoadFile(&status,&nama,&money,&life,&waktu,&restoran);
+    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan);
 
     
     K_PrintKata(nama);printf("\n");
     printf("money=%d\n",money);
     printf("life=%d\n",life);
     printf("time=%d\n",waktu);
-    SaveFile(nama,money,life,waktu,restoran);
-    LoadFile(&status,&nama,&money,&life,&waktu,&restoran);
+    SaveFile(nama,money,life,waktu,restoran,pelayan);
+    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan);
     nama=K_MakeKata("tessave");
-    SaveFile(nama,money,life,waktu,restoran);
+    SaveFile(nama,money,life,waktu,restoran,pelayan);
     return 0;
 }
     // scanf("%s",tes);

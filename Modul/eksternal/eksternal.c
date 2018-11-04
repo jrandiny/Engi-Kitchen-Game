@@ -24,6 +24,24 @@ void ParserLocate(Kata input,int *pos1, int *pos2)
   }
 }
 
+Pelayan ParsePelayan(Kata Scanned)
+/*mengembalikan tipe pelayan dari hasil parsing kata,Ckata berada di kata pelayan */
+{
+  Pelayan hasil;
+  K_ADVKATA();//Ckata berada di posisi pelayan
+  Pelayan_Posisi(hasil)=K_KataToPoint(CKata);
+  K_ADVKATA();//ckata berada di up
+  Up(hasil)=ParseTile(CKata);
+  K_ADVKATA();//ckata berada di down
+  Down(hasil)=ParseTile(CKata);
+  K_ADVKATA();//ckata berada di left
+  Left(hasil)=ParseTile(CKata);
+  K_ADVKATA();//ckata berada di right
+  Right(hasil)=ParseTile(CKata);
+  return hasil;
+}
+
+
 Kata ParseNama(Kata scanned)
 /* parsing nama,Ckata berada di Kata name*/
 {
@@ -183,7 +201,7 @@ GrafRuangan ParseGrafRuangan(Kata X)
   return hasil;
 }
 
-void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran)
+void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan)
 /*I.S. bebas
   F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
   parameter sisanya berisi data sesuai file eksternal
@@ -209,6 +227,9 @@ void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran
       }else if(K_IsKataSama(CKata,K_MakeKata("restoran"))){
         //Ckata berada di kata restoran
         *restoran=ParseRestoran();
+      }else if(K_IsKataSama(CKata,K_MakeKata("pelayan"))){
+        //Ckata berada di kata pelayan
+        *pelayan=ParsePelayan(CKata);
       }
     }
   }
@@ -284,7 +305,7 @@ void WriteArrayMeja(FILE* namafile,ArrMeja arrmeja)
   }
 }
 
-void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran)
+void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan)
 /*I.S. bebas
   F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
   */
@@ -326,6 +347,7 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran)
   }
   fprintf(fw," 4");
   ////////////////////////////////////
+  //bagian writing vertex
   GR=GR_First(Ruangan(restoran));
   GRD_address temp[9];
   int n=0,i;
@@ -358,7 +380,18 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran)
     }
     GR=GR_Next(GR);
   }
-  fprintf(fw,".");
   ////////////////////////////////////
+  //tulis bagian pelayan
+  fprintf(fw," pelayan ");
+  fprintf(fw,"%d,%d",P_Baris(Pelayan_Posisi(pelayan)),P_Kolom(Pelayan_Posisi(pelayan)));
+  WriteSpace(fw);
+  WriteTile(fw,Up(pelayan));
+  WriteSpace(fw);
+  WriteTile(fw,Down(pelayan));
+  WriteSpace(fw);
+  WriteTile(fw,Left(pelayan));
+  WriteSpace(fw);
+  WriteTile(fw,Right(pelayan));
+  fprintf(fw,".");
   fclose(fw);
 }
