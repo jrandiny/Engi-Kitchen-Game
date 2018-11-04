@@ -238,3 +238,31 @@ void K_KonkatKata(Kata *kata1, Kata kata2)
   }
   (*kata1).Length=max;
 }
+
+void K_KataAddTXT(Kata *kata)
+/* I.S. *kata terdefinisi
+   F.S. *kata terdapat tambahan .txt dibelakangnya*/
+{
+  int length=(*kata).Length;
+  (*kata).Length+=4;
+  (*kata).TabKata[length+1]='.';
+  (*kata).TabKata[length+2]='t';
+  (*kata).TabKata[length+3]='x';
+  (*kata).TabKata[length+4]='t';
+}
+
+int K_CountKata(Kata kata)
+/* mengembalikan banyak kata sebenarnya dari suatu kata*/
+{
+  int jumlah=0,i;
+  for(i=1;i<=kata.Length;i++){
+    if(kata.TabKata[i]==' '){
+      jumlah++;
+    }
+  }
+  if(kata.Length!=0){
+    return jumlah+1;
+  }else{
+    return 0;
+  }
+}

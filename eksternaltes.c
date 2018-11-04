@@ -10,6 +10,20 @@ int main(){
     Kata nama;
     int money,life,waktu;
     Restoran restoran;
+    nama=K_MakeKata("filetes");
+     LoadFile(&status,&nama,&money,&life,&waktu,&restoran);
+
+    
+    K_PrintKata(nama);printf("\n");
+    printf("money=%d\n",money);
+    printf("life=%d\n",life);
+    printf("time=%d\n",waktu);
+    SaveFile(nama,money,life,waktu,restoran);
+    LoadFile(&status,&nama,&money,&life,&waktu,&restoran);
+    nama=K_MakeKata("tessave");
+    SaveFile(nama,money,life,waktu,restoran);
+    return 0;
+}
     // scanf("%s",tes);
     // T=ParseTile(K_MakeKata(tes));
     // printf("%c %d\n",Karakter(T),Value(T));
@@ -37,8 +51,7 @@ int main(){
     //     //     printf("gagal\n");
     //     // }
     // }
-    LoadFile("filetes.txt",&status,&nama,&money,&life,&waktu,&restoran);
-    
+        
     // scanf("%s",tes);
     // temp2=ParseMeja(K_MakeKata(tes));
     // printf("bangku:%d status:%d",Bangku(temp2),Status(temp2));
@@ -73,11 +86,3 @@ int main(){
     //         printf("mungkin berhasil\n");
     //     }
     // }
-    
-    K_PrintKata(nama);printf("\n");
-    printf("money=%d\n",money);
-    printf("life=%d\n",life);
-    printf("time=%d\n",waktu);
-
-    return 0;
-}

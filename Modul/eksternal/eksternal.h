@@ -5,6 +5,8 @@
 #include "../../ADT.h"
 #include "../../ADT/space/space.h"
 
+/*Bagian Load File Eksternal*/
+
 void ParserLocate(Kata input,int *pos1, int *pos2);
 /*I.S. input valid, pos1 dan pos2 kosong
   F.S. pos1 dan pos2 berisi index letak parse
@@ -41,9 +43,50 @@ Restoran ParseRestoran();
 GrafRuangan ParseGrafRuangan(Kata X);
 /*Ckata berada di jumlah komponen rungan, mengambil X bagian berikutnya menjadi grafruangan*/
 
-void LoadFile(char* namafile,int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran);
-/*  F.S. status memberikan status apakah file berhasil di load atau tidak
+void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran);
+/*I.S. bebas
+  F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
   parameter sisanya berisi data sesuai file eksternal
+  */
+
+/*Bagian Save File Eksternal*/
+
+void WriteSpace(FILE* namafile);
+/* I.S. bebas
+   F.S. di namafile tertulis spasi*/
+
+void WriteName(FILE* namafile,Kata name);
+/* I.S. namafile dan name terdefinisi
+   F.S. tertulis name di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+
+void WriteTile(FILE* namafile,Tile tile);
+/* I.S. namafile dan tile terdefinisi
+   F.S. tertulis tile di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+
+
+void WriteMeja(FILE* namafile,Meja meja);
+/* I.S. namafile dan meja terdefinisi
+   F.S. tertulis meja di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+
+void WriteCustomer(FILE* namafile,customer customer);
+/* I.S. namafile dan customer terdefinisi
+   F.S. tertulis customer di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+
+void WriteDoor(FILE* namafile,Door door);
+/* I.S. namafile dan door terdefinisi
+   F.S. tertulis door di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+
+void WriteMatriksTile(FILE* namafile,MatTile mattile);
+/* I.S. namafile dan mattile terdefinisi
+   F.S. tertulis mattile di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+
+void WriteArrayMeja(FILE* namafile,ArrMeja arrmeja);
+/* I.S. namafile dan arrmeja terdefinisi
+   F.S. tertulis arrmeja di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+
+void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran);
+/*I.S. bebas
+  F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
   */
 
 #endif

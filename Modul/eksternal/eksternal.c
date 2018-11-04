@@ -1,5 +1,7 @@
 #include "eksternal.h"
 
+/*Bagian Load File Eksternal*/
+
 void ParserLocate(Kata input,int *pos1, int *pos2)
 /*I.S. input valid, pos1 dan pos2 kosong
   F.S. pos1 dan pos2 berisi index letak parse
@@ -179,13 +181,15 @@ GrafRuangan ParseGrafRuangan(Kata X)
   return hasil;
 }
 
-void LoadFile(char* namafile,int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran)
-/*I.S. namafile berisi namafile diikuti .txt
-  F.S. status memberikan status apakah file berhasil di load atau tidak
+void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran)
+/*I.S. bebas
+  F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
   parameter sisanya berisi data sesuai file eksternal
   */
 { 
-  K_STARTKATA(namafile,status);//Ckata berada di kata FILE_EKSTERNAL
+  Kata namafile=*nama;
+  K_KataAddTXT(&namafile);
+  K_STARTKATA(K_KataToChar(namafile),status);//Ckata berada di kata FILE_EKSTERNAL
   if(*status==1){
     while(!EndKata){
       K_ADVKATA();
@@ -206,4 +210,153 @@ void LoadFile(char* namafile,int* status, Kata* nama,int* money, int* life, int*
       }
     }
   }
+}
+
+/*Bagian Save File Eksternal*/
+
+void WriteSpace(FILE* namafile)
+/* I.S. bebas
+   F.S. di namafile tertulis spasi*/
+{
+  fprintf(namafile," ");
+}
+
+void WriteName(FILE* namafile,Kata name)
+/* I.S. namafile dan name terdefinisi
+   F.S. tertulis name di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+{
+  fprintf(namafile,"%s",K_KataToChar(name));
+}
+
+void WriteTile(FILE* namafile,Tile tile)
+/* I.S. namafile dan tile terdefinisi
+   F.S. tertulis tile di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+{
+  fprintf(namafile,"%c/%d",Karakter(tile),Value(tile));
+}
+
+void WriteMeja(FILE* namafile,Meja meja)
+/* I.S. namafile dan meja terdefinisi
+   F.S. tertulis meja di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+{
+  fprintf(namafile,"%d/%d,%d/%d",Bangku(meja),P_Baris(Meja_Posisi(meja)),P_Kolom(Meja_Posisi(meja)),Status(meja));
+}
+
+void WriteCustomer(FILE* namafile,customer customer)
+/* I.S. namafile dan customer terdefinisi
+   F.S. tertulis customer di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+{
+  fprintf(namafile,"%d/%d/%d",PQC_Prio(customer),PQC_Jumlah(customer),PQC_Waktu(customer));
+}
+
+void WriteDoor(FILE* namafile,Door door)
+/* I.S. namafile dan door terdefinisi
+   F.S. tertulis door di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+{
+  fprintf(namafile,"%d,%d/%d/%d", P_Baris(DoorLocation(door)),P_Kolom(DoorLocation(door)) ,DoorDirection(door),DoorRoomID(door));
+}
+
+void WriteMatriksTile(FILE* namafile,MatTile mattile)
+/* I.S. namafile dan mattile terdefinisi
+   F.S. tertulis mattile di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+{
+  int i,j;
+  fprintf(namafile,"%d",MT_NBrsEff(mattile)*MT_NKolEff(mattile));
+  for(i=1;i<=MT_NBrsEff(mattile);i++){
+    for(j=1;j<=MT_NKolEff(mattile);j++){
+      WriteSpace(namafile);
+      WriteTile(namafile,MT_Elmt(mattile,i,j));
+    }
+  }
+}
+
+void WriteArrayMeja(FILE* namafile,ArrMeja arrmeja)
+/* I.S. namafile dan arrmeja terdefinisi
+   F.S. tertulis arrmeja di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+{
+  int i;
+  fprintf(namafile,"%d",AM_Neff(arrmeja));
+  for(i=1;i<=AM_Neff(arrmeja);i++){
+    WriteSpace(namafile);
+    WriteMeja(namafile,AM_Elmt(arrmeja,i));
+  }
+}
+
+void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran)
+/*I.S. bebas
+  F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
+  */
+{ 
+  FILE* fw;
+  Kata namafile;
+  GR_address GR=Nil;
+  GRD_address GD=Nil;
+  namafile=nama;
+  K_KataAddTXT(&namafile);
+  fw=fopen(K_KataToChar(namafile),"w+");
+  fprintf(fw,"FILE_EKSTERNAL");
+  WriteSpace(fw);
+  //Tulis bagian nama
+  fprintf(fw,"name %d ",K_CountKata(nama));  
+  WriteName(fw,nama);
+  WriteSpace(fw);
+  //Tulis bagian money
+  fprintf(fw,"money %d",money);
+  WriteSpace(fw);
+  //Tulis bagian life
+  fprintf(fw,"life %d",life);
+  WriteSpace(fw);
+  //Tulis bagian time
+  fprintf(fw,"time %d",waktu);
+  WriteSpace(fw);
+  //Tulis bagian restoran
+  fprintf(fw,"restoran ");
+  fprintf(fw,"%d",RoomNow(restoran));
+  fprintf(fw," 4 ");
+  GR=GR_First(Ruangan(restoran));
+  while(GR!=Nil){
+    fprintf(fw,"%d ",RoomID(GR_Info(GR)));
+    WriteMatriksTile(fw,Room(GR_Info(GR)));
+    WriteSpace(fw);
+    WriteArrayMeja(fw,Meja(GR_Info(GR)));
+    WriteSpace(fw);
+    GR=GR_Next(GR);
+  }
+  fprintf(fw," 4");
+  ////////////////////////////////////
+  GR=GR_First(Ruangan(restoran));
+  GRD_address temp[9];
+  int n=0,i;
+  boolean found;
+  while(GR!=Nil){
+    GD=GR_Doors(GR);
+    while(GD!=Nil){
+      found=false;
+      i=1;
+      while((i<=n)&&!found){
+        if(GD==temp[i]){
+          found=true;
+        }else{
+          i++;
+        }
+      }
+      if(!found){
+        WriteSpace(fw);
+        WriteDoor(fw,GRD_Info(GD));
+        n++;
+        temp[n]=GD;
+        GD=GRD_To(GD);
+        WriteSpace(fw);
+        WriteDoor(fw,GRD_Info(GD));
+        n++;
+        temp[n]=GD;
+        GD=temp[n-1];
+      }
+      GD=GRD_Next(GD);
+    }
+    GR=GR_Next(GR);
+  }
+  fprintf(fw,".");
+  ////////////////////////////////////
+  fclose(fw);
 }
