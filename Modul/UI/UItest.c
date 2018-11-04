@@ -6,6 +6,9 @@
 #include "../../ADT/mesinkata/mesinkata.h"
 #include "../../ADT/space/matTile/matTile.h"
 #include "../../ADT/customer/prioqueuecustomer.h"
+#include "../../ADT/food/stacktfood.h"
+
+#include <string.h>
 
 int main(){
   /* KAMUS */
@@ -17,6 +20,8 @@ int main(){
   PrioQueueCustomer pqc;
   customer cust;
   Point waiter;
+  StackFood sf,sh;
+  SF_infotype testinfo;
 
   int i,j;
 
@@ -59,10 +64,31 @@ int main(){
   PQC_Add(&pqc, cust);
   PQC_Add(&pqc, cust);
 
+  /* Create sample food stack */
+  SF_CreateEmpty(&sf);
+  SF_IDMakanan(testinfo) = 1;
+  strcpy(  SF_NamaMakanan(testinfo),"manusia");
+  SF_Push(&sf, testinfo);
+  SF_IDMakanan(testinfo) = 2;
+  strcpy(  SF_NamaMakanan(testinfo),"tubes bkr");
+  SF_Push(&sf, testinfo);
+
+  /* Create sample hand stack */
+  SF_CreateEmpty(&sh);
+  SF_IDMakanan(testinfo) = 1;
+  strcpy(  SF_NamaMakanan(testinfo),"otak");
+  SF_Push(&sh, testinfo);
+  SF_IDMakanan(testinfo) = 2;
+  strcpy(  SF_NamaMakanan(testinfo),"tubes");
+  SF_Push(&sh, testinfo);
+
+
 
   while(true){
     RefreshTopPanel(&gs,"Nama",1,2,3);
     RefreshWaitingPanel(&gs, pqc);
+    RefreshFoodPanel(&gs,sf);
+    RefreshHandPanel(&gs,sh);
     RefreshMap(&gs,mt,waiter);
     input  = GetInput(&gs,prompt);
 

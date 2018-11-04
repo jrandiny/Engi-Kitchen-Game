@@ -4,6 +4,7 @@
 #include "../../boolean.h"
 #include "../../ADT/space/matTile/matTile.h"
 #include "../../ADT/customer/prioqueuecustomer.h"
+#include "../../ADT/food/stacktfood.h"
 #include <locale.h>
 
 void DrawBorders(WINDOW *screen)
@@ -340,27 +341,53 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
   wrefresh(Waiting_Panel(*gs));
 }
 
-// void RefreshFoodPanel(GameScreen *gs, Stack foodStack)
+void RefreshFoodPanel(GameScreen *gs, StackFood foodStack)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel stack makanan */
-// {
-//   /* KAMUS LOKAL */
-//
-//   /* ALGORITMA */
-//   wclear(Food_Panel(*gs));
-//   DrawBorders(Food_Panel(*gs));
-// }
+{
+  /* KAMUS LOKAL */
+  SF_infotype temp;
+  int y;
 
-// void RefreshHandPanel(GameScreen *gs, Stack handStack)
+  /* ALGORITMA */
+  wclear(Food_Panel(*gs));
+  DrawBorders(Food_Panel(*gs));
+
+  mvwprintw(Food_Panel(*gs),1, 2, "Food Stack");
+
+  y = 2;
+  while(!SF_IsEmpty(foodStack)){
+    SF_Pop(&foodStack, &temp);
+    mvwprintw(Food_Panel(*gs), y, 2, SF_NamaMakanan(temp));
+    y++;
+  }
+
+  wrefresh(Food_Panel(*gs));
+}
+
+void RefreshHandPanel(GameScreen *gs, StackFood handStack)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel stack di tangan */
-// {
-//   /* KAMUS LOKAL */
-//
-//   /* ALGORITMA */
-//   wclear(Hand_Panel(*gs));
-//   DrawBorders(Hand_Panel(*gs));
-// }
+{
+  /* KAMUS LOKAL */
+  SF_infotype temp;
+  int y;
+
+  /* ALGORITMA */
+  wclear(Hand_Panel(*gs));
+  DrawBorders(Hand_Panel(*gs));
+
+  mvwprintw(Hand_Panel(*gs),1, 2, "Food Stack");
+
+  y = 2;
+  while(!SF_IsEmpty(handStack)){
+    SF_Pop(&handStack, &temp);
+    mvwprintw(Hand_Panel(*gs), y, 2, SF_NamaMakanan(temp));
+    y++;
+  }
+
+  wrefresh(Hand_Panel(*gs));
+}
 
 void RefreshTopPanel(GameScreen *gs, char* name, int money, int life, int time)
 /* I.S. : Bebas sudah initScreen */

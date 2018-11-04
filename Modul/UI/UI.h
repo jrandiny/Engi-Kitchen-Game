@@ -9,6 +9,7 @@
 #include "../../ADT/mesinkata/arrKata/arrKata.h"
 #include "../../ADT/space/matTile/matTile.h"
 #include "../../ADT/customer/prioqueuecustomer.h"
+#include "../../ADT/food/stacktfood.h"
 //#include "../../ADT/listlinier/listlinier.h"
 #include <ncurses.h>
 
@@ -103,15 +104,15 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel daftar pelanggan menunggu */
 
-//void DrawOrderPanel(GameScreen *gs, List orderList);
+// void RefreshOrderPanel(GameScreen *gs, List orderList);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel daftar order */
 
-// void RefreshFoodPanel(GameScreen *gs, Stack foodStack);
+void RefreshFoodPanel(GameScreen *gs, StackFood foodStack);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel stack makanan */
 
-// void RefreshHandPanel(GameScreen *gs, Stack handStack);
+void RefreshHandPanel(GameScreen *gs, StackFood handStack);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel stack di tangan */
 
