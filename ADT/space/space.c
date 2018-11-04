@@ -92,10 +92,14 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
   found = false;
   p = GR_First(Ruangan(*R));
   while (p!=Nil && !found) {
-    pt = GR_Doors(p);
-    door = GRD_Search(pt,Pelayan_Posisi(*P));
-    if (door != Nil) {
-      found = true;
+    if (RoomID(GR_Info(p))==RoomNow(*R)){
+      pt = GR_Doors(p);
+      door = GRD_Search(pt,Pelayan_Posisi(*P));
+      if (door != Nil) {
+        found = true;
+      } else {
+        p = GR_Next(p);
+      }
     } else {
       p = GR_Next(p);
     }
@@ -103,10 +107,10 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
 
   if (found) {
     pintu = GRD_Info(door);
+    arah = DoorDirection(pintu);
     tujuan = DoorLocation(GRD_Info(GRD_To(door)));
     P_GetXY(tujuan,&i,&j);
-    arah = DoorDirection(pintu);
-    nomorRuang = DoorRoomID(GRD_Info(GRD_To(door)));
+    nomorRuang = RoomID(GR_Info(GRD_Parent(GRD_To(door))));
   } else {
     nomorRuang = RoomNow(*R);
   }

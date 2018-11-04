@@ -215,10 +215,11 @@ int main() {
       }
       //inisialisasi game
       InitPelayan(&P);
-      PlacePelayan(&P,6,5,GetMatTileSekarang(R));
+      PlacePelayan(&P,3,5,GetMatTileSekarang(R));
       PQC_CreateEmpty(&Q1);
 
       do{ //looping command di dalam game
+        money = RoomNow(R);
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
         aksiValid = false;
         lantai = GetMatTileSekarang(R);
