@@ -234,7 +234,7 @@ void WriteTile(FILE* namafile,Tile tile)
 /* I.S. namafile dan tile terdefinisi
    F.S. tertulis tile di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 {
-  fprintf(namafile,"%c/%d",Karakter(tile),Value(tile));
+  fprintf(namafile,"%c/%d",(Karakter(tile)==' ')?'-':Karakter(tile),Value(tile));
 }
 
 void WriteMeja(FILE* namafile,Meja meja)
