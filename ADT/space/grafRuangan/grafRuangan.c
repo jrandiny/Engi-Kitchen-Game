@@ -159,6 +159,7 @@ GR_address GR_Search(GrafRuangan GR, int roomSearch)
   boolean found;
 
   /* ALGORITMA */
+  found = false;
   pt = GR_First(GR);
   while(!found && pt!=Nil){
     if(RoomID(GR_Info(pt))==roomSearch){

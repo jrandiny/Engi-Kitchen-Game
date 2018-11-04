@@ -71,7 +71,7 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
   //ALGORITMA
   srand((unsigned) time(&t));
   chance = (rand()%15);
-  if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ // 1/15 kemungkinan
+  if (chance<5 && PQC_Tail(*pqc)<PQC_MaxEl){ // 1/3 kemungkinan
     PQC_Prio(pelanggan) = rand()%2;
     do {
       jumlah = rand()%3+2;
@@ -179,7 +179,7 @@ int main() {
   do { //looping game
     InitScreen(&gs);
     WriteText(&gs,MainMenu()); //main menu
-    loaded = false; // masuk main menu == belum load 
+    loaded = false; // masuk main menu == belum load
     do { //meminta input hingga benar
       input = GetInput(&gs,K_MakeKata("CHOICE: "));
     }
@@ -210,16 +210,11 @@ int main() {
       }
       if (!loaded) { //tidak ada file yang di load
         //load konfigurasi normal
-        usernameSaved = K_MakeKata("filetes");
+        usernameSaved = K_MakeKata("basic");
         LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R);
-        // money = 0;   //inisialisasi uang awal = 0
-        // life = 10;   //inisialisasi nyawa awal = 10
-        // waktu = 1;   //inisialisasi waktu awal = 1
       }
       //inisialisasi game
       InitPelayan(&P);
-      // InitRestoran(&R);
-      // InitTes(&R,&Q1);
       PlacePelayan(&P,6,5,GetMatTileSekarang(R));
       PQC_CreateEmpty(&Q1);
 
@@ -227,7 +222,6 @@ int main() {
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
         aksiValid = false;
         lantai = GetMatTileSekarang(R);
-        RandomPelanggan(&Q1,waktu);
         //refresh tampilan di layar
         RefreshMap(&gs,lantai,Pelayan_Posisi(P));
         RefreshWaitingPanel(&gs, Q1);
@@ -318,13 +312,11 @@ int main() {
                   PQC_Del(&Q1,&pelanggan);
                   srand((unsigned) time(&t)); //inisiasi random
                   if(PQC_Prio(pelanggan)==1){
-                    // waktuOut = waktu + (rand()%20+21); //[21..40]
+                    waktuOut = waktu + (rand()%20+21); //[21..40]
                   }
                   else{
-                    // waktuOut = waktu + (rand()%20+31); //[31..50]
+                    waktuOut = waktu + (rand()%20+31); //[31..50]
                   }
-                  waktuOut = waktu + (rand()%3+3); //[21..40]
-
                   Placing(PQC_Jumlah(pelanggan),waktuOut,&P,room);
 
                   while(!PQC_IsEmpty(Q1)) {
@@ -357,24 +349,24 @@ int main() {
         } //akhir proses validasi command
 
         if(aksiValid){//proses yang terjadi jika inputnya valid
+          RandomPelanggan(&Q1,waktu);
           waktu++; //tik bertambah
           PelangganKabur(waktu,&P,&R,&jumlahKabur);
           PelangganPergi(&Q1,waktu,&jumlahPergi);
-          money = jumlahPergi;
           life -=jumlahKabur+jumlahPergi;
           saved = false; //saved false karena ada aksi yang berhasil
-          if(life==0){ //jika nyawa==0 maka kalah
+          if(life<=0){ //jika nyawa==0 maka kalah
             lose = true;
           }
         }//akhir proses aksiValid
-
       }
-      while(!K_IsKataSama(input,K_MakeKata("EXIT")) && !lose);
+      while(!K_IsKataSama(input,keluar) && !lose);
 
       if(lose){ //pemain kalah tampilkan credit
+        InitScreen(&gs);
         WriteText(&gs,Credit());
-        input = GetInput(&gs,K_MakeKata(""));
-        input = K_MakeKata("EXIT");
+        input = GetInput(&gs,K_MakeKata("YOU LOSE!"));
+        input = keluar;
       }
       else { //pemain menekan exit
         //kembali ke main menu
@@ -382,7 +374,7 @@ int main() {
         //inisialisai agar tidak exit game
       }
     } //input == exit
-  } while (!K_IsKataSama(input,K_MakeKata("EXIT")));
+  } while (!K_IsKataSama(input,keluar));
   //input == exit
   QuitScreen(&gs); //quit game
   return 0;
