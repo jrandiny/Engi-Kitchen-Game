@@ -70,8 +70,8 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
   customer pelanggan;
   //ALGORITMA
   srand((unsigned) time(&t));
-  chance = (rand()%15);
-  if (chance<5 && PQC_Tail(*pqc)<PQC_MaxEl){ // 1/3 kemungkinan
+  chance = rand()%25;
+  if (chance<5 && PQC_Tail(*pqc)<PQC_MaxEl){ // 1/5 kemungkinan
     PQC_Prio(pelanggan) = rand()%2;
     do {
       jumlah = rand()%3+2;
@@ -104,43 +104,6 @@ void PelangganPergi(PrioQueueCustomer *pqc,int waktuNow,int *jumlah)
   }
   *pqc = Q2;
 }
-
-// //hanya untuk tes selama belum ada file external
-// void InitTes(Restoran *R,PrioQueueCustomer *pqc){
-//   //KAMUS
-//   MatTile mt;
-//   ArrMeja am;
-//   GR_infotype grinfo;
-//   customer x;
-//   Point p;
-//   //ALGORITMA
-//   GR_CreateEmpty(&Ruangan(*R));
-//   //ruangan kosong dan ada 1 meja 4 bangku
-//   MT_MakeMatriks(8,8, &mt);
-//   MT_Elmt(mt, 2, 2) = MT_CreateTile('x',ValUndeff);
-//   MT_Elmt(mt, 3, 1) = MT_CreateTile('x',ValUndeff);
-//   MT_Elmt(mt, 3, 3) = MT_CreateTile('x',ValUndeff);
-//   MT_Elmt(mt, 4, 2) = MT_CreateTile('x',ValUndeff);
-//   MT_Elmt(mt, 3, 2) = MT_CreateTile('n',1);
-//   //array meja
-//   AM_CreateEmpty(&am);
-//   P_CreatePoint(&p);
-//   P_SetXY(&p, 3, 2);
-//   AM_AddEli(&am, AM_CreateMeja(4, p, 0), 1);
-//
-//   Room(grinfo) = mt;
-//   Meja(grinfo) = am;
-//   RoomID(grinfo) = 1;
-//   //grafruangan
-//   GR_InsVFirst(&Ruangan(*R),grinfo);
-//   RoomNow(*R) = 1;
-//   //prioqueuecustomer
-//   // PQC_CreateEmpty(pqc);
-//   // PQC_Prio(x) = 1;
-//   // PQC_Jumlah(x) = 2;
-//   // PQC_Waktu(x) = 50;
-//   // PQC_Add(pqc, x);
-// }
 
 int main() {
   //KAMUS
@@ -219,7 +182,6 @@ int main() {
       PQC_CreateEmpty(&Q1);
 
       do{ //looping command di dalam game
-        money = RoomNow(R);
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
         aksiValid = false;
         lantai = GetMatTileSekarang(R);
@@ -253,6 +215,7 @@ int main() {
         else if(K_IsKataSama(input,K_MakeKata("TAKE"))){ //nunggu stack
           if (CanTake(P)) {
             aksiValid = true;
+            idMakanan = Taking(P);
           }
           //1. validasi apakah berada didekat M / tempat mengolah makanan
           //2. cek apakah bahan makanan yang akan diambil adalah urutan yang sesuai
@@ -300,34 +263,34 @@ int main() {
         else { //aksi2 yang butuh dekat Meja
           room = GetRuanganSekarang(R);
           nomorMeja = GetTableNumber(P,*room);
+
           if (nomorMeja!=0) { //artinya deket meja
             if(K_IsKataSama(input,K_MakeKata("PLACE"))){
-              if(IsTableEmpty(nomorMeja,*room)){
-                PQC_CreateEmpty(&Q2);
-                while(!CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room) && !PQC_IsEmpty(Q1)){
+              PQC_CreateEmpty(&Q2);
+              while(!CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room) && !PQC_IsEmpty(Q1)){
+                PQC_Del(&Q1,&pelanggan);
+                PQC_Add(&Q2,pelanggan);
+              }//bisa place atau sudah dicek semua
+
+              if (CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room)) { //ada yang bisa di place
+                aksiValid = true;
+                PQC_Del(&Q1,&pelanggan);
+                srand((unsigned) time(&t)); //inisiasi random
+                if(PQC_Prio(pelanggan)==1){
+                  waktuOut = waktu + (rand()%20+21); //[21..40]
+                }
+                else{
+                  waktuOut = waktu + (rand()%20+31); //[31..50]
+                }
+
+                Placing(PQC_Jumlah(pelanggan),waktuOut,&P,room);
+
+                while(!PQC_IsEmpty(Q1)) {
                   PQC_Del(&Q1,&pelanggan);
                   PQC_Add(&Q2,pelanggan);
-                }//bisa place atau sudah dicek semua
-                if(CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room)){ //ada yang bisa di place
-                  aksiValid = true;
-                  PQC_Del(&Q1,&pelanggan);
-                  srand((unsigned) time(&t)); //inisiasi random
-                  if(PQC_Prio(pelanggan)==1){
-                    waktuOut = waktu + (rand()%20+21); //[21..40]
-                  }
-                  else{
-                    waktuOut = waktu + (rand()%20+31); //[31..50]
-                  }
-                  Placing(PQC_Jumlah(pelanggan),waktuOut,&P,room);
-
-                  while(!PQC_IsEmpty(Q1)) {
-                    PQC_Del(&Q1,&pelanggan);
-                    PQC_Add(&Q2,pelanggan);
-                  } //Q1 pasti kosong
-
-                } //akhir placing
-                Q1 = Q2;
-              } //akhir cek meja kosong
+                } //Q1 pasti kosong
+              } //akhir placing
+              Q1 = Q2;
             } //akhir command place
             else if(K_IsKataSama(input,K_MakeKata("GIVE"))){  //nunggu stack
               if (CanGive(P,*room,nomorMeja)) {
@@ -343,6 +306,7 @@ int main() {
               if(CanOrder(P,*room)){
                 aksiValid = true;
                 Ordering(P,room,&idMakanan,&nomorMeja);
+                money = idMakanan;
                 // S_Push(room,idmakanan,nomormeja);
               } //akhir can order
             } //akhir command order
@@ -367,6 +331,7 @@ int main() {
         InitScreen(&gs);
         WriteText(&gs,Credit());
         input = GetInput(&gs,K_MakeKata("YOU LOSE!"));
+
         input = keluar;
       }
       else { //pemain menekan exit

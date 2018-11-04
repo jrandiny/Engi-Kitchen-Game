@@ -85,7 +85,7 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
   GRD_address pt,door;
   Door pintu;
   Point tujuan;
-  int arah,nomorRuang;
+  int arah,nomorRuangBaru;
   MatTile M;
   //ALGORITMA
 
@@ -110,12 +110,10 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
     arah = DoorDirection(pintu);
     tujuan = DoorLocation(GRD_Info(GRD_To(door)));
     P_GetXY(tujuan,&i,&j);
-    nomorRuang = RoomID(GR_Info(GRD_Parent(GRD_To(door))));
-  } else {
-    nomorRuang = RoomNow(*R);
+    nomorRuangBaru = RoomID(GR_Info(GRD_Parent(GRD_To(door))));
+    p1 = GR_Search(Ruangan(*R),nomorRuangBaru);
+    M = Room(GR_Info(p1));
   }
-  p1 = GR_Search(Ruangan(*R),nomorRuang);
-  M = Room(GR_Info(p1));
 
   *status = false;
   P_GetXY(Pelayan_Posisi(*P),&x,&y);
@@ -124,12 +122,12 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       if (Karakter(Up(*P))==' ') {
         *status =true;
         x-=1;
-        PlacePelayan(P,x,y,M);
+        PlacePelayan(P,x,y,GetMatTileSekarang(*R));
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
           PlacePelayan(P,i,j,M);
-          RoomNow(*R) = nomorRuang;
+          RoomNow(*R) = nomorRuangBaru;
         }
       }
       break;
@@ -137,12 +135,12 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       if (Karakter(Right(*P))==' ') {
         *status =true;
         y+=1;
-        PlacePelayan(P,x,y,M);
+        PlacePelayan(P,x,y,GetMatTileSekarang(*R));
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
           PlacePelayan(P,i,j,M);
-          RoomNow(*R) = nomorRuang;
+          RoomNow(*R) = nomorRuangBaru;
         }
       }
       break;
@@ -150,12 +148,12 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       if (Karakter(Down(*P))==' ') {
         *status =true;
         x+=1;
-        PlacePelayan(P,x,y,M);
+        PlacePelayan(P,x,y,GetMatTileSekarang(*R));
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
           PlacePelayan(P,i,j,M);
-          RoomNow(*R) = nomorRuang;
+          RoomNow(*R) = nomorRuangBaru;
         }
       }
       break;
@@ -163,12 +161,12 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       if (Karakter(Left(*P))==' ') {
         *status =true;
         y-=1;
-        PlacePelayan(P,x,y,M);
+        PlacePelayan(P,x,y,GetMatTileSekarang(*R));
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
           PlacePelayan(P,i,j,M);
-          RoomNow(*R) = nomorRuang;
+          RoomNow(*R) = nomorRuangBaru;
         }
       }
       break;
@@ -311,13 +309,15 @@ boolean CanPlace(int pelanggan,Pelayan P, Ruangan R)
 {
   //KAMUS
   boolean empty;
-  Tile table;
+  // Tile table;
   int jumlahBangku;
+  int nomorMeja;
   //ALGORITMA
-  table = GetTableTile(P,R);
-  jumlahBangku = Bangku(AM_Elmt(Meja(R),Value(table)));
-  empty = IsTableEmpty(Value(table),R);
-  return empty && (jumlahBangku>=pelanggan && pelanggan != 0);
+  // table = GetTableTile(P,R);
+  nomorMeja = GetTableNumber(P,R);
+  jumlahBangku = Bangku(AM_Elmt(Meja(R),nomorMeja));
+  empty = IsTableEmpty(nomorMeja,R);
+  return (empty && (jumlahBangku>=pelanggan && pelanggan != 0));
 }
 
 // *** ACTION ***
@@ -517,27 +517,54 @@ int GetTableNumber (Pelayan P, Ruangan R)
   while (!found && i <=AM_GetLastIdx(arrmeja)) {
     meja = AM_Elmt(arrmeja,i);
     P_GetXY(Meja_Posisi(meja),&a,&b);
-    if (a-1 == x && b ==y) {
+
+    if (a == x && b-2 ==y) {
       found = true;
-    } else if (a+1 == x && b ==y) {
+    } else if (a-1 == x && b-1 ==y) {
       found = true;
-    } else if (a-2 == x && b ==y) {
+    } else if (a-1 == x && b+1 ==y) {
       found = true;
-    } else if (a+2 == x && b ==y) {
+    } else if (a == x && b+2 ==y) {
       found = true;
-    } else if (a == x && b ==y-2) {
+    } else if (a+1 == x && b+1 ==y) {
       found = true;
-    } else if (a == x && b ==y+2) {
+    } else if (a+1 == x && b-1 ==y) {
       found = true;
-    } else if (a-1 == x && b ==y+1) {
-      found = true;
-    } else if (a-1 == x && b ==y-1) {
-      found = true;
-    } else if (a+1 == x && b ==y+1) {
-      found = true;
-    } else if (a+1 == x && b ==y-1) {
-      found = true;
+    } else if (Bangku(meja)==2) {
+      if (a-1 == x && b ==y) {
+        found = true;
+      } else if (a+1 == x && b ==y) {
+        found = true;
+      } else i++;
+    } else if (Bangku(meja)==4) {
+      if (a-2 == x && b ==y) {
+        found = true;
+      } else if (a+2 == x && b ==y) {
+        found = true;
+      } else i++;
     } else i++;
+
+    // if (a-1 == x && b ==y) {
+    //   found = true;
+    // } else if (a+1 == x && b ==y) {
+    //   found = true;
+    // } else if (a-2 == x && b ==y) {
+    //   found = true;
+    // } else if (a+2 == x && b ==y) {
+    //   found = true;
+    // } else if (a == x && b ==y-2) {
+    //   found = true;
+    // } else if (a == x && b ==y+2) {
+    //   found = true;
+    // } else if (a-1 == x && b ==y+1) {
+    //   found = true;
+    // } else if (a-1 == x && b ==y-1) {
+    //   found = true;
+    // } else if (a+1 == x && b ==y+1) {
+    //   found = true;
+    // } else if (a+1 == x && b ==y-1) {
+    //   found = true;
+    // } else i++;
   } //found == true || i > AM_GetLastIdx(arrmeja)
   if (!found) {
     tmp = 0;
