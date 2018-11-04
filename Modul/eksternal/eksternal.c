@@ -60,7 +60,9 @@ Tile ParseTile(Kata scanned)
   int pos1,pos2;
   Tile hasil;
   ParserLocate(scanned,&pos1,&pos2);
-  Karakter(hasil)=scanned.TabKata[1];
+  if (scanned.TabKata[1] == '-')
+    Karakter(hasil)= ' ';
+  else Karakter(hasil)=scanned.TabKata[1];
   Value(hasil)=K_KataToInt(K_CopySubKata(scanned,pos1+1,scanned.Length));
   return hasil;
 }
@@ -161,7 +163,7 @@ GrafRuangan ParseGrafRuangan(Kata X)
     K_ADVKATA();//Ckata berada di banyak meja
     Meja(tempR)=TakeArrMeja(CKata);//ckata berada di meja terakhir
     GR_InsVFirst(&hasil,tempR);
-  }    
+  }
 
   //di akhir iterasi for Ckata berada di meja dari ruangan terakhir;
   //saat mencapai sini, semua ruangan sudah menjadi node, namun belum ada door
@@ -186,7 +188,7 @@ void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran
   F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
   parameter sisanya berisi data sesuai file eksternal
   */
-{ 
+{
   Kata namafile=*nama;
   K_KataAddTXT(&namafile);
   K_STARTKATA(K_KataToChar(namafile),status);//Ckata berada di kata FILE_EKSTERNAL
@@ -286,7 +288,7 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran)
 /*I.S. bebas
   F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
   */
-{ 
+{
   FILE* fw;
   Kata namafile;
   GR_address GR=Nil;
@@ -297,7 +299,7 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran)
   fprintf(fw,"FILE_EKSTERNAL");
   WriteSpace(fw);
   //Tulis bagian nama
-  fprintf(fw,"name %d ",K_CountKata(nama));  
+  fprintf(fw,"name %d ",K_CountKata(nama));
   WriteName(fw,nama);
   WriteSpace(fw);
   //Tulis bagian money
