@@ -41,6 +41,17 @@ ArrKata Credit(){
   return isicredit;
 }
 
+ArrKata InputSalah(){
+  //KAMUS
+  ArrKata isiInputSalah;
+  //ALGORITMA
+  AK_CreateEmpty(&isiInputSalah);
+  AK_AddAsLastEl(&isiInputSalah,K_MakeKata("INPUT YANG DIMASUKKAN SALAH"));
+  AK_AddAsLastEl(&isiInputSalah,K_MakeKata(" "));
+  AK_AddAsLastEl(&isiInputSalah,K_MakeKata("SILAHKAN INPUT ULANG!"));
+  return isiInputSalah;
+}
+
 //fungsi bernilai true jika input adalah salah satu kata dari main menu
 boolean InputBenar(Kata input,Kata new,Kata start,Kata load,Kata keluar){
   return (K_IsKataSama(input,new)||K_IsKataSama(input,start)||K_IsKataSama(input,load)||K_IsKataSama(input,keluar));
@@ -94,42 +105,42 @@ void PelangganPergi(PrioQueueCustomer *pqc,int waktuNow,int *jumlah)
   *pqc = Q2;
 }
 
-//hanya untuk tes selama belum ada file external
-void InitTes(Restoran *R,PrioQueueCustomer *pqc){
-  //KAMUS
-  MatTile mt;
-  ArrMeja am;
-  GR_infotype grinfo;
-  customer x;
-  Point p;
-  //ALGORITMA
-  GR_CreateEmpty(&Ruangan(*R));
-  //ruangan kosong dan ada 1 meja 4 bangku
-  MT_MakeMatriks(8,8, &mt);
-  MT_Elmt(mt, 2, 2) = MT_CreateTile('x',ValUndeff);
-  MT_Elmt(mt, 3, 1) = MT_CreateTile('x',ValUndeff);
-  MT_Elmt(mt, 3, 3) = MT_CreateTile('x',ValUndeff);
-  MT_Elmt(mt, 4, 2) = MT_CreateTile('x',ValUndeff);
-  MT_Elmt(mt, 3, 2) = MT_CreateTile('n',1);
-  //array meja
-  AM_CreateEmpty(&am);
-  P_CreatePoint(&p);
-  P_SetXY(&p, 3, 2);
-  AM_AddEli(&am, AM_CreateMeja(4, p, 0), 1);
-
-  Room(grinfo) = mt;
-  Meja(grinfo) = am;
-  RoomID(grinfo) = 1;
-  //grafruangan
-  GR_InsVFirst(&Ruangan(*R),grinfo);
-  RoomNow(*R) = 1;
-  //prioqueuecustomer
-  // PQC_CreateEmpty(pqc);
-  // PQC_Prio(x) = 1;
-  // PQC_Jumlah(x) = 2;
-  // PQC_Waktu(x) = 50;
-  // PQC_Add(pqc, x);
-}
+// //hanya untuk tes selama belum ada file external
+// void InitTes(Restoran *R,PrioQueueCustomer *pqc){
+//   //KAMUS
+//   MatTile mt;
+//   ArrMeja am;
+//   GR_infotype grinfo;
+//   customer x;
+//   Point p;
+//   //ALGORITMA
+//   GR_CreateEmpty(&Ruangan(*R));
+//   //ruangan kosong dan ada 1 meja 4 bangku
+//   MT_MakeMatriks(8,8, &mt);
+//   MT_Elmt(mt, 2, 2) = MT_CreateTile('x',ValUndeff);
+//   MT_Elmt(mt, 3, 1) = MT_CreateTile('x',ValUndeff);
+//   MT_Elmt(mt, 3, 3) = MT_CreateTile('x',ValUndeff);
+//   MT_Elmt(mt, 4, 2) = MT_CreateTile('x',ValUndeff);
+//   MT_Elmt(mt, 3, 2) = MT_CreateTile('n',1);
+//   //array meja
+//   AM_CreateEmpty(&am);
+//   P_CreatePoint(&p);
+//   P_SetXY(&p, 3, 2);
+//   AM_AddEli(&am, AM_CreateMeja(4, p, 0), 1);
+//
+//   Room(grinfo) = mt;
+//   Meja(grinfo) = am;
+//   RoomID(grinfo) = 1;
+//   //grafruangan
+//   GR_InsVFirst(&Ruangan(*R),grinfo);
+//   RoomNow(*R) = 1;
+//   //prioqueuecustomer
+//   // PQC_CreateEmpty(pqc);
+//   // PQC_Prio(x) = 1;
+//   // PQC_Jumlah(x) = 2;
+//   // PQC_Waktu(x) = 50;
+//   // PQC_Add(pqc, x);
+// }
 
 int main() {
   //KAMUS
@@ -148,7 +159,8 @@ int main() {
   Pelayan P; //tipe pelayan restoran
   PrioQueueCustomer Q1,Q2; //tipe barisan pelanggan
   customer pelanggan; //tipe pelanggan
-  Kata input,username; //input dari user
+  Kata input; //input dari user
+  Kata username,usernameSaved; // Kata untuk nama user
   Kata new,start,load,keluar; //tipe kata pembanding
   boolean lose,aksiValid; //tipe validasi
   boolean loaded; //menyatakan ada file yang di load
@@ -162,12 +174,12 @@ int main() {
   start = K_MakeKata("START");
   load = K_MakeKata("LOAD");
   keluar = K_MakeKata("EXIT");
-  loaded = false;
   saved = true;
 
   do { //looping game
     InitScreen(&gs);
     WriteText(&gs,MainMenu()); //main menu
+    loaded = false; // masuk main menu == belum load 
     do { //meminta input hingga benar
       input = GetInput(&gs,K_MakeKata("CHOICE: "));
     }
@@ -187,10 +199,19 @@ int main() {
       else if (K_IsKataSama(input,load)) { //LOAD
         //prosedure load
         loaded = true;
+        do {
+          username = GetInput(&gs,K_MakeKata("USERNAME: "));
+          LoadFile(&status,&username,&money,&life,&waktu,&R);
+          if (status ==0) {
+            WriteText(&gs,InputSalah()); //main menu
+            input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
+          }
+        } while (status==0);
       }
       if (!loaded) { //tidak ada file yang di load
         //load konfigurasi normal
-        LoadFile("filetes.txt",&status,&username,&money,&life,&waktu,&R);
+        usernameSaved = K_MakeKata("filetes");
+        LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R);
         // money = 0;   //inisialisasi uang awal = 0
         // life = 10;   //inisialisasi nyawa awal = 10
         // waktu = 1;   //inisialisasi waktu awal = 1
@@ -266,7 +287,8 @@ int main() {
         else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
           //procedure save
           saved = true;
-          //save current state
+          SaveFile(username,money,life,waktu,R);
+          input = GetInput(&gs,K_MakeKata("GAME SAVED."));
         }//akhir command save
         else if(K_IsKataSama(input,K_MakeKata("EXIT"))){
           if (!saved) { //dipanggil jika belum di save
