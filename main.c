@@ -164,7 +164,7 @@ int main() {
         loaded = true;
         do {
           username = GetInput(&gs,K_MakeKata("USERNAME: "));
-          LoadFile(&status,&username,&money,&life,&waktu,&R);
+          LoadFile(&status,&username,&money,&life,&waktu,&R,&P);
           if (status ==0) {
             WriteText(&gs,InputSalah()); //main menu
             input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
@@ -174,11 +174,9 @@ int main() {
       if (!loaded) { //tidak ada file yang di load
         //load konfigurasi normal
         usernameSaved = K_MakeKata("basic");
-        LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R);
+        LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P);
       }
       //inisialisasi game
-      InitPelayan(&P);
-      PlacePelayan(&P,3,5,GetMatTileSekarang(R));
       PQC_CreateEmpty(&Q1);
 
       do{ //looping command di dalam game
@@ -245,7 +243,7 @@ int main() {
         else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
           //procedure save
           saved = true;
-          SaveFile(username,money,life,waktu,R);
+          SaveFile(username,money,life,waktu,R,P);
           input = GetInput(&gs,K_MakeKata("GAME SAVED."));
         }//akhir command save
         else if(K_IsKataSama(input,K_MakeKata("EXIT"))){
@@ -331,14 +329,9 @@ int main() {
         InitScreen(&gs);
         WriteText(&gs,Credit());
         input = GetInput(&gs,K_MakeKata("YOU LOSE!"));
-
-        input = keluar;
       }
-      else { //pemain menekan exit
-        //kembali ke main menu
-        input = K_MakeKata("mainmenu");
-        //inisialisai agar tidak exit game
-      }
+      //inisialisasi inpt agar kembali ke main menu
+      input = K_MakeKata("mainmenu");
     } //input == exit
   } while (!K_IsKataSama(input,keluar));
   //input == exit
