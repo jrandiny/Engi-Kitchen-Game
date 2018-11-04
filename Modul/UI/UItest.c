@@ -57,6 +57,7 @@ int main(){
   PQC_Waktu(cust) = 2;
   PQC_Jumlah(cust) = 2;
   PQC_Add(&pqc, cust);
+  PQC_Add(&pqc, cust);
 
 
   while(true){

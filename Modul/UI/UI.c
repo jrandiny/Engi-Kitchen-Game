@@ -261,10 +261,10 @@ void RefreshMap(GameScreen *gs, MatTile peta, Point waiter)
   maxY = MT_NBrsEff(peta);
 
   /* Margin calculation */
-  /* (total width - table width)/2 + 1 (border compensation)*/
-  marginX = ((Main_Panel_Width(*gs)-((maxX)*5))/2) +1;
-  /* (total height - table height)/2 + 1 (border compensation)*/
-  marginY = ((Main_Panel_Height(*gs) - maxY*3)/2)+1;
+  /* (total width - (table width-1(for border compensation)))/2 */
+  marginX = ((Main_Panel_Width(*gs)-((maxX-1)*5))/2);
+  /* (total height - (table height-1(border compensation)))/2 */
+  marginY = ((Main_Panel_Height(*gs) - (maxY-1)*3)/2);
 
 
   for(i=1;i<=maxY;i++){
@@ -330,8 +330,11 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
   idx = 1;
 
   if(!PQC_IsEmpty(waitQueue)){
-    ch = PQC_Jumlah(PQC_Elmt(waitQueue, idx))+'0';
-    mvwaddch(Waiting_Panel(*gs), idx+1, 2, ch);
+    while(idx<=PQC_NBElmt(waitQueue)){
+      ch = PQC_Jumlah(PQC_Elmt(waitQueue, idx))+'0';
+      mvwaddch(Waiting_Panel(*gs), idx+1, 2, ch);
+      idx++;
+    }
   }
 
   wrefresh(Waiting_Panel(*gs));
