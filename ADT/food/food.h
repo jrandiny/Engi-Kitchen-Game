@@ -16,4 +16,7 @@ typedef struct {
 #define NamaMakanan(F) (F).namaMakanan
 #define Harga(F) (F).harga
 
+Food F_CreateFood(int id, Kata nama, int harga);
+/* Dikembalikan tipe food baru dari id, nama, dan harga terdefinisi */
+
 #endif
