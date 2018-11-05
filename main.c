@@ -1,7 +1,7 @@
 /* Kelompok  : UAS
    Nama file : main.c
    Tanggal   : 3 November 2018
-   Deskripsi : program utama Engi's Kitchen Expansion */
+   Deskripsi : Program utama Engi's Kitchen Expansion */
 
 #include "std.h"
 #include "ADT.h"
@@ -106,7 +106,7 @@ void PelangganPergi(PrioQueueCustomer *pqc,int waktuNow,int *jumlah)
 }
 
 int main() {
-  //KAMUS
+  //KAMUS PROGRAM UTAMA
   int money,life,waktu; //uang dan nyawa yang dimiliki pemain dan tik waktu
   int nomorMeja; //nomor meja di dekat pelayan
   int jumlahKabur; //jumlah pelanggan yang kabur (sudah duduk)
@@ -115,6 +115,7 @@ int main() {
   int waktuOut; //waktu saat pelanggan akan kabur
   int kodeArah; //1==up, 2==right, 3==down, 4==left
   int status; //menyatakan berhasil load file atau tidak
+  int harga; //harga makanan sesuai kedalaman food tree
   time_t t; //variabel random
   Restoran R; //tipe restoran dengan graf
   Ruangan *room; //tipe ruangan pada restoran
@@ -122,6 +123,10 @@ int main() {
   Pelayan P; //tipe pelayan restoran
   PrioQueueCustomer Q1,Q2; //tipe barisan pelanggan
   customer pelanggan; //tipe pelanggan
+  SF_infotype food;//tipe makanan yang
+  StackFood order;  //tipe tumpukan makanan di order
+  StackFood hand; //tipe tumpukan makanan di hand
+  StackFood tray; //tipe tumpukan makanan di tray
   Kata input; //input dari user
   Kata username,usernameSaved; // Kata untuk nama user
   Kata new,start,load,keluar; //tipe kata pembanding
@@ -130,7 +135,7 @@ int main() {
   boolean saved; //menyatakan sudah save di saat bermain
   GameScreen gs; //tipe untuk GameScreen ncruses
 
-  //ALGORITMA
+  //ALGORITMA PROGRAM UTAMA
 
   //inisialisasi
   new = K_MakeKata("NEW");
@@ -203,14 +208,16 @@ int main() {
           }
           Move(&P,&R,kodeArah,&aksiValid);
         }
-        else if(K_IsKataSama(input,K_MakeKata("PUT"))){ //nunggu stack
+        else if(K_IsKataSama(input,K_MakeKata("PUT"))){ //nunggu stack dan tree
           aksiValid = true;
+          //if(!SF_IsFull(tray)){
+          //}
           //1. validasi apakah tumpukan bahan makanan dapat dijadikan makanan
           //2. cek id makanan sesuai tree
           //3. pop makanan yang sudah jadi dari hand
           //4. push makanan yang sudah jadi ke tray
         } //akhir command put
-        else if(K_IsKataSama(input,K_MakeKata("TAKE"))){ //nunggu stack
+        else if(K_IsKataSama(input,K_MakeKata("TAKE"))){ //nunggu stack tree
           if (CanTake(P)) {
             aksiValid = true;
             idMakanan = Taking(P);
@@ -221,16 +228,16 @@ int main() {
           //manggil function Taking(P);
         } //akhir command take
         else if(K_IsKataSama(input,K_MakeKata("CH"))){ //nunggu stack
-          // if(!S_IsEmpty(hand)){
-            // S_CreateEmpty(&hand);
+          if(!SF_IsEmpty(hand)){
+            SF_CreateEmpty(&hand);
             aksiValid = true;
-          // }
+          }
         } //akhir command ch
         else if(K_IsKataSama(input,K_MakeKata("CT"))){ //nunggu stack
-          // if(!S_IsEmpty(tray)){
-            // S_CreateEmpty(&tray);
+          if(!SF_IsEmpty(tray)){
+            SF_CreateEmpty(&tray);
             aksiValid = true;
-          // }
+          }
         } //akhir command ct
         else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ //nunggu tree makanan
           aksiValid = true;
@@ -293,6 +300,9 @@ int main() {
             else if(K_IsKataSama(input,K_MakeKata("GIVE"))){  //nunggu stack
               if (CanGive(P,*room,nomorMeja)) {
                 aksiValid = true;
+                //SF_Pop(&tray,&food);
+                //money += harga
+                //SetTableEmpty(nomorMeja,room);
               }
               //1. validasi nomormeja yang memesan makanan pada top stack tray
               //2. search harga makanan di data harga makanan
@@ -304,8 +314,8 @@ int main() {
               if(CanOrder(P,*room)){
                 aksiValid = true;
                 Ordering(P,room,&idMakanan,&nomorMeja);
-                money = idMakanan;
-                // S_Push(room,idmakanan,nomormeja);
+                // money = idMakanan;
+                // SF_Push(room,idmakanan,nomormeja);
               } //akhir can order
             } //akhir command order
           } //akhir cek nomor meja
@@ -330,7 +340,7 @@ int main() {
         WriteText(&gs,Credit());
         input = GetInput(&gs,K_MakeKata("YOU LOSE!"));
       }
-      //inisialisasi inpt agar kembali ke main menu
+      //inisialisasi input agar kembali ke main menu
       input = K_MakeKata("mainmenu");
     } //input == exit
   } while (!K_IsKataSama(input,keluar));
