@@ -235,9 +235,11 @@ void AM_DelLastEl (ArrMeja * T, Meja * X)
 /*      Tabel T mungkin menjadi kosong */
 {
   /* KAMUS LOKAL */
-
+  Point p;
   /* ALGORITMA */
   *X = AM_Elmt(*T,AM_GetLastIdx(*T));
+  P_CreatePoint(&p);
+  AM_Elmt(*T,AM_GetLastIdx(*T)) = AM_CreateMeja(0,p,0);
   AM_Neff(*T)--;
 }
 void AM_DelEli (ArrMeja * T, IdxType i, Meja * X)
@@ -251,13 +253,14 @@ void AM_DelEli (ArrMeja * T, IdxType i, Meja * X)
 {
   /* KAMUS LOKAL */
   IdxType j;
-
+  Point p;
   /* ALGORITMA */
   *X = AM_Elmt(*T,i);
 
   for(j=i+1;j<=AM_GetLastIdx(*T);j++){
     AM_Elmt(*T,j-1)=AM_Elmt(*T,j);
   }
-
+  P_CreatePoint(&p);
+  AM_Elmt(*T,AM_GetLastIdx(*T)) = AM_CreateMeja(0,p,0);
   AM_Neff(*T)--;
 }
