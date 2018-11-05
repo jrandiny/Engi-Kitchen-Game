@@ -8,6 +8,8 @@
 #include "ADT/point/point.h"
 #include "ADT/space/space.h"
 #include "ADT/customer/prioqueuecustomer.h"
+#include "ADT/arrInt/arrInt.h"
+#include "ADT/arrOrder/arrOrder.h"
 #include "Modul/eksternal/eksternal.h"
 #include "Modul/UI/UI.h"
 

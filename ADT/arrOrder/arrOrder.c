@@ -156,18 +156,18 @@ AO_IdxType AO_Search (ArrOrder T, int X)
 
   /* ALGORITMA */
   if(AO_IsEmpty(T)){
-    return IdxUndef;
+    return IdxUndeff;
   }else{
     i = AO_GetFirstIdx(T);
 
-    while(O_IDMakanan(AO_Elmt(T,i)!=X)&&(i<AO_GetLastIdx(T))){
+    while(O_NoMeja(AO_Elmt(T,i))!=X&&(i<AO_GetLastIdx(T))){
       i++;
     }
 
-    if(O_IDMakanan(AO_Elmt(T,i))==X){
+    if(O_NoMeja(AO_Elmt(T,i))==X){
       return i;
     }else{
-      return IdxUndef;
+      return IdxUndeff;
     }
 
   }

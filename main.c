@@ -104,7 +104,7 @@ void PelangganPergi(PrioQueueCustomer *pqc,int waktuNow,int *jumlah)
   *pqc = Q2;
 }
 
-void CekToolTip(Restoran *R, Pelayan *P,boolean pindahruang, Kata*IsiToolTip)
+void CekToolTip(Restoran R, Pelayan P,boolean pindahRuang, Kata*IsiToolTip)
 /*
   I.S. grafRuangan dan posisi pelayang terdefinisi
   F.S. IsiToolTip sebagai kata bantuan untuk barang-barang disiktar pelayang
@@ -114,16 +114,20 @@ void CekToolTip(Restoran *R, Pelayan *P,boolean pindahruang, Kata*IsiToolTip)
   //Kamus lokal
   int idtemp; //variabel idmakanan sementara
   char roomtemp[2]; //variabel nomor ruangan sementara
+  Kata room, idroom;
 
   //Algoritma
-  if(CanTake(P)){
+  if(pindahRuang){
+    roomtemp[0] = (char) RoomNow(R) + '0';
+    roomtemp[1] = '\0';
+    room = K_MakeKata("Room ");
+    idroom = K_MakeKata(roomtemp);
+    K_KonkatKata(&room,idroom);
+    *IsiToolTip = room;
+  }
+  else if(CanTake(P)){
     idtemp = Taking(P);
     // *IsiToolTip = nama makanan di tree
-  }
-  else if(pindahruang){
-    roomtemp[0] = (char) RoomNow(*R) + '0';
-    roomtemp[1] = '\0';
-    *IsiToolTip = K_MakeKata(roomtemp);
   }
 }
 
@@ -143,19 +147,23 @@ int main() {
   Ruangan *room; //tipe ruangan pada restoran
   MatTile lantai; //tipe MatTile untuk matriks representasi lantai
   Pelayan P; //tipe pelayan restoran
+  ArrInt arrayNomorMeja; //array berisi nomor-nomor meja pelanggan yang kabur
+  ArrOrder arrayOrder; //array berisi orderan yang belum di give
+  AO_IdxType indeksOrder; //indeks dari array of order
   PrioQueueCustomer Q1,Q2; //tipe barisan pelanggan
   customer pelanggan; //tipe pelanggan
-  StackFood order;  //tipe tumpukan makanan di order
+  Order order; //tipe order
+  Food makanan; //tipe food
   StackFood hand; //tipe tumpukan makanan di hand
   StackFood tray; //tipe tumpukan makanan di tray
   Kata input; //input dari user
   Kata username,usernameSaved; // Kata untuk nama user
   Kata new,start,load,keluar; //tipe kata pembanding
-  Kata tooltip; //kata bantuan yang berisi informasi disekitar pelayan
+  Kata IsiToolTip; //kata bantuan yang berisi informasi disekitar pelayan
   boolean lose,aksiValid; //tipe validasi
   boolean loaded; //menyatakan ada file yang di load
   boolean saved; //menyatakan sudah save di saat bermain
-  boolean pindahruang //menyatakan pelayan baru saja pindah ruangan
+  boolean pindahRuang; //menyatakan pelayan baru saja pindah ruangan
   GameScreen gs; //tipe untuk GameScreen ncruses
 
   //ALGORITMA PROGRAM UTAMA
@@ -211,13 +219,13 @@ int main() {
 
       //inisialisasi game
       lose = false;
-      IsiToolTip = K_MakeKata("");
-      pindahruang = false;
+      pindahRuang = false;
 
       do{ //looping command di dalam game
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
         lantai = GetMatTileSekarang(R);
-        CekToolTip(&R,&P,pindahraung,&IsiToolTip);
+        IsiToolTip = K_MakeKata("");
+        CekToolTip(R,P,pindahRuang,&IsiToolTip);
         aksiValid = false;
         //refresh tampilan di layar
         RefreshMap(&gs,lantai,Pelayan_Posisi(P));
@@ -238,7 +246,7 @@ int main() {
           else if(input.TabKata[2]=='L'){ //GL
             kodeArah=4;
           }
-          Move(&P,&R,kodeArah,&aksiValid,&pindahruang);
+          Move(&P,&R,kodeArah,&aksiValid,&pindahRuang);
         }
         else if(K_IsKataSama(input,K_MakeKata("PUT"))){ //nunggu stack dan tree
           aksiValid = true;
@@ -345,8 +353,8 @@ int main() {
               if(CanOrder(P,*room)){
                 aksiValid = true;
                 Ordering(P,room,&idMakanan,&nomorMeja);
-                // money = idMakanan;
-                // SF_Push(room,idmakanan,nomormeja);
+                // order = O_CreateOrder(idmakanan,namaMakanan,omorMeja); //tree pada namaMakanan
+                // AO_AddAsLastEl(&arrayOrder,order);
               } //akhir can order
             } //akhir command order
           } //akhir cek nomor meja
@@ -355,7 +363,11 @@ int main() {
         if(aksiValid){//proses yang terjadi jika inputnya valid
           RandomPelanggan(&Q1,waktu);
           waktu++; //tik bertambah
-          PelangganKabur(waktu,&P,&R,&jumlahKabur);
+          PelangganKabur(waktu,&P,&R,&jumlahKabur,&arrayNomorMeja);
+          while(!AI_IsEmpty(arrayNomorMeja)){
+            AI_DelLastEl(&arrayNomorMeja,&nomorMeja);
+            indeksOrder = AO_Search(arrayOrder,nomorMeja);
+          }
           PelangganPergi(&Q1,waktu,&jumlahPergi);
           life -=jumlahKabur+jumlahPergi;
           saved = false; //saved false karena ada aksi yang berhasil
