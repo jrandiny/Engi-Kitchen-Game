@@ -89,11 +89,5 @@ void K_KonkatKata(Kata *kata1, Kata kata2);
    F.S. kata1 berisi hasil konkat kata 1 dan kata 2
 */
 
-void K_KataAddTXT(Kata *kata);
-/* I.S. *kata terdefinisi
-   F.S. *kata terdapat tambahan .txt dibelakangnya*/
-
-int K_CountKata(Kata kata);
-/* mengembalikan banyak kata sebenarnya dari suatu kata*/
 
 #endif

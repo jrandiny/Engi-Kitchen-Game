@@ -156,8 +156,14 @@ void K_CopyKata(Kata sumber,Kata* hasil)
 int K_KataToInt(Kata input)
 /*mengubah input menjadi tipe integer*/
 {
-  int hasil=0,i=1;
-  boolean negatif=false;
+  int hasil;
+  int i;
+  boolean negatif;
+
+  hasil=0;
+  i=1;
+  negatif=false;
+
   while(i<=input.Length){
     if(i==1&&input.TabKata[i]=='-'){
       negatif=true;
@@ -166,6 +172,7 @@ int K_KataToInt(Kata input)
     }
     i++;
   }
+
   if(negatif){
     hasil*=-1;
   }
@@ -239,30 +246,3 @@ void K_KonkatKata(Kata *kata1, Kata kata2)
   (*kata1).Length=max;
 }
 
-void K_KataAddTXT(Kata *kata)
-/* I.S. *kata terdefinisi
-   F.S. *kata terdapat tambahan .txt dibelakangnya*/
-{
-  int length=(*kata).Length;
-  (*kata).Length+=4;
-  (*kata).TabKata[length+1]='.';
-  (*kata).TabKata[length+2]='t';
-  (*kata).TabKata[length+3]='x';
-  (*kata).TabKata[length+4]='t';
-}
-
-int K_CountKata(Kata kata)
-/* mengembalikan banyak kata sebenarnya dari suatu kata*/
-{
-  int jumlah=0,i;
-  for(i=1;i<=kata.Length;i++){
-    if(kata.TabKata[i]==' '){
-      jumlah++;
-    }
-  }
-  if(kata.Length!=0){
-    return jumlah+1;
-  }else{
-    return 0;
-  }
-}

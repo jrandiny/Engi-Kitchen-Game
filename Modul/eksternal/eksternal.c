@@ -46,16 +46,8 @@ Kata ParseNama(Kata scanned)
 /* parsing nama,Ckata berada di Kata name*/
 {
   Kata hasil;
-  int jumlah,i;
-  K_ADVKATA();//Ckata berada di jumlah kata nama
-  jumlah=K_KataToInt(CKata);
-  K_ADVKATA();//Ckata berada di kata pertama;
+  K_ADVKATA();//Ckata berada di namanya;
   hasil=CKata;
-  for(i=2;i<=jumlah;i++){
-    K_ADVKATA();
-    K_KonkatKata(&hasil,K_MakeKata(" "));
-    K_KonkatKata(&hasil,CKata);
-  }
   return hasil;
   //Ckata berakhir di kata terkahir nama
 }
@@ -165,6 +157,7 @@ GrafRuangan ParseGrafRuangan(Kata X)
   Door tempD1,tempD2;
   GR_address GR1,GR2;
   int i,j,jumlahdoor;
+
   GR_CreateEmpty(&hasil);
   for(i=1;i<=K_KataToInt(X);i++){
     K_ADVKATA();//Ckata menjadi idruangan
@@ -216,8 +209,9 @@ void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran
   parameter sisanya berisi data sesuai file eksternal
   */
 {
-  Kata namafile=*nama;
-  K_KataAddTXT(&namafile);
+  Kata namafile=K_MakeKata("SaveData/");
+  K_KonkatKata(&namafile,*nama);
+  K_KonkatKata(&namafile,K_MakeKata(".sav"));
   K_STARTKATA(K_KataToChar(namafile),status);//Ckata berada di kata FILE_EKSTERNAL
   if(*status==1){
     while(!EndKata){
@@ -314,7 +308,7 @@ void WriteArrayMeja(FILE* namafile,ArrMeja arrmeja)
   for(i=AM_GetFirstIdx(arrmeja);i<=AM_GetLastIdx(arrmeja);i++){
     WriteSpace(namafile);
     WriteMeja(namafile,AM_Elmt(arrmeja,i));
-  }
+ }
 }
 
 void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan,PrioQueueCustomer prioqueue)
@@ -323,17 +317,17 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan
   */
 {
   FILE* fw;
-  Kata namafile;
+  Kata namafile=K_MakeKata("SaveData/");
+  K_KonkatKata(&namafile,nama);
+  K_KonkatKata(&namafile,K_MakeKata(".sav"));
   GR_address GR=Nil;
   GRD_address GD=Nil;
-  namafile=nama;
   customer customer;
-  K_KataAddTXT(&namafile);
   fw=fopen(K_KataToChar(namafile),"w+");
   fprintf(fw,"FILE_EKSTERNAL");
   WriteSpace(fw);
   //Tulis bagian nama
-  fprintf(fw,"name %d ",K_CountKata(nama));
+  fprintf(fw,"name ");
   WriteName(fw,nama);
   WriteSpace(fw);
   //Tulis bagian money
