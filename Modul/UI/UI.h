@@ -26,6 +26,7 @@ typedef struct{
   WINDOW *bottomPanel;
   WINDOW *orderPanel;
   WINDOW *foodPanel;
+  WINDOW *tooltipPanel;
 
   int mainWidth;
   int mainHeight;
@@ -44,6 +45,7 @@ typedef struct{
 #define Hand_Panel(GS) (GS).handPanel
 #define Order_Panel(GS) (GS).orderPanel
 #define Food_Panel(GS) (GS).foodPanel
+#define Tooltip_Panel(GS) (GS).tooltipPanel
 #define Main_Panel_Width(GS) (GS).mainWidth
 #define Main_Panel_Height(GS) (GS).mainHeight
 #define Side_Panel_Width(GS) (GS).sideWidth
@@ -123,6 +125,10 @@ void RefreshTopPanel(GameScreen *gs, char* name, int money, int life, int time);
 void RefreshCommandPanel(GameScreen *gs, Kata prompt);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel command */
+
+void RefreshTooltipPanel(GameScreen *gs, Kata tooltip);
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar panel tooltip */
 
 /* KELOMPOK INPUT */
 Kata GetInput(GameScreen *gs,Kata prompt);

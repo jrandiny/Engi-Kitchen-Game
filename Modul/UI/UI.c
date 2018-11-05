@@ -87,7 +87,8 @@ void InitScreen(GameScreen *gs)
   Order_Panel(*gs) = newwin(sideHeight,sideWidth,topBarHeight+sideHeight,0);
   Hand_Panel(*gs) = newwin(sideHeight,sideWidth, topBarHeight+sideHeight, sideWidth+mainWidth);
 
-  Command_Panel(*gs) = newwin(topBarHeight, parentX, topBarHeight+mainHeight, 0);
+  Command_Panel(*gs) = newwin(topBarHeight, parentX-sideWidth, topBarHeight+mainHeight, 0);
+  Tooltip_Panel(*gs) = newwin(topBarHeight,sideWidth,topBarHeight+mainHeight,sideWidth+mainWidth);
 
   Main_Panel(*gs) = newwin(2*sideHeight, mainWidth,topBarHeight, sideWidth);
 
@@ -122,6 +123,7 @@ void RefreshBorder(GameScreen *gs)
   wclear(Hand_Panel(*gs));
   wclear(Command_Panel(*gs));
   wclear(Main_Panel(*gs));
+  wclear(Tooltip_Panel(*gs));
 
   DrawBorders(Top_1_Panel(*gs));
   DrawBorders(Top_2_Panel(*gs));
@@ -134,6 +136,7 @@ void RefreshBorder(GameScreen *gs)
   DrawBorders(Hand_Panel(*gs));
   DrawBorders(Command_Panel(*gs));
   DrawBorders(Main_Panel(*gs));
+  DrawBorders(Tooltip_Panel(*gs));
 
   wrefresh(Main_Panel(*gs));
   wrefresh(Top_1_Panel(*gs));
@@ -145,6 +148,7 @@ void RefreshBorder(GameScreen *gs)
   wrefresh(Hand_Panel(*gs));
   wrefresh(Order_Panel(*gs));
   wrefresh(Food_Panel(*gs));
+  wrefresh(Tooltip_Panel(*gs));
 }
 
 void refreshLayout(GameScreen *gs)
@@ -180,7 +184,8 @@ void refreshLayout(GameScreen *gs)
   wresize(Order_Panel(*gs), sideHeight, sideWidth);
   wresize(Hand_Panel(*gs), sideHeight, sideWidth);
 
-  wresize(Command_Panel(*gs), topBarHeight, parentX);
+  wresize(Command_Panel(*gs), topBarHeight, parentX-sideWidth);
+  wresize(Tooltip_Panel(*gs), topBarHeight, sideWidth);
 
   wresize(Main_Panel(*gs), 2*sideHeight, mainWidth);
 
@@ -194,6 +199,7 @@ void refreshLayout(GameScreen *gs)
   mvwin(Hand_Panel(*gs),topBarHeight+sideHeight,sideWidth+mainWidth);
 
   mvwin(Command_Panel(*gs),topBarHeight+mainHeight,0);
+  mvwin(Tooltip_Panel(*gs), topBarHeight+mainHeight, mainWidth+sideWidth);
 
   mvwin(Main_Panel(*gs),topBarHeight,sideWidth);
 
@@ -460,6 +466,25 @@ void RefreshCommandPanel(GameScreen *gs,Kata prompt)
   wrefresh(Command_Panel(*gs));
 }
 
+void RefreshTooltipPanel(GameScreen *gs, Kata tooltip)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar panel tooltip */
+{
+  /* KAMUS LOKAL */
+  char *temp;
+
+  /* ALGORITMA */
+  wclear(Tooltip_Panel(*gs));
+  DrawBorders(Tooltip_Panel(*gs));
+
+  temp = K_KataToChar(tooltip);
+
+  mvwprintw(Tooltip_Panel(*gs),1, 2,temp);
+
+  free(temp);
+  wrefresh(Tooltip_Panel(*gs));
+}
+
 Kata GetInput(GameScreen *gs,Kata prompt)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Mengembalikan input user (command) dalam huruf besar, jika window diresize, kembalikan RESIZE*/
@@ -496,6 +521,7 @@ Kata GetInput(GameScreen *gs,Kata prompt)
       }
     }else if(tempInput == KEY_RESIZE){
       output = K_MakeKata("RESIZE");
+      refreshLayout(gs);
       finishReading = true;
     }else if(tempInput == KEY_UP){
       output = K_MakeKata("GU");

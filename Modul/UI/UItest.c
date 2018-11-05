@@ -15,6 +15,7 @@ int main(){
   GameScreen gs;
   Kata input,up;
   Kata prompt;
+  Kata tooltip;
   ArrKata ak;
   MatTile mt;
   PrioQueueCustomer pqc;
@@ -87,7 +88,7 @@ int main(){
   strcpy(  SF_NamaMakanan(testinfo),"tubes");
   SF_Push(&sh, testinfo);
 
-
+  tooltip = K_MakeKata("Hello");
 
   while(true){
     RefreshTopPanel(&gs,"Nama",1,2,3);
@@ -99,6 +100,10 @@ int main(){
 
     if(K_IsKataSama(input,K_MakeKata("RESIZE"))){
       refreshLayout(&gs);
+    }
+
+    if(K_IsKataSama(input,K_MakeKata("TOOLTIP"))){
+      RefreshTooltipPanel(&gs,tooltip);
     }
 
     if(K_IsKataSama(input, up)){
