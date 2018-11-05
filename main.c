@@ -123,7 +123,6 @@ int main() {
   Pelayan P; //tipe pelayan restoran
   PrioQueueCustomer Q1,Q2; //tipe barisan pelanggan
   customer pelanggan; //tipe pelanggan
-  SF_infotype food;//tipe makanan yang
   StackFood order;  //tipe tumpukan makanan di order
   StackFood hand; //tipe tumpukan makanan di hand
   StackFood tray; //tipe tumpukan makanan di tray
@@ -169,7 +168,7 @@ int main() {
         loaded = true;
         do {
           username = GetInput(&gs,K_MakeKata("USERNAME: "));
-          LoadFile(&status,&username,&money,&life,&waktu,&R,&P);
+          LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1);
           if (status ==0) {
             WriteText(&gs,InputSalah()); //main menu
             input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
@@ -179,7 +178,7 @@ int main() {
       if (!loaded) { //tidak ada file yang di load
         //load konfigurasi normal
         usernameSaved = K_MakeKata("basic");
-        LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P);
+        LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1);
       }
       //inisialisasi game
       PQC_CreateEmpty(&Q1);
@@ -250,7 +249,7 @@ int main() {
         else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
           //procedure save
           saved = true;
-          SaveFile(username,money,life,waktu,R,P);
+          SaveFile(username,money,life,waktu,R,P,Q1);
           input = GetInput(&gs,K_MakeKata("GAME SAVED."));
         }//akhir command save
         else if(K_IsKataSama(input,K_MakeKata("EXIT"))){
