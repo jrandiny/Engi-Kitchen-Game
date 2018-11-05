@@ -7,9 +7,9 @@ Food F_CreateFood(int id, Kata nama, int harga)
   Food ftemp;
 
   /* ALGORITMA */
-  IDMakanan(ftemp) = id;
-  NamaMakanan(ftemp) = nama;
-  Harga(ftemp) = harga;
+  F_IDMakanan(ftemp) = id;
+  F_NamaMakanan(ftemp) = nama;
+  F_Harga(ftemp) = harga;
 
   return ftemp;
 }

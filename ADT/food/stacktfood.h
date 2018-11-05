@@ -8,11 +8,11 @@
 #include "../../std.h"
 #include "food.h"
 
-#define SF_MaxEl 10
+#define SF_MaxEl 50
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
 
-typedef struct Food SF_infotype;
+typedef Food SF_infotype;
 typedef int SF_address;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
@@ -20,6 +20,7 @@ typedef int SF_address;   /* indeks tabel */
 typedef struct {
 	SF_infotype T[SF_MaxEl+1]; /* tabel penyimpan elemen */
 	SF_address TOP;  /* alamat TOP: elemen puncak */
+	int Max;
 } StackFood;
 /* Definisi stack S kosong : S.TOP = Nil */
 /* Elemen yang dipakai menyimpan nilai StackFood T[1]..T[SF_MaxEl] */
@@ -28,8 +29,9 @@ typedef struct {
    /* S.TOP adalah alamat elemen TOP */
 
 /* Definisi akses dengan Selektor : Set dan Get */
-#define SF_Top(S)           (S).TOP
-#define SF_InfoTop(S)       (S).T[(S).TOP]
+#define SF_Top(S) (S).TOP
+#define SF_InfoTop(S) (S).T[(S).TOP]
+#define SF_Max(S) (S).Max
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */

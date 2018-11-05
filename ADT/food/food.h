@@ -10,11 +10,11 @@ typedef struct {
   int idMakanan; //indeks makanan
   Kata namaMakanan; //nama makanan sesuai tree makanan
   int harga; //harga makanan
-} Food;
+}Food;
 
-#define IDMakanan(F) (F).idMakanan
-#define NamaMakanan(F) (F).namaMakanan
-#define Harga(F) (F).harga
+#define F_IDMakanan(F) (F).idMakanan
+#define F_NamaMakanan(F) (F).namaMakanan
+#define F_Harga(F) (F).harga
 
 Food F_CreateFood(int id, Kata nama, int harga);
 /* Dikembalikan tipe food baru dari id, nama, dan harga terdefinisi */

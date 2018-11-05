@@ -19,7 +19,7 @@ boolean SF_IsEmpty (StackFood S)
 boolean SF_IsFull (StackFood S)
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 {
-  return SF_Top(S)==SF_MaxEl;
+  return SF_Top(S)==SF_Max(S);
 }
 
 /* ************ Menambahkan sebuah elemen ke StackFood ************ */
