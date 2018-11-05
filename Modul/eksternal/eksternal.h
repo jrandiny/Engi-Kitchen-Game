@@ -37,7 +37,7 @@ Ruangan ParseRuangan(Kata X);
 MatTile TakeMatTile(Kata X);
 /*CKata berada di jumlah tile yg akan diambil/X, mengambil X kata berikutnya menjadi elemen MatTile*/
 
-ArrMeja TakeArrMeja(Kata X);
+ArrMeja TakeArrMeja(Kata X,MatTile mattile);
 /*CKata berada di jumlah meja yg akan diambil/X, mengambil X kata berikutnya menjadi elemen ArrMeja*/
 
 Restoran ParseRestoran();

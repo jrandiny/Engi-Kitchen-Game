@@ -116,7 +116,7 @@ Ruangan ParseRuangan(Kata X)
   K_ADVKATA();//Ckata menjadi jumlah MatTile
   Room(hasil)=TakeMatTile(CKata);//Ckata berada di tile terakhir
   K_ADVKATA();//Ckata menjadi jumlah arrmeja
-  Meja(hasil)=TakeArrMeja(CKata);//Ckata berakhir di jumlah elemen arrmeja terakhir;
+  Meja(hasil)=TakeArrMeja(CKata,Room(hasil));//Ckata berakhir di jumlah elemen arrmeja terakhir;
   return hasil;
 }
 
@@ -150,15 +150,19 @@ MatTile TakeMatTile(Kata X)
   return hasil;
 }
 
-ArrMeja TakeArrMeja(Kata X)
+ArrMeja TakeArrMeja(Kata X,MatTile mattile)
 /*CKata berada di jumlah meja yg akan diambil/X, mengambil X kata berikutnya menjadi elemen ArrMeja*/
 {
-  int i;
+  int index,i,x,y;
   ArrMeja hasil;
+  Meja temp;
   AM_CreateEmpty(&hasil);
   for(i=1;i<=K_KataToInt(X);i++){
     K_ADVKATA();
-    AM_Elmt(hasil,i)=ParseMeja(CKata);
+    temp=ParseMeja(CKata);
+    P_GetXY(Meja_Posisi(temp),&x,&y);
+    index=Value(MT_Elmt(mattile,x,y));
+    AM_Elmt(hasil,index)=temp;
   }
   AM_Neff(hasil)=K_KataToInt(X);
   return hasil;
@@ -179,7 +183,7 @@ GrafRuangan ParseGrafRuangan(Kata X)
     K_ADVKATA();//Ckata menjadi banyak tile yg akan diambil
     Room(tempR)=TakeMatTile(CKata);//ckata berada di tile terakhir
     K_ADVKATA();//Ckata berada di banyak meja
-    Meja(tempR)=TakeArrMeja(CKata);//ckata berada di meja terakhir
+    Meja(tempR)=TakeArrMeja(CKata,Room(tempR));//ckata berada di meja terakhir
     GR_InsVFirst(&hasil,tempR);
   }
 
@@ -299,7 +303,7 @@ void WriteArrayMeja(FILE* namafile,ArrMeja arrmeja)
 {
   int i;
   fprintf(namafile,"%d",AM_Neff(arrmeja));
-  for(i=1;i<=AM_Neff(arrmeja);i++){
+  for(i=AM_GetFirstIdx(arrmeja);i<=AM_GetLastIdx(arrmeja);i++){
     WriteSpace(namafile);
     WriteMeja(namafile,AM_Elmt(arrmeja,i));
   }
