@@ -72,20 +72,20 @@ int main(){
 
   /* Create sample food stack */
   SF_CreateEmpty(&sf);
-  SF_IDMakanan(testinfo) = 1;
-  strcpy(  SF_NamaMakanan(testinfo),"manusia");
+  F_IDMakanan(testinfo) = 1;
+  F_NamaMakanan(testinfo) = K_MakeKata("Manusia");
   SF_Push(&sf, testinfo);
-  SF_IDMakanan(testinfo) = 2;
-  strcpy(  SF_NamaMakanan(testinfo),"tubes bkr");
+  F_IDMakanan(testinfo) = 2;
+  F_NamaMakanan(testinfo) = K_MakeKata("Tubes bkr");
   SF_Push(&sf, testinfo);
 
   /* Create sample hand stack */
   SF_CreateEmpty(&sh);
-  SF_IDMakanan(testinfo) = 1;
-  strcpy(  SF_NamaMakanan(testinfo),"otak");
+  F_IDMakanan(testinfo) = 1;
+  F_NamaMakanan(testinfo) = K_MakeKata("Otak");
   SF_Push(&sh, testinfo);
-  SF_IDMakanan(testinfo) = 2;
-  strcpy(  SF_NamaMakanan(testinfo),"tubes");
+  F_IDMakanan(testinfo) = 2;
+  F_NamaMakanan(testinfo) = K_MakeKata("Tubes");
   SF_Push(&sh, testinfo);
 
   tooltip = K_MakeKata("Hello");

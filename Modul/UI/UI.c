@@ -378,7 +378,8 @@ void RefreshFoodPanel(GameScreen *gs, StackFood foodStack)
 /* F.S. : Digambar panel stack makanan */
 {
   /* KAMUS LOKAL */
-  SF_infotype temp;
+  Food temp;
+  char *tempKata;
   int y;
 
   /* ALGORITMA */
@@ -390,7 +391,9 @@ void RefreshFoodPanel(GameScreen *gs, StackFood foodStack)
   y = 2;
   while(!SF_IsEmpty(foodStack)){
     SF_Pop(&foodStack, &temp);
-    mvwprintw(Food_Panel(*gs), y, 2, SF_NamaMakanan(temp));
+    tempKata = K_KataToChar(F_NamaMakanan(temp));
+    mvwprintw(Food_Panel(*gs), y, 2, tempKata);
+    free(tempKata);
     y++;
   }
 
@@ -402,7 +405,8 @@ void RefreshHandPanel(GameScreen *gs, StackFood handStack)
 /* F.S. : Digambar panel stack di tangan */
 {
   /* KAMUS LOKAL */
-  SF_infotype temp;
+  Food temp;
+  char *tempKata;
   int y;
 
   /* ALGORITMA */
@@ -414,7 +418,9 @@ void RefreshHandPanel(GameScreen *gs, StackFood handStack)
   y = 2;
   while(!SF_IsEmpty(handStack)){
     SF_Pop(&handStack, &temp);
-    mvwprintw(Hand_Panel(*gs), y, 2, SF_NamaMakanan(temp));
+    tempKata = K_KataToChar(F_NamaMakanan(temp));
+    mvwprintw(Hand_Panel(*gs), y, 2, tempKata);
+    free(tempKata);
     y++;
   }
 
