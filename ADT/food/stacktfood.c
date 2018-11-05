@@ -15,11 +15,13 @@ boolean SF_IsEmpty (StackFood S)
 {
   return SF_Top(S)==Nol;
 }
+
 boolean SF_IsFull (StackFood S)
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
 {
   return SF_Top(S)==SF_MaxEl;
 }
+
 /* ************ Menambahkan sebuah elemen ke StackFood ************ */
 void SF_Push (StackFood * S, SF_infotype X)
 /* Menambahkan X sebagai elemen StackFood S. */
