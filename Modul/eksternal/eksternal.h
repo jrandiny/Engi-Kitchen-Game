@@ -25,14 +25,11 @@ Tile ParseTile(Kata scanned);
 Meja ParseMeja(Kata scanned);
 /* mengembalikan tipe meja dari hasil parsing kata */
 
-customer ParseCostumer(Kata scanned);
+customer ParseCustomer(Kata scanned);
 /* mengembalikan tipe customer dari hasil parsing kata */
 
 Door ParseDoor(Kata scanned);
 /* mengembalikan tipe door dari hasil parsing kata */
-
-Ruangan ParseRuangan(Kata X);
-/*CKata berada di banyak elemen ruangan/x, mengambil X kata berikutnya menjadi Ruangan*/
 
 MatTile TakeMatTile(Kata X);
 /*CKata berada di jumlah tile yg akan diambil/X, mengambil X kata berikutnya menjadi elemen MatTile*/
@@ -46,7 +43,11 @@ Restoran ParseRestoran();
 GrafRuangan ParseGrafRuangan(Kata X);
 /*Ckata berada di jumlah komponen rungan, mengambil X bagian berikutnya menjadi grafruangan*/
 
-void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan);
+PrioQueueCustomer ParsePrioQueue(Kata X);
+/*Ckata berada di kata queue*/
+
+
+void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan,PrioQueueCustomer *prioqueue);
 /*I.S. bebas
   F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
   parameter sisanya berisi data sesuai file eksternal
@@ -87,7 +88,7 @@ void WriteArrayMeja(FILE* namafile,ArrMeja arrmeja);
 /* I.S. namafile dan arrmeja terdefinisi
    F.S. tertulis arrmeja di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 
-void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan);
+void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan,PrioQueueCustomer prioqueue);
 /*I.S. bebas
   F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
   */

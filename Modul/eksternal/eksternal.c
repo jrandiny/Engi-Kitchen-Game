@@ -85,7 +85,7 @@ Tile ParseTile(Kata scanned)
   return hasil;
 }
 
-customer ParseCostumer(Kata scanned)
+customer ParseCustomer(Kata scanned)
 /* mengembalikan tipe customer dari hasil parsing kata */
 {
   int pos1,pos2;
@@ -106,17 +106,6 @@ Meja ParseMeja(Kata scanned)
   Bangku(hasil)=K_KataToInt(K_CopySubKata(scanned,1,pos1-1));
   Meja_Posisi(hasil)=K_KataToPoint(K_CopySubKata(scanned,pos1+1,pos2-1));
   Status(hasil)=K_KataToInt(K_CopySubKata(scanned,pos2+1,scanned.Length));
-  return hasil;
-}
-
-Ruangan ParseRuangan(Kata X)
-/*CKata berada di banyak elemen ruangan/x, mengambil X kata berikutnya menjadi Ruangan*/
-{
-  Ruangan hasil;
-  K_ADVKATA();//Ckata menjadi jumlah MatTile
-  Room(hasil)=TakeMatTile(CKata);//Ckata berada di tile terakhir
-  K_ADVKATA();//Ckata menjadi jumlah arrmeja
-  Meja(hasil)=TakeArrMeja(CKata,Room(hasil));//Ckata berakhir di jumlah elemen arrmeja terakhir;
   return hasil;
 }
 
@@ -205,7 +194,23 @@ GrafRuangan ParseGrafRuangan(Kata X)
   return hasil;
 }
 
-void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan)
+PrioQueueCustomer ParsePrioQueue(Kata X)
+/*Ckata berada di kata queue*/
+{
+  int i,jumlah;
+  PrioQueueCustomer hasil;
+  K_ADVKATA();//ckata berada di jumlah queue
+  jumlah=K_KataToInt(CKata);
+  PQC_CreateEmpty(&hasil);
+  for(i=1;i<=jumlah;i++){
+    K_ADVKATA();
+    PQC_Add(&hasil,ParseCustomer(CKata));
+  }
+  return hasil;
+}
+
+
+void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan,PrioQueueCustomer* prioqueue)
 /*I.S. bebas
   F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
   parameter sisanya berisi data sesuai file eksternal
@@ -234,6 +239,9 @@ void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran
       }else if(K_IsKataSama(CKata,K_MakeKata("pelayan"))){
         //Ckata berada di kata pelayan
         *pelayan=ParsePelayan(CKata);
+      }else if(K_IsKataSama(CKata,K_MakeKata("queue"))){
+        //Ckata berada di kata queue
+        *prioqueue=ParsePrioQueue(CKata);
       }
     }
   }
@@ -309,7 +317,7 @@ void WriteArrayMeja(FILE* namafile,ArrMeja arrmeja)
   }
 }
 
-void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan)
+void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan,PrioQueueCustomer prioqueue)
 /*I.S. bebas
   F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
   */
@@ -319,6 +327,7 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan
   GR_address GR=Nil;
   GRD_address GD=Nil;
   namafile=nama;
+  customer customer;
   K_KataAddTXT(&namafile);
   fw=fopen(K_KataToChar(namafile),"w+");
   fprintf(fw,"FILE_EKSTERNAL");
@@ -396,6 +405,15 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan
   WriteTile(fw,Left(pelayan));
   WriteSpace(fw);
   WriteTile(fw,Right(pelayan));
+  //tulis bagian priorqueue
+  fprintf(fw," queue ");
+  fprintf(fw,"%d",PQC_NBElmt(prioqueue));
+  n=PQC_NBElmt(prioqueue);
+  for(i=1;i<=n;i++){
+    WriteSpace(fw);
+    PQC_Del(&prioqueue,&customer);
+    WriteCustomer(fw,customer);
+  }
   fprintf(fw,".");
   fclose(fw);
 }

@@ -11,18 +11,28 @@ int main(){
     int money,life,waktu;
     Restoran restoran;
     Pelayan pelayan;
+    PrioQueueCustomer prioqueue;
+    customer customer;
     nama=K_MakeKata("filetes");
-    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan);
+    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue);
 
     
     K_PrintKata(nama);printf("\n");
     printf("money=%d\n",money);
     printf("life=%d\n",life);
     printf("time=%d\n",waktu);
-    SaveFile(nama,money,life,waktu,restoran,pelayan);
-    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan);
+    printf("jumlah queue=%d\n",PQC_NBElmt(prioqueue));
+    // int i,n=PQC_NBElmt(prioqueue);
+    // for(i=1;i<=n;i++){
+    //     printf("%d ",i);
+    //     PQC_Del(&prioqueue,&customer);
+    //     printf("%d\n",PQC_Prio(customer));
+    // }
+    SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue);
+    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue);
+    printf("jumlah queue=%d\n",PQC_NBElmt(prioqueue));
     nama=K_MakeKata("tessave");
-    SaveFile(nama,money,life,waktu,restoran,pelayan);
+    SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue);
     return 0;
 }
     // scanf("%s",tes);
