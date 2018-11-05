@@ -67,7 +67,7 @@ void InitRestoran(Restoran *R)
 }
 
 // *** PINDAH ***
-void Move(Pelayan *P,Restoran *R, int code, boolean *status)
+void Move(Pelayan *P,Restoran *R, int code, boolean *status,boolean *justMove)
 /*
   I.S. Pelayan dan Restoran terdifinsi, Pelayang dapat bergerak ke arah code
   F.S. Pelayan pindah ke posisi sesuai code dan update semua karakter
@@ -116,6 +116,7 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
   }
 
   *status = false;
+  *justMove = false;
   P_GetXY(Pelayan_Posisi(*P),&x,&y);
   switch (code) {
     case 1:
@@ -126,6 +127,7 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
+          *justMove = true;
           PlacePelayan(P,i,j,M);
           RoomNow(*R) = nomorRuangBaru;
         }
@@ -139,6 +141,7 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
+          *justMove = true;
           PlacePelayan(P,i,j,M);
           RoomNow(*R) = nomorRuangBaru;
         }
@@ -152,6 +155,7 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
+          *justMove = true;
           PlacePelayan(P,i,j,M);
           RoomNow(*R) = nomorRuangBaru;
         }
@@ -165,6 +169,7 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status)
       } else if (found) { //di pintu bisa naik
         if (arah==code) {
           *status =true;
+          *justMove = true;
           PlacePelayan(P,i,j,M);
           RoomNow(*R) = nomorRuangBaru;
         }
@@ -429,7 +434,7 @@ Ruangan* GetRuanganSekarang(Restoran R)
 {
   return &(GR_Info(GR_Search(Ruangan(R),RoomNow(R))));
 }
-void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
+void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah,ArrInt *arrinteger)
 /*
   I.S. waktuNow, P, R terdefinisi
   F.S. jumlah berisi jumlah pelanggan yang waktu keluarnya sudah sama
@@ -440,6 +445,7 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
   //KAMUS
   int x,y;
   int a,b;
+  int nomorMeja;
   Ruangan *tmp;
   Ruangan room;
   GR_address p;
@@ -447,6 +453,7 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
   //ALGORITMA
   *jumlah = 0;
   p1 = GR_First(Ruangan(*R));
+  AI_CreateEmpty(arrinteger);
   while (p1!=Nil) {
     room = GR_Info(p1);
     for(int i = AM_GetFirstIdx(Meja(room));i<=AM_GetLastIdx(Meja(room));i++) {
@@ -454,6 +461,8 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah)
         if (Value(MT_Elmt(Room(room),a,b+1))==waktuNow) {
           //saatnya keluar
           *jumlah += 1;
+          nomorMeja = Value(MT_Elmt(Room(room),a,b));
+          AI_AddAsLastEl(arrinteger,nomorMeja);
           SetTableEmpty(i,&GR_Info(p1));
         }
     }
@@ -543,28 +552,6 @@ int GetTableNumber (Pelayan P, Ruangan R)
         found = true;
       } else i++;
     } else i++;
-
-    // if (a-1 == x && b ==y) {
-    //   found = true;
-    // } else if (a+1 == x && b ==y) {
-    //   found = true;
-    // } else if (a-2 == x && b ==y) {
-    //   found = true;
-    // } else if (a+2 == x && b ==y) {
-    //   found = true;
-    // } else if (a == x && b ==y-2) {
-    //   found = true;
-    // } else if (a == x && b ==y+2) {
-    //   found = true;
-    // } else if (a-1 == x && b ==y+1) {
-    //   found = true;
-    // } else if (a-1 == x && b ==y-1) {
-    //   found = true;
-    // } else if (a+1 == x && b ==y+1) {
-    //   found = true;
-    // } else if (a+1 == x && b ==y-1) {
-    //   found = true;
-    // } else i++;
   } //found == true || i > AM_GetLastIdx(arrmeja)
   if (!found) {
     tmp = 0;

@@ -7,6 +7,7 @@
 
 #include "../../std.h"
 #include "../point/point.h"
+#include "../arrInt/arrInt.h"
 #include "matTile/matTile.h"
 #include "arrMeja/arrMeja.h"
 #include "grafRuangan/grafRuangan.h"
@@ -41,12 +42,13 @@ void InitRestoran(Restoran *R);
 */
 
 // *** PINDAH ***
-void Move(Pelayan *P,Restoran *R, int code, boolean *status);
+void Move(Pelayan *P,Restoran *R, int code, boolean *status, boolean *justMove);
 /*
   I.S. Pelayan dan Restoran terdifinsi, Pelayang dapat bergerak ke arah code
   F.S. Jika bershasil, maka Pelayan pindah ke posisi sesuai code dan
       update semua karakter lalu status bernilai true.
       jika tidak, status bernilai false
+      justMove berniali true jika pindah ruangan, false jika tidak
   code: 1 = Up
         2 = Right
         3 = Down
@@ -140,9 +142,9 @@ Ruangan* GetRuanganSekarang(Restoran R);
 /*
   fungsi mengembalikan suatu tipe Ruangan yang sedang digunakan berdasarkan Ruangan(R)
 */
-void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah);
+void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah,ArrInt *arrinteger);
 /*
-  I.S. waktuNow, P, R terdefinisi
+  I.S. waktuNow, P, R, arrinteger terdefinisi
   F.S. jumlah berisi jumlah pelanggan yang waktu keluarnya sudah sama
     dengan waktuNow sekaligus mengembalikan status meja menjadi kosong, karakter
     menjadi x deskripsi menjadi "-" dan Value menjadi ValUndeff
