@@ -1,5 +1,5 @@
 //File : food.h
-/* merupakan tipe data restoran */
+/* merupakan tipe data Food */
 
 #ifndef FOOD_H
 #define FOOD_H
