@@ -64,12 +64,10 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
 */
 {
   //KAMUS
-  time_t t;
   int chance;
   int jumlah;
   customer pelanggan;
   //ALGORITMA
-  srand((unsigned) time(&t));
   chance = rand()%25;
   if (chance<5 && PQC_Tail(*pqc)<PQC_MaxEl){ // 1/5 kemungkinan
     PQC_Prio(pelanggan) = rand()%2;
@@ -137,6 +135,7 @@ int main() {
   //ALGORITMA PROGRAM UTAMA
 
   //inisialisasi
+  srand((unsigned) time(&t)); //inisiasi random
   new = K_MakeKata("NEW");
   start = K_MakeKata("START");
   load = K_MakeKata("LOAD");
@@ -279,7 +278,6 @@ int main() {
               if (CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room)) { //ada yang bisa di place
                 aksiValid = true;
                 PQC_Del(&Q1,&pelanggan);
-                srand((unsigned) time(&t)); //inisiasi random
                 if(PQC_Prio(pelanggan)==1){
                   waktuOut = waktu + (rand()%20+21); //[21..40]
                 }
