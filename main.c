@@ -68,9 +68,10 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
   int jumlah;
   customer pelanggan;
   //ALGORITMA
-  chance = rand()%25;
-  if (chance<5 && PQC_Tail(*pqc)<PQC_MaxEl){ // 1/5 kemungkinan
-    PQC_Prio(pelanggan) = rand()%2;
+  chance = rand()%5;
+  if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ //chance customer : 1/5 kemungkinan
+    chance = rand()%4;
+    PQC_Prio(pelanggan) = (chance==0)? 1:0; //chance prio : 1/4 kemungkinan
     do {
       jumlah = rand()%3+2;
     } while (jumlah ==3);
@@ -103,6 +104,29 @@ void PelangganPergi(PrioQueueCustomer *pqc,int waktuNow,int *jumlah)
   *pqc = Q2;
 }
 
+void CekToolTip(Restoran *R, Pelayan *P,boolean pindahruang, Kata*IsiToolTip)
+/*
+  I.S. grafRuangan dan posisi pelayang terdefinisi
+  F.S. IsiToolTip sebagai kata bantuan untuk barang-barang disiktar pelayang
+       boolean pindah ruang bernilai true jika pelayan baru pindah ruangan
+*/
+{
+  //Kamus lokal
+  int idtemp; //variabel idmakanan sementara
+  char roomtemp[2]; //variabel nomor ruangan sementara
+
+  //Algoritma
+  if(CanTake(P)){
+    idtemp = Taking(P);
+    // *IsiToolTip = nama makanan di tree
+  }
+  else if(pindahruang){
+    roomtemp[0] = (char) RoomNow(*R) + '0';
+    roomtemp[1] = '\0';
+    *IsiToolTip = K_MakeKata(roomtemp);
+  }
+}
+
 int main() {
   //KAMUS PROGRAM UTAMA
   int money,life,waktu; //uang dan nyawa yang dimiliki pemain dan tik waktu
@@ -127,20 +151,24 @@ int main() {
   Kata input; //input dari user
   Kata username,usernameSaved; // Kata untuk nama user
   Kata new,start,load,keluar; //tipe kata pembanding
+  Kata tooltip; //kata bantuan yang berisi informasi disekitar pelayan
   boolean lose,aksiValid; //tipe validasi
   boolean loaded; //menyatakan ada file yang di load
   boolean saved; //menyatakan sudah save di saat bermain
+  boolean pindahruang //menyatakan pelayan baru saja pindah ruangan
   GameScreen gs; //tipe untuk GameScreen ncruses
 
   //ALGORITMA PROGRAM UTAMA
 
-  //inisialisasi
+  //inisialisasi awal
   srand((unsigned) time(&t)); //inisiasi random
   new = K_MakeKata("NEW");
   start = K_MakeKata("START");
   load = K_MakeKata("LOAD");
   keluar = K_MakeKata("EXIT");
   saved = true;
+  username = K_MakeKata("");
+  PQC_CreateEmpty(&Q1);
 
   do { //looping game
     InitScreen(&gs);
@@ -153,12 +181,13 @@ int main() {
 
     if (!K_IsKataSama(input,keluar)) { //inputnya bukan exit
       if (K_IsKataSama(input,new)) { //NEW
-        username=GetInput(&gs,K_MakeKata("USERNAME : "));
+        username=GetInput(&gs,K_MakeKata("NEW USERNAME : "));
         //baca file konfigurasi normal
       }
       else if (K_IsKataSama(input,start)) { //START
         //menampilkan username yang tersedia
-        username = GetInput(&gs,K_MakeKata("USERNAME: "));
+        if(username.Length==0)
+          username = GetInput(&gs,K_MakeKata("INPUT USERNAME: "));
         //dibaca diulang hingga daper username yang benar
         //baca save file dengan nama
       }
@@ -166,7 +195,7 @@ int main() {
         //prosedure load
         loaded = true;
         do {
-          username = GetInput(&gs,K_MakeKata("USERNAME: "));
+          username = GetInput(&gs,K_MakeKata("SAVED USERNAME: "));
           LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1);
           if (status ==0) {
             WriteText(&gs,InputSalah()); //main menu
@@ -179,16 +208,21 @@ int main() {
         usernameSaved = K_MakeKata("basic");
         LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1);
       }
+
       //inisialisasi game
-      PQC_CreateEmpty(&Q1);
+      lose = false;
+      IsiToolTip = K_MakeKata("");
+      pindahruang = false;
 
       do{ //looping command di dalam game
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
-        aksiValid = false;
         lantai = GetMatTileSekarang(R);
+        CekToolTip(&R,&P,pindahraung,&IsiToolTip);
+        aksiValid = false;
         //refresh tampilan di layar
         RefreshMap(&gs,lantai,Pelayan_Posisi(P));
         RefreshWaitingPanel(&gs, Q1);
+        RefreshTooltipPanel(&gs,IsiToolTip);
         //meminta input perintah
         input = GetInput(&gs,K_MakeKata("COMMAND : "));
         if(input.TabKata[1]=='G' && input.Length==2){ //inputnya move
@@ -204,7 +238,7 @@ int main() {
           else if(input.TabKata[2]=='L'){ //GL
             kodeArah=4;
           }
-          Move(&P,&R,kodeArah,&aksiValid);
+          Move(&P,&R,kodeArah,&aksiValid,&pindahruang);
         }
         else if(K_IsKataSama(input,K_MakeKata("PUT"))){ //nunggu stack dan tree
           aksiValid = true;
