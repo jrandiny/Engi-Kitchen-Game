@@ -64,6 +64,11 @@ int main(){
   PQC_Add(&pqc, cust);
   PQC_Add(&pqc, cust);
 
+  PQC_Prio(cust) = 0;
+  PQC_Jumlah(cust) = 4;
+  PQC_Add(&pqc, cust);
+  PQC_Add(&pqc, cust);
+
   /* Create sample food stack */
   SF_CreateEmpty(&sf);
   SF_IDMakanan(testinfo) = 1;

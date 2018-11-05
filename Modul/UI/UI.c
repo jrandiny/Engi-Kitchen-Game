@@ -322,18 +322,44 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
   /* KAMUS LOKAL */
   char ch;
   int idx;
+  int ycol1,ycol2;
+  boolean doubleCol;
 
   /* ALGORITMA */
   wclear(Waiting_Panel(*gs));
   DrawBorders(Waiting_Panel(*gs));
 
   mvwprintw(Waiting_Panel(*gs),1, 2, "Waiting Cust");
-  idx = 1;
+
+  if(Side_Panel_Width(*gs)>30){
+    doubleCol = true;
+    ycol1 = 4;
+    ycol2 = 4;
+    mvwprintw(Waiting_Panel(*gs),3,15, "Priority");
+    mvwprintw(Waiting_Panel(*gs),3,2, "Gelandangan");
+  }else{
+    ycol1 = 3;
+    doubleCol = false;
+  }
 
   if(!PQC_IsEmpty(waitQueue)){
+    idx = 1;
+
     while(idx<=PQC_NBElmt(waitQueue)){
       ch = PQC_Jumlah(PQC_Elmt(waitQueue, idx))+'0';
-      mvwaddch(Waiting_Panel(*gs), idx+1, 2, ch);
+
+      if(PQC_Prio(PQC_Elmt(waitQueue, idx))==1){
+        if(doubleCol){
+          mvwaddch(Waiting_Panel(*gs), ycol2, 15, ch);
+          ycol2++;
+        }else{
+          mvwaddch(Waiting_Panel(*gs), ycol1, 2, ch);
+          ycol1++;
+        }
+      }else{
+        mvwaddch(Waiting_Panel(*gs), ycol1, 2, ch);
+        ycol1++;
+      }
       idx++;
     }
   }
