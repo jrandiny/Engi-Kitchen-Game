@@ -52,12 +52,15 @@ int AO_NbElmt (ArrOrder T);
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
 /* *** Daya tampung container *** */
+
 int AO_MaxNbEl (ArrOrder T);
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
 /* *** Selektor INDEKS *** */
+
 AO_IdxType AO_GetFirstIdx (ArrOrder T);
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T pertama */
+
 AO_IdxType AO_GetLastIdx (ArrOrder T);
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T terakhir */
@@ -66,6 +69,7 @@ AO_IdxType AO_GetLastIdx (ArrOrder T);
 boolean AO_IsIdxValid (ArrOrder T, AO_IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
+
 boolean AO_IsIdxEff (ArrOrder T, AO_IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
@@ -75,6 +79,7 @@ boolean AO_IsIdxEff (ArrOrder T, AO_IdxType i);
 boolean AO_IsEmpty (ArrOrder T);
 /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
 /* *** Test tabel penuh *** */
+
 boolean AO_IsFull (ArrOrder T);
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
 
@@ -90,6 +95,7 @@ void AO_BacaIsi (ArrOrder * T);
 /* 2. Jika 0 < N <= MaxNbEl(T); Lakukan N kali: Baca elemen mulai dari indeks
       IdxMin satu per satu diakhiri enter */
 /*    Jika N = 0; hanya terbentuk T kosong */
+
 void AO_TulisIsi (ArrOrder T);
 /* Proses : Menuliskan isi tabel dengan traversal */
 /* I.S. T boleh kosong */
@@ -102,7 +108,6 @@ void AO_TulisIsi (ArrOrder T);
    [3]30
    [4]50
 */
-
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : Tabel boleh kosong!! *** */
@@ -119,6 +124,7 @@ void AO_AddAsLastEl (ArrOrder * T, AO_ElType X);
 /* Proses: Menambahkan X sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. X adalah elemen terakhir T yang baru */
+
 void AO_AddEli (ArrOrder * T, AO_ElType X, AO_IdxType i);
 /* Menambahkan X sebagai elemen ke-i tabel tanpa mengganggu kontiguitas
    terhadap elemen yang sudah ada */
@@ -135,6 +141,7 @@ void AO_DelLastEl (ArrOrder * T, AO_ElType * X);
 /* F.S. X adalah nilai elemen terakhir T sebelum penghapusan, */
 /*      Banyaknya elemen tabel berkurang satu */
 /*      Tabel T mungkin menjadi kosong */
+
 void AO_DelEli (ArrOrder * T, AO_IdxType i, AO_ElType * X);
 /* Menghapus elemen ke-i tabel tanpa mengganggu kontiguitas */
 /* I.S. Tabel tidak kosong, i adalah indeks efektif yang valid */

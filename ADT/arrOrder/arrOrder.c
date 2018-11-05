@@ -28,12 +28,14 @@ int AO_NbElmt (ArrOrder T)
 {
   return AO_Neff(T);
 }
+
 /* *** Daya tampung container *** */
 int AO_MaxNbEl (ArrOrder T)
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
 {
   return IdxMax;
 }
+
 /* *** Selektor INDEKS *** */
 AO_IdxType AO_GetFirstIdx (ArrOrder T)
 /* Prekondisi : Tabel T tidak kosong */
@@ -41,6 +43,7 @@ AO_IdxType AO_GetFirstIdx (ArrOrder T)
 {
   return IdxMin;
 }
+
 AO_IdxType AO_GetLastIdx (ArrOrder T)
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T terakhir */
@@ -55,6 +58,7 @@ boolean AO_IsIdxValid (ArrOrder T, AO_IdxType i)
 {
   return ((i >= IdxMin)&&(i <= IdxMax));
 }
+
 boolean AO_IsIdxEff (ArrOrder T, AO_IdxType i)
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
@@ -69,6 +73,7 @@ boolean AO_IsEmpty (ArrOrder T)
 {
   return (AO_Neff(T) == 0);
 }
+
 /* *** Test tabel penuh *** */
 boolean AO_IsFull (ArrOrder T)
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
@@ -109,6 +114,7 @@ void AO_BacaIsi (ArrOrder * T)
   //   AO_Elmt(*T,i) = isi;
   // }
 }
+
 void AO_TulisIsi (ArrOrder T)
 /* Proses : Menuliskan isi tabel dengan traversal */
 /* I.S. T boleh kosong */

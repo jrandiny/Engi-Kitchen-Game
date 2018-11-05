@@ -12,13 +12,12 @@ typedef struct {
   int noMeja; //nomor meja
 } Order;
 
-#define O_IDMakanan(O) (O).idMakanan
-#define O_NamaMakanan(O) (O).namaMakanan
-#define O_NoMeja(O) (O).noMeja
+// Misal : X adalah variabel bertipe Order
+#define O_IDMakanan(X) (X).idMakanan
+#define O_NamaMakanan(X) (X).namaMakanan
+#define O_NoMeja(X) (X).noMeja
 
 Order O_CreateOrder (int idMakanan, Kata namaMakanan, int noMeja);
-/* 
-Fungsi membuat tipe order dari parameter
-*/
+/* Fungsi membuat tipe order dari parameter */
 
 #endif
