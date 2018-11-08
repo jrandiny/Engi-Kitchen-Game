@@ -56,7 +56,7 @@ StackFood SF_ReversStack(StackFood S)
   //ALGORITMA
   s1 = S;
   SF_CreateEmpty(&s2,SF_Max(S));
-  while (!SF_IsEmpty(S)) {
+  while (!SF_IsEmpty(s1)) {
     SF_Pop(&s1, &info);
     SF_Push(&s2, info);
   }

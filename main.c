@@ -141,14 +141,10 @@ int JadiApa(StackFood sf, TreeFood tf)
 
   /* ALGORITMA */
   if(SF_IsEmpty(sf)){
-    if(!TF_IsEmpty(tf)){
-      if(F_IDMakanan(TF_Akar(TF_Left(tf)))<0){
-        return F_IDMakanan(TF_Akar(TF_Left(tf)));
-      }else{
-        return 0;
-      }
-    }else{
+    if(TF_IsEmpty(tf)){
       return 0;
+    }else{
+      return F_IDMakanan(TF_Akar(tf));
     }
   }else if(TF_IsEmpty(tf)){
     return 0;
@@ -161,9 +157,9 @@ int JadiApa(StackFood sf, TreeFood tf)
         return 0;
       }else{
         if(tempLeft==0){
-          return tempLeft;
-        }else{
           return tempRight;
+        }else{
+          return tempLeft;
         }
       }
     }else{
@@ -261,8 +257,8 @@ int main() {
         //load konfigurasi normal
         usernameSaved = K_MakeKata("basic");
         LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1);
-        SF_CreateEmpty(&hand);
-        SF_CreateEmpty(&tray);
+        SF_CreateEmpty(&hand,10);
+        SF_CreateEmpty(&tray,5);
       }
 
       //inisialisasi game
@@ -301,8 +297,12 @@ int main() {
         else if(K_IsKataSama(input,K_MakeKata("PUT"))){ //nunggu stack dan tree
           if(!SF_IsFull(tray)){
             idMakanan = JadiApa(SF_ReversStack(hand),tree);
-            money = idMakanan;
-            aksiValid = true;
+            if(idMakanan<0){
+              SF_CreateEmpty(&hand,10);
+              SF_Push(&tray,TF_Akar(TF_Search(tree,idMakanan)));
+              aksiValid = true;
+            }
+
           }
           //1. validasi apakah tumpukan bahan makanan dapat dijadikan makanan
           //2. cek id makanan sesuai tree
@@ -321,13 +321,13 @@ int main() {
         } //akhir command take
         else if(K_IsKataSama(input,K_MakeKata("CH"))){ //nunggu stack
           if(!SF_IsEmpty(hand)){
-            SF_CreateEmpty(&hand);
+            SF_CreateEmpty(&hand,10);
             aksiValid = true;
           }
         } //akhir command ch
         else if(K_IsKataSama(input,K_MakeKata("CT"))){ //nunggu stack
           if(!SF_IsEmpty(tray)){
-            SF_CreateEmpty(&tray);
+            SF_CreateEmpty(&tray,5);
             aksiValid = true;
           }
         } //akhir command ct
