@@ -19,9 +19,9 @@ int main(){
     TreeFood treefood;
     // LoadTree(&status,&treefood);
     // 
-    Kata namafile=K_MakeKata("SaveData/TreeFood.sav");
-    K_STARTKATA(K_KataToChar(namafile),&status);
-    printf("%d",status);
+    // Kata namafile=K_MakeKata("SaveData/TreeFood.sav");
+    // K_STARTKATA(K_KataToChar(namafile),&status);
+    // printf("%d",status);
 
     //Ckata berada di kata tree
     // K_ADVKATA();//Ckata berada di jumlah node tree
@@ -30,19 +30,22 @@ int main(){
     //     K_ADVKATA();
     // }
     // K_PrintKata(CKata);
-    treefood=ParseTreeFood(CKata);
+    // treefood=ParseTreeFood(CKata);
 
 
 
 
 
     // printf("%s",K_KataToChar(F_NamaMakanan(TF_Akar(treefood))));
-    // scanf("%s",tes);
+    scanf("%s",tes);
     // food=ParseFood(K_MakeKata(tes),&kiri,&parentid);
     // printf("kiri:%d\n",kiri);
     // printf("parentid:%d\n",parentid);
-    printf("id:%d nama:%s harga:%d\n",F_IDMakanan(TF_Akar(treefood)),K_KataToChar(F_NamaMakanan(TF_Akar(treefood))),F_Harga(TF_Akar(treefood)));
-    
+    // printf("id:%d nama:%s harga:%d\n",F_IDMakanan(food),K_KataToChar(F_NamaMakanan(food)),F_Harga(food));
+    Kata temp222;
+    temp222=K_MakeKata(tes);
+    K_ReplaceSpace(&temp222);
+    K_PrintKata(temp222);
     // nama=K_MakeKata("filetes");
     // LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue);
 

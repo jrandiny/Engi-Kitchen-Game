@@ -246,3 +246,15 @@ void K_KonkatKata(Kata *kata1, Kata kata2)
   (*kata1).Length=max;
 }
 
+
+void K_ReplaceSpace(Kata* kata)
+/* I.S. kata terdefinisi
+   F.S. semua _ yang terdapat di kata diubah menjadi ' '*/
+{
+  int i;
+  for(i=1;i<=(*kata).Length;i++){
+    if((*kata).TabKata[i]=='_'){
+      (*kata).TabKata[i]=' ';
+    }
+  }
+}

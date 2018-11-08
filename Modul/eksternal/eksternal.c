@@ -42,6 +42,7 @@ Food ParseFood(Kata Scanned,boolean* kiri,int* parentID)
   *parentID=K_KataToInt(K_CopySubKata(Scanned,2,posu-1));
   F_IDMakanan(hasil)=K_KataToInt(K_CopySubKata(Scanned,posu+1,pos1-1));
   F_NamaMakanan(hasil)=K_CopySubKata(Scanned,pos1+1,pos2-1);
+  K_ReplaceSpace(&(F_NamaMakanan(hasil)));
   F_Harga(hasil)=K_KataToInt(K_CopySubKata(Scanned,pos2+1,Scanned.Length));
   return hasil;
 }
@@ -237,7 +238,6 @@ TreeFood ParseTreeFood(Kata X)
   jumlah=K_KataToInt(CKata);
   for(i=1;i<=jumlah;i++){
     K_ADVKATA();//Ckata berada di food
-    K_PrintKata(CKata);printf("\n");
     tempfood=ParseFood(CKata,&kiri,&parentid);
     temptf=TF_Alokasi(tempfood);
     if(parentid==0){
