@@ -223,6 +223,21 @@ boolean CanTake(Pelayan P)
   right = Karakter(Right(P)) == 'm';
   return up||down||left||right;
 }
+boolean CanPut(Pelayan P)
+/*
+  fungsi bernilai true jika di dekat P ada t yang bisa diput
+*/
+{
+  //KAMUS
+  boolean up,down,left,right;
+  //ALGORITMA
+  //jika karakter di dekatnya adalah 'm'
+  up = Karakter(Up(P)) == 't';
+  down = Karakter(Down(P)) == 't';
+  left = Karakter(Left(P)) == 't';
+  right = Karakter(Right(P)) == 't';
+  return up||down||left||right;
+}
 
 // *** Tile Set ***
 void SetTile(Pelayan *P,MatTile M, int kode)

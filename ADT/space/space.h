@@ -67,7 +67,11 @@ boolean CanOrder(Pelayan P, Ruangan R);
 // */
 boolean CanTake(Pelayan P);
 /*
-  fungsi bernilai true jika di dekat P ada M yang bisa diambil idnya
+  fungsi bernilai true jika di dekat P ada m yang bisa diambil idnya
+*/
+boolean CanPut(Pelayan P);
+/*
+  fungsi bernilai true jika di dekat P ada t yang bisa diput
 */
 
 // *** Tile Set ***
