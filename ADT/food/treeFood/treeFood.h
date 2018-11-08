@@ -42,6 +42,8 @@ void TF_Dealokasi(TF_address P);
 
 boolean TF_IsEmpty(TreeFood tf);
 
+int TF_DeepestLeaf(TreeFood tf);
+
 void TF_AddLeafS(TreeFood *tf,int pangkal,boolean kiri,TF_infotype X);
 
 void TF_AddLeaf(TreeFood *tf,TF_address pangkal,boolean kiri,TF_infotype X);

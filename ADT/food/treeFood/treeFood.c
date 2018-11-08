@@ -88,6 +88,27 @@ boolean TF_IsEmpty(TreeFood tf)
   return (tf==Nil);
 }
 
+int TF_DeepestLeaf(TreeFood tf)
+/* Mengembalikan tingkat tree terdalam*/
+{
+  /* KAMUS LOKAL */
+  int leftCount;
+  int rightCount;
+
+  /* ALGORITMA */
+  if(TF_IsEmpty(tf)){
+    return 0;
+  }else{
+    leftCount = TF_DeepestLeaf(TF_Left(tf));
+    rightCount = TF_DeepestLeaf(TF_Right(tf));
+    if(leftCount>rightCount){
+      return leftCount + 1;
+    }else{
+      return rightCount + 1;
+    }
+  }
+}
+
 TF_address TF_Search(TreeFood tf,int foodId)
 /* Mengembalikan address yang id makanannya sesuai */
 {
@@ -98,12 +119,11 @@ TF_address TF_Search(TreeFood tf,int foodId)
   if(TF_IsEmpty(tf)){
     return Nil;
   }else{
-    printf("cek %d",F_IDMakanan(TF_Akar(tf)));
     if(F_IDMakanan(TF_Akar(tf))==foodId){
       return tf;
     }else{
       P1 = TF_Search(TF_Left(tf),foodId);
-      P2 = TF_Search(TF_Left(tf),foodId);
+      P2 = TF_Search(TF_Right(tf),foodId);
       if(P1!=Nil){
         return P1;
       }else if(P2!=Nil){
