@@ -127,7 +127,7 @@ void CekToolTip(Restoran R, Pelayan P,boolean pindahRuang, Kata*IsiToolTip)
   }
   else if(CanTake(P)){
     idtemp = Taking(P);
-    // *IsiToolTip = nama makanan di tree
+    IsiToolTip = F_NamaMakanan(TF_Akar(TF_Search(tree,idMakanan)));
   }
 }
 
@@ -142,7 +142,7 @@ int JadiApa(StackFood sf, TreeFood tf)
   /* ALGORITMA */
   if(SF_IsEmpty(sf)){
     if(!TF_IsEmpty(tf)){
-      if(F_IDMakanan(TF_Akar(TF_Left(tf))<0){
+      if(F_IDMakanan(TF_Akar(TF_Left(tf)))<0){
         return F_IDMakanan(TF_Akar(TF_Left(tf)));
       }else{
         return 0;
@@ -155,8 +155,8 @@ int JadiApa(StackFood sf, TreeFood tf)
   }else{
     SF_Pop(&sf,&tempFood);
     if(F_IDMakanan(tempFood)==F_IDMakanan(TF_Akar(tf))){
-      tempLeft  = CekMakananBenar(sf,TF_Left(tf));
-      tempRight = CekMakananBenar(sf,TF_Right(tf))
+      tempLeft  = JadiApa(sf,TF_Left(tf));
+      tempRight = JadiApa(sf,TF_Right(tf));
       if(tempLeft==0 && tempRight==0){
         return 0;
       }else{
@@ -197,7 +197,7 @@ int main() {
   Order orderKabur; //tipe order yang isinya orderan dari pelanggan kabur
   Food makanan; //tipe food
   TreeFood tree; //tipe tree food
-  TreeFood masakan; //tipe address food yang berisi alamat masakan
+  TF_address masakan; //tipe address food yang berisi alamat masakan
   StackFood hand; //tipe tumpukan makanan di hand
   StackFood tray; //tipe tumpukan makanan di tray
   Kata input; //input dari user
@@ -222,6 +222,7 @@ int main() {
   saved = true;
   username = K_MakeKata("");
   PQC_CreateEmpty(&Q1);
+  LoadTree(&status,&tree);
 
   do { //looping game
     InitScreen(&gs);
@@ -260,6 +261,8 @@ int main() {
         //load konfigurasi normal
         usernameSaved = K_MakeKata("basic");
         LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1);
+        SF_CreateEmpty(&hand);
+        SF_CreateEmpty(&tray);
       }
 
       //inisialisasi game
@@ -276,6 +279,8 @@ int main() {
         RefreshMap(&gs,lantai,Pelayan_Posisi(P));
         RefreshWaitingPanel(&gs, Q1);
         RefreshTooltipPanel(&gs,IsiToolTip);
+        RefreshHandPanel(&gs,hand);
+        RefreshFoodPanel(&gs,tray);
         //meminta input perintah
         input = GetInput(&gs,K_MakeKata("COMMAND : "));
         if(input.TabKata[1]=='G' && input.Length==2){ //inputnya move
@@ -328,7 +333,6 @@ int main() {
         } //akhir command ct
         else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ //nunggu tree makanan
           ShowTree(&gs,tree);
-          input = GetInput(&gs,K_MakeKata("COMMAND : "));
         } //akhir command recipe
         else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
           //procedure save
