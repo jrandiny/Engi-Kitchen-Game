@@ -131,6 +131,47 @@ void CekToolTip(Restoran R, Pelayan P,boolean pindahRuang, Kata*IsiToolTip)
   }
 }
 
+int JadiApa(StackFood sf, TreeFood tf)
+/* Mengembalikan id makanan jika valid, 0 jika tidak */
+{
+  /* KAMUS LOKAL */
+  Food tempFood;
+  int tempLeft;
+  int tempRight;
+
+  /* ALGORITMA */
+  if(SF_IsEmpty(sf)){
+    if(!TF_IsEmpty(tf)){
+      if(F_IDMakanan(TF_Akar(TF_Left(tf))<0){
+        return F_IDMakanan(TF_Akar(TF_Left(tf)));
+      }else{
+        return 0;
+      }
+    }else{
+      return 0;
+    }
+  }else if(TF_IsEmpty(tf)){
+    return 0;
+  }else{
+    SF_Pop(&sf,&tempFood);
+    if(F_IDMakanan(tempFood)==F_IDMakanan(TF_Akar(tf))){
+      tempLeft  = CekMakananBenar(sf,TF_Left(tf));
+      tempRight = CekMakananBenar(sf,TF_Right(tf))
+      if(tempLeft==0 && tempRight==0){
+        return 0;
+      }else{
+        if(tempLeft==0){
+          return tempLeft;
+        }else{
+          return tempRight;
+        }
+      }
+    }else{
+      return 0;
+    }
+  }
+}
+
 int main() {
   //KAMUS PROGRAM UTAMA
   int money,life,waktu; //uang dan nyawa yang dimiliki pemain dan tik waktu
@@ -253,9 +294,11 @@ int main() {
           Move(&P,&R,kodeArah,&aksiValid,&pindahRuang);
         }
         else if(K_IsKataSama(input,K_MakeKata("PUT"))){ //nunggu stack dan tree
-          aksiValid = true;
-          //if(!SF_IsFull(tray)){
-          //}
+          if(!SF_IsFull(tray)){
+            idMakanan = JadiApa(SF_ReversStack(hand),tree);
+            money = idMakanan;
+            aksiValid = true;
+          }
           //1. validasi apakah tumpukan bahan makanan dapat dijadikan makanan
           //2. cek id makanan sesuai tree
           //3. pop makanan yang sudah jadi dari hand
@@ -263,10 +306,12 @@ int main() {
         } //akhir command put
         else if(K_IsKataSama(input,K_MakeKata("TAKE"))){ //nunggu stack tree
           if (CanTake(P)) {
-            aksiValid = true;
-            idMakanan = Taking(P);
-            makanan = TF_Search(tree,idMakanan);
-            SF_Push(&hand,makanan);
+            if(!SF_IsFull(hand)){
+              idMakanan = Taking(P);
+              makanan = TF_Akar(TF_Search(tree,idMakanan));
+              SF_Push(&hand,makanan);
+              aksiValid = true;
+            }
           }
         } //akhir command take
         else if(K_IsKataSama(input,K_MakeKata("CH"))){ //nunggu stack
