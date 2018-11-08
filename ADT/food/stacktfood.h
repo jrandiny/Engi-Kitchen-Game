@@ -35,7 +35,7 @@ typedef struct {
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
-void SF_CreateEmpty (StackFood *S);
+void SF_CreateEmpty (StackFood *S, int max);
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas SF_MaxEl */
 /* jadi indeksnya antara 1.. SF_MaxEl+1 karena 0 tidak dipakai */

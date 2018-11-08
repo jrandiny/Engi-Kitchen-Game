@@ -1,12 +1,13 @@
 #include "stacktfood.h"
 
-void SF_CreateEmpty (StackFood *S)
+void SF_CreateEmpty (StackFood *S, int max)
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas SF_MaxEl */
 /* jadi indeksnya antara 1.. SF_MaxEl+1 karena 0 tidak dipakai */
 /* Ciri stack kosong : TOP bernilai Nil */
 {
   SF_Top(*S)=Nol;
+  SF_Max(*S) = max;
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
@@ -54,7 +55,7 @@ StackFood SF_ReversStack(StackFood S)
   SF_infotype info;
   //ALGORITMA
   s1 = S;
-  SF_CreateEmpty(&s2);
+  SF_CreateEmpty(&s2,SF_Max(S));
   while (!SF_IsEmpty(S)) {
     SF_Pop(&s1, &info);
     SF_Push(&s2, info);
