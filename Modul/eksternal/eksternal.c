@@ -24,6 +24,28 @@ void ParserLocate(Kata input,int *pos1, int *pos2)
   }
 }
 
+Food ParseFood(Kata Scanned,boolean* kiri,int* parentID)
+/*mengembalikan tipe food dari hasil parsing kata, kiri berisi apakah ia leaf kiri,parentid berisi id pangkal*/
+{
+  Food hasil;
+  int pos1,pos2,posu;
+  ParserLocate(Scanned,&pos1,&pos2);
+  posu=1;
+  while(Scanned.TabKata[posu]!='_'){
+    posu++;
+  }
+  if((Scanned.TabKata[1])=='L'){
+    *kiri=true;
+  }else{
+    *kiri=false;
+  }
+  *parentID=K_KataToInt(K_CopySubKata(Scanned,2,posu-1));
+  F_IDMakanan(hasil)=K_KataToInt(K_CopySubKata(Scanned,posu+1,pos1-1));
+  F_NamaMakanan(hasil)=K_CopySubKata(Scanned,pos1+1,pos2-1);
+  F_Harga(hasil)=K_KataToInt(K_CopySubKata(Scanned,pos2+1,Scanned.Length));
+  return hasil;
+}
+
 Pelayan ParsePelayan(Kata Scanned)
 /*mengembalikan tipe pelayan dari hasil parsing kata,Ckata berada di kata pelayan */
 {
@@ -143,9 +165,8 @@ ArrMeja TakeArrMeja(Kata X,MatTile mattile)
     temp=ParseMeja(CKata);
     P_GetXY(Meja_Posisi(temp),&x,&y);
     index=Value(MT_Elmt(mattile,x,y));
-    AM_Elmt(hasil,index)=temp;
+    AM_AddEli(&hasil,temp,index);
   }
-  AM_Neff(hasil)=K_KataToInt(X);
   return hasil;
 }
 
@@ -203,6 +224,31 @@ PrioQueueCustomer ParsePrioQueue(Kata X)
 }
 
 
+TreeFood ParseTreeFood(Kata X)
+/*Ckata berada di kata tree*/
+{
+  Food tempfood;
+  int jumlah,i,parentid;
+  boolean kiri;
+  TreeFood hasil;
+  TF_address temptf;
+  TF_CreateEmpty(&hasil);
+  K_ADVKATA();//Ckata berada di jumlah node tree
+  jumlah=K_KataToInt(CKata);
+  for(i=1;i<=jumlah;i++){
+    K_ADVKATA();//Ckata berada di food
+    K_PrintKata(CKata);printf("\n");
+    tempfood=ParseFood(CKata,&kiri,&parentid);
+    temptf=TF_Alokasi(tempfood);
+    if(parentid==0){
+      hasil=temptf;
+    }else{
+      TF_AddLeafS(&hasil,parentid,kiri,tempfood);
+    }
+  }
+  return hasil;
+}
+
 void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan,PrioQueueCustomer* prioqueue)
 /*I.S. bebas
   F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
@@ -239,6 +285,18 @@ void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran
       }
     }
   }
+}
+
+void LoadTree(int* status,TreeFood* TreeFood)
+/*I.S. bebas
+  F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
+  parameter sisanya berisi data sesuai file eksternal, treefood berisi sesuai file ex*/
+{
+  Kata namafile=K_MakeKata("SaveData/TreeFood.sav");
+  K_STARTKATA(K_KataToChar(namafile),status);
+  //Ckata berada di kata tree
+  K_ADVKATA();//Ckata berada di jumlah node tree
+  *TreeFood=ParseTreeFood(CKata);
 }
 
 /*Bagian Save File Eksternal*/

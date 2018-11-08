@@ -13,6 +13,9 @@ void ParserLocate(Kata input,int *pos1, int *pos2);
        jika tidak ditemukan pos berisi -1
 */
 
+Food ParseFood(Kata Scanned,boolean* kiri,int* parentID);
+/*mengembalikan tipe food dari hasil parsing kata, kiri berisi apakah ia leaf kiri,parentid berisi id pangkal*/
+
 Pelayan ParsePelayan(Kata Scanned);
 /*mengembalikan tipe pelayan dari hasil parsing kata */
 
@@ -46,12 +49,20 @@ GrafRuangan ParseGrafRuangan(Kata X);
 PrioQueueCustomer ParsePrioQueue(Kata X);
 /*Ckata berada di kata queue*/
 
+TreeFood ParseTreeFood(Kata X);
+/*Ckata berada di kata tree*/
 
 void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan,PrioQueueCustomer *prioqueue);
 /*I.S. bebas
   F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
   parameter sisanya berisi data sesuai file eksternal
   */
+
+
+void LoadTree(int* status,TreeFood* TreeFood);
+/*I.S. bebas
+  F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
+  parameter sisanya berisi data sesuai file eksternal, treefood berisi sesuai file ex*/
 
 /*Bagian Save File Eksternal*/
 

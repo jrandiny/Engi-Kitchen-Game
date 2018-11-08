@@ -13,26 +13,56 @@ int main(){
     Pelayan pelayan;
     PrioQueueCustomer prioqueue;
     customer customer;
-    nama=K_MakeKata("filetes");
-    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue);
+    Food food;
+    boolean kiri;
+    int parentid;
+    TreeFood treefood;
+    // LoadTree(&status,&treefood);
+    // 
+    Kata namafile=K_MakeKata("SaveData/TreeFood.sav");
+    K_STARTKATA(K_KataToChar(namafile),&status);
+    printf("%d",status);
+
+    //Ckata berada di kata tree
+    // K_ADVKATA();//Ckata berada di jumlah node tree
+    // while(!EndKata){
+    //     K_PrintKata(CKata);printf("\n");
+    //     K_ADVKATA();
+    // }
+    // K_PrintKata(CKata);
+    treefood=ParseTreeFood(CKata);
+
+
+
+
+
+    // printf("%s",K_KataToChar(F_NamaMakanan(TF_Akar(treefood))));
+    // scanf("%s",tes);
+    // food=ParseFood(K_MakeKata(tes),&kiri,&parentid);
+    // printf("kiri:%d\n",kiri);
+    // printf("parentid:%d\n",parentid);
+    printf("id:%d nama:%s harga:%d\n",F_IDMakanan(TF_Akar(treefood)),K_KataToChar(F_NamaMakanan(TF_Akar(treefood))),F_Harga(TF_Akar(treefood)));
+    
+    // nama=K_MakeKata("filetes");
+    // LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue);
 
     
-    K_PrintKata(nama);printf("\n");
-    printf("money=%d\n",money);
-    printf("life=%d\n",life);
-    printf("time=%d\n",waktu);
-    printf("jumlah queue=%d\n",PQC_NBElmt(prioqueue));
+    // K_PrintKata(nama);printf("\n");
+    // printf("money=%d\n",money);
+    // printf("life=%d\n",life);
+    // printf("time=%d\n",waktu);
+    // printf("jumlah queue=%d\n",PQC_NBElmt(prioqueue));
     // int i,n=PQC_NBElmt(prioqueue);
     // for(i=1;i<=n;i++){
     //     printf("%d ",i);
     //     PQC_Del(&prioqueue,&customer);
     //     printf("%d\n",PQC_Prio(customer));
     // }
-    SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue);
-    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue);
-    printf("jumlah queue=%d\n",PQC_NBElmt(prioqueue));
-    nama=K_MakeKata("tessave");
-    SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue);
+    // SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue);
+    // LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue);
+    // printf("jumlah queue=%d\n",PQC_NBElmt(prioqueue));
+    // nama=K_MakeKata("tessave");
+    // SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue);
     return 0;
 }
     // scanf("%s",tes);
