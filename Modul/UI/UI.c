@@ -388,7 +388,7 @@ void RefreshFoodPanel(GameScreen *gs, StackFood foodStack)
 
   mvwprintw(Food_Panel(*gs),1, 2, "Food Stack");
 
-  y = 2;
+  y = 3;
   while(!SF_IsEmpty(foodStack)){
     SF_Pop(&foodStack, &temp);
     tempKata = K_KataToChar(F_NamaMakanan(temp));
@@ -413,9 +413,9 @@ void RefreshHandPanel(GameScreen *gs, StackFood handStack)
   wclear(Hand_Panel(*gs));
   DrawBorders(Hand_Panel(*gs));
 
-  mvwprintw(Hand_Panel(*gs),1, 2, "Food Stack");
+  mvwprintw(Hand_Panel(*gs),1, 2, "Hand Stack");
 
-  y = 2;
+  y = 3;
   while(!SF_IsEmpty(handStack)){
     SF_Pop(&handStack, &temp);
     tempKata = K_KataToChar(F_NamaMakanan(temp));
@@ -638,4 +638,28 @@ void PrintGrafRekursif(GameScreen *gs,TreeFood tf, int xOrig, int yOrig, int dep
   }else{
     *lastY = depthY-1;
   }
+}
+
+void RefreshOrderPanel(GameScreen *gs, ArrOrder orderList)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar panel daftar order */
+{
+  /* KAMUS LOKAL */
+  Food temp;
+  char *tempKata;
+  int i;
+
+  /* ALGORITMA */
+  wclear(Order_Panel(*gs));
+  DrawBorders(Order_Panel(*gs));
+
+  mvwprintw(Order_Panel(*gs),1, 2, "Order List");
+
+  for(i=AO_GetFirstIdx(orderList);i<=AO_GetLastIdx(orderList);i++){
+    tempKata = K_KataToChar(F_NamaMakanan(AO_Elmt(orderList, i)));
+    mvwprintw(Order_Panel(*gs), i+3, 2, tempKata);
+    free(tempKata);
+  }
+
+  wrefresh(Order_Panel(*gs));
 }

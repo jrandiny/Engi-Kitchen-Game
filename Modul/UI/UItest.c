@@ -27,6 +27,8 @@ int main(){
   SF_infotype testinfo;
   TreeFood tf;
   Food tempFood;
+  Order tempOrder;
+  ArrOrder ao;
 
   int i,j;
 
@@ -95,6 +97,11 @@ int main(){
   tempFood = F_CreateFood(5, K_MakeKata("Nama 5"),999);
   TF_AddLeafS(&tf, 2, 0,tempFood);
 
+  /* Create sample order */
+  AO_CreateEmpty(&ao);
+  tempOrder = O_CreateOrder(-1, K_MakeKata("makanan"),999);
+  AO_AddAsLastEl(&ao, tempOrder);
+
   tooltip = K_MakeKata("Hello");
 
   InitScreen(&gs);
@@ -113,6 +120,7 @@ int main(){
     RefreshFoodPanel(&gs,sf);
     RefreshHandPanel(&gs,sh);
     RefreshMap(&gs,mt,waiter);
+    RefreshOrderPanel(&gs,ao);
     input  = GetInput(&gs,prompt);
 
     if(K_IsKataSama(input,K_MakeKata("RESIZE"))){

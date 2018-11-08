@@ -11,6 +11,7 @@
 #include "../../ADT/customer/prioqueuecustomer.h"
 #include "../../ADT/food/stacktfood.h"
 #include "../../ADT/food/treeFood/treeFood.h"
+#include "../../ADT/arrOrder/arrOrder.h"
 //#include "../../ADT/listlinier/listlinier.h"
 #include <ncurses.h>
 
@@ -107,7 +108,7 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel daftar pelanggan menunggu */
 
-// void RefreshOrderPanel(GameScreen *gs, List orderList);
+void RefreshOrderPanel(GameScreen *gs, ArrOrder orderList);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel daftar order */
 
