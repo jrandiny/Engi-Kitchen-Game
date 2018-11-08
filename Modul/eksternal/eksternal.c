@@ -295,7 +295,6 @@ void LoadTree(int* status,TreeFood* TreeFood)
   Kata namafile=K_MakeKata("SaveData/TreeFood.sav");
   K_STARTKATA(K_KataToChar(namafile),status);
   //Ckata berada di kata tree
-  K_ADVKATA();//Ckata berada di jumlah node tree
   *TreeFood=ParseTreeFood(CKata);
 }
 
