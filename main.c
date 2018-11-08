@@ -68,8 +68,8 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
   int jumlah;
   customer pelanggan;
   //ALGORITMA
-  chance = rand()%5;
-  if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ //chance customer : 1/5 kemungkinan
+  chance = rand()%10;
+  if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ //chance customer : 1/10 kemungkinan
     chance = rand()%4;
     PQC_Prio(pelanggan) = (chance==0)? 1:0; //chance prio : 1/4 kemungkinan
     do {
@@ -295,19 +295,16 @@ int main() {
           Move(&P,&R,kodeArah,&aksiValid,&pindahRuang);
         }
         else if(K_IsKataSama(input,K_MakeKata("PUT"))){ //nunggu stack dan tree
-          if(!SF_IsFull(tray)){
-            idMakanan = JadiApa(SF_ReversStack(hand),tree);
-            if(idMakanan<0){
-              SF_CreateEmpty(&hand,10);
-              SF_Push(&tray,TF_Akar(TF_Search(tree,idMakanan)));
-              aksiValid = true;
+          if(CanPut(P)){
+            if(!SF_IsFull(tray)){
+              idMakanan = JadiApa(SF_ReversStack(hand),tree);
+              if(idMakanan<0){
+                SF_CreateEmpty(&hand,10);
+                SF_Push(&tray,TF_Akar(TF_Search(tree,idMakanan)));
+                aksiValid = true;
+              }
             }
-
           }
-          //1. validasi apakah tumpukan bahan makanan dapat dijadikan makanan
-          //2. cek id makanan sesuai tree
-          //3. pop makanan yang sudah jadi dari hand
-          //4. push makanan yang sudah jadi ke tray
         } //akhir command put
         else if(K_IsKataSama(input,K_MakeKata("TAKE"))){ //nunggu stack tree
           if (CanTake(P)) {
