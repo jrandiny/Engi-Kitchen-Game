@@ -10,6 +10,7 @@
 #include "ADT/customer/prioqueuecustomer.h"
 #include "ADT/arrInt/arrInt.h"
 #include "ADT/arrOrder/arrOrder.h"
+#include "ADT/food/treeFood/treeFood.h"
 #include "Modul/eksternal/eksternal.h"
 #include "Modul/UI/UI.h"
 

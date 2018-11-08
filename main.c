@@ -154,12 +154,15 @@ int main() {
   customer pelanggan; //tipe pelanggan
   Order order; //tipe order
   Food makanan; //tipe food
+  TreeFood tree; //tipe tree food
+  TreeFood masakan;
   StackFood hand; //tipe tumpukan makanan di hand
   StackFood tray; //tipe tumpukan makanan di tray
   Kata input; //input dari user
   Kata username,usernameSaved; // Kata untuk nama user
   Kata new,start,load,keluar; //tipe kata pembanding
   Kata IsiToolTip; //kata bantuan yang berisi informasi disekitar pelayan
+  Kata namaMakanan; //kata untuk nama makanan orderan
   boolean lose,aksiValid; //tipe validasi
   boolean loaded; //menyatakan ada file yang di load
   boolean saved; //menyatakan sudah save di saat bermain
@@ -353,8 +356,10 @@ int main() {
               if(CanOrder(P,*room)){
                 aksiValid = true;
                 Ordering(P,room,&idMakanan,&nomorMeja);
-                // order = O_CreateOrder(idmakanan,namaMakanan,omorMeja); //tree pada namaMakanan
-                // AO_AddAsLastEl(&arrayOrder,order);
+                masakan = TF_Search(tree,idMakanan);
+                namaMakanan = F_NamaMakanan(TF_Akar(masakan));
+                order = O_CreateOrder(idMakanan,namaMakanan,nomorMeja); //tree pada namaMakanan
+                AO_AddAsLastEl(&arrayOrder,order);
               } //akhir can order
             } //akhir command order
           } //akhir cek nomor meja
