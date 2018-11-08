@@ -41,17 +41,6 @@ ArrKata Credit(){
   return isicredit;
 }
 
-ArrKata InputSalah(){
-  //KAMUS
-  ArrKata isiInputSalah;
-  //ALGORITMA
-  AK_CreateEmpty(&isiInputSalah);
-  AK_AddAsLastEl(&isiInputSalah,K_MakeKata("INPUT YANG DIMASUKKAN SALAH"));
-  AK_AddAsLastEl(&isiInputSalah,K_MakeKata(" "));
-  AK_AddAsLastEl(&isiInputSalah,K_MakeKata("SILAHKAN INPUT ULANG!"));
-  return isiInputSalah;
-}
-
 //fungsi bernilai true jika input adalah salah satu kata dari main menu
 boolean InputBenar(Kata input,Kata new,Kata start,Kata load,Kata keluar){
   return (K_IsKataSama(input,new)||K_IsKataSama(input,start)||K_IsKataSama(input,load)||K_IsKataSama(input,keluar));
@@ -68,7 +57,7 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
   int jumlah;
   customer pelanggan;
   //ALGORITMA
-  chance = rand()%10;
+  chance = rand()%15;
   if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ //chance customer : 1/10 kemungkinan
     chance = rand()%4;
     PQC_Prio(pelanggan) = (chance==0)? 1:0; //chance prio : 1/4 kemungkinan
@@ -170,6 +159,8 @@ int JadiApa(StackFood sf, TreeFood tf)
 
 int main() {
   //KAMUS PROGRAM UTAMA
+  const int maxHand=10;
+  const int maxTray=5;
   int money,life,waktu; //uang dan nyawa yang dimiliki pemain dan tik waktu
   int nomorMeja; //nomor meja di dekat pelayan
   int jumlahKabur; //jumlah pelanggan yang kabur (sudah duduk)
@@ -218,6 +209,9 @@ int main() {
   saved = true;
   username = K_MakeKata("");
   PQC_CreateEmpty(&Q1);
+  SF_CreateEmpty(&hand,maxHand);
+  SF_CreateEmpty(&tray,maxTray);
+  AO_CreateEmpty(&arrayOrder);
   LoadTree(&status,&tree);
 
   do { //looping game
@@ -248,7 +242,6 @@ int main() {
           username = GetInput(&gs,K_MakeKata("SAVED USERNAME: "));
           LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1);
           if (status ==0) {
-            WriteText(&gs,InputSalah()); //main menu
             input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
           }
         } while (status==0);
@@ -257,9 +250,6 @@ int main() {
         //load konfigurasi normal
         usernameSaved = K_MakeKata("basic");
         LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1);
-        SF_CreateEmpty(&hand,10);
-        SF_CreateEmpty(&tray,5);
-        AO_CreateEmpty(&arrayOrder);
       }
 
       //inisialisasi game
@@ -301,7 +291,7 @@ int main() {
             if(!SF_IsFull(tray)){
               idMakanan = JadiApa(SF_ReversStack(hand),tree);
               if(idMakanan<0){
-                SF_CreateEmpty(&hand,10);
+                SF_CreateEmpty(&hand,maxHand);
                 SF_Push(&tray,TF_Akar(TF_Search(tree,idMakanan)));
                 aksiValid = true;
               }
@@ -320,13 +310,13 @@ int main() {
         } //akhir command take
         else if(K_IsKataSama(input,K_MakeKata("CH"))){ //nunggu stack
           if(!SF_IsEmpty(hand)){
-            SF_CreateEmpty(&hand,10);
+            SF_CreateEmpty(&hand,maxHand);
             aksiValid = true;
           }
         } //akhir command ch
         else if(K_IsKataSama(input,K_MakeKata("CT"))){ //nunggu stack
           if(!SF_IsEmpty(tray)){
-            SF_CreateEmpty(&tray,5);
+            SF_CreateEmpty(&tray,maxTray);
             aksiValid = true;
           }
         } //akhir command ct
