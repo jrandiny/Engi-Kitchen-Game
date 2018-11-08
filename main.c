@@ -104,7 +104,7 @@ void PelangganPergi(PrioQueueCustomer *pqc,int waktuNow,int *jumlah)
   *pqc = Q2;
 }
 
-void CekToolTip(Restoran R, Pelayan P,boolean pindahRuang, Kata*IsiToolTip)
+void CekToolTip(Restoran R, Pelayan P,boolean pindahRuang, Kata*IsiToolTip, TreeFood tree)
 /*
   I.S. grafRuangan dan posisi pelayang terdefinisi
   F.S. IsiToolTip sebagai kata bantuan untuk barang-barang disiktar pelayang
@@ -127,7 +127,7 @@ void CekToolTip(Restoran R, Pelayan P,boolean pindahRuang, Kata*IsiToolTip)
   }
   else if(CanTake(P)){
     idtemp = Taking(P);
-    IsiToolTip = F_NamaMakanan(TF_Akar(TF_Search(tree,idMakanan)));
+    *IsiToolTip = F_NamaMakanan(TF_Akar(TF_Search(tree,idtemp)));
   }
 }
 
@@ -273,7 +273,7 @@ int main() {
         RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
         lantai = GetMatTileSekarang(R);
         IsiToolTip = K_MakeKata("");
-        CekToolTip(R,P,pindahRuang,&IsiToolTip);
+        CekToolTip(R,P,pindahRuang,&IsiToolTip,tree);
         aksiValid = false;
         //refresh tampilan di layar
         RefreshMap(&gs,lantai,Pelayan_Posisi(P));
