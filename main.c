@@ -153,9 +153,11 @@ int main() {
   PrioQueueCustomer Q1,Q2; //tipe barisan pelanggan
   customer pelanggan; //tipe pelanggan
   Order order; //tipe order
+  Order orderKabur; //tipe order yang isinya orderan dari pelanggan kabur
   Food makanan; //tipe food
+  Food topTray; //tipe food yang merupakan puncak stack tray
   TreeFood tree; //tipe tree food
-  TreeFood masakan;
+  TreeFood masakan; //tipe address food yang berisi alamat masakan
   StackFood hand; //tipe tumpukan makanan di hand
   StackFood tray; //tipe tumpukan makanan di tray
   Kata input; //input dari user
@@ -287,9 +289,6 @@ int main() {
           //show tree makanan
           //input = GetInput(&gs,K_MakeKata("COMMAND : "));
         } //akhir command recipe
-        else if(K_IsKataSama(input,K_MakeKata("RESIZE"))) {
-          refreshLayout(&gs);
-        } //akhir command resize
         else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
           //procedure save
           saved = true;
@@ -340,12 +339,19 @@ int main() {
               Q1 = Q2;
             } //akhir command place
             else if(K_IsKataSama(input,K_MakeKata("GIVE"))){  //nunggu stack
-              if (CanGive(P,*room,nomorMeja)) {
-                aksiValid = true;
-                //SF_Pop(&tray,&food);
-                //money += harga
-                //SetTableEmpty(nomorMeja,room);
-              }
+              // if (CanGive(P,*room,nomorMeja)) {
+                indeksOrder = AO_Search(arrayOrder,nomorMeja);
+                if(indeksOrder!=IdxUndef){
+                  topTray = SF_InfoTop(tray);
+                  if(O_IDMakanan(AO_Elmt(arrayOrder,indeksOrder))==F_IDMakanan(topTray)){
+                    SF_Pop(&tray,&food);
+                    money += F_Harga(topTray);
+                    AO_DelEli(&arrayOrder,indeksOrder,&orderKabur)
+                    SetTableEmpty(nomorMeja,room);
+                    aksiValid = true;
+                  }
+                }
+              // }
               //1. validasi nomormeja yang memesan makanan pada top stack tray
               //2. search harga makanan di data harga makanan
               //3. tambahkan money dengan harga makanan
@@ -372,6 +378,9 @@ int main() {
           while(!AI_IsEmpty(arrayNomorMeja)){
             AI_DelLastEl(&arrayNomorMeja,&nomorMeja);
             indeksOrder = AO_Search(arrayOrder,nomorMeja);
+            if(indeksOrder!=IdxUndef){
+              AO_DelEli(&arrayOrder,indeksOrder,&orderKabur);
+            }
           }
           PelangganPergi(&Q1,waktu,&jumlahPergi);
           life -=jumlahKabur+jumlahPergi;
