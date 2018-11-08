@@ -155,7 +155,6 @@ int main() {
   Order order; //tipe order
   Order orderKabur; //tipe order yang isinya orderan dari pelanggan kabur
   Food makanan; //tipe food
-  Food topTray; //tipe food yang merupakan puncak stack tray
   TreeFood tree; //tipe tree food
   TreeFood masakan; //tipe address food yang berisi alamat masakan
   StackFood hand; //tipe tumpukan makanan di hand
@@ -266,11 +265,9 @@ int main() {
           if (CanTake(P)) {
             aksiValid = true;
             idMakanan = Taking(P);
+            makanan = TF_Search(tree,idMakanan);
+            SF_Push(&hand,makanan);
           }
-          //1. validasi apakah berada didekat M / tempat mengolah makanan
-          //2. cek apakah bahan makanan yang akan diambil adalah urutan yang sesuai
-          //3. push bahan makanan ke stack hand
-          //manggil function Taking(P);
         } //akhir command take
         else if(K_IsKataSama(input,K_MakeKata("CH"))){ //nunggu stack
           if(!SF_IsEmpty(hand)){
@@ -285,7 +282,7 @@ int main() {
           }
         } //akhir command ct
         else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ //nunggu tree makanan
-          //show tree makanan
+          ShowTree(&gs,tree);
           input = GetInput(&gs,K_MakeKata("COMMAND : "));
         } //akhir command recipe
         else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
@@ -340,10 +337,10 @@ int main() {
             else if(K_IsKataSama(input,K_MakeKata("GIVE"))){  //nunggu stack
                 indeksOrder = AO_Search(arrayOrder,nomorMeja);
                 if(indeksOrder!=IdxUndeff){
-                  topTray = SF_InfoTop(tray);
-                  if(O_IDMakanan(AO_Elmt(arrayOrder,indeksOrder))==F_IDMakanan(topTray)){
-                    SF_Pop(&tray,&topTray);
-                    money += F_Harga(topTray);
+                  makanan = SF_InfoTop(tray);
+                  if(O_IDMakanan(AO_Elmt(arrayOrder,indeksOrder))==F_IDMakanan(makanan)){
+                    SF_Pop(&tray,&makanan);
+                    money += F_Harga(makanan);
                     AO_DelEli(&arrayOrder,indeksOrder,&orderKabur);
                     SetTableEmpty(nomorMeja,room);
                     aksiValid = true;
