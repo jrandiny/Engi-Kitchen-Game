@@ -59,4 +59,11 @@ void SF_Pop (StackFood * S, SF_infotype* X);
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 
+// fungsi lain
+StackFood SF_ReversStack(StackFood S);
+/*
+	fungsi mengembalikan S yang di balikkan,
+	misalnya inputnya 1 2 3 menjadi 3 2 1
+*/
+
 #endif

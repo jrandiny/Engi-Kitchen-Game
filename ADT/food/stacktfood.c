@@ -41,3 +41,23 @@ void SF_Pop (StackFood * S, SF_infotype* X)
   *X=SF_InfoTop(*S);
   SF_Top(*S)--;
 }
+
+// fungsi lain
+StackFood SF_ReversStack(StackFood S)
+/*
+	fungsi mengembalikan S yang di balikkan,
+	misalnya inputnya 1 2 3 menjadi 3 2 1
+*/
+{
+  //KAMUS
+  StackFood s1,s2;
+  SF_infotype info;
+  //ALGORITMA
+  s1 = S;
+  SF_CreateEmpty(&s2);
+  while (!SF_IsEmpty(S)) {
+    SF_Pop(&s1, &info);
+    SF_Push(&s2, info);
+  }
+  return s2;
+}
