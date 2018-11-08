@@ -259,6 +259,7 @@ int main() {
         LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1);
         SF_CreateEmpty(&hand,10);
         SF_CreateEmpty(&tray,5);
+        AO_CreateEmpty(&arrayOrder);
       }
 
       //inisialisasi game
@@ -277,6 +278,7 @@ int main() {
         RefreshTooltipPanel(&gs,IsiToolTip);
         RefreshHandPanel(&gs,hand);
         RefreshFoodPanel(&gs,tray);
+        RefreshOrderPanel(&gs,arrayOrder);
         //meminta input perintah
         input = GetInput(&gs,K_MakeKata("COMMAND : "));
         if(input.TabKata[1]=='G' && input.Length==2){ //inputnya move
