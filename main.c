@@ -367,10 +367,10 @@ int main() {
                 aksiValid = true;
                 PQC_Del(&Q1,&pelanggan);
                 if(PQC_Prio(pelanggan)==1){
-                  waktuOut = waktu + (rand()%20+21); //[21..40]
+                  waktuOut = waktu + (rand()%40+41); //[41..80]
                 }
                 else{
-                  waktuOut = waktu + (rand()%20+31); //[31..50]
+                  waktuOut = waktu + (rand()%60+61); //[61..120]
                 }
 
                 Placing(PQC_Jumlah(pelanggan),waktuOut,&P,room);
