@@ -258,7 +258,7 @@ void RefreshMap(GameScreen *gs, MatTile peta, Point waiter)
   int marginY;
   int posy;
   int posx;
-
+  int value;
   /* ALGORITMA */
   wclear(Main_Panel(*gs));
   DrawBorders(Main_Panel(*gs));
@@ -286,7 +286,49 @@ void RefreshMap(GameScreen *gs, MatTile peta, Point waiter)
       /* Lokasi posx dan posy berada di kanan P (kotak isi cell paling kanan) */
 
       /* Isi */
-      mvwaddch(Main_Panel(*gs),posy,posx-1,Karakter(MT_Elmt(peta, i, j)));
+      // mvwaddch(Main_Panel(*gs),posy,posx-1,Karakter(MT_Elmt(peta, i, j)));
+      switch(Karakter(MT_Elmt(peta,i,j))){
+        case '2':
+        case '4':
+          value = Value(MT_Elmt(peta,i,j));
+          if (value >9) {
+            mvwprintw(Main_Panel(*gs), posy, posx-2, "%d",Value(MT_Elmt(peta,i,j)));
+          } else {
+            mvwprintw(Main_Panel(*gs), posy, posx-1, "%d",Value(MT_Elmt(peta,i,j)));
+          }
+          break;
+        case 'x':
+          mvwprintw(Main_Panel(*gs), posy, posx-2, "\xf0\x9f\x92\xba");
+          break;
+        case 't':
+          mvwprintw(Main_Panel(*gs), posy, posx-2, "\xf0\x9f\x93\xa5");
+          break;
+        case 'c':
+          mvwprintw(Main_Panel(*gs), posy, posx-2, "\xf0\x9f\x91\xa8");
+          break;
+        case ' ':
+          switch(Value(MT_Elmt(peta,i,j))){
+            case 1:
+              mvwprintw(Main_Panel(*gs), posy, posx-2, "\xe2\xac\x86\xef\xb8\x8f");
+              break;
+            case 2:
+              mvwprintw(Main_Panel(*gs), posy, posx-2, "\xe2\x9e\xa1\xef\xb8\x8f");
+              break;
+            case 3:
+              mvwprintw(Main_Panel(*gs), posy, posx-2, "\xe2\xac\x87\xef\xb8\x8f");
+              break;
+            case 4:
+              mvwprintw(Main_Panel(*gs), posy, posx-2, "\xe2\xac\x85\xef\xb8\x8f");
+              break;
+            default:
+              mvwaddch(Main_Panel(*gs),posy,posx-1,Karakter(MT_Elmt(peta, i, j)));
+              break;
+          };
+          break;
+        default:
+          mvwaddch(Main_Panel(*gs),posy,posx-1,Karakter(MT_Elmt(peta, i, j)));
+          break;
+      };
 
       /* Garis bawah */
       if(i!=maxY){
@@ -313,7 +355,7 @@ void RefreshMap(GameScreen *gs, MatTile peta, Point waiter)
   /* Waiter */
   posx=P_Kolom(waiter)*4 + marginX;
   posy=P_Baris(waiter)*2 + marginY;
-  mvwprintw(Main_Panel(*gs), posy, posx-1, "\xf0\x9f\xa4\xb5");
+  mvwprintw(Main_Panel(*gs), posy, posx-2, "\xf0\x9f\xa4\xb5");
   // mvwaddch(Main_Panel(*gs), posy, posx-1, 'P');
 
   wrefresh(Main_Panel(*gs));
@@ -328,6 +370,7 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
   /* KAMUS LOKAL */
   char ch;
   int idx;
+  int jumlahOrang;
   int ycol1,ycol2;
   boolean doubleCol;
 
@@ -341,8 +384,8 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
     doubleCol = true;
     ycol1 = 4;
     ycol2 = 4;
-    mvwprintw(Waiting_Panel(*gs),3,15, "Priority");
-    mvwprintw(Waiting_Panel(*gs),3,2, "Gelandangan");
+    mvwprintw(Waiting_Panel(*gs),3,15, "\xf0\x9f\x8c\x9f");
+    mvwprintw(Waiting_Panel(*gs),3,2, "citizen");
   }else{
     ycol1 = 3;
     doubleCol = false;
@@ -353,17 +396,34 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
 
     while(idx<=PQC_NBElmt(waitQueue)){
       ch = PQC_Jumlah(PQC_Elmt(waitQueue, idx))+'0';
-
+      jumlahOrang = PQC_Jumlah(PQC_Elmt(waitQueue, idx));
       if(PQC_Prio(PQC_Elmt(waitQueue, idx))==1){
         if(doubleCol){
-          mvwaddch(Waiting_Panel(*gs), ycol2, 15, ch);
+          // mvwaddch(Waiting_Panel(*gs), ycol2, 15, ch);
+          if (jumlahOrang == 2) {
+            mvwprintw(Waiting_Panel(*gs),ycol2, 15, "\xf0\x9f\x91\xa8\xe2\x80\x8d\xf0\x9f\x91\xa7");
+          } else {
+            mvwprintw(Waiting_Panel(*gs),ycol2, 15, "\xf0\x9f\x91\xa8\xe2\x80\x8d\xf0\x9f\x91\xa9\xe2\x80\x8d\xf0\x9f\x91\xa7\xe2\x80\x8d\xf0\x9f\x91\xa6");
+          }
           ycol2++;
         }else{
-          mvwaddch(Waiting_Panel(*gs), ycol1, 2, ch);
+          if (jumlahOrang == 2) {
+            mvwprintw(Waiting_Panel(*gs),ycol1, 2, "\xf0\x9f\x91\xa8\xe2\x80\x8d\xf0\x9f\x91\xa7");
+            mvwprintw(Waiting_Panel(*gs),ycol1, 8, "\xf0\x9f\x8c\x9f");
+          } else {
+            mvwprintw(Waiting_Panel(*gs),ycol1, 2, "\xf0\x9f\x91\xa8\xe2\x80\x8d\xf0\x9f\x91\xa9\xe2\x80\x8d\xf0\x9f\x91\xa7\xe2\x80\x8d\xf0\x9f\x91\xa6");
+            mvwprintw(Waiting_Panel(*gs),ycol1, 12, "\xf0\x9f\x8c\x9f");
+          }
+          // mvwaddch(Waiting_Panel(*gs), ycol1, 2, ch);
           ycol1++;
         }
       }else{
-        mvwaddch(Waiting_Panel(*gs), ycol1, 2, ch);
+        // mvwaddch(Waiting_Panel(*gs), ycol1, 2, ch);
+        if (jumlahOrang == 2) {
+          mvwprintw(Waiting_Panel(*gs),ycol1, 2, "\xf0\x9f\x91\xa8\xe2\x80\x8d\xf0\x9f\x91\xa7");
+        } else {
+          mvwprintw(Waiting_Panel(*gs),ycol1, 2, "\xf0\x9f\x91\xa8\xe2\x80\x8d\xf0\x9f\x91\xa9\xe2\x80\x8d\xf0\x9f\x91\xa7\xe2\x80\x8d\xf0\x9f\x91\xa6");
+        }
         ycol1++;
       }
       idx++;
@@ -446,8 +506,8 @@ void RefreshTopPanel(GameScreen *gs, char* name, int money, int life, int time)
 
   mvwprintw(Top_1_Panel(*gs),1,2,"%s",name);
   mvwprintw(Top_2_Panel(*gs),1,2,"\xf0\x9f\x92\xb2: %d",money);
-  mvwprintw(Top_3_Panel(*gs),1,2,"\xf0\x9f\x92\x99: %d",life);
-  mvwprintw(Top_4_Panel(*gs),1,2,"\xe2\x8f\xb1: %d",time);
+  mvwprintw(Top_3_Panel(*gs),1,2,"\xf0\x9f\x92\x99 : %d",life);
+  mvwprintw(Top_4_Panel(*gs),1,2,"\xe2\x8f\xb1  : %d",time);
 
   wrefresh(Top_1_Panel(*gs));
   wrefresh(Top_2_Panel(*gs));
@@ -485,7 +545,7 @@ void RefreshTooltipPanel(GameScreen *gs, Kata tooltip)
 
   temp = K_KataToChar(tooltip);
 
-  mvwprintw(Tooltip_Panel(*gs),1, 2,"\xf0\x9f\xa4\xb5 %s",temp);
+  mvwprintw(Tooltip_Panel(*gs),1, 2,"\xf0\x9f\x94\x8e  %s",temp);
 
   free(temp);
   wrefresh(Tooltip_Panel(*gs));
