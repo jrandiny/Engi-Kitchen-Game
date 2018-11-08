@@ -7,6 +7,7 @@
 #include "space.h"
 #include "../../std.h"
 #include "../point/point.h"
+#include "../arrInt/arrInt.h"
 #include "matTile/matTile.h"
 #include "arrMeja/arrMeja.h"
 #include "grafRuangan/grafRuangan.h"
@@ -14,27 +15,27 @@
 #include "restoran.h"
 
 // *** KONSTRUKTOR ***
-void InitPelayan(Pelayan *P)
-/* membuat Pelayan baru
-  I.S. Sembarang
-  F.S. terbentuk Pelayan dengan posisi di 0,0
-      semua karakter bernilai CharUndeff
-      semua value bernilai ValUndeff
-      semua deskripsi berniali ""
-*/
-{
-  //ALGORITMA
-  //posisi
-  P_SetXY(&Pelayan_Posisi(*P),0,0);
-  //up
-  Up(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-  //down
-  Down(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-  //left
-  Left(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-  //right
-  Right(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-}
+// void InitPelayan(Pelayan *P)
+// /* membuat Pelayan baru
+//   I.S. Sembarang
+//   F.S. terbentuk Pelayan dengan posisi di 0,0
+//       semua karakter bernilai CharUndeff
+//       semua value bernilai ValUndeff
+//       semua deskripsi berniali ""
+// */
+// {
+//   //ALGORITMA
+//   //posisi
+//   P_SetXY(&Pelayan_Posisi(*P),0,0);
+//   //up
+//   Up(*P) = MT_CreateTile(CharUndeff,ValUndeff);
+//   //down
+//   Down(*P) = MT_CreateTile(CharUndeff,ValUndeff);
+//   //left
+//   Left(*P) = MT_CreateTile(CharUndeff,ValUndeff);
+//   //right
+//   Right(*P) = MT_CreateTile(CharUndeff,ValUndeff);
+// }
 void PlacePelayan(Pelayan *P,int x,int y, MatTile M)
 /*
   menaruh Pelayan di posisi (x,y) di ruangan di Restoran r
@@ -43,28 +44,28 @@ void PlacePelayan(Pelayan *P,int x,int y, MatTile M)
 */
 {
   //ALGORITMA
-  P_SetXY(&Pelayan_Posisi(*P),x,y);
-  SetUpTile(P,M);
-  SetDownTile(P,M);
-  SetLeftTile(P,M);
-  SetRightTile(P,M);
+  P_SetXY(&Pelayan_Posisi(*P),x,y); //merubah posisi
+  SetTile(P,M,1); //mengecek karakter di atasnya
+  SetTile(P,M,2); //mengencek karakter di kanannya
+  SetTile(P,M,3); //mengecek karakter di bawahnya
+  SetTile(P,M,4); //mengecek karakter di kirinya
 }
-void InitRestoran(Restoran *R)
-/*
-  menyiapkan ruangan kosong dan menghubungkan semua ruangan
-  I.S. R Sembarang
-  F.S. setiap room.karakter terisi "",
-      room.value berisi ValUndeff
-      room.deskripsi berisi ""
-      lokasi pusat meja sudah ada nomornya,
-      ruangan berniali 0,
-      hubungan telah menghubungkan semua ruangan.
-*/
-{
-  //ALGORITMA
-  GR_CreateEmpty(&Ruangan(*R));
-  RoomNow(*R) = 0;
-}
+// void InitRestoran(Restoran *R)
+// /*
+//   menyiapkan ruangan kosong dan menghubungkan semua ruangan
+//   I.S. R Sembarang
+//   F.S. setiap room.karakter terisi "",
+//       room.value berisi ValUndeff
+//       room.deskripsi berisi ""
+//       lokasi pusat meja sudah ada nomornya,
+//       ruangan berniali 0,
+//       hubungan telah menghubungkan semua ruangan.
+// */
+// {
+//   //ALGORITMA
+//   GR_CreateEmpty(&Ruangan(*R));
+//   RoomNow(*R) = 0;
+// }
 
 // *** PINDAH ***
 void Move(Pelayan *P,Restoran *R, int code, boolean *status,boolean *justMove)
@@ -88,39 +89,42 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status,boolean *justMove)
   int arah,nomorRuangBaru;
   MatTile M;
   //ALGORITMA
-
+  //cek apakah sekarang pelayan ada di pintu
   found = false;
-  p = GR_First(Ruangan(*R));
-  while (p!=Nil && !found) {
+  p = GR_First(Ruangan(*R)); //GR_address dari ruangan pertama
+  while (p!=Nil && !found) { //diulang hingga ketemu atau sudah di cek semua ruangan
     if (RoomID(GR_Info(p))==RoomNow(*R)){
-      pt = GR_Doors(p);
-      door = GRD_Search(pt,Pelayan_Posisi(*P));
-      if (door != Nil) {
+      //mencari room id di ruangan yang sama dengan ruangan sekarang
+      pt = GR_Doors(p); //pt adalah address untuk list door
+      door = GRD_Search(pt,Pelayan_Posisi(*P)); //searching pintu di posisi pelayan
+      if (door != Nil) { //ketemu pintu di posisi pelayan
         found = true;
-      } else {
+      } else { //tidak ketemu, cek ruangan selanjutnya
         p = GR_Next(p);
       }
-    } else {
+    } else { //ruangannya tidak sama jadi lanjut ke ruangan selanjutnya
       p = GR_Next(p);
     }
   } //found == true || p == nil
 
-  if (found) {
+  if (found) { //ketemu pintu
     pintu = GRD_Info(door);
-    arah = DoorDirection(pintu);
+    arah = DoorDirection(pintu); //mengambil arah dari pintu
+
     tujuan = DoorLocation(GRD_Info(GRD_To(door)));
-    P_GetXY(tujuan,&i,&j);
+    P_GetXY(tujuan,&i,&j); //mengambil posisi pintu yang dituju
+
     nomorRuangBaru = RoomID(GR_Info(GRD_Parent(GRD_To(door))));
     p1 = GR_Search(Ruangan(*R),nomorRuangBaru);
-    M = Room(GR_Info(p1));
+    M = Room(GR_Info(p1)); //mengambil layout ruangan yang dituju
   }
 
   *status = false;
   *justMove = false;
   P_GetXY(Pelayan_Posisi(*P),&x,&y);
-  switch (code) {
-    case 1:
-      if (Karakter(Up(*P))==' ') {
+  switch (code) { //move pelayan sesuai kode
+    case 1: //atas
+      if (Karakter(Up(*P))==' ') { //lantai atas kosong
         *status =true;
         x-=1;
         PlacePelayan(P,x,y,GetMatTileSekarang(*R));
@@ -133,8 +137,8 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status,boolean *justMove)
         }
       }
       break;
-    case 2:
-      if (Karakter(Right(*P))==' ') {
+    case 2: //kanan
+      if (Karakter(Right(*P))==' ') { //lantai kanan kosong
         *status =true;
         y+=1;
         PlacePelayan(P,x,y,GetMatTileSekarang(*R));
@@ -147,8 +151,8 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status,boolean *justMove)
         }
       }
       break;
-    case 3:
-      if (Karakter(Down(*P))==' ') {
+    case 3: //bawah
+      if (Karakter(Down(*P))==' ') { //lantai bawah kosong
         *status =true;
         x+=1;
         PlacePelayan(P,x,y,GetMatTileSekarang(*R));
@@ -161,8 +165,8 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status,boolean *justMove)
         }
       }
       break;
-    case 4:
-      if (Karakter(Left(*P))==' ') {
+    case 4: //kiri
+      if (Karakter(Left(*P))==' ') { //lantai kiri kosong
         *status =true;
         y-=1;
         PlacePelayan(P,x,y,GetMatTileSekarang(*R));
@@ -188,20 +192,22 @@ boolean CanOrder(Pelayan P, Ruangan R)
   int nomorMeja;
   //ALGORITMA
   nomorMeja = GetTableNumber(P,R);
+  //bisa order jika status mejanya adalah 1, sudah duduk dan
   return Status(AM_Elmt(Meja(R),nomorMeja)) ==  1;
 }
-boolean CanGive(Pelayan P, Ruangan R, int nomorMeja)
-/*
-  fungsi akan bernilai true jika nomorMeja sama dengan nomor dari
-  meja di dekat P
-*/
-{
-  //KAMUS
-  Tile lantai;
-  //ALGORITMA
-  lantai = GetTableTile(P,R);
-  return nomorMeja == Value(lantai);
-}
+// boolean CanGive(Pelayan P, Ruangan R, int nomorMeja)
+// /*
+//   fungsi akan bernilai true jika nomorMeja sama dengan nomor dari
+//   meja di dekat P
+// */
+// {
+//   //KAMUS
+//   Tile lantai;
+//   //ALGORITMA
+//   lantai = GetTableTile(P,R);
+//   //bisa give jika nomormejanya
+//   return nomorMeja == Value(lantai);
+// }
 boolean CanTake(Pelayan P)
 /*
   fungsi bernilai true jika di dekat P ada M yang bisa diambil idnya
@@ -210,6 +216,7 @@ boolean CanTake(Pelayan P)
   //KAMUS
   boolean up,down,left,right;
   //ALGORITMA
+  //jika karakter di dekatnya adalah 'm'
   up = Karakter(Up(P)) == 'm';
   down = Karakter(Down(P)) == 'm';
   left = Karakter(Left(P)) == 'm';
@@ -218,10 +225,10 @@ boolean CanTake(Pelayan P)
 }
 
 // *** Tile Set ***
-void SetUpTile(Pelayan *P,MatTile M)
+void SetTile(Pelayan *P,MatTile M, int kode)
 /*
-  I.S. P dan M terdefinisi
-  F.S. Tile Up pada pelayan diisi dengan elemt yang sesuai dengan M
+  I.S. P, M, kode terdefinisi
+  F.S. Tile pada pelayan diisi dengan elemt yang sesuai dengan M menurut kode
 */
 {
   //KAMUS
@@ -229,70 +236,44 @@ void SetUpTile(Pelayan *P,MatTile M)
   Tile tmp;
   //ALGORITMA
   P_GetXY(Pelayan_Posisi(*P),&x,&y);
-  x -= 1;
-  if (MT_IsIdxEff(M,x,y)) {
-    tmp = MT_Elmt(M,x,y);
-    Up(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
-  } else {
-    Up(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-  }
-}
-void SetDownTile(Pelayan *P,MatTile M)
-/*
-  I.S. P dan M terdefinisi
-  F.S. Tile Down pada pelayan diisi dengan elemt yang sesuai dengan M
-*/
-{
-  //KAMUS
-  int x,y;
-  Tile tmp;
-  //ALGORITMA
-  P_GetXY(Pelayan_Posisi(*P),&x,&y);
-  x += 1;
-  if (MT_IsIdxEff(M,x,y)) {
-    tmp = MT_Elmt(M,x,y);
-    Down(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
-  } else {
-    Down(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-  }
-}
-void SetLeftTile(Pelayan *P,MatTile M)
-/*
-  I.S. P dan M terdefinisi
-  F.S. Tile Left pada pelayan diisi dengan elemt yang sesuai dengan M
-*/
-{
-  //KAMUS
-  int x,y;
-  Tile tmp;
-  //ALGORITMA
-  P_GetXY(Pelayan_Posisi(*P),&x,&y);
-  y -= 1;
-  if (MT_IsIdxEff(M,x,y)) {
-    tmp = MT_Elmt(M,x,y);
-    Left(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
-  } else {
-    Left(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-  }
-}
-void SetRightTile(Pelayan *P,MatTile M)
-/*
-  I.S. P dan M terdefinisi
-  F.S. Tile Right pada pelayan diisi dengan elemt yang sesuai dengan M
-*/
-{
-  //KAMUS
-  int x,y;
-  Tile tmp;
-  //ALGORITMA
-  P_GetXY(Pelayan_Posisi(*P),&x,&y);
-  y += 1;
-  if (MT_IsIdxEff(M,x,y)) {
-    tmp = MT_Elmt(M,x,y);
-    Right(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
-  } else {
-    Right(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-  }
+  switch (kode) {
+    case 1:
+      x -= 1;
+      if (MT_IsIdxEff(M,x,y)) {
+        //jika merupakan indeks efektif berarti masih dalam ruangan
+        tmp = MT_Elmt(M,x,y);
+        Up(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
+      } else {
+        Up(*P) = MT_CreateTile(CharUndeff,ValUndeff);
+      }
+    case 2:
+      y += 1;
+      if (MT_IsIdxEff(M,x,y)) {
+        //jika merupakan indeks efektif berarti masih dalam ruangan
+        tmp = MT_Elmt(M,x,y);
+        Right(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
+      } else {
+        Right(*P) = MT_CreateTile(CharUndeff,ValUndeff);
+      }
+    case 3:
+      x += 1;
+      if (MT_IsIdxEff(M,x,y)) {
+        //jika merupakan indeks efektif berarti masih dalam ruangan
+        tmp = MT_Elmt(M,x,y);
+        Down(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
+      } else {
+        Down(*P) = MT_CreateTile(CharUndeff,ValUndeff);
+      }
+    case 4:
+      y -= 1;
+      if (MT_IsIdxEff(M,x,y)) {
+        //jika merupakan indeks efektif berarti masih dalam ruangan
+        tmp = MT_Elmt(M,x,y);
+        Down(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
+      } else {
+        Down(*P) = MT_CreateTile(CharUndeff,ValUndeff);
+      }
+  };
 }
 
 // *** BOOLEAN RUANGAN***
@@ -303,6 +284,7 @@ boolean IsTableEmpty(int nomorMeja, Ruangan R)
 */
 {
   //ALGORITMA
+  //empty jika status mejanya 0
   return Status(AM_Elmt(Meja(R),nomorMeja)) ==  0;
 }
 boolean CanPlace(int pelanggan,Pelayan P, Ruangan R)
@@ -314,14 +296,13 @@ boolean CanPlace(int pelanggan,Pelayan P, Ruangan R)
 {
   //KAMUS
   boolean empty;
-  // Tile table;
   int jumlahBangku;
   int nomorMeja;
   //ALGORITMA
-  // table = GetTableTile(P,R);
   nomorMeja = GetTableNumber(P,R);
   jumlahBangku = Bangku(AM_Elmt(Meja(R),nomorMeja));
   empty = IsTableEmpty(nomorMeja,R);
+  //bisa di-place jika jumlah bangku cukup dan statusnya empty
   return (empty && (jumlahBangku>=pelanggan && pelanggan != 0));
 }
 
@@ -335,12 +316,11 @@ void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int *nomorMeja)
 {
   //KAMUS
   Tile table;
-  time_t t;
   //ALGORITMA
-  srand((unsigned) time(&t)); //inisialisasi rnd()
-  *idMakanan = (rand()%8+17); //[17..24]
+  //merandom id makanan dari -1 - -8
+  *idMakanan = (rand()%8-8); //[-1..-8]
   *nomorMeja = GetTableNumber(P,*R);
-  Status(AM_Elmt(Meja(*R),*nomorMeja)) = 2;
+  Status(AM_Elmt(Meja(*R),*nomorMeja)) = 2; //merubah status meja menjadi 2, sudah order
 }
 int Taking(Pelayan P)
 /*
@@ -399,7 +379,7 @@ void Placing(int pelanggan,int waktuOut,Pelayan *P, Ruangan *R)
     MT_Elmt(Room(*R),i+1,j) = MT_CreateTile('x',waktuOut);
     MT_Elmt(Room(*R),i-1,j) = MT_CreateTile('x',waktuOut);
   }
-  PlacePelayan(P,x,y,Room(*R));
+  PlacePelayan(P,x,y,Room(*R)); //update semua karakter pelayan
 }
 
 // *** LAIN LAIN ***
@@ -470,9 +450,7 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah,ArrInt *arr
   }
   if (*jumlah > 0) { //hanya dilakukan jika ada pelanggan kabur
     P_GetXY(Pelayan_Posisi(*P),&x,&y);
-    // p = GR_Search(Ruangan(*R),RoomNow(*R));
     tmp = GetRuanganSekarang(*R);
-    // PlacePelayan(P,x,y,Room(GR_Info(p)));
     PlacePelayan(P,x,y,Room(*tmp));
   }
 }
@@ -526,7 +504,7 @@ int GetTableNumber (Pelayan P, Ruangan R)
   while (!found && i <=AM_GetLastIdx(arrmeja)) {
     meja = AM_Elmt(arrmeja,i);
     P_GetXY(Meja_Posisi(meja),&a,&b);
-
+    //cek semua kemungkinan posisi meja terhadap pelayan
     if (a == x && b-2 ==y) {
       found = true;
     } else if (a-1 == x && b-1 ==y) {
