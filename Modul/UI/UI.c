@@ -566,7 +566,7 @@ void ShowTree(GameScreen *gs, TreeFood tf)
   Kata input;
   Kata prompt;
 
-  Kata up,down,left,right,back;
+  Kata up,down,left,right,back1,back2;
 
   /* ALGORITMA */
 
@@ -578,7 +578,8 @@ void ShowTree(GameScreen *gs, TreeFood tf)
   down = K_MakeKata("GD");
   left = K_MakeKata("GL");
   right = K_MakeKata("GR");
-  back = K_MakeKata("EXIT");
+  back1 = K_MakeKata("EXIT");
+  back2 = K_MakeKata("Q");
 
   do {
     wclear(Main_Panel(*gs));
@@ -588,7 +589,7 @@ void ShowTree(GameScreen *gs, TreeFood tf)
     DrawBorders(Main_Panel(*gs));
 
     mvwprintw(Main_Panel(*gs), 1, 2, "Tanda panah untuk bergerak");
-    mvwprintw(Main_Panel(*gs),2, 2, "EXIT untuk kembali");
+    mvwprintw(Main_Panel(*gs),2, 2, "EXIT atau Q untuk kembali");
 
     wrefresh(Main_Panel(*gs));
 
@@ -604,7 +605,7 @@ void ShowTree(GameScreen *gs, TreeFood tf)
       x+=1;
     }
 
-  } while(!K_IsKataSama(input, back));
+  } while((!K_IsKataSama(input, back1))&&(!K_IsKataSama(input, back2)));
 
 }
 
@@ -656,8 +657,8 @@ void RefreshOrderPanel(GameScreen *gs, ArrOrder orderList)
   mvwprintw(Order_Panel(*gs),1, 2, "Order List");
 
   for(i=AO_GetFirstIdx(orderList);i<=AO_GetLastIdx(orderList);i++){
-    tempKata = K_KataToChar(F_NamaMakanan(AO_Elmt(orderList, i)));
-    mvwprintw(Order_Panel(*gs), i+3, 2, tempKata);
+    tempKata = K_KataToChar(O_NamaMakanan(AO_Elmt(orderList, i)));
+    mvwprintw(Order_Panel(*gs), i+2, 2, "%d - %s",O_NoMeja(AO_Elmt(orderList, i)),tempKata);
     free(tempKata);
   }
 
