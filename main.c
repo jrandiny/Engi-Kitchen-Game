@@ -285,9 +285,8 @@ int main() {
           }
         } //akhir command ct
         else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ //nunggu tree makanan
-          aksiValid = true;
           //show tree makanan
-          //input = GetInput(&gs,K_MakeKata("COMMAND : "));
+          input = GetInput(&gs,K_MakeKata("COMMAND : "));
         } //akhir command recipe
         else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
           //procedure save
@@ -339,24 +338,17 @@ int main() {
               Q1 = Q2;
             } //akhir command place
             else if(K_IsKataSama(input,K_MakeKata("GIVE"))){  //nunggu stack
-              // if (CanGive(P,*room,nomorMeja)) {
                 indeksOrder = AO_Search(arrayOrder,nomorMeja);
-                if(indeksOrder!=IdxUndef){
+                if(indeksOrder!=IdxUndeff){
                   topTray = SF_InfoTop(tray);
                   if(O_IDMakanan(AO_Elmt(arrayOrder,indeksOrder))==F_IDMakanan(topTray)){
-                    SF_Pop(&tray,&food);
+                    SF_Pop(&tray,&topTray);
                     money += F_Harga(topTray);
-                    AO_DelEli(&arrayOrder,indeksOrder,&orderKabur)
+                    AO_DelEli(&arrayOrder,indeksOrder,&orderKabur);
                     SetTableEmpty(nomorMeja,room);
                     aksiValid = true;
                   }
                 }
-              // }
-              //1. validasi nomormeja yang memesan makanan pada top stack tray
-              //2. search harga makanan di data harga makanan
-              //3. tambahkan money dengan harga makanan
-              //4. pop top stack tray
-              //5. SetTableEmpty(nomormeja,&Room);
             } //akhir command give
             else if(K_IsKataSama(input,K_MakeKata("ORDER"))){ //nunggu stack dan converter idmakanan
               if(CanOrder(P,*room)){
@@ -378,7 +370,7 @@ int main() {
           while(!AI_IsEmpty(arrayNomorMeja)){
             AI_DelLastEl(&arrayNomorMeja,&nomorMeja);
             indeksOrder = AO_Search(arrayOrder,nomorMeja);
-            if(indeksOrder!=IdxUndef){
+            if(indeksOrder!=IdxUndeff){
               AO_DelEli(&arrayOrder,indeksOrder,&orderKabur);
             }
           }
