@@ -3,6 +3,8 @@
    Topik     : Engi's Kitchen Game
    Tanggal   : 5 November 2018
    Deskripsi : ADT untuk tipe array kata*/
+#ifndef TREEFOOD_H
+#define TREEFOOD_H
 
 #include "../food.h"
 #include "../../../std.h"
@@ -51,3 +53,5 @@ void TF_AddLeaf(TreeFood *tf,TF_address pangkal,boolean kiri,TF_infotype X);
 /* Search */
 TF_address TF_Search(TreeFood tf,int foodId);
 /* Mengembalikan address yang id makanannya sesuai */
+
+#endif
