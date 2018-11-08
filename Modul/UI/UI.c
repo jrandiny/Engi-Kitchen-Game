@@ -619,16 +619,19 @@ void PrintGrafRekursif(GameScreen *gs,TreeFood tf, int xOrig, int yOrig, int dep
 
   /* ALGORITMA */
   if(!TF_IsEmpty(tf)){
+    printText = K_KataToChar(F_NamaMakanan(TF_Akar(tf)));
     if(depthX!=xOrig){
       i = xOrig;
       while(i<depthX){
         mvwaddch(Main_Panel(*gs),depthY, i, ACS_VLINE);
         i+=2;
       }
-        mvwprintw(Main_Panel(*gs),depthY,depthX-1,"-isi %d",F_IDMakanan(TF_Akar(tf)));
-    }else{
-        mvwprintw(Main_Panel(*gs),depthY,depthX,"isi %d",F_IDMakanan(TF_Akar(tf)));
+        mvwaddch(Main_Panel(*gs),depthY, depthX-1, ACS_HLINE);
     }
+
+    mvwprintw(Main_Panel(*gs),depthY,depthX,printText);
+
+    free(printText);
 
     PrintGrafRekursif(gs, TF_Left(tf), xOrig, yOrig,depthX+2, depthY+1,&lastChildY);
     PrintGrafRekursif(gs, TF_Right(tf), xOrig, yOrig,depthX+2, lastChildY+1,lastY);
