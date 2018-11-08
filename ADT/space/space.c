@@ -269,9 +269,9 @@ void SetTile(Pelayan *P,MatTile M, int kode)
       if (MT_IsIdxEff(M,x,y)) {
         //jika merupakan indeks efektif berarti masih dalam ruangan
         tmp = MT_Elmt(M,x,y);
-        Down(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
+        Left(*P) = MT_CreateTile(Karakter(tmp),Value(tmp));
       } else {
-        Down(*P) = MT_CreateTile(CharUndeff,ValUndeff);
+        Left(*P) = MT_CreateTile(CharUndeff,ValUndeff);
       }
   };
 }
