@@ -7,6 +7,8 @@
 #include "../../ADT/space/matTile/matTile.h"
 #include "../../ADT/customer/prioqueuecustomer.h"
 #include "../../ADT/food/stacktfood.h"
+#include "../../ADT/food/treeFood/treeFood.h"
+#include "../../ADT/food/food.h"
 
 #include <string.h>
 
@@ -23,6 +25,8 @@ int main(){
   Point waiter;
   StackFood sf,sh;
   SF_infotype testinfo;
+  TreeFood tf;
+  Food tempFood;
 
   int i,j;
 
@@ -33,16 +37,6 @@ int main(){
   AK_CreateEmpty(&ak);
   AK_AddAsLastEl(&ak,K_MakeKata("Menu contoh 😁"));
   AK_AddAsLastEl(&ak,K_MakeKata("Input 1 untuk lanjut"));
-
-  InitScreen(&gs);
-
-  do {
-    WriteText(&gs,ak);
-    input = GetInput(&gs, prompt);
-    if(K_IsKataSama(input,K_MakeKata("RESIZE"))){
-      refreshLayout(&gs);
-    }
-  } while(!K_IsKataSama(input, K_MakeKata("1")));
 
   /* Create sample matTile */
   MT_MakeMatriks(8, 8, &mt);
@@ -88,7 +82,30 @@ int main(){
   F_NamaMakanan(testinfo) = K_MakeKata("Tubes");
   SF_Push(&sh, testinfo);
 
+  /* Create sample tree */
+  TF_CreateEmpty(&tf);
+  tempFood = F_CreateFood(1, K_MakeKata("Nama"),10000);
+  tf = TF_CreateTree(tempFood, Nil, Nil);
+  tempFood = F_CreateFood(2, K_MakeKata("Nama 2"),999);
+  TF_AddLeafS(&tf, 1, 1,tempFood);
+  tempFood = F_CreateFood(3, K_MakeKata("Nama 3"),999);
+  TF_AddLeafS(&tf, 1, 0,tempFood);
+  tempFood = F_CreateFood(4, K_MakeKata("Nama 4"),999);
+  TF_AddLeafS(&tf, 2, 1,tempFood);
+  tempFood = F_CreateFood(5, K_MakeKata("Nama 5"),999);
+  TF_AddLeafS(&tf, 2, 0,tempFood);
+
   tooltip = K_MakeKata("Hello");
+
+  InitScreen(&gs);
+
+  do {
+    WriteText(&gs,ak);
+    input = GetInput(&gs, prompt);
+    if(K_IsKataSama(input,K_MakeKata("RESIZE"))){
+      refreshLayout(&gs);
+    }
+  } while(!K_IsKataSama(input, K_MakeKata("1")));
 
   while(true){
     RefreshTopPanel(&gs,"Nama",1,2,3);
@@ -104,6 +121,10 @@ int main(){
 
     if(K_IsKataSama(input,K_MakeKata("TOOLTIP"))){
       RefreshTooltipPanel(&gs,tooltip);
+    }
+
+    if(K_IsKataSama(input,K_MakeKata("TREE"))){
+      ShowTree(&gs,tf);
     }
 
     if(K_IsKataSama(input, up)){

@@ -10,6 +10,7 @@
 #include "../../ADT/space/matTile/matTile.h"
 #include "../../ADT/customer/prioqueuecustomer.h"
 #include "../../ADT/food/stacktfood.h"
+#include "../../ADT/food/treeFood/treeFood.h"
 //#include "../../ADT/listlinier/listlinier.h"
 #include <ncurses.h>
 
@@ -129,6 +130,14 @@ void RefreshCommandPanel(GameScreen *gs, Kata prompt);
 void RefreshTooltipPanel(GameScreen *gs, Kata tooltip);
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Digambar panel tooltip */
+
+void ShowTree(GameScreen *gs, TreeFood tf);
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar tree makanan di bagian main, kontrol diambil alih hingga q ditekan */
+
+void PrintGrafRekursif(GameScreen *gs,TreeFood tf, int xOrig, int yOrig, int depthX, int depthY, int *lastY);
+/* I.S. : Sudah menyiapkan main untuk ditulis, x dan y lokasi corner atas layar */
+/* F.S. : Tercetak tree sesuai posisi */
 
 /* KELOMPOK INPUT */
 Kata GetInput(GameScreen *gs,Kata prompt);

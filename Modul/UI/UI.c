@@ -555,3 +555,86 @@ Kata GetInput(GameScreen *gs,Kata prompt)
 
   return output;
 }
+
+void ShowTree(GameScreen *gs, TreeFood tf)
+/* I.S. : Bebas sudah initScreen */
+/* F.S. : Digambar tree makanan di bagian main, kontrol diambil alih hingga q ditekan */
+{
+  /* KAMUS LOKAL */
+  int x,y;
+  int treeDepth,lastY;
+  Kata input;
+  Kata prompt;
+
+  Kata up,down,left,right,back;
+
+  /* ALGORITMA */
+
+  x = 2;
+  y = 4;
+
+  treeDepth = TF_DeepestLeaf(tf);
+
+  prompt = K_MakeKata("Tree : ");
+  up = K_MakeKata("GU");
+  down = K_MakeKata("GD");
+  left = K_MakeKata("GL");
+  right = K_MakeKata("GR");
+  back = K_MakeKata("EXIT");
+
+  do {
+    wclear(Main_Panel(*gs));
+
+    PrintGrafRekursif(gs, tf,x,y,x,y,&lastY);
+
+    DrawBorders(Main_Panel(*gs));
+
+    mvwprintw(Main_Panel(*gs), 1, 2, "Tanda panah untuk bergerak");
+    mvwprintw(Main_Panel(*gs),2, 2, "EXIT untuk kembali");
+
+    wrefresh(Main_Panel(*gs));
+
+    input = GetInput(gs, prompt);
+
+    if(K_IsKataSama(input, up)){
+      y--;
+    }else if(K_IsKataSama(input, down)){
+      y++;
+    }else if(K_IsKataSama(input, left)){
+      x-=1;
+    }else if(K_IsKataSama(input, right)){
+      x+=1;
+    }
+
+  } while(!K_IsKataSama(input, back));
+
+}
+
+void PrintGrafRekursif(GameScreen *gs,TreeFood tf, int xOrig, int yOrig, int depthX, int depthY, int *lastY)
+/* I.S. : Sudah menyiapkan main untuk ditulis, x dan y lokasi corner atas layar */
+/* F.S. : Tercetak tree sesuai posisi */
+{
+  /* KAMUS LOKAL */
+  char *printText;
+  int lastChildY;
+  int i;
+
+  /* ALGORITMA */
+  if(!TF_IsEmpty(tf)){
+    if(depthX!=xOrig){
+      i = xOrig;
+      while(i<depthX){
+        mvwaddch(Main_Panel(*gs),depthY, i, ACS_VLINE);
+        i+=2;
+      }
+        mvwprintw(Main_Panel(*gs),depthY,depthX-1,"-isi %d",F_IDMakanan(TF_Akar(tf)));
+    }else{
+        mvwprintw(Main_Panel(*gs),depthY,depthX,"isi %d",F_IDMakanan(TF_Akar(tf)));
+    }
+
+    PrintGrafRekursif(gs, TF_Left(tf), xOrig, yOrig,depthX+2, depthY+1,&lastChildY);
+    PrintGrafRekursif(gs, TF_Right(tf), xOrig, yOrig,depthX+2, lastChildY+1,lastY);
+  }else{
+    *lastY = depthY-1;
+  }
+}
