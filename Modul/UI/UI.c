@@ -313,8 +313,8 @@ void RefreshMap(GameScreen *gs, MatTile peta, Point waiter)
   /* Waiter */
   posx=P_Kolom(waiter)*4 + marginX;
   posy=P_Baris(waiter)*2 + marginY;
-  // mvwprintw(Main_Panel(*gs), posy, posx-1, "\xF0\x9F\x92\x81");
-  mvwaddch(Main_Panel(*gs), posy, posx-1, 'P');
+  mvwprintw(Main_Panel(*gs), posy, posx-1, "\xf0\x9f\xa4\xb5");
+  // mvwaddch(Main_Panel(*gs), posy, posx-1, 'P');
 
   wrefresh(Main_Panel(*gs));
 
@@ -445,9 +445,9 @@ void RefreshTopPanel(GameScreen *gs, char* name, int money, int life, int time)
   DrawBorders(Top_4_Panel(*gs));
 
   mvwprintw(Top_1_Panel(*gs),1,2,"%s",name);
-  mvwprintw(Top_2_Panel(*gs),1,2,"Money: %d",money);
-  mvwprintw(Top_3_Panel(*gs),1,2,"Life: %d",life);
-  mvwprintw(Top_4_Panel(*gs),1,2,"Time: %d",time);
+  mvwprintw(Top_2_Panel(*gs),1,2,"\xf0\x9f\x92\xb2: %d",money);
+  mvwprintw(Top_3_Panel(*gs),1,2,"\xf0\x9f\x92\x99: %d",life);
+  mvwprintw(Top_4_Panel(*gs),1,2,"\xe2\x8f\xb1: %d",time);
 
   wrefresh(Top_1_Panel(*gs));
   wrefresh(Top_2_Panel(*gs));
@@ -485,7 +485,7 @@ void RefreshTooltipPanel(GameScreen *gs, Kata tooltip)
 
   temp = K_KataToChar(tooltip);
 
-  mvwprintw(Tooltip_Panel(*gs),1, 2,temp);
+  mvwprintw(Tooltip_Panel(*gs),1, 2,"\xf0\x9f\xa4\xb5 %s",temp);
 
   free(temp);
   wrefresh(Tooltip_Panel(*gs));
