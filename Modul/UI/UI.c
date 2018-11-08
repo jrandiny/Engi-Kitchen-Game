@@ -562,7 +562,7 @@ void ShowTree(GameScreen *gs, TreeFood tf)
 {
   /* KAMUS LOKAL */
   int x,y;
-  int treeDepth,lastY;
+  int lastY;
   Kata input;
   Kata prompt;
 
@@ -572,8 +572,6 @@ void ShowTree(GameScreen *gs, TreeFood tf)
 
   x = 2;
   y = 4;
-
-  treeDepth = TF_DeepestLeaf(tf);
 
   prompt = K_MakeKata("Tree : ");
   up = K_MakeKata("GU");
