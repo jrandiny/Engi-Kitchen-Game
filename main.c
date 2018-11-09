@@ -68,7 +68,7 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
   int jumlah;
   customer pelanggan;
   //ALGORITMA
-  chance = rand()%10;
+  chance = rand()%20;
   if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ //chance customer : 1/10 kemungkinan
     chance = rand()%4;
     PQC_Prio(pelanggan) = (chance==0)? 1:0; //chance prio : 1/4 kemungkinan
@@ -367,10 +367,10 @@ int main() {
                 aksiValid = true;
                 PQC_Del(&Q1,&pelanggan);
                 if(PQC_Prio(pelanggan)==1){
-                  waktuOut = waktu + (rand()%20+21); //[21..40]
+                  waktuOut = waktu + (rand()%40+41); //[21..40]
                 }
                 else{
-                  waktuOut = waktu + (rand()%20+31); //[31..50]
+                  waktuOut = waktu + (rand()%60+61); //[31..50]
                 }
 
                 Placing(PQC_Jumlah(pelanggan),waktuOut,&P,room);

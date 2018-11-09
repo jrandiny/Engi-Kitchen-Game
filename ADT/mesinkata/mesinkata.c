@@ -258,3 +258,15 @@ void K_ReplaceSpace(Kata* kata)
     }
   }
 }
+
+void K_RemoveSpace(Kata* kata)
+/* I.S. kata terdefinisi
+   F.S. semua ' ' yang terdapat di kata diubah menjadi _*/
+{
+  int i;
+  for(i=1;i<=(*kata).Length;i++){
+    if((*kata).TabKata[i]==' '){
+      (*kata).TabKata[i]='_';
+    }
+  }
+}
