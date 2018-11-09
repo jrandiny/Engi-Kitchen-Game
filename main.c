@@ -208,10 +208,10 @@ int main() {
   keluar = K_MakeKata("EXIT");
   saved = true;
   username = K_MakeKata("");
-  PQC_CreateEmpty(&Q1);
-  SF_CreateEmpty(&hand,maxHand);
-  SF_CreateEmpty(&tray,maxTray);
-  AO_CreateEmpty(&arrayOrder);
+  // PQC_CreateEmpty(&Q1);
+  // SF_CreateEmpty(&hand,maxHand);
+  // SF_CreateEmpty(&tray,maxTray);
+  // AO_CreateEmpty(&arrayOrder);
   LoadTree(&status,&tree);
 
   do { //looping game
@@ -240,7 +240,7 @@ int main() {
         loaded = true;
         do {
           username = GetInput(&gs,K_MakeKata("SAVED USERNAME: "));
-          LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1);
+          LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
           if (status ==0) {
             input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
           }
@@ -249,7 +249,7 @@ int main() {
       if (!loaded) { //tidak ada file yang di load
         //load konfigurasi normal
         usernameSaved = K_MakeKata("basic");
-        LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1);
+        LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
       }
 
       //inisialisasi game
@@ -326,7 +326,7 @@ int main() {
         else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
           //procedure save
           saved = true;
-          SaveFile(username,money,life,waktu,R,P,Q1);
+          SaveFile(username,money,life,waktu,R,P,Q1,hand,tray,arrayOrder);
           input = GetInput(&gs,K_MakeKata("GAME SAVED."));
         }//akhir command save
         else if(K_IsKataSama(input,K_MakeKata("EXIT"))){
