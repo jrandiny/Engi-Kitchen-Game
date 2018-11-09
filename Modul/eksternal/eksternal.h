@@ -3,6 +3,10 @@
 
 #include "../../std.h"
 #include "../../ADT.h"
+#include "../../ADT/food/food.h"
+#include "../../ADT/food/stacktfood.h"
+#include "../../ADT/arrOrder/order.h"
+#include "../../ADT/arrOrder/arrOrder.h"
 #include "../../ADT/space/space.h"
 
 /*Bagian Load File Eksternal*/
@@ -13,8 +17,14 @@ void ParserLocate(Kata input,int *pos1, int *pos2);
        jika tidak ditemukan pos berisi -1
 */
 
-Food ParseFood(Kata Scanned,boolean* kiri,int* parentID);
-/*mengembalikan tipe food dari hasil parsing kata, kiri berisi apakah ia leaf kiri,parentid berisi id pangkal*/
+Order ParseOrder(Kata Scanned);
+/*mengembalikan tipe order dari stack dari hasil parsing kata*/ 
+
+Food ParseTFood(Kata Scanned,boolean* kiri,int* parentID);
+/*mengembalikan tipe food dari tree dari hasil parsing kata, kiri berisi apakah ia leaf kiri,parentid berisi id pangkal*/
+
+Food ParseSFood(Kata Scanned);
+/*mengembalikan tipe food dari stack dari hasil parsing kata*/ 
 
 Pelayan ParsePelayan(Kata Scanned);
 /*mengembalikan tipe pelayan dari hasil parsing kata */
@@ -52,7 +62,13 @@ PrioQueueCustomer ParsePrioQueue(Kata X);
 TreeFood ParseTreeFood(Kata X);
 /*Ckata berada di kata tree*/
 
-void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan,PrioQueueCustomer *prioqueue);
+StackFood ParseStackFood(Kata X);
+/*Ckata berada di kata stackhand atau stacktray*/
+
+ArrOrder ParseArrOrder(Kata X);
+/*Ckata berada di kata order*/
+
+void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan,PrioQueueCustomer *prioqueue,StackFood* hand,StackFood* tray,ArrOrder* arrorder);
 /*I.S. bebas
   F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
   parameter sisanya berisi data sesuai file eksternal
@@ -99,7 +115,15 @@ void WriteArrayMeja(FILE* namafile,ArrMeja arrmeja);
 /* I.S. namafile dan arrmeja terdefinisi
    F.S. tertulis arrmeja di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 
-void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan,PrioQueueCustomer prioqueue);
+void WriteFood(FILE* namafile,Food food);
+/* I.S. namafile dan food terdefinisi
+   F.S. tertulis food di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+
+void WriteOrder(FILE* namafile,Order order);
+/* I.S. namafile dan order terdefinisi
+   F.S. tertulis order di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+
+void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan,PrioQueueCustomer prioqueue,StackFood hand,StackFood tray,ArrOrder arrorder);
 /*I.S. bebas
   F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
   */

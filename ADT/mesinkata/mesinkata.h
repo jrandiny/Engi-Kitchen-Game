@@ -93,4 +93,8 @@ void K_ReplaceSpace(Kata* kata);
 /* I.S. kata terdefinisi
    F.S. semua _ yang terdapat di kata diubah menjadi ' '*/
 
+void K_RemoveSpace(Kata* kata);
+/* I.S. kata terdefinisi
+   F.S. semua ' ' yang terdapat di kata diubah menjadi _*/
+
 #endif

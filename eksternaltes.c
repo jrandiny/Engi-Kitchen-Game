@@ -17,6 +17,8 @@ int main(){
     boolean kiri;
     int parentid;
     TreeFood treefood;
+    ArrOrder arrorder;
+    StackFood hand,tray;
     // LoadTree(&status,&treefood);
     // 
     // Kata namafile=K_MakeKata("SaveData/TreeFood.sav");
@@ -37,18 +39,24 @@ int main(){
 
 
     // printf("%s",K_KataToChar(F_NamaMakanan(TF_Akar(treefood))));
-    scanf("%s",tes);
+    // scanf("%s",tes);
     // food=ParseFood(K_MakeKata(tes),&kiri,&parentid);
     // printf("kiri:%d\n",kiri);
     // printf("parentid:%d\n",parentid);
     // printf("id:%d nama:%s harga:%d\n",F_IDMakanan(food),K_KataToChar(F_NamaMakanan(food)),F_Harga(food));
-    Kata temp222;
-    temp222=K_MakeKata(tes);
-    K_ReplaceSpace(&temp222);
-    K_PrintKata(temp222);
-    // nama=K_MakeKata("filetes");
-    // LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue);
-
+    // Kata temp222;
+    // temp222=K_MakeKata(tes);
+    // K_ReplaceSpace(&temp222);
+    // K_PrintKata(temp222);
+    nama=K_MakeKata("STEVE");
+    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue,&hand,&tray,&arrorder);
+    nama=K_MakeKata("tessaved");
+    SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue,hand,tray,arrorder);
+    K_PrintKata(nama);printf("\n");
+    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue,&hand,&tray,&arrorder);
+    nama=K_MakeKata("tesasaved2");
+    K_PrintKata(nama);printf("\n");
+    SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue,hand,tray,arrorder);
     
     // K_PrintKata(nama);printf("\n");
     // printf("money=%d\n",money);
