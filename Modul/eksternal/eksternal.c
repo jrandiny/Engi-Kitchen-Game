@@ -24,7 +24,20 @@ void ParserLocate(Kata input,int *pos1, int *pos2)
   }
 }
 
-Food ParseFood(Kata Scanned,boolean* kiri,int* parentID)
+Order ParseOrder(Kata Scanned)
+/*mengembalikan tipe order dari stack dari hasil parsing kata*/
+{
+  Order hasil;
+  int pos1,pos2;
+  ParserLocate(Scanned,&pos1,&pos2);
+  O_IDMakanan(hasil)=K_KataToInt(K_CopySubKata(Scanned,1,pos1-1));
+  O_NamaMakanan(hasil)=K_CopySubKata(Scanned,pos1+1,pos2-1);
+  K_ReplaceSpace(&(O_NamaMakanan(hasil)));
+  O_NoMeja(hasil)=K_KataToInt(K_CopySubKata(Scanned,pos2+1,Scanned.Length));
+  return hasil;
+}
+
+Food ParseTFood(Kata Scanned,boolean* kiri,int* parentID)
 /*mengembalikan tipe food dari hasil parsing kata, kiri berisi apakah ia leaf kiri,parentid berisi id pangkal*/
 {
   Food hasil;
@@ -41,6 +54,19 @@ Food ParseFood(Kata Scanned,boolean* kiri,int* parentID)
   }
   *parentID=K_KataToInt(K_CopySubKata(Scanned,2,posu-1));
   F_IDMakanan(hasil)=K_KataToInt(K_CopySubKata(Scanned,posu+1,pos1-1));
+  F_NamaMakanan(hasil)=K_CopySubKata(Scanned,pos1+1,pos2-1);
+  K_ReplaceSpace(&(F_NamaMakanan(hasil)));
+  F_Harga(hasil)=K_KataToInt(K_CopySubKata(Scanned,pos2+1,Scanned.Length));
+  return hasil;
+}
+
+Food ParseSFood(Kata Scanned)
+/*mengembalikan tipe food dari stack dari hasil parsing kata*/ 
+{
+  Food hasil;
+  int pos1,pos2;
+  ParserLocate(Scanned,&pos1,&pos2);
+  F_IDMakanan(hasil)=K_KataToInt(K_CopySubKata(Scanned,1,pos1-1));
   F_NamaMakanan(hasil)=K_CopySubKata(Scanned,pos1+1,pos2-1);
   K_ReplaceSpace(&(F_NamaMakanan(hasil)));
   F_Harga(hasil)=K_KataToInt(K_CopySubKata(Scanned,pos2+1,Scanned.Length));
@@ -238,7 +264,7 @@ TreeFood ParseTreeFood(Kata X)
   jumlah=K_KataToInt(CKata);
   for(i=1;i<=jumlah;i++){
     K_ADVKATA();//Ckata berada di food
-    tempfood=ParseFood(CKata,&kiri,&parentid);
+    tempfood=ParseTFood(CKata,&kiri,&parentid);
     temptf=TF_Alokasi(tempfood);
     if(parentid==0){
       hasil=temptf;
@@ -249,7 +275,44 @@ TreeFood ParseTreeFood(Kata X)
   return hasil;
 }
 
-void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan,PrioQueueCustomer* prioqueue)
+StackFood ParseStackFood(Kata X)
+/*Ckata berada di kata stackhand atau stacktray*/
+{
+  StackFood hasil;
+  int jumlah,i;
+  if(K_IsKataSama(X,K_MakeKata("stackhand"))){
+    SF_CreateEmpty(&hasil,5);
+  }else{//ckata bernilai stacktray
+    SF_CreateEmpty(&hasil,10);
+  }
+  K_ADVKATA();//Ckata berada di jumlah stack
+  jumlah=K_KataToInt(CKata);
+  for(i=1;i<=jumlah;i++){
+    K_ADVKATA();
+    SF_Push(&hasil,ParseSFood(CKata));
+  }
+  //ckata berakhir di komponen terakhir
+  hasil=SF_ReversStack(hasil);
+  return hasil;
+}
+
+ArrOrder ParseArrOrder(Kata X)
+/*Ckata berada di kata order*/
+{
+  ArrOrder hasil;
+  int i,jumlah;
+  K_ADVKATA();//Ckata berada di jumlah order
+  jumlah=K_KataToInt(CKata);
+  AO_CreateEmpty(&hasil);
+  for(i=1;i<=jumlah;i++){
+    K_ADVKATA();
+    AO_AddAsLastEl(&hasil,ParseOrder(CKata));
+  }
+  //Ckata berada di order terakhir
+  return hasil;
+}
+
+void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran* restoran,Pelayan* pelayan,PrioQueueCustomer* prioqueue,StackFood* hand,StackFood* tray,ArrOrder* arrorder)
 /*I.S. bebas
   F.S. status memberikan status apakah file berhasil di load(1) atau tidak(0)
   parameter sisanya berisi data sesuai file eksternal
@@ -282,6 +345,15 @@ void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran
       }else if(K_IsKataSama(CKata,K_MakeKata("queue"))){
         //Ckata berada di kata queue
         *prioqueue=ParsePrioQueue(CKata);
+      }else if(K_IsKataSama(CKata,K_MakeKata("stackhand"))){
+        //Ckata berada di kata stackhand
+        *hand=ParseStackFood(CKata);
+      }else if(K_IsKataSama(CKata,K_MakeKata("stacktray"))){
+        //Ckata berada di kata stacktray
+        *tray=ParseStackFood(CKata);
+      }else if(K_IsKataSama(CKata,K_MakeKata("order"))){
+        //Ckata berada di kata order
+        *arrorder=ParseArrOrder(CKata);
       }
     }
   }
@@ -368,7 +440,23 @@ void WriteArrayMeja(FILE* namafile,ArrMeja arrmeja)
  }
 }
 
-void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan,PrioQueueCustomer prioqueue)
+void WriteFood(FILE* namafile,Food food)
+/* I.S. namafile dan food terdefinisi
+   F.S. tertulis food di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+{
+  K_RemoveSpace(&(F_NamaMakanan(food))); 
+  fprintf(namafile,"%d/%s/%d",F_IDMakanan(food),K_KataToChar(F_NamaMakanan(food)),F_Harga(food));
+}
+
+void WriteOrder(FILE* namafile,Order order)
+/* I.S. namafile dan order terdefinisi
+   F.S. tertulis order di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+{
+  K_RemoveSpace(&(O_NamaMakanan(order))); 
+  fprintf(namafile,"%d/%s/%d",O_IDMakanan(order),K_KataToChar(O_NamaMakanan(order)),O_NoMeja(order));
+}
+
+void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan,PrioQueueCustomer prioqueue,StackFood hand,StackFood tray,ArrOrder arrorder)
 /*I.S. bebas
   F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
   */
@@ -380,6 +468,8 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan
   GR_address GR=Nil;
   GRD_address GD=Nil;
   customer customer;
+  Food food;
+  ///////////////////////////////////////////////////////////
   fw=fopen(K_KataToChar(namafile),"w+");
   fprintf(fw,"FILE_EKSTERNAL");
   WriteSpace(fw);
@@ -465,6 +555,30 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan
     PQC_Del(&prioqueue,&customer);
     WriteCustomer(fw,customer);
   }
+  //tulis bagian stackhand
+  fprintf(fw," stackhand ");
+  fprintf(fw,"%d",SF_Top(hand));
+  while(!SF_IsEmpty(hand)){
+    SF_Pop(&hand,&food);
+    WriteSpace(fw);
+    WriteFood(fw,food);
+  }
+  //tulis bagian stacktray
+  fprintf(fw," stacktray ");
+  fprintf(fw,"%d",SF_Top(tray));
+  while(!SF_IsEmpty(tray)){
+    SF_Pop(&tray,&food);
+    WriteSpace(fw);
+    WriteFood(fw,food);
+  }
+  //tulis bagian order
+  fprintf(fw," order ");
+  fprintf(fw,"%d",AO_Neff(arrorder));
+  for(i=AO_GetFirstIdx(arrorder);i<=AO_GetLastIdx(arrorder);i++){
+    WriteSpace(fw);
+    WriteOrder(fw,AO_Elmt(arrorder,i));
+  }  
+  /////////////////////////////////
   fprintf(fw,".");
   fclose(fw);
 }
