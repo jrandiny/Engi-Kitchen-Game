@@ -327,43 +327,33 @@ void LoadFile(int* status, Kata* nama,int* money, int* life, int* waktu,Restoran
       K_ADVKATA();
       if(K_IsKataSama(CKata,K_MakeKata("name"))){
         *nama=ParseNama(CKata);
-        printf("sukses load nama\n");
       }else if(K_IsKataSama(CKata,K_MakeKata("money"))){
         K_ADVKATA();//Ckata berada di value money
         *money=K_KataToInt(CKata);
-        printf("sukses load money\n");
       }else if(K_IsKataSama(CKata,K_MakeKata("life"))){
         K_ADVKATA();//Ckata berada di value life
         *life=K_KataToInt(CKata);
-        printf("sukses load life\n");
       }else if(K_IsKataSama(CKata,K_MakeKata("time"))){
         K_ADVKATA();//Ckata berada di value life
         *waktu=K_KataToInt(CKata);
-        printf("sukses load time\n");
       }else if(K_IsKataSama(CKata,K_MakeKata("restoran"))){
         //Ckata berada di kata restoran
         *restoran=ParseRestoran();
-        printf("sukses load restoran\n");
       }else if(K_IsKataSama(CKata,K_MakeKata("pelayan"))){
         //Ckata berada di kata pelayan
         *pelayan=ParsePelayan(CKata);
-        printf("sukses load pelayan\n");
       }else if(K_IsKataSama(CKata,K_MakeKata("queue"))){
         //Ckata berada di kata queue
         *prioqueue=ParsePrioQueue(CKata);
-        printf("sukses load queue\n");
       }else if(K_IsKataSama(CKata,K_MakeKata("stackhand"))){
         //Ckata berada di kata stackhand
         *hand=ParseStackFood(CKata);
-        printf("sukses load hand\n");
       }else if(K_IsKataSama(CKata,K_MakeKata("stacktray"))){
         //Ckata berada di kata stacktray
         *tray=ParseStackFood(CKata);
-        printf("sukses load tray\n");
       }else if(K_IsKataSama(CKata,K_MakeKata("order"))){
         //Ckata berada di kata order
         *arrorder=ParseArrOrder(CKata);
-        printf("sukses load order\n");
       }
     }
   }
