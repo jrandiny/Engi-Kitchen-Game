@@ -246,7 +246,7 @@ int main() {
         loaded = true;
         do {
           username = GetInput(&gs,K_MakeKata("SAVED USERNAME: "));
-          LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1);
+          LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
           if (status ==0) {
             WriteText(&gs,InputSalah()); //main menu
             input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
@@ -256,7 +256,7 @@ int main() {
       if (!loaded) { //tidak ada file yang di load
         //load konfigurasi normal
         usernameSaved = K_MakeKata("basic");
-        LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1);
+        LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
         SF_CreateEmpty(&hand,10);
         SF_CreateEmpty(&tray,5);
         AO_CreateEmpty(&arrayOrder);
@@ -336,7 +336,7 @@ int main() {
         else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
           //procedure save
           saved = true;
-          SaveFile(username,money,life,waktu,R,P,Q1);
+          SaveFile(username,money,life,waktu,R,P,Q1,hand,tray,arrayOrder);
           input = GetInput(&gs,K_MakeKata("GAME SAVED."));
         }//akhir command save
         else if(K_IsKataSama(input,K_MakeKata("EXIT"))){
