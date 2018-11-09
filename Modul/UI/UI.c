@@ -716,8 +716,8 @@ void RefreshOrderPanel(GameScreen *gs, ArrOrder orderList)
   mvwprintw(Order_Panel(*gs),1, 2, "Order List");
 
   for(i=AO_GetFirstIdx(orderList);i<=AO_GetLastIdx(orderList);i++){
-    tempKata = K_KataToChar(F_NamaMakanan(AO_Elmt(orderList, i)));
-    mvwprintw(Order_Panel(*gs), i+3, 2, tempKata);
+    tempKata = K_KataToChar(O_NamaMakanan(AO_Elmt(orderList, i)));
+    mvwprintw(Order_Panel(*gs), i+2, 2, "%d - %s",O_NoMeja(AO_Elmt(orderList, i)),tempKata);
     free(tempKata);
   }
 
