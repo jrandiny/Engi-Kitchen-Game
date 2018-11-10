@@ -207,10 +207,6 @@ int main() {
   keluar = K_MakeKata("EXIT");
   saved = true;
   username = K_MakeKata("");
-  // PQC_CreateEmpty(&Q1);
-  // SF_CreateEmpty(&hand,maxHand);
-  // SF_CreateEmpty(&tray,maxTray);
-  // AO_CreateEmpty(&arrayOrder);
   LoadTree(&status,&tree);
 
   do { //looping game
@@ -240,14 +236,14 @@ int main() {
         do {
           username = GetInput(&gs,K_MakeKata("SAVED USERNAME: "));
           LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
-          if (status ==0 && !K_IsKataSama(input,keluar)) {
+          if (status ==0 && !K_IsKataSama(username,keluar)) {
             do {
               input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
             } while(!K_IsKataSama(input,K_MakeKata("")));
           }
-        } while (status==0 && !K_IsKataSama(input,keluar));
+        } while (status==0 && !K_IsKataSama(username,keluar));
       }
-      if (!K_IsKataSama(input,keluar)) { //inputnya langsung exit
+      if (!K_IsKataSama(username,keluar)) { //inputnya langsung exit
         if (!loaded) { //tidak ada file yang di load
           //load konfigurasi normal
           usernameSaved = K_MakeKata("basic");
@@ -261,6 +257,10 @@ int main() {
         lose = false;
         pindahRuang = false;
         RefreshMap(&gs,GetMatTileSekarang(R),Pelayan_Posisi(P));
+        RefreshWaitingPanel(&gs, Q1);
+        RefreshHandPanel(&gs,hand);
+        RefreshFoodPanel(&gs,tray);
+        RefreshOrderPanel(&gs,arrayOrder);
 
 
         do{ //looping command di dalam game
@@ -344,13 +344,13 @@ int main() {
               do {
                 input=GetInput(&gs,K_MakeKata("ARE YOU SURE EXIT WITHOUT SAVE CURRENT FILE ? : "));
                 if(K_IsKataSama(input,K_MakeKata("YES"))){ //jadi exit
-                  input = K_MakeKata("EXIT");
+                  input = keluar;
                 }
                 else if(K_IsKataSama(input,K_MakeKata("NO"))) { //batal exit
                   //inisialisasi agar tidak exit game
                   input = K_MakeKata("batalexit");
                 }
-              } while(!K_IsKataSama(input,K_MakeKata("YES")) && !K_IsKataSama(input,K_MakeKata("NO")));
+              } while(!K_IsKataSama(input,keluar) && !K_IsKataSama(input,K_MakeKata("batalexit")));
             }
           } //akhir comman exit
           else { //aksi2 yang butuh dekat Meja
@@ -446,7 +446,10 @@ int main() {
             input = GetInput(&gs,K_MakeKata("YOU LOSE!"));
           } while(!K_IsKataSama(input,K_MakeKata("")));
         }
-      } //inputnya langsung keluar
+      }  //inputnya langsung keluar
+      else {
+        username = K_MakeKata("");
+      }
       //inisialisasi input agar kembali ke main menu
       input = K_MakeKata("mainmenu");
     } //input == exit
