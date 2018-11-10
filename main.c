@@ -159,6 +159,8 @@ int JadiApa(StackFood sf, TreeFood tf)
 
 int main() {
   //KAMUS PROGRAM UTAMA
+  const int maxHand=10;
+  const int maxTray=5;
   int money,life,waktu; //uang dan nyawa yang dimiliki pemain dan tik waktu
   int nomorMeja; //nomor meja di dekat pelayan
   int jumlahKabur; //jumlah pelanggan yang kabur (sudah duduk)
@@ -205,7 +207,10 @@ int main() {
   keluar = K_MakeKata("EXIT");
   saved = true;
   username = K_MakeKata("");
-  PQC_CreateEmpty(&Q1);
+  // PQC_CreateEmpty(&Q1);
+  // SF_CreateEmpty(&hand,maxHand);
+  // SF_CreateEmpty(&tray,maxTray);
+  // AO_CreateEmpty(&arrayOrder);
   LoadTree(&status,&tree);
 
   do { //looping game
@@ -256,9 +261,10 @@ int main() {
         lose = false;
         pindahRuang = false;
         RefreshMap(&gs,GetMatTileSekarang(R),Pelayan_Posisi(P));
-        IsiToolTip = K_MakeKata("");
+
 
         do{ //looping command di dalam game
+          IsiToolTip = K_MakeKata("");
           CekToolTip(R,P,pindahRuang,&IsiToolTip,tree);
           aksiValid = false;
           //refresh tampilan di layar

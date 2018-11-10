@@ -67,7 +67,7 @@ int main(){
   PQC_Add(&pqc, cust);
 
   /* Create sample food stack */
-  SF_CreateEmpty(&sf);
+  SF_CreateEmpty(&sf,10);
   F_IDMakanan(testinfo) = 1;
   F_NamaMakanan(testinfo) = K_MakeKata("Manusia");
   SF_Push(&sf, testinfo);
@@ -76,7 +76,7 @@ int main(){
   SF_Push(&sf, testinfo);
 
   /* Create sample hand stack */
-  SF_CreateEmpty(&sh);
+  SF_CreateEmpty(&sh,5);
   F_IDMakanan(testinfo) = 1;
   F_NamaMakanan(testinfo) = K_MakeKata("Otak");
   SF_Push(&sh, testinfo);
@@ -99,7 +99,7 @@ int main(){
 
   /* Create sample order */
   AO_CreateEmpty(&ao);
-  tempOrder = O_CreateOrder(-1, K_MakeKata("makanan"),999);
+  tempOrder = O_CreateOrder(-1, K_MakeKata("makanan"),1);
   AO_AddAsLastEl(&ao, tempOrder);
 
   tooltip = K_MakeKata("Hello");

@@ -113,17 +113,17 @@ void RefreshBorder(GameScreen *gs)
 
   refresh();
 
-  wclear(Top_1_Panel(*gs));
-  wclear(Top_2_Panel(*gs));
-  wclear(Top_3_Panel(*gs));
-  wclear(Top_4_Panel(*gs));
-  wclear(Waiting_Panel(*gs));
-  wclear(Food_Panel(*gs));
-  wclear(Order_Panel(*gs));
-  wclear(Hand_Panel(*gs));
-  wclear(Command_Panel(*gs));
-  wclear(Main_Panel(*gs));
-  wclear(Tooltip_Panel(*gs));
+  werase(Top_1_Panel(*gs));
+  werase(Top_2_Panel(*gs));
+  werase(Top_3_Panel(*gs));
+  werase(Top_4_Panel(*gs));
+  werase(Waiting_Panel(*gs));
+  werase(Food_Panel(*gs));
+  werase(Order_Panel(*gs));
+  werase(Hand_Panel(*gs));
+  werase(Command_Panel(*gs));
+  werase(Main_Panel(*gs));
+  werase(Tooltip_Panel(*gs));
 
   DrawBorders(Top_1_Panel(*gs));
   DrawBorders(Top_2_Panel(*gs));
@@ -222,7 +222,7 @@ void WriteText(GameScreen *gs,ArrKata ak)
   char* output;
 
   /* ALGORITMA */
-  wclear(Main_Panel(*gs));
+  werase(Main_Panel(*gs));
 
   for(i = AK_GetFirstIdx(ak);i<=AK_GetLastIdx(ak);i++){
     output = K_KataToChar(AK_Elmt(ak, i));
@@ -260,7 +260,7 @@ void RefreshMap(GameScreen *gs, MatTile peta, Point waiter)
   int posx;
   int value;
   /* ALGORITMA */
-  wclear(Main_Panel(*gs));
+  werase(Main_Panel(*gs));
   DrawBorders(Main_Panel(*gs));
 
   /* Draw tile */
@@ -375,7 +375,7 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
   boolean doubleCol;
 
   /* ALGORITMA */
-  wclear(Waiting_Panel(*gs));
+  werase(Waiting_Panel(*gs));
   DrawBorders(Waiting_Panel(*gs));
 
   mvwprintw(Waiting_Panel(*gs),1, 2, "Waiting Cust");
@@ -443,7 +443,7 @@ void RefreshFoodPanel(GameScreen *gs, StackFood foodStack)
   int y;
 
   /* ALGORITMA */
-  wclear(Food_Panel(*gs));
+  werase(Food_Panel(*gs));
   DrawBorders(Food_Panel(*gs));
 
   mvwprintw(Food_Panel(*gs),1, 2, "Food Stack");
@@ -470,7 +470,7 @@ void RefreshHandPanel(GameScreen *gs, StackFood handStack)
   int y;
 
   /* ALGORITMA */
-  wclear(Hand_Panel(*gs));
+  werase(Hand_Panel(*gs));
   DrawBorders(Hand_Panel(*gs));
 
   mvwprintw(Hand_Panel(*gs),1, 2, "Hand Stack");
@@ -494,10 +494,10 @@ void RefreshTopPanel(GameScreen *gs, char* name, int money, int life, int time)
   /* KAMUS LOKAL */
 
   /* ALGORITMA */
-  wclear(Top_1_Panel(*gs));
-  wclear(Top_2_Panel(*gs));
-  wclear(Top_3_Panel(*gs));
-  wclear(Top_4_Panel(*gs));
+  werase(Top_1_Panel(*gs));
+  werase(Top_2_Panel(*gs));
+  werase(Top_3_Panel(*gs));
+  werase(Top_4_Panel(*gs));
 
   DrawBorders(Top_1_Panel(*gs));
   DrawBorders(Top_2_Panel(*gs));
@@ -524,7 +524,7 @@ void RefreshCommandPanel(GameScreen *gs,Kata prompt)
   int i;
 
   /* ALGORITMA */
-  wclear(Command_Panel(*gs));
+  werase(Command_Panel(*gs));
   DrawBorders(Command_Panel(*gs));
   for(i = 1;i<=prompt.Length;i++){
     mvwaddch(Command_Panel(*gs),1,2+i,prompt.TabKata[i]);
@@ -540,7 +540,7 @@ void RefreshTooltipPanel(GameScreen *gs, Kata tooltip)
   char *temp;
 
   /* ALGORITMA */
-  wclear(Tooltip_Panel(*gs));
+  werase(Tooltip_Panel(*gs));
   DrawBorders(Tooltip_Panel(*gs));
 
   temp = K_KataToChar(tooltip);
@@ -626,7 +626,7 @@ void ShowTree(GameScreen *gs, TreeFood tf)
   Kata input;
   Kata prompt;
 
-  Kata up,down,left,right,back;
+  Kata up,down,left,right,back1,back2;
 
   /* ALGORITMA */
 
@@ -638,17 +638,18 @@ void ShowTree(GameScreen *gs, TreeFood tf)
   down = K_MakeKata("GD");
   left = K_MakeKata("GL");
   right = K_MakeKata("GR");
-  back = K_MakeKata("EXIT");
+  back1 = K_MakeKata("EXIT");
+  back2 = K_MakeKata("Q");
 
   do {
-    wclear(Main_Panel(*gs));
+    werase(Main_Panel(*gs));
 
     PrintGrafRekursif(gs, tf,x,y,x,y,&lastY);
 
     DrawBorders(Main_Panel(*gs));
 
     mvwprintw(Main_Panel(*gs), 1, 2, "Tanda panah untuk bergerak");
-    mvwprintw(Main_Panel(*gs),2, 2, "EXIT untuk kembali");
+    mvwprintw(Main_Panel(*gs),2, 2, "EXIT atau Q untuk kembali");
 
     wrefresh(Main_Panel(*gs));
 
@@ -664,7 +665,7 @@ void ShowTree(GameScreen *gs, TreeFood tf)
       x+=1;
     }
 
-  } while(!K_IsKataSama(input, back));
+  } while((!K_IsKataSama(input, back1))&&(!K_IsKataSama(input, back2)));
 
 }
 
@@ -710,7 +711,7 @@ void RefreshOrderPanel(GameScreen *gs, ArrOrder orderList)
   int i;
 
   /* ALGORITMA */
-  wclear(Order_Panel(*gs));
+  werase(Order_Panel(*gs));
   DrawBorders(Order_Panel(*gs));
 
   mvwprintw(Order_Panel(*gs),1, 2, "Order List");
