@@ -41,17 +41,6 @@ ArrKata Credit(){
   return isicredit;
 }
 
-ArrKata InputSalah(){
-  //KAMUS
-  ArrKata isiInputSalah;
-  //ALGORITMA
-  AK_CreateEmpty(&isiInputSalah);
-  AK_AddAsLastEl(&isiInputSalah,K_MakeKata("INPUT YANG DIMASUKKAN SALAH"));
-  AK_AddAsLastEl(&isiInputSalah,K_MakeKata(" "));
-  AK_AddAsLastEl(&isiInputSalah,K_MakeKata("SILAHKAN INPUT ULANG!"));
-  return isiInputSalah;
-}
-
 //fungsi bernilai true jika input adalah salah satu kata dari main menu
 boolean InputBenar(Kata input,Kata new,Kata start,Kata load,Kata keluar){
   return (K_IsKataSama(input,new)||K_IsKataSama(input,start)||K_IsKataSama(input,load)||K_IsKataSama(input,keluar));
@@ -68,7 +57,7 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
   int jumlah;
   customer pelanggan;
   //ALGORITMA
-  chance = rand()%20;
+  chance = rand()%50;
   if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ //chance customer : 1/10 kemungkinan
     chance = rand()%4;
     PQC_Prio(pelanggan) = (chance==0)? 1:0; //chance prio : 1/4 kemungkinan
@@ -182,7 +171,6 @@ int main() {
   time_t t; //variabel random
   Restoran R; //tipe restoran dengan graf
   Ruangan *room; //tipe ruangan pada restoran
-  MatTile lantai; //tipe MatTile untuk matriks representasi lantai
   Pelayan P; //tipe pelayan restoran
   ArrInt arrayNomorMeja; //array berisi nomor-nomor meja pelanggan yang kabur
   ArrOrder arrayOrder; //array berisi orderan yang belum di give
@@ -247,193 +235,212 @@ int main() {
         do {
           username = GetInput(&gs,K_MakeKata("SAVED USERNAME: "));
           LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
-          if (status ==0) {
-            WriteText(&gs,InputSalah()); //main menu
-            input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
+          if (status ==0 && !K_IsKataSama(input,keluar)) {
+            do {
+              input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
+            } while(!K_IsKataSama(input,K_MakeKata("")));
           }
-        } while (status==0);
+        } while (status==0 && !K_IsKataSama(input,keluar));
       }
-      if (!loaded) { //tidak ada file yang di load
-        //load konfigurasi normal
-        usernameSaved = K_MakeKata("basic");
-        LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
-        SF_CreateEmpty(&hand,10);
-        SF_CreateEmpty(&tray,5);
-        AO_CreateEmpty(&arrayOrder);
-      }
-
-      //inisialisasi game
-      lose = false;
-      pindahRuang = false;
-
-      do{ //looping command di dalam game
-        RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
-        lantai = GetMatTileSekarang(R);
-        IsiToolTip = K_MakeKata("");
-        CekToolTip(R,P,pindahRuang,&IsiToolTip,tree);
-        aksiValid = false;
-        //refresh tampilan di layar
-        RefreshMap(&gs,lantai,Pelayan_Posisi(P));
-        RefreshWaitingPanel(&gs, Q1);
-        RefreshTooltipPanel(&gs,IsiToolTip);
-        RefreshHandPanel(&gs,hand);
-        RefreshFoodPanel(&gs,tray);
-        RefreshOrderPanel(&gs,arrayOrder);
-        //meminta input perintah
-        input = GetInput(&gs,K_MakeKata("COMMAND : "));
-        if(input.TabKata[1]=='G' && input.Length==2){ //inputnya move
-          if(input.TabKata[2]=='U'){ //GU
-            kodeArah=1;
-          }
-          else if(input.TabKata[2]=='R'){ //GR
-            kodeArah=2;
-          }
-          else if(input.TabKata[2]=='D'){ //GD
-            kodeArah=3;
-          }
-          else if(input.TabKata[2]=='L'){ //GL
-            kodeArah=4;
-          }
-          Move(&P,&R,kodeArah,&aksiValid,&pindahRuang);
+      if (!K_IsKataSama(input,keluar)) { //inputnya langsung exit
+        if (!loaded) { //tidak ada file yang di load
+          //load konfigurasi normal
+          usernameSaved = K_MakeKata("basic");
+          LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
+          SF_CreateEmpty(&hand,10);
+          SF_CreateEmpty(&tray,5);
+          AO_CreateEmpty(&arrayOrder);
         }
-        else if(K_IsKataSama(input,K_MakeKata("PUT"))){ //nunggu stack dan tree
-          if(CanPut(P)){
-            if(!SF_IsFull(tray)){
-              idMakanan = JadiApa(SF_ReversStack(hand),tree);
-              if(idMakanan<0){
-                SF_CreateEmpty(&hand,10);
-                SF_Push(&tray,TF_Akar(TF_Search(tree,idMakanan)));
-                aksiValid = true;
+
+        //inisialisasi game
+        lose = false;
+        pindahRuang = false;
+        RefreshMap(&gs,GetMatTileSekarang(R),Pelayan_Posisi(P));
+        IsiToolTip = K_MakeKata("");
+
+        do{ //looping command di dalam game
+          CekToolTip(R,P,pindahRuang,&IsiToolTip,tree);
+          aksiValid = false;
+          //refresh tampilan di layar
+          RefreshTooltipPanel(&gs,IsiToolTip);
+          RefreshTopPanel(&gs,K_KataToChar(username),money,life,waktu);
+          //meminta input perintah
+          input = GetInput(&gs,K_MakeKata("COMMAND : "));
+          if(input.TabKata[1]=='G' && input.Length==2){ //inputnya move
+            if(input.TabKata[2]=='U'){ //GU
+              kodeArah=1;
+            }
+            else if(input.TabKata[2]=='R'){ //GR
+              kodeArah=2;
+            }
+            else if(input.TabKata[2]=='D'){ //GD
+              kodeArah=3;
+            }
+            else if(input.TabKata[2]=='L'){ //GL
+              kodeArah=4;
+            }
+            Move(&P,&R,kodeArah,&aksiValid,&pindahRuang);
+            if (aksiValid) {
+              RefreshMap(&gs,GetMatTileSekarang(R),Pelayan_Posisi(P));
+            }
+          }
+          else if(K_IsKataSama(input,K_MakeKata("PUT"))){ //nunggu stack dan tree
+            if(CanPut(P)){
+              if(!SF_IsFull(tray)){
+                idMakanan = JadiApa(SF_ReversStack(hand),tree);
+                if(idMakanan<0){
+                  SF_CreateEmpty(&hand,10);
+                  SF_Push(&tray,TF_Akar(TF_Search(tree,idMakanan)));
+                  aksiValid = true;
+                  RefreshHandPanel(&gs,hand);
+                }
               }
             }
-          }
-        } //akhir command put
-        else if(K_IsKataSama(input,K_MakeKata("TAKE"))){ //nunggu stack tree
-          if (CanTake(P)) {
-            if(!SF_IsFull(hand)){
-              idMakanan = Taking(P);
-              makanan = TF_Akar(TF_Search(tree,idMakanan));
-              SF_Push(&hand,makanan);
-              aksiValid = true;
-            }
-          }
-        } //akhir command take
-        else if(K_IsKataSama(input,K_MakeKata("CH"))){ //nunggu stack
-          if(!SF_IsEmpty(hand)){
-            SF_CreateEmpty(&hand,10);
-            aksiValid = true;
-          }
-        } //akhir command ch
-        else if(K_IsKataSama(input,K_MakeKata("CT"))){ //nunggu stack
-          if(!SF_IsEmpty(tray)){
-            SF_CreateEmpty(&tray,5);
-            aksiValid = true;
-          }
-        } //akhir command ct
-        else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ //nunggu tree makanan
-          ShowTree(&gs,tree);
-        } //akhir command recipe
-        else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
-          //procedure save
-          saved = true;
-          SaveFile(username,money,life,waktu,R,P,Q1,hand,tray,arrayOrder);
-          input = GetInput(&gs,K_MakeKata("GAME SAVED."));
-        }//akhir command save
-        else if(K_IsKataSama(input,K_MakeKata("EXIT"))){
-          if (!saved) { //dipanggil jika belum di save
-            input=GetInput(&gs,K_MakeKata("ARE YOU SURE EXIT WITHOUT SAVE CURRENT FILE ? : "));
-            if(K_IsKataSama(input,K_MakeKata("YES"))){ //jadi exit
-              input = K_MakeKata("EXIT");
-            }
-            else { //batal exit
-              //inisialisasi agar tidak exit game
-              input = K_MakeKata("batalexit");
-            }
-          }
-        } //akhir comman exit
-        else { //aksi2 yang butuh dekat Meja
-          room = GetRuanganSekarang(R);
-          nomorMeja = GetTableNumber(P,*room);
-
-          if (nomorMeja!=0) { //artinya deket meja
-            if(K_IsKataSama(input,K_MakeKata("PLACE"))){
-              PQC_CreateEmpty(&Q2);
-              while(!CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room) && !PQC_IsEmpty(Q1)){
-                PQC_Del(&Q1,&pelanggan);
-                PQC_Add(&Q2,pelanggan);
-              }//bisa place atau sudah dicek semua
-
-              if (CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room)) { //ada yang bisa di place
+          } //akhir command put
+          else if(K_IsKataSama(input,K_MakeKata("TAKE"))){ //nunggu stack tree
+            if (CanTake(P)) {
+              if(!SF_IsFull(hand)){
+                idMakanan = Taking(P);
+                makanan = TF_Akar(TF_Search(tree,idMakanan));
+                SF_Push(&hand,makanan);
                 aksiValid = true;
-                PQC_Del(&Q1,&pelanggan);
-                if(PQC_Prio(pelanggan)==1){
-                  waktuOut = waktu + (rand()%40+41); //[21..40]
+                RefreshHandPanel(&gs,hand);
+              }
+            }
+          } //akhir command take
+          else if(K_IsKataSama(input,K_MakeKata("CH"))){ //nunggu stack
+            if(!SF_IsEmpty(hand)){
+              SF_CreateEmpty(&hand,10);
+              aksiValid = true;
+              RefreshHandPanel(&gs,hand);
+            }
+          } //akhir command ch
+          else if(K_IsKataSama(input,K_MakeKata("CT"))){ //nunggu stack
+            if(!SF_IsEmpty(tray)){
+              SF_CreateEmpty(&tray,5);
+              aksiValid = true;
+              RefreshFoodPanel(&gs,tray);
+            }
+          } //akhir command ct
+          else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ //nunggu tree makanan
+            ShowTree(&gs,tree);
+          } //akhir command recipe
+          else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
+            //procedure save
+            saved = true;
+            SaveFile(username,money,life,waktu,R,P,Q1,hand,tray,arrayOrder);
+            do {
+              input = GetInput(&gs,K_MakeKata("GAME SAVED."));
+            } while (!K_IsKataSama(input, K_MakeKata("")));
+          }//akhir command save
+          else if(K_IsKataSama(input,K_MakeKata("EXIT"))){
+            if (!saved) { //dipanggil jika belum di save
+              do {
+                input=GetInput(&gs,K_MakeKata("ARE YOU SURE EXIT WITHOUT SAVE CURRENT FILE ? : "));
+                if(K_IsKataSama(input,K_MakeKata("YES"))){ //jadi exit
+                  input = K_MakeKata("EXIT");
                 }
-                else{
-                  waktuOut = waktu + (rand()%60+61); //[31..50]
+                else if(K_IsKataSama(input,K_MakeKata("NO"))) { //batal exit
+                  //inisialisasi agar tidak exit game
+                  input = K_MakeKata("batalexit");
                 }
+              } while(!K_IsKataSama(input,K_MakeKata("YES")) && !K_IsKataSama(input,K_MakeKata("NO")));
+            }
+          } //akhir comman exit
+          else { //aksi2 yang butuh dekat Meja
+            room = GetRuanganSekarang(R);
+            nomorMeja = GetTableNumber(P,*room);
 
-                Placing(PQC_Jumlah(pelanggan),waktuOut,&P,room);
-
-                while(!PQC_IsEmpty(Q1)) {
+            if (nomorMeja!=0) { //artinya deket meja
+              if(K_IsKataSama(input,K_MakeKata("PLACE"))){
+                PQC_CreateEmpty(&Q2);
+                while(!CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room) && !PQC_IsEmpty(Q1)){
                   PQC_Del(&Q1,&pelanggan);
                   PQC_Add(&Q2,pelanggan);
-                } //Q1 pasti kosong
-              } //akhir placing
-              Q1 = Q2;
-            } //akhir command place
-            else if(K_IsKataSama(input,K_MakeKata("GIVE"))){  //nunggu stack
-                indeksOrder = AO_Search(arrayOrder,nomorMeja);
-                if(indeksOrder!=IdxUndeff){
-                  makanan = SF_InfoTop(tray);
-                  if(O_IDMakanan(AO_Elmt(arrayOrder,indeksOrder))==F_IDMakanan(makanan)){
-                    SF_Pop(&tray,&makanan);
-                    money += F_Harga(makanan);
-                    AO_DelEli(&arrayOrder,indeksOrder,&orderKabur);
-                    SetTableEmpty(nomorMeja,room);
-                    aksiValid = true;
+                }//bisa place atau sudah dicek semua
+
+                if (CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room)) { //ada yang bisa di place
+                  aksiValid = true;
+                  PQC_Del(&Q1,&pelanggan);
+                  if(PQC_Prio(pelanggan)==1){
+                    waktuOut = waktu + (rand()%40+81); //[81..120]
                   }
-                }
-            } //akhir command give
-            else if(K_IsKataSama(input,K_MakeKata("ORDER"))){ //nunggu stack dan converter idmakanan
-              if(CanOrder(P,*room)){
-                aksiValid = true;
-                Ordering(P,room,&idMakanan,&nomorMeja);
-                masakan = TF_Search(tree,idMakanan);
-                namaMakanan = F_NamaMakanan(TF_Akar(masakan));
-                order = O_CreateOrder(idMakanan,namaMakanan,nomorMeja); //tree pada namaMakanan
-                AO_AddAsLastEl(&arrayOrder,order);
-              } //akhir can order
-            } //akhir command order
-          } //akhir cek nomor meja
-        } //akhir proses validasi command
+                  else{
+                    waktuOut = waktu + (rand()%60+121); //[121..180]
+                  }
 
-        if(aksiValid){//proses yang terjadi jika inputnya valid
-          RandomPelanggan(&Q1,waktu);
-          waktu++; //tik bertambah
-          PelangganKabur(waktu,&P,&R,&jumlahKabur,&arrayNomorMeja);
-          while(!AI_IsEmpty(arrayNomorMeja)){
-            AI_DelLastEl(&arrayNomorMeja,&nomorMeja);
-            indeksOrder = AO_Search(arrayOrder,nomorMeja);
-            if(indeksOrder!=IdxUndeff){
-              AO_DelEli(&arrayOrder,indeksOrder,&orderKabur);
+                  Placing(PQC_Jumlah(pelanggan),waktuOut,&P,room);
+
+                  while(!PQC_IsEmpty(Q1)) {
+                    PQC_Del(&Q1,&pelanggan);
+                    PQC_Add(&Q2,pelanggan);
+                  } //Q1 pasti kosong
+                  RefreshMap(&gs,GetMatTileSekarang(R),Pelayan_Posisi(P));
+                  RefreshWaitingPanel(&gs, Q1);
+                } //akhir placing
+                Q1 = Q2;
+              } //akhir command place
+              else if(K_IsKataSama(input,K_MakeKata("GIVE"))){  //nunggu stack
+                  indeksOrder = AO_Search(arrayOrder,nomorMeja);
+                  if(indeksOrder!=IdxUndeff){
+                    makanan = SF_InfoTop(tray);
+                    if(O_IDMakanan(AO_Elmt(arrayOrder,indeksOrder))==F_IDMakanan(makanan)){
+                      SF_Pop(&tray,&makanan);
+                      money += F_Harga(makanan);
+                      AO_DelEli(&arrayOrder,indeksOrder,&orderKabur);
+                      SetTableEmpty(nomorMeja,room);
+                      aksiValid = true;
+                      RefreshMap(&gs,GetMatTileSekarang(R),Pelayan_Posisi(P));
+                      RefreshFoodPanel(&gs,tray);
+                      RefreshOrderPanel(&gs,arrayOrder);
+                    }
+                  }
+              } //akhir command give
+              else if(K_IsKataSama(input,K_MakeKata("ORDER"))){ //nunggu stack dan converter idmakanan
+                if(CanOrder(P,*room)){
+                  aksiValid = true;
+                  Ordering(P,room,&idMakanan,&nomorMeja);
+                  masakan = TF_Search(tree,idMakanan);
+                  namaMakanan = F_NamaMakanan(TF_Akar(masakan));
+                  order = O_CreateOrder(idMakanan,namaMakanan,nomorMeja); //tree pada namaMakanan
+                  AO_AddAsLastEl(&arrayOrder,order);
+                  RefreshOrderPanel(&gs,arrayOrder);
+                } //akhir can order
+              } //akhir command order
+            } //akhir cek nomor meja
+          } //akhir proses validasi command
+
+          if(aksiValid){//proses yang terjadi jika inputnya valid
+            RandomPelanggan(&Q1,waktu);
+            waktu++; //tik bertambah
+            PelangganKabur(waktu,&P,&R,&jumlahKabur,&arrayNomorMeja);
+            while(!AI_IsEmpty(arrayNomorMeja)){
+              AI_DelLastEl(&arrayNomorMeja,&nomorMeja);
+              indeksOrder = AO_Search(arrayOrder,nomorMeja);
+              if(indeksOrder!=IdxUndeff){
+                AO_DelEli(&arrayOrder,indeksOrder,&orderKabur);
+              }
             }
-          }
-          PelangganPergi(&Q1,waktu,&jumlahPergi);
-          life -=jumlahKabur+jumlahPergi;
-          saved = false; //saved false karena ada aksi yang berhasil
-          if(life<=0){ //jika nyawa==0 maka kalah
-            lose = true;
-          }
-        }//akhir proses aksiValid
-      }
-      while(!K_IsKataSama(input,keluar) && !lose);
+            PelangganPergi(&Q1,waktu,&jumlahPergi);
+            RefreshWaitingPanel(&gs, Q1);
+            RefreshOrderPanel(&gs,arrayOrder);
+            life -=jumlahKabur+jumlahPergi;
+            saved = false; //saved false karena ada aksi yang berhasil
+            if(life<=0){ //jika nyawa==0 maka kalah
+              lose = true;
+            }
+          }//akhir proses aksiValid
+        }
+        while(!K_IsKataSama(input,keluar) && !lose);
 
-      if(lose){ //pemain kalah tampilkan credit
-        InitScreen(&gs);
-        WriteText(&gs,Credit());
-        input = GetInput(&gs,K_MakeKata("YOU LOSE!"));
-      }
+        if(lose){ //pemain kalah tampilkan credit
+          InitScreen(&gs);
+          WriteText(&gs,Credit());
+          do {
+            input = GetInput(&gs,K_MakeKata("YOU LOSE!"));
+          } while(!K_IsKataSama(input,K_MakeKata("")));
+        }
+      } //inputnya langsung keluar
       //inisialisasi input agar kembali ke main menu
       input = K_MakeKata("mainmenu");
     } //input == exit
