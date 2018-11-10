@@ -299,6 +299,7 @@ int main() {
                   SF_Push(&tray,TF_Akar(TF_Search(tree,idMakanan)));
                   aksiValid = true;
                   RefreshHandPanel(&gs,hand);
+                  RefreshFoodPanel(&gs,tray);
                 }
               }
             }
@@ -330,6 +331,7 @@ int main() {
           } //akhir command ct
           else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ //nunggu tree makanan
             ShowTree(&gs,tree);
+            RefreshMap(&gs,GetMatTileSekarang(R),Pelayan_Posisi(P));
           } //akhir command recipe
           else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
             //procedure save
