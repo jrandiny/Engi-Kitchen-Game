@@ -424,8 +424,7 @@ int main() {
         while(!K_IsKataSama(input,keluar) && !lose);
 
         if(lose){ //pemain kalah tampilkan credit
-          // InitScreen(&gs);
-          input = GetInput(&gs,K_MakeKata("YOU LOSE!"));
+          InitScreen(&gs);
           WriteText(&gs,Credit());
           do {
             input = GetInput(&gs,K_MakeKata("YOU LOSE!"));
