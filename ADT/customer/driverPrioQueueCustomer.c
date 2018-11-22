@@ -1,14 +1,15 @@
-/* File : driver_prioquequecustomer.c */
-/* Driver ADT Customer Priority Queue */
+/* Kelompok  : UAS
+   Nama file : driverPrioQueueCustomer.c
+   Deskripsi : Driver ADT untuk prio queue customer */
 
-#include "prioqueuecustomer.h"
+#include "prioQueueCustomer.h"
 
 int main () {
 	int menu;
 	PrioQueueCustomer C;
-	customer X;
+	Customer X;
 	char tipecustomer;
-	
+
 	printf("MENU PRIO QUEUE CUSTOMER\n");
 	printf("1. IsEmpty\n");
 	printf("2. IsFull\n");
@@ -18,7 +19,7 @@ int main () {
 	printf("6. PrintQueue\n");
 	printf("Masukkan pilihan menu : \n");
 	PQC_CreateEmpty(&C);
-	
+
 	scanf("%d", &menu);
 	while ((menu>0) && (menu<=6))
 	{

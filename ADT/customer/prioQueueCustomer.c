@@ -1,28 +1,29 @@
-/* File : custprioqueue */
-/* Implementasi ADT Customer Priority Queue */
+/* Kelompok  : UAS
+   Nama file : prioQueueCustomer.c
+   Deskripsi : ADT untuk prio queue customer */
 
-#include "prioqueuecustomer.h"
+#include "prioQueueCustomer.h"
 
 /* ********* Prototype ********* */
 boolean PQC_IsEmpty (PrioQueueCustomer Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 {
-	//algoritma
+	/* ALGORITMA */
 	return (PQC_Head(Q)==Nol && PQC_Tail(Q)==Nol);
 }
 boolean PQC_IsFull (PrioQueueCustomer Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak PQC_MaxEl */
 {
-	//algoritma
+	/* ALGORITMA */
 	return (PQC_NBElmt(Q)==PQC_MaxEl);
 }
 int PQC_NBElmt (PrioQueueCustomer Q)
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 {
-	//kamus
+	/* KAMUS */
 	PQC_address count;
-	//algoritma
+	/* ALGORITMA */
 	if (PQC_IsEmpty(Q)) return 0;
 	else {
 		if(PQC_Head(Q)<=PQC_Tail(Q)){
@@ -41,7 +42,7 @@ void PQC_CreateEmpty (PrioQueueCustomer * Q)
 /* atau : jika alokasi gagal, Q kosong dg PQC_MaxEl=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 {
-	//algoritma
+	/* ALGORITMA */
 	PQC_Tail(*Q) = Nol;
 	PQC_Head(*Q) = Nol;
 }
@@ -54,10 +55,10 @@ void PQC_Add (PrioQueueCustomer * Q, Customer X)
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer;
         elemen baru disisipkan pada posisi yang tepat sesuai dengan prioritas */
 {
-	//kamus
+	/* KAMUS */
 	int i,j;
 	int indeks;
-	//algoritma
+	/* ALGORITMA */
 	if (PQC_IsEmpty(*Q)) {
 		PQC_Head(*Q) = 1;
 		PQC_Tail(*Q) = 1;
@@ -92,7 +93,7 @@ void PQC_Del (PrioQueueCustomer * Q, Customer * X)
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
         Q mungkin kosong */
 {
-	//algoritma
+	/* ALGORITMA */
 	*X = PQC_InfoHead(*Q);
 	if (PQC_Head(*Q)==PQC_Tail(*Q)) {
 		PQC_Head(*Q) = Nol;
@@ -113,9 +114,9 @@ void PQC_PrintQueue (PrioQueueCustomer Q)
 #
 */
 {
-	//kamus
+	/* KAMUS */
 	Customer X;
-	//algoritma
+	/* ALGORITMA */
 	while (!PQC_IsEmpty(Q)) {
 		PQC_Del(&Q,&X);
 		printf("%d %d %d\n",PQC_Prio(X),PQC_Jumlah(X), PQC_Waktu(X));

@@ -6,7 +6,7 @@ Order O_CreateOrder (int idMakanan, Kata namaMakanan, int noMeja)
     //kamus
     Order O;
     
-    //algoritma
+    /* ALGORITMA */
     O_IDMakanan(O) = idMakanan;
     O_NamaMakanan(O) = namaMakanan;
     O_NoMeja(O) = noMeja;

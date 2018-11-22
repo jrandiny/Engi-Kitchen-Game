@@ -4,14 +4,14 @@
 boolean PQ_IsEmpty (PrioQueue Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 {
-	//algoritma
+	/* ALGORITMA */
   return (PQ_Head(Q)==Nol && PQ_Tail(Q)==Nol);
 }
 boolean PQ_IsFull (PrioQueue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak PQ_MaxEl */
 {
-  //algoritma
+  /* ALGORITMA */
 	return (PQ_NBElmt(Q)==PQ_MaxEl(Q));
 }
 int PQ_NBElmt (PrioQueue Q)
@@ -19,7 +19,7 @@ int PQ_NBElmt (PrioQueue Q)
 {
 	//kamus
   address count;
-  //algoritma
+  /* ALGORITMA */
   if (PQ_IsEmpty(Q)) return 0;
   else {
     count = PQ_Tail(Q);
@@ -36,7 +36,7 @@ void PQ_CreateEmpty (PrioQueue * Q, int Max)
 /* atau : jika alokasi gagal, Q kosong dg PQ_MaxEl=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 {
-	//algoritma
+	/* ALGORITMA */
   (*Q).T = (PQ_infotype*) malloc ((Max+1)* sizeof(PQ_infotype));
   if ((*Q).T != NULL) {
     PQ_MaxEl(*Q) = Max;
@@ -50,7 +50,7 @@ void PQ_DeAlokasi (PrioQueue * Q)
 /* I.S. Q pernah dialokasi */
 /* F.S. Q menjadi tidak terdefinisi lagi, PQ_MaxEl(Q) diset 0 */
 {
-	//algoritma
+	/* ALGORITMA */
   free((*Q).T);
   PQ_MaxEl(*Q) = Nol;
 }
@@ -65,7 +65,7 @@ void PQ_Add (PrioQueue * Q, PQ_infotype X)
   //kamus
   int i,j;
   int indeks;
-	//algoritma
+	/* ALGORITMA */
   if (PQ_IsEmpty(*Q)) {
 		PQ_Head(*Q) = 1;
 		PQ_Tail(*Q) = 1;
@@ -99,7 +99,7 @@ void PQ_Del (PrioQueue * Q, PQ_infotype * X)
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
         Q mungkin kosong */
 {
-	//algoritma
+	/* ALGORITMA */
   *X = PQ_InfoHead(*Q);
   if (PQ_Head(*Q)==PQ_Tail(*Q)) {
     PQ_Head(*Q) = Nol;
@@ -120,7 +120,7 @@ void PQ_PrintQueue (PrioQueue Q)
 {
   //kamus
 	PQ_infotype X;
-  //algoritma
+  /* ALGORITMA */
 	while (!PQ_IsEmpty(Q)) {
 		PQ_Del(&Q,&X);
 		printf("%d %d\n",PQ_Prio(X),PQ_Info(X));

@@ -1,4 +1,7 @@
 /* MODUL TABEL ORDER */
+/* Kelompok  : UAS
+   Nama file : arrOrder.h
+   Deskripsi : ADT untuk tipe Array order */
 /* Berisi definisi dan semua primitif pemrosesan tabel order */
 /* Penempatan elemen selalu rapat kiri */
 /* Versi I : dengan banyaknya elemen didefinisikan secara eksplisit,

@@ -5,7 +5,7 @@ int main() {
   PrioQueue q;
   int input,prio,info; //input user
   PQ_infotype elmt; //elmt queue
-  //algoritma
+  /* ALGORITMA */
   printf("Masukan panjang max Q: ");
   scanf("%d",&input); //maxel
   PQ_CreateEmpty(&q,input);

@@ -29,7 +29,7 @@ int main() {
   Queue q;
   int input; //input user
   Q_infotype elmt; //elmt queue
-  //algoritma
+  /* ALGORITMA */
   printf("Masukan panjang max Q: ");
   scanf("%d",&input); //maxel
   Q_CreateEmpty(&q,input);

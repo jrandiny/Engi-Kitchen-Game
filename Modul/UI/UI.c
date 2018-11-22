@@ -3,7 +3,7 @@
 #include "../../ADT/point/point.h"
 #include "../../boolean.h"
 #include "../../ADT/space/matTile/matTile.h"
-#include "../../ADT/customer/prioqueuecustomer.h"
+#include "../../ADT/customer/prioQueueCustomer.h"
 #include "../../ADT/food/stacktfood.h"
 #include <locale.h>
 

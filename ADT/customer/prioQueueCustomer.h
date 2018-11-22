@@ -1,22 +1,23 @@
-/* File : custprioqueue.h */
+/* Kelompok  : UAS
+   Nama file : prioQueueCustomer.h
+   Deskripsi : ADT untuk prio queue customer */
 /* Definisi ADT Customer Priority Queue dengan representasi array secara eksplisit dan alokasi dinamik */
-/* Model Implementasi Versi III dengan circular buffer */
 /* Elemen queue terurut mengecil berdasarkan elemen prio */
 
-#ifndef prioqueuecustomer_H
-#define prioqueuecustomer_H
+#ifndef PRIOQUEUECUSTOMER_H
+#define PRIOQUEUECUSTOMER_H
 
 #include "../../std.h"
 
 #define PQC_MaxEl 12
-/* Definisi elemen dan PQ_address */
+/* Definisi elemen dan PQC_address */
 typedef struct { int prio;  /* [0..1], prioritas dengan nilai 0..1 (1 adalah prioritas tertinggi) */
                  int jumlah;  /* [2 atau 4] nilai elemen */
                  int waktu; /* waktu keluar */
                } Customer;
+
 typedef int PQC_address;   /* indeks tabel */
-/* Contoh deklarasi variabel bertype Queue : */
-/* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
+
 typedef struct { Customer T[PQC_MaxEl+1];   /* tabel penyimpan elemen */
                  PQC_address HEAD;  /* alamat penghapusan */
                  PQC_address TAIL;  /* alamat penambahan */

@@ -1,13 +1,6 @@
-/* MODUL TABEL INTEGER */
 /* Kelompok  : UAS
-   Nama file : array.c
-   Topik     : Modul Prapraktikum 02
-   Tanggal   : 04-09-2018
-   Deskripsi : ADT untuk tipe Array statik eksplisit*/
-/* Berisi definisi dan semua primitif pemrosesan tabel integer */
-/* Penempatan elemen selalu rapat kiri */
-/* Versi I : dengan banyaknya elemen didefinisikan secara eksplisit,
-   memori tabel statik */
+   Nama file : driverArrInt.c
+   Deskripsi : Driver ADT untuk tipe Array integer statik eksplisit */
 
 #include "arrInt.h"
 
@@ -104,7 +97,7 @@ int main (){
       }
       printf("\n");
     }
-    
+
   } while (input != 7);
 
   return 0;
