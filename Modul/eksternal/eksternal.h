@@ -27,13 +27,13 @@ void ParserLocate(Kata input,int *pos1, int *pos2);
 */
 
 Order ParseOrder(Kata Scanned);
-/*mengembalikan tipe order dari stack dari hasil parsing kata*/ 
+/*mengembalikan tipe order dari stack dari hasil parsing kata*/
 
 Food ParseTFood(Kata Scanned,boolean* kiri,int* parentID);
 /*mengembalikan tipe food dari tree dari hasil parsing kata, kiri berisi apakah ia leaf kiri,parentid berisi id pangkal*/
 
 Food ParseSFood(Kata Scanned);
-/*mengembalikan tipe food dari stack dari hasil parsing kata*/ 
+/*mengembalikan tipe food dari stack dari hasil parsing kata*/
 
 Pelayan ParsePelayan(Kata Scanned);
 /*mengembalikan tipe pelayan dari hasil parsing kata */
@@ -47,7 +47,7 @@ Tile ParseTile(Kata scanned);
 Meja ParseMeja(Kata scanned);
 /* mengembalikan tipe meja dari hasil parsing kata */
 
-customer ParseCustomer(Kata scanned);
+Customer ParseCustomer(Kata scanned);
 /* mengembalikan tipe customer dari hasil parsing kata */
 
 Door ParseDoor(Kata scanned);
@@ -108,7 +108,7 @@ void WriteMeja(FILE* namafile,Meja meja);
 /* I.S. namafile dan meja terdefinisi
    F.S. tertulis meja di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 
-void WriteCustomer(FILE* namafile,customer customer);
+void WriteCustomer(FILE* namafile,Customer customer);
 /* I.S. namafile dan customer terdefinisi
    F.S. tertulis customer di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 

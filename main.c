@@ -54,7 +54,7 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
 {
   //KAMUS
   int chance;
-  customer pelanggan;
+  Customer pelanggan;
   //ALGORITMA
   chance = rand()%50;
   if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ //chance customer : 1/10 kemungkinan
@@ -75,7 +75,7 @@ void PelangganPergi(PrioQueueCustomer *pqc,int waktuNow,int *jumlah)
 {
   //KAMUS
   PrioQueueCustomer Q2;
-  customer pelanggan;
+  Customer pelanggan;
   //ALGORITMA
   PQC_CreateEmpty(&Q2);
   *jumlah = 0;
@@ -177,7 +177,7 @@ int main() {
   ArrOrder arrayOrder; //array berisi orderan yang belum di give
   AO_IdxType indeksOrder; //indeks dari array of order
   PrioQueueCustomer Q1,Q2; //tipe barisan pelanggan
-  customer pelanggan; //tipe pelanggan
+  Customer pelanggan; //tipe pelanggan
   Order order; //tipe order
   Order orderKabur; //tipe order yang isinya orderan dari pelanggan kabur
   Food makanan; //tipe food

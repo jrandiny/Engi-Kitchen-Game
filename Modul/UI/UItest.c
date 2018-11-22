@@ -21,7 +21,7 @@ int main(){
   ArrKata ak;
   MatTile mt;
   PrioQueueCustomer pqc;
-  customer cust;
+  Customer cust;
   Point waiter;
   StackFood sf,sh;
   SF_infotype testinfo;

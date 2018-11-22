@@ -48,7 +48,7 @@ void PQC_CreateEmpty (PrioQueueCustomer * Q)
 
 
 /* *** Primitif Add/Delete *** */
-void PQC_Add (PrioQueueCustomer * Q, customer X)
+void PQC_Add (PrioQueueCustomer * Q, Customer X)
 /* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut mengecil berdasarkan prio */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer;
@@ -86,7 +86,7 @@ void PQC_Add (PrioQueueCustomer * Q, customer X)
 	}
 }
 
-void PQC_Del (PrioQueueCustomer * Q, customer * X)
+void PQC_Del (PrioQueueCustomer * Q, Customer * X)
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
@@ -97,7 +97,7 @@ void PQC_Del (PrioQueueCustomer * Q, customer * X)
 	if (PQC_Head(*Q)==PQC_Tail(*Q)) {
 		PQC_Head(*Q) = Nol;
 		PQC_Tail(*Q) = Nol;
-	} else {	
+	} else {
 		if (PQC_Head(*Q)==PQC_MaxEl) PQC_Head(*Q) = 1;
 		else PQC_Head(*Q)++;
 	}
@@ -114,7 +114,7 @@ void PQC_PrintQueue (PrioQueueCustomer Q)
 */
 {
 	//kamus
-	customer X;
+	Customer X;
 	//algoritma
 	while (!PQC_IsEmpty(Q)) {
 		PQC_Del(&Q,&X);

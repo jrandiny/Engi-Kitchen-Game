@@ -13,11 +13,11 @@
 typedef struct { int prio;  /* [0..1], prioritas dengan nilai 0..1 (1 adalah prioritas tertinggi) */
                  int jumlah;  /* [2 atau 4] nilai elemen */
                  int waktu; /* waktu keluar */
-               } customer;
+               } Customer;
 typedef int PQC_address;   /* indeks tabel */
 /* Contoh deklarasi variabel bertype Queue : */
 /* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
-typedef struct { customer T[PQC_MaxEl+1];   /* tabel penyimpan elemen */
+typedef struct { Customer T[PQC_MaxEl+1];   /* tabel penyimpan elemen */
                  PQC_address HEAD;  /* alamat penghapusan */
                  PQC_address TAIL;  /* alamat penambahan */
                } PrioQueueCustomer;
@@ -25,7 +25,7 @@ typedef struct { customer T[PQC_MaxEl+1];   /* tabel penyimpan elemen */
 /* Catatan implementasi: T[0] tidak pernah dipakai */
 
 /* ********* AKSES (Selektor) ********* */
-/* Jika e adalah customer dan Q adalah Queue, maka akses elemen : */
+/* Jika e adalah Customer dan Q adalah Queue, maka akses elemen : */
 #define PQC_Prio(e)       (e).prio
 #define PQC_Jumlah(e)     (e).jumlah
 #define PQC_Waktu(e)      (e).waktu
@@ -53,12 +53,12 @@ void PQC_CreateEmpty (PrioQueueCustomer * Q);
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 
 /* *** Primitif Add/Delete *** */
-void PQC_Add (PrioQueueCustomer * Q, customer X);
+void PQC_Add (PrioQueueCustomer * Q, Customer X);
 /* Proses: Menambahkan X pada Q dengan aturan priority queue, terurut mengecil berdasarkan prio */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer;
         elemen baru disisipkan pada posisi yang tepat sesuai dengan prioritas */
-void PQC_Del (PrioQueueCustomer * Q, customer * X);
+void PQC_Del (PrioQueueCustomer * Q, Customer * X);
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;

@@ -85,7 +85,7 @@ Food ParseTFood(Kata Scanned,boolean* kiri,int* parentID)
 }
 
 Food ParseSFood(Kata Scanned)
-/*mengembalikan tipe food dari stack dari hasil parsing kata*/ 
+/*mengembalikan tipe food dari stack dari hasil parsing kata*/
 {
   Food hasil;
   int pos1,pos2;
@@ -150,11 +150,11 @@ Tile ParseTile(Kata scanned)
   return hasil;
 }
 
-customer ParseCustomer(Kata scanned)
-/* mengembalikan tipe customer dari hasil parsing kata */
+Customer ParseCustomer(Kata scanned)
+/* mengembalikan tipe Customer dari hasil parsing kata */
 {
   int pos1,pos2;
-  customer hasil;
+  Customer hasil;
   ParserLocate(scanned,&pos1,&pos2);
   PQC_Prio(hasil)=K_KataToInt(K_CopySubKata(scanned,1,pos1-1));
   PQC_Jumlah(hasil)=K_KataToInt(K_CopySubKata(scanned,pos1+1,pos2-1));
@@ -424,7 +424,7 @@ void WriteMeja(FILE* namafile,Meja meja)
   fprintf(namafile,"%d/%d,%d/%d",Bangku(meja),P_Baris(Meja_Posisi(meja)),P_Kolom(Meja_Posisi(meja)),Status(meja));
 }
 
-void WriteCustomer(FILE* namafile,customer customer)
+void WriteCustomer(FILE* namafile,Customer customer)
 /* I.S. namafile dan customer terdefinisi
    F.S. tertulis customer di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 {
@@ -468,7 +468,7 @@ void WriteFood(FILE* namafile,Food food)
 /* I.S. namafile dan food terdefinisi
    F.S. tertulis food di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 {
-  K_RemoveSpace(&(F_NamaMakanan(food))); 
+  K_RemoveSpace(&(F_NamaMakanan(food)));
   fprintf(namafile,"%d/%s/%d",F_IDMakanan(food),K_KataToChar(F_NamaMakanan(food)),F_Harga(food));
 }
 
@@ -476,7 +476,7 @@ void WriteOrder(FILE* namafile,Order order)
 /* I.S. namafile dan order terdefinisi
    F.S. tertulis order di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 {
-  K_RemoveSpace(&(O_NamaMakanan(order))); 
+  K_RemoveSpace(&(O_NamaMakanan(order)));
   fprintf(namafile,"%d/%s/%d",O_IDMakanan(order),K_KataToChar(O_NamaMakanan(order)),O_NoMeja(order));
 }
 
@@ -537,7 +537,7 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan
   K_KonkatKata(&namafile,K_MakeKata(".sav"));
   GR_address GR=Nil;
   GRD_address GD=Nil;
-  customer customer;
+  Customer customer;
   Food food;
   ///////////////////////////////////////////////////////////
   fw=fopen(K_KataToChar(namafile),"w+");
@@ -646,10 +646,8 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan
   for(i=AO_GetFirstIdx(arrorder);i<=AO_GetLastIdx(arrorder);i++){
     WriteSpace(fw);
     WriteOrder(fw,AO_Elmt(arrorder,i));
-  }  
+  }
   /////////////////////////////////
   fprintf(fw,".");
   fclose(fw);
 }
-
-
