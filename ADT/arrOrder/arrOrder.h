@@ -86,32 +86,6 @@ boolean AO_IsEmpty (ArrOrder T);
 boolean AO_IsFull (ArrOrder T);
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
 
-/* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
-/* *** Mendefinisikan isi tabel dari pembacaan *** */
-void AO_BacaIsi (ArrOrder * T);
-/* I.S. T sembarang */
-/* F.S. Tabel T terdefinisi */
-/* Proses : membaca banyaknya elemen T dan mengisi nilainya */
-/* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
-/*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= MaxNbEl(T) */
-/*    Jika N tidak valid, tidak diberikan pesan kesalahan */
-/* 2. Jika 0 < N <= MaxNbEl(T); Lakukan N kali: Baca elemen mulai dari indeks
-      IdxMin satu per satu diakhiri enter */
-/*    Jika N = 0; hanya terbentuk T kosong */
-
-void AO_TulisIsi (ArrOrder T);
-/* Proses : Menuliskan isi tabel dengan traversal */
-/* I.S. T boleh kosong */
-/* F.S. Jika T tidak kosong : indeks dan elemen tabel ditulis berderet ke bawah */
-/*      Jika T kosong : Hanya menulis "Tabel kosong" */
-/* Contoh: Jika isi Tabel: [1, 20, 30, 50]
-   Maka tercetak di layar:
-   [1]1
-   [2]20
-   [3]30
-   [4]50
-*/
-
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : Tabel boleh kosong!! *** */
 AO_IdxType AO_Search (ArrOrder T, int X);

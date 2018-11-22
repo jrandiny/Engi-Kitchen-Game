@@ -79,67 +79,6 @@ boolean AO_IsFull (ArrOrder T)
   return (AO_Neff(T) >= IdxMax);
 }
 
-/* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
-/* *** Mendefinisikan isi tabel dari pembacaan *** */
-void AO_BacaIsi (ArrOrder * T)
-/* I.S. T sembarang */
-/* F.S. Tabel T terdefinisi */
-/* Proses : membaca banyaknya elemen T dan mengisi nilainya */
-/* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
-/*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= MaxNbEl(T) */
-/*    Jika N tidak valid, tidak diberikan pesan kesalahan */
-/* 2. Jika 0 < N <= MaxNbEl(T); Lakukan N kali: Baca elemen mulai dari indeks
-      IdxMin satu per satu diakhiri enter */
-/*    Jika N = 0; hanya terbentuk T kosong */
-{
-  // /* KAMUS LOKAL */
-  // int N;
-  // int i;
-  // AO_ElType isi;
-
-  // /* ALGORITMA */
-  // N = -99;
-  // while(!(AO_IsIdxValid(*T,N)||(N==0))){
-  //   scanf("%d",&N);
-  // }
-
-  // /* N>=0 dan IsIdxValid(N)*/
-  // AO_CreateEmpty(T);
-  // AO_Neff(*T) = N;
-
-  // for(i = IdxMin;i<=N;i++){
-  //   scanf("%d",&isi);
-  //   AO_Elmt(*T,i) = isi;
-  // }
-}
-
-void AO_TulisIsi (ArrOrder T)
-/* Proses : Menuliskan isi tabel dengan traversal */
-/* I.S. T boleh kosong */
-/* F.S. Jika T tidak kosong : indeks dan elemen tabel ditulis berderet ke bawah */
-/*      Jika T kosong : Hanya menulis "Tabel kosong" */
-/* Contoh: Jika isi Tabel: [1, 20, 30, 50]
-   Maka tercetak di layar:
-   [1]1
-   [2]20
-   [3]30
-   [4]50
-*/
-{
-  // /* KAMUS LOKAL */
-  // AO_IdxType i;
-
-  // /* ALGORITMA */
-  // if(AO_IsEmpty(T)){
-  //   printf("Tabel kosong\n");
-  // }else{
-  //   for(i=AO_GetFirstIdx(T);i<=AO_GetLastIdx(T);i++){
-  //     printf("[%d]%d\n",i,AO_Elmt(T,i));
-  //   }
-  // }
-
-}
-
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : Tabel boleh kosong!! *** */
 AO_IdxType AO_Search (ArrOrder T, int X)
