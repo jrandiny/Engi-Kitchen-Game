@@ -8,6 +8,15 @@
 #include "../../ADT/arrOrder/order.h"
 #include "../../ADT/arrOrder/arrOrder.h"
 #include "../../ADT/space/space.h"
+#include "../../ADT/jam/jam.h"
+#include "../../ADT/mesinkata/arrKata/arrKata.h"
+
+ArrKata GetAllUserName();
+/*
+mengambil semua username dan jam kemudian dimasukkan ke arrkata
+index genap untuk username, index ganjil untuk jam
+*/
+
 
 /*Bagian Load File Eksternal*/
 
@@ -123,9 +132,15 @@ void WriteOrder(FILE* namafile,Order order);
 /* I.S. namafile dan order terdefinisi
    F.S. tertulis order di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 
+void WriteUsername(FILE* namafile,ArrKata arrkata);
+/* I.S. namafile dan arrkata terdefinisi
+   F.S. tertulis arrkata di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+
 void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan,PrioQueueCustomer prioqueue,StackFood hand,StackFood tray,ArrOrder arrorder);
 /*I.S. bebas
   F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
   */
+
+
 
 #endif

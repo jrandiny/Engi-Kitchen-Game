@@ -11,6 +11,7 @@
 
 #include "mesinkar.h"
 #include "../point/point.h"
+#include "../jam/jam.h"
 
 #define NMax 50
 #define BLANK ' '
@@ -96,5 +97,8 @@ void K_ReplaceSpace(Kata* kata);
 void K_RemoveSpace(Kata* kata);
 /* I.S. kata terdefinisi
    F.S. semua ' ' yang terdapat di kata diubah menjadi _*/
+
+Kata K_JamToKata(Jam jam);
+/* mengembalikan tipe kata dari jam*/
 
 #endif

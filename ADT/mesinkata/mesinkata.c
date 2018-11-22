@@ -270,3 +270,20 @@ void K_RemoveSpace(Kata* kata)
     }
   }
 }
+
+Kata K_JamToKata(Jam jam)
+/* mengembalikan tipe kata dari jam*/
+{
+  
+  Kata hasil;
+  hasil.Length = 8;
+  hasil.TabKata[1]=(char)(J_Hour(jam)/10)+'0';
+  hasil.TabKata[2]=(char)(J_Hour(jam)%10)+'0';
+  hasil.TabKata[3]=':';
+  hasil.TabKata[4]=(char)(J_Minute(jam)/10)+'0';
+  hasil.TabKata[5]=(char)(J_Minute(jam)%10)+'0';
+  hasil.TabKata[6]=':';
+  hasil.TabKata[7]=(char)(J_Second(jam)/10)+'0';
+  hasil.TabKata[8]=(char)(J_Second(jam)%10)+'0';
+  return hasil;
+}

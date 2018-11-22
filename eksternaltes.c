@@ -50,13 +50,9 @@ int main(){
     // K_PrintKata(temp222);
     nama=K_MakeKata("STEVE");
     LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue,&hand,&tray,&arrorder);
-    nama=K_MakeKata("tessaved");
+    nama=K_MakeKata("TESSAVED4");
     SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue,hand,tray,arrorder);
-    K_PrintKata(nama);printf("\n");
-    LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue,&hand,&tray,&arrorder);
-    nama=K_MakeKata("tesasaved2");
-    K_PrintKata(nama);printf("\n");
-    SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue,hand,tray,arrorder);
+    
     
     // K_PrintKata(nama);printf("\n");
     // printf("money=%d\n",money);

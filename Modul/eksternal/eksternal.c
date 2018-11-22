@@ -1,4 +1,28 @@
 #include "eksternal.h"
+#include <time.h>
+
+
+ArrKata GetAllUserName()
+/*
+mengambil semua username dan jam kemudian dimasukkan ke arrkata
+index genap untuk username, index ganjil untuk jam
+*/
+{
+  ArrKata hasil;
+  int status=0,i=0;
+  AK_CreateEmpty(&hasil);
+  K_STARTKATA("SaveData/username.dat",&status);//Ckata berada di username
+  if(status==1){
+    while(!EndKata){
+      AK_AddAsLastEl(&hasil,CKata);
+      K_ADVKATA();//Ckata berada di jam;
+      AK_AddAsLastEl(&hasil,CKata);
+      K_ADVKATA();
+    }
+  }
+  return hasil;
+}
+
 
 /*Bagian Load File Eksternal*/
 
@@ -456,11 +480,57 @@ void WriteOrder(FILE* namafile,Order order)
   fprintf(namafile,"%d/%s/%d",O_IDMakanan(order),K_KataToChar(O_NamaMakanan(order)),O_NoMeja(order));
 }
 
+void WriteUsername(FILE* namafile,ArrKata arrkata)
+/* I.S. namafile dan arrkata terdefinisi
+   F.S. tertulis arrkata di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
+{
+  int i;
+  for(i=AK_GetFirstIdx(arrkata);i<=AK_Neff(arrkata);i+=2){
+    fprintf(namafile,"%s ",K_KataToChar(AK_Elmt(arrkata,i)));
+    fprintf(namafile,"%s ",K_KataToChar(AK_Elmt(arrkata,i+1)));
+  }
+  fprintf(namafile,".");
+}
+
 void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan pelayan,PrioQueueCustomer prioqueue,StackFood hand,StackFood tray,ArrOrder arrorder)
 /*I.S. bebas
   F.S. data nama,money,dll tersave di file eksternal dengan nama sesuai nama
   */
 {
+  ArrKata allUserName;
+  FILE* fu;
+  Jam timesaved;
+  time_t raw;
+  struct tm * now;
+  boolean found=false;
+  int indeks=1;
+  time(&raw);
+  now = localtime(&raw);
+  J_Hour(timesaved) = now->tm_hour;
+  J_Minute(timesaved) = now->tm_min;
+  J_Second(timesaved) = now->tm_sec;
+  allUserName=GetAllUserName();
+  // for(indeks=1;indeks<=AK_Neff(allUserName);indeks++){
+  //   K_PrintKata(AK_Elmt(allUserName,indeks));
+  // }
+  indeks=1;
+  while(indeks<=AK_Neff(allUserName)&&!found){
+    if(K_IsKataSama(AK_Elmt(allUserName,indeks),nama)){
+      found=true;
+    }else{
+      indeks++;
+    }
+  }
+  if(found){
+    AK_Elmt(allUserName,indeks+1)=K_JamToKata(timesaved);
+  }else{
+    AK_AddAsLastEl(&allUserName,nama);
+    AK_AddAsLastEl(&allUserName,K_JamToKata(timesaved));
+  }
+  fu=fopen("SaveData/username.dat","w+");
+  WriteUsername(fu,allUserName);
+  fclose(fu);
+  ///////////////////////////////////////////////////////////
   FILE* fw;
   Kata namafile=K_MakeKata("SaveData/");
   K_KonkatKata(&namafile,nama);
@@ -505,7 +575,6 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan
   GR=GR_First(Ruangan(restoran));
   GRD_address temp[9];
   int n=0,i;
-  boolean found;
   while(GR!=Nil){
     GD=GR_Doors(GR);
     while(GD!=Nil){
@@ -582,3 +651,5 @@ void SaveFile(Kata nama,int money, int life, int waktu,Restoran restoran,Pelayan
   fprintf(fw,".");
   fclose(fw);
 }
+
+
