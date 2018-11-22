@@ -4,7 +4,7 @@
 #include "../../boolean.h"
 #include "../../ADT/space/matTile/matTile.h"
 #include "../../ADT/customer/prioQueueCustomer.h"
-#include "../../ADT/food/stacktfood.h"
+#include "../../ADT/food/stackFood/stacktfood.h"
 #include <locale.h>
 
 void DrawBorders(WINDOW *screen)

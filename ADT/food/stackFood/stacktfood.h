@@ -5,8 +5,8 @@
 #ifndef stacktfood_H
 #define stacktfood_H
 
-#include "../../std.h"
-#include "food.h"
+#include "../../../std.h"
+#include "../food.h"
 
 #define SF_MaxEl 50
 /* Nil adalah stack dengan elemen kosong . */

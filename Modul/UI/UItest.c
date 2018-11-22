@@ -6,7 +6,7 @@
 #include "../../ADT/mesinkata/mesinkata.h"
 #include "../../ADT/space/matTile/matTile.h"
 #include "../../ADT/customer/prioQueueCustomer.h"
-#include "../../ADT/food/stacktfood.h"
+#include "../../ADT/food/stackFood/stacktfood.h"
 #include "../../ADT/food/treeFood/treeFood.h"
 #include "../../ADT/food/food.h"
 

@@ -2,15 +2,15 @@
 mkdir -p bin
 case $1 in
 main)
-	gcc -Wall -o main main.c ADT/food/stacktfood.c ADT/point/point.c ADT/arrInt/arrInt.c ADT/arrOrder/order.c ADT/arrOrder/arrOrder.c ADT/food/food.c ADT/food/treeFood/treeFood.c ADT/space/space.c ADT/space/arrMeja/arrMeja.c ADT/space/matTile/matTile.c Modul/UI/UI.c Modul/eksternal/eksternal.c ADT/mesinkata/mesinkata.c ADT/mesinkata/mesinkar.c ADT/mesinkata/arrKata/arrKata.c ADT/space/grafRuangan/grafRuangan.c ADT/customer/prioQueueCustomer.c ADT/jam/jam.c -lncursesw
+	gcc -Wall -o main main.c ADT/food/stackFood/stacktfood.c ADT/point/point.c ADT/arrInt/arrInt.c ADT/arrOrder/order.c ADT/arrOrder/arrOrder.c ADT/food/food.c ADT/food/treeFood/treeFood.c ADT/space/space.c ADT/space/arrMeja/arrMeja.c ADT/space/matTile/matTile.c Modul/UI/UI.c Modul/eksternal/eksternal.c ADT/mesinkata/mesinkata.c ADT/mesinkata/mesinkar.c ADT/mesinkata/arrKata/arrKata.c ADT/space/grafRuangan/grafRuangan.c ADT/customer/prioQueueCustomer.c ADT/jam/jam.c -lncursesw
   mv main bin/main
   ./bin/main
 	;;
 test)
 	case $2 in
-  ui)
+  UI)
     cd Modul/UI
-    gcc -Wall -o test-ui UI.c UItest.c ../../ADT/customer/prioQueueCustomer.c ../../ADT/space/matTile/matTile.c ../../ADT/mesinkata/mesinka*.c ../../ADT/mesinkata/arrKata/arrKata.c ../../ADT/food/stacktfood.c ../../ADT/food/food.c ../../ADT/food/treeFood/treeFood.c ../../ADT/arrOrder/arrOrder.c ../../ADT/arrOrder/order.c -lncursesw
+    gcc -Wall -o test-ui UI.c UItest.c ../../ADT/customer/prioQueueCustomer.c ../../ADT/space/matTile/matTile.c ../../ADT/mesinkata/mesinka*.c ../../ADT/mesinkata/arrKata/arrKata.c ../../ADT/food/stackFood/stacktfood.c ../../ADT/food/food.c ../../ADT/food/treeFood/treeFood.c ../../ADT/arrOrder/arrOrder.c ../../ADT/arrOrder/order.c -lncursesw
     mv test-ui ../../bin/test-ui
     cd ../..
     ./bin/test-ui
@@ -29,6 +29,20 @@ test)
     cd ../..
     ./bin/test-space
     ;;
+  arrInt)
+    cd ADT/arrInt
+    gcc -Wall arrInt.c driverArrInt.c
+    mv a.out ../../bin/test-arrInt
+    cd ../..
+    ./bin/test-arrInt
+    ;;
+  PQC)
+    cd ADT/customer
+    gcc -Wall driverPrioQueueCustomer.c prioQueueCustomer.c
+    mv a.out ../../bin/test-PQC
+    cd ../..
+    ./bin/test-PQC
+    ;;
   arrOrder)
     cd ADT/arrOrder
     gcc -Wall driverArrOrder.c arrOrder.c order.c ../mesinkata/mesinkata.c ../mesinkata/mesinkar.c
@@ -36,20 +50,30 @@ test)
     cd ../..
     ./bin/test-arrOrder
     ;;
+  treeFood)
+    cd ADT/food/treeFood
+    gcc -Wall mtree.c treeFood.c ../../mesinkata/mesinkar.c ../../mesinkata/mesinkata.c ../food.c
+    mv a.out ../../../bin/test-treeFood
+    cd ../../..
+    ./bin/test-treeFood
+    ;;
   *)
     echo "Unimplemented tester '$2'"
     echo ""
     echo "Implemented tester"
-    echo "ui                  - Modul UI"
+    echo "UI                  - Modul UI"
+    echo "arrInt              - ADT Array Integer"
     echo "arrOrder            - ADT Array Order"
     echo "grafRuangan         - ADT Graf Ruangan"
+    echo "PQC                 - ADT Priority Queue Customer"
+    echo "treeFood            - ADT Tree Food"
     ;;
     
   esac
 	;;
 *)
 	echo "Usage"
-  echo "compile <argument>"
+  echo "run <argument>"
   echo "Supported arguments"
   echo "main        - Main Program"
   echo "test <type> - Tester"
