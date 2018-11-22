@@ -106,6 +106,7 @@ int main(){
 
   InitScreen(&gs);
 
+  /* Test menu */
   do {
     WriteText(&gs,ak);
     input = GetInput(&gs, prompt);
@@ -114,18 +115,16 @@ int main(){
     }
   } while(!K_IsKataSama(input, K_MakeKata("1")));
 
+
+  /* Test Main game*/
   while(true){
-    RefreshTopPanel(&gs,"Nama",1,2,3);
+    RefreshTopPanel(&gs,"Up to quit",1,2,3);
     RefreshWaitingPanel(&gs, pqc);
     RefreshFoodPanel(&gs,sf);
     RefreshHandPanel(&gs,sh);
     RefreshMap(&gs,mt,waiter);
     RefreshOrderPanel(&gs,ao);
     input  = GetInput(&gs,prompt);
-
-    if(K_IsKataSama(input,K_MakeKata("RESIZE"))){
-      refreshLayout(&gs);
-    }
 
     if(K_IsKataSama(input,K_MakeKata("TOOLTIP"))){
       RefreshTooltipPanel(&gs,tooltip);
