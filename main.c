@@ -210,33 +210,40 @@ int main() {
 
   do { //looping game
     InitScreen(&gs);
-    WriteText(&gs,MainMenu()); //main menu
+    // WriteText(&gs,MainMenu()); //main menu
     loaded = false; // masuk main menu == belum load
     do { //meminta input hingga benar
+      WriteText(&gs,MainMenu()); //main menu
       input = GetInput(&gs,K_MakeKata("CHOICE: "));
     }
     while (!InputBenar(input,new,start,load,keluar));
 
     if (!K_IsKataSama(input,keluar)) { //inputnya bukan exit
       if (K_IsKataSama(input,new)) { //NEW
-        username=GetInput(&gs,K_MakeKata("NEW USERNAME : "));
-        //baca file konfigurasi normal
+        do {
+          WriteText(&gs,MainMenu()); //main menu
+          username=GetInput(&gs,K_MakeKata("NEW USERNAME : "));
+          //baca file konfigurasi normal
+        } while(K_IsKataSama(username,K_MakeKata("RESIZE")));
       }
       else if (K_IsKataSama(input,start)) { //START
-        //menampilkan username yang tersedia
-        if(username.Length==0)
-          username = GetInput(&gs,K_MakeKata("INPUT USERNAME: "));
-        //dibaca diulang hingga daper username yang benar
-        //baca save file dengan nama
+        do {
+          WriteText(&gs,MainMenu()); //main menu
+          username=GetInput(&gs,K_MakeKata("NEW USERNAME : "));
+        } while(K_IsKataSama(username,K_MakeKata("RESIZE")));
       }
       else if (K_IsKataSama(input,load)) { //LOAD
         //prosedure load
         loaded = true;
         do {
-          username = GetInput(&gs,K_MakeKata("SAVED USERNAME: "));
+          do {
+            WriteText(&gs, GetAllUserName());
+            username = GetInput(&gs,K_MakeKata("SAVED USERNAME: "));
+          } while(K_IsKataSama(username,K_MakeKata("RESIZE")));
           LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
           if (status ==0 && !K_IsKataSama(username,keluar)) {
             do {
+              // WriteText(&gs, GetAllUserName());
               input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
             } while(!K_IsKataSama(input,K_MakeKata("")));
           }
