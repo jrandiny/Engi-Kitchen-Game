@@ -1,0 +1,9 @@
+language: c
+
+compiler:
+  - gcc
+
+build:
+  ci:
+    - chmod +x run.sh
+    - ./run.sh main
