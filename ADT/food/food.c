@@ -1,3 +1,7 @@
+/* Kelompok : UAS
+   Nama File : food.c
+   Deskripsi : ADT untuk tipe food */
+
 #include "food.h"
 
 Food F_CreateFood(int id, Kata nama, int harga)

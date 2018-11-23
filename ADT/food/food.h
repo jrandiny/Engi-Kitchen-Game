@@ -1,5 +1,6 @@
-//File : food.h
-/* merupakan tipe data Food */
+/* Kelompok : UAS
+   Nama File : food.h
+   Deskripsi : ADT untuk tipe food */
 
 #ifndef FOOD_H
 #define FOOD_H
@@ -7,9 +8,9 @@
 #include "../mesinkata/mesinkata.h"
 
 typedef struct {
-  int idMakanan; //indeks makanan
-  Kata namaMakanan; //nama makanan sesuai tree makanan
-  int harga; //harga makanan
+  int idMakanan;    /* indeks makanan */
+  Kata namaMakanan; /* nama makanan sesuai tree makanan */
+  int harga;        /* harga makanan */
 }Food;
 
 #define F_IDMakanan(F) (F).idMakanan
