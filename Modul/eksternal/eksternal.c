@@ -9,7 +9,7 @@ index genap untuk username, index ganjil untuk jam
 */
 {
   ArrKata hasil;
-  int status=0,i=0;
+  int status=0;
   AK_CreateEmpty(&hasil);
   K_STARTKATA("SaveData/username.dat",&status);//Ckata berada di username
   if(status==1){
@@ -39,8 +39,8 @@ hasil fungsi getallusername
     K_KonkatKata(&hasilkata,hubung);
     K_KonkatKata(&hasilkata,AK_Elmt(arrkata,i));
     K_KonkatKata(&hasilkata,tab);
-    K_KonkatKata(&hasilkata,AK_Elmt(arrkata,i+1)); 
-    AK_AddAsLastEl(&hasil,hasilkata); 
+    K_KonkatKata(&hasilkata,AK_Elmt(arrkata,i+1));
+    AK_AddAsLastEl(&hasil,hasilkata);
   }
   return hasil;
 }

@@ -15,6 +15,13 @@ test)
     cd ../..
     ./bin/test-ui
     ;;
+  eksternal)
+    cd Modul/eksternal
+    gcc -Wall -o eksternaltes eksternaltes.c ../../ADT/point/point.c ../../ADT/arrInt/arrInt.c ../../ADT/space/space.c ../../ADT/space/arrMeja/arrMeja.c ../../ADT/space/matTile/matTile.c eksternal.c ../../ADT/mesinkata/mesinkata.c ../../ADT/mesinkata/mesinkar.c ../../ADT/mesinkata/arrKata/arrKata.c ../../ADT/space/grafRuangan/grafRuangan.c ../../ADT/customer/prioQueueCustomer.c ../../ADT/food/treeFood/treeFood.c ../../ADT/food/food.c ../../ADT/food/stackFood/stacktfood.c ../../ADT/order/arrOrder/arrOrder.c ../../ADT/order/order.c -lncurses
+    mv eksternaltes ../../bin/test-eksternal
+    cd ../..
+    ./bin/test-eksternal
+    ;;
   grafRuangan)
     cd ADT/space/grafRuangan
     gcc -Wall mgraf.c grafRuangan.c ../matTile/matTile.c ../arrMeja/arrMeja.c ../../point/point.c

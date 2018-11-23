@@ -37,12 +37,14 @@ void K_STARTKATA(char* nama,int *status)
 
   /* ALGORITMA */
   K_START(nama,status);
-  K_IgnoreBlank();
-  if(CC == MARK){
-    EndKata = true;
-  }else{
-    EndKata = false;
-    K_SalinKata();
+  if(*status==1){
+    K_IgnoreBlank();
+    if(CC == MARK){
+      EndKata = true;
+    }else{
+      EndKata = false;
+      K_SalinKata();
+    }
   }
 }
 
@@ -274,7 +276,7 @@ void K_RemoveSpace(Kata* kata)
 Kata K_JamToKata(Jam jam)
 /* mengembalikan tipe kata dari jam*/
 {
-  
+
   Kata hasil;
   hasil.Length = 8;
   hasil.TabKata[1]=(char)(J_Hour(jam)/10)+'0';
