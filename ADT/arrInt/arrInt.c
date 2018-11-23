@@ -1,11 +1,7 @@
 /* MODUL TABEL INTEGER */
 /* Kelompok  : UAS
    Nama file : arrInt.c
-   Deskripsi : ADT untuk tipe Array integer statik eksplisit */
-/* Berisi definisi dan semua primitif pemrosesan tabel integer */
-/* Penempatan elemen selalu rapat kiri */
-/* Versi I : dengan banyaknya elemen didefinisikan secara eksplisit,
-   memori tabel statik */
+   Deskripsi : Implementasi ADT untuk tipe Array integer statik eksplisit */
 
 #include "arrInt.h"
 
@@ -13,7 +9,7 @@
 /* Konstruktor : create tabel kosong  */
 void AI_CreateEmpty (ArrInt * T)
 /* I.S. T sembarang */
-/* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
+/* F.S. Terbentuk tabel T kosong dengan kapasitas AI_IdxMax-AI_IdxMin+1 */
 {
   AI_Neff(*T) = 0;
 }
@@ -30,20 +26,20 @@ int AI_NbElmt (ArrInt T)
 int AI_MaxNbEl (ArrInt T)
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
 {
-  return IdxMax;
+  return AI_IdxMax;
 }
 /* *** Selektor INDEKS *** */
 int AI_GetFirstIdx (ArrInt T)
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T pertama */
 {
-  return IdxMin;
+  return AI_IdxMin;
 }
 int AI_GetLastIdx (ArrInt T)
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T terakhir */
 {
-  return (IdxMin + AI_Neff(T) -1);
+  return (AI_IdxMin + AI_Neff(T) -1);
 }
 
 /* ********** Test Indeks yang valid ********** */
@@ -51,7 +47,7 @@ boolean AI_IsIdxValid (ArrInt T, int i)
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
 {
-  return ((i >= IdxMin)&&(i <= IdxMax));
+  return ((i >= AI_IdxMin)&&(i <= AI_IdxMax));
 }
 boolean AI_IsIdxEff (ArrInt T, int i)
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
@@ -71,7 +67,7 @@ boolean AI_IsEmpty (ArrInt T)
 boolean AI_IsFull (ArrInt T)
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
 {
-  return (AI_Neff(T) >= IdxMax);
+  return (AI_Neff(T) >= AI_IdxMax);
 }
 
 /* ********** MENAMBAH ELEMEN ********** */

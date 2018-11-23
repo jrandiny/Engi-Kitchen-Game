@@ -13,23 +13,18 @@
 #include "../../std.h"
 
 /*  Kamus Umum */
-#define IdxMax 100
+#define AI_IdxMax 100
 /* Indeks maksimum array, sekaligus ukuran maksimum array dalam C */
-#define IdxMin 1
+#define AI_IdxMin 1
 /* Indeks minimum array */
 
 /* Definisi elemen dan koleksi objek */
 typedef struct {
-	int TI[IdxMax+1]; /* memori tempat penyimpan elemen (container) */
+	int TI[AI_IdxMax+1]; /* memori tempat penyimpan elemen (container) */
 	int Neff; /* >=0, banyaknya elemen efektif */
 } ArrInt;
-/* Indeks yang digunakan [IdxMin..IdxMax] */
-/* Jika T adalah ArrInt, cara deklarasi dan akses: */
-/* Deklarasi : T : ArrInt */
-/* Maka cara akses:
-   T.Neff  untuk mengetahui banyaknya elemen
-   T.TI    untuk mengakses seluruh nilai elemen tabel
-   T.TI[i] untuk mengakses elemen ke-i */
+/* Indeks yang digunakan [AI_IdxMin..AI_IdxMax] */
+
 /* Definisi :
   Tabel kosong: T.Neff = 0
   Definisi elemen pertama : T.TI[i] dengan i=1
@@ -44,7 +39,7 @@ typedef struct {
 /* Konstruktor : create tabel kosong  */
 void AI_CreateEmpty (ArrInt * T);
 /* I.S. T sembarang */
-/* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
+/* F.S. Terbentuk tabel T kosong dengan kapasitas AI_IdxMax-AI_IdxMin+1 */
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */

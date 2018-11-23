@@ -6,15 +6,16 @@
 
 int main (){
 
-  //Kamus
+  /* KAMUS */
   ArrInt T;
   int input;
   int temp;
 
-  //ALGORITMA
+  /* ALGORITMA */
   AI_CreateEmpty(&T);
 
   do {
+    /* Menu */
     printf("1. Info elemen\n");
     printf("2. Info indeks\n");
     printf("3. AddAsLastEl\n");
@@ -27,16 +28,18 @@ int main (){
     printf("Input = ");
     scanf("%d", &input);
 
+    /* Info element */
     if(input==1){
       printf("NbElmt : %d \n", AI_NbElmt(T));
       printf("MaxNbElmt : %d\n", AI_MaxNbEl(T));
     }
 
+    /* Info indeks */
     else if(input==2){
       printf("FirstIdx = %d\n", AI_GetFirstIdx(T));
       printf("LastIdx = %d\n", AI_GetLastIdx(T));
     }
-
+    /* AddAsLastEl */
     else if(input==3){
       printf("Elemen yang akan dimasukkan = ");
       scanf("%d", &temp);
@@ -45,14 +48,14 @@ int main (){
       else
         printf("Tabel full");
     }
-
+    /* DelLastEl */
     else if(input==4){
       if(!AI_IsEmpty(T))
         AI_DelLastEl(&T,&temp);
       else
         printf("Tabel kosong\n");
     }
-
+    /* Cek tabel */
     else if(input==5){
       if(AI_IsEmpty(T))
         printf("IsEmpty = true\n");
@@ -64,7 +67,7 @@ int main (){
       else
         printf("IsFull = false\n");
     }
-
+    /*Cek Indeks */
     else if(input==6){
       printf("indeks yang akan dimasukkan = ");
       scanf("%d", &temp);
@@ -83,6 +86,7 @@ int main (){
 
     printf("\n");
 
+    /* Cetak array */
     if(input!=7){
       if(AI_IsEmpty(T))
         printf("Array = []\n");
@@ -99,6 +103,7 @@ int main (){
     }
 
   } while (input != 7);
+  /* input == 7 (exit)*/
 
   return 0;
 }
