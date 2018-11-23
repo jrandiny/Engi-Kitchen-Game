@@ -10,4 +10,4 @@ install:
 build:
   ci:
     - chmod +x run.sh
-    - ./run.sh main
+    - ./run.sh mainCI
