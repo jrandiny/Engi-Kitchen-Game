@@ -2,10 +2,6 @@
 /* Kelompok  : UAS
    Nama file : arrOrder.c
    Deskripsi : ADT untuk tipe Array order */
-/* Berisi definisi dan semua primitif pemrosesan tabel Order */
-/* Penempatan elemen selalu rapat kiri */
-/* Versi I : dengan banyaknya elemen didefinisikan secara eksplisit,
-   memori tabel statik */
 
 #include "arrOrder.h"
 
@@ -13,7 +9,7 @@
 /* Konstruktor : create tabel kosong  */
 void AO_CreateEmpty (ArrOrder * T)
 /* I.S. T sembarang */
-/* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
+/* F.S. Terbentuk tabel T kosong dengan kapasitas AO_IdxMax-AO_IdxMin+1 */
 {
   AO_Neff(*T) = 0;
 }
@@ -31,7 +27,7 @@ int AO_NbElmt (ArrOrder T)
 int AO_MaxNbEl (ArrOrder T)
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
 {
-  return IdxMax;
+  return AO_IdxMax;
 }
 
 /* *** Selektor INDEKS *** */
@@ -39,14 +35,14 @@ AO_IdxType AO_GetFirstIdx (ArrOrder T)
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T pertama */
 {
-  return IdxMin;
+  return AO_IdxMin;
 }
 
 AO_IdxType AO_GetLastIdx (ArrOrder T)
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T terakhir */
 {
-  return (IdxMin + AO_Neff(T) -1);
+  return (AO_IdxMin + AO_Neff(T) -1);
 }
 
 /* ********** Test Indeks yang valid ********** */
@@ -54,7 +50,7 @@ boolean AO_IsIdxValid (ArrOrder T, AO_IdxType i)
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
 {
-  return ((i >= IdxMin)&&(i <= IdxMax));
+  return ((i >= AO_IdxMin)&&(i <= AO_IdxMax));
 }
 
 boolean AO_IsIdxEff (ArrOrder T, AO_IdxType i)
@@ -76,7 +72,7 @@ boolean AO_IsEmpty (ArrOrder T)
 boolean AO_IsFull (ArrOrder T)
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
 {
-  return (AO_Neff(T) >= IdxMax);
+  return (AO_Neff(T) >= AO_IdxMax);
 }
 
 /* ********** SEARCHING ********** */

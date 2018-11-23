@@ -3,23 +3,16 @@
    Deskripsi : Driver ADT untuk tipe Array order */
 
 #include "arrOrder.h"
-#include "order.h"
-#include "../mesinkata/mesinkata.h"
+#include "../order.h"
+#include "../../mesinkata/mesinkata.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 void AO_TulisIsi (ArrOrder T);
 /* Proses : Menuliskan isi tabel dengan traversal */
 /* I.S. T boleh kosong */
-/* F.S. Jika T tidak kosong : indeks dan elemen tabel ditulis berderet ke bawah */
+/* F.S. Jika T tidak kosong : Ditulis ke bawah [nomor meja] id - nama makanan */
 /*      Jika T kosong : Hanya menulis "Tabel kosong" */
-/* Contoh: Jika isi Tabel: [1, 20, 30, 50]
-   Maka tercetak di layar:
-   [1]1
-   [2]20
-   [3]30
-   [4]50
-*/
 
 int main(){
   /* KAMUS */
@@ -42,20 +35,20 @@ int main(){
     printf("\n");
 
     printf("Menu\n");
-    printf("0 = Exit\n");
-    printf("1 = I/O\n");
-    printf("2 = Indeks\n");
-    printf("3 = Status\n");
-    printf("4 = Search\n");
+    printf("0. Exit\n");
+    printf("1. I/O\n");
+    printf("2. Indeks\n");
+    printf("3. Status\n");
+    printf("4. Search\n");
     printf("Choice = ");
     scanf("%d",&input);
 
     switch(input){
       case 1:
-        printf("1 = AddEli\n");
-        printf("2 = AddAsLastEl\n");
-        printf("3 = DelEli\n");
-        printf("4 = DelLasEl\n");
+        printf("1. AddEli\n");
+        printf("2. AddAsLastEl\n");
+        printf("3. DelEli\n");
+        printf("4. DelLasEl\n");
         printf("Choice = ");
         scanf("%d",&input);
 

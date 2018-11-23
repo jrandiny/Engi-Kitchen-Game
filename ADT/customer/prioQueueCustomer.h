@@ -27,9 +27,9 @@ typedef struct { Customer T[PQC_MaxEl+1];   /* tabel penyimpan elemen */
 
 /* ********* AKSES (Selektor) ********* */
 /* Jika e adalah Customer dan Q adalah Queue, maka akses elemen : */
-#define PQC_Prio(e)       (e).prio
-#define PQC_Jumlah(e)     (e).jumlah
-#define PQC_Waktu(e)      (e).waktu
+#define C_Prio(e)         (e).prio
+#define C_Jumlah(e)       (e).jumlah
+#define C_Waktu(e)        (e).waktu
 #define PQC_Head(Q)       (Q).HEAD
 #define PQC_Tail(Q)       (Q).TAIL
 #define PQC_InfoHead(Q)   (Q).T[(Q).HEAD]

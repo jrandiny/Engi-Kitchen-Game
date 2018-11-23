@@ -10,23 +10,23 @@
 #ifndef ARRORDER_H
 #define ARRORDER_H
 
-#include "../../std.h"
-#include "order.h"
+#include "../../../std.h"
+#include "../order.h"
 
 /*  Kamus Umum */
-#define IdxMax 100
+#define AO_IdxMax 100
 /* Indeks maksimum array, sekaligus ukuran maksimum array dalam C */
-#define IdxMin 1
+#define AO_IdxMin 1
 /* Indeks minimum array */
 
 /* Definisi elemen dan koleksi objek */
 typedef int AO_IdxType;  /* type indeks */
 typedef Order AO_ElType;   /* type elemen tabel */
 typedef struct {
-	AO_ElType TI[IdxMax+1]; /* memori tempat penyimpan elemen (container) */
+	AO_ElType TI[AO_IdxMax+1]; /* memori tempat penyimpan elemen (container) */
 	int Neff; /* >=0, banyaknya elemen efektif */
 } ArrOrder;
-/* Indeks yang digunakan [IdxMin..IdxMax] */
+/* Indeks yang digunakan [AO_IdxMin..AO_IdxMax] */
 /* Jika T adalah ArrOrder, cara deklarasi dan akses: */
 /* Deklarasi : T : ArrOrder */
 /* Maka cara akses:
@@ -47,7 +47,7 @@ typedef struct {
 /* Konstruktor : create tabel kosong  */
 void AO_CreateEmpty (ArrOrder * T);
 /* I.S. T sembarang */
-/* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
+/* F.S. Terbentuk tabel T kosong dengan kapasitas AO_IdxMax-AO_IdxMin+1 */
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
@@ -93,7 +93,6 @@ AO_IdxType AO_Search (ArrOrder T, int X);
 /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = X */
 /* Jika tidak ada, mengirimkan IdxUndef */
 /* Menghasilkan indeks tak terdefinisi (IdxUndef) jika tabel T kosong */
-/* Memakai skema search TANPA boolean */
 
 /* ********** MENAMBAH ELEMEN ********** */
 /* *** Menambahkan elemen terakhir *** */

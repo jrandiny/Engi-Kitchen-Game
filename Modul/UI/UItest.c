@@ -55,14 +55,14 @@ int main(){
 
   /* Create simple Queue*/
   PQC_CreateEmpty(&pqc);
-  PQC_Prio(cust) = 1;
-  PQC_Waktu(cust) = 2;
-  PQC_Jumlah(cust) = 2;
+  C_Prio(cust) = 1;
+  C_Waktu(cust) = 2;
+  C_Jumlah(cust) = 2;
   PQC_Add(&pqc, cust);
   PQC_Add(&pqc, cust);
 
-  PQC_Prio(cust) = 0;
-  PQC_Jumlah(cust) = 4;
+  C_Prio(cust) = 0;
+  C_Jumlah(cust) = 4;
   PQC_Add(&pqc, cust);
   PQC_Add(&pqc, cust);
 

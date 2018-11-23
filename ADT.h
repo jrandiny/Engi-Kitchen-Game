@@ -9,7 +9,7 @@
 #include "ADT/space/space.h"
 #include "ADT/customer/prioQueueCustomer.h"
 #include "ADT/arrInt/arrInt.h"
-#include "ADT/arrOrder/arrOrder.h"
+#include "ADT/order/arrOrder/arrOrder.h"
 #include "ADT/food/treeFood/treeFood.h"
 #include "Modul/eksternal/eksternal.h"
 #include "Modul/UI/UI.h"

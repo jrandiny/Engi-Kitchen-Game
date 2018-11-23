@@ -2,7 +2,7 @@
 mkdir -p bin
 case $1 in
 main)
-	gcc -Wall -o main main.c ADT/food/stackFood/stacktfood.c ADT/point/point.c ADT/arrInt/arrInt.c ADT/arrOrder/order.c ADT/arrOrder/arrOrder.c ADT/food/food.c ADT/food/treeFood/treeFood.c ADT/space/space.c ADT/space/arrMeja/arrMeja.c ADT/space/matTile/matTile.c Modul/UI/UI.c Modul/eksternal/eksternal.c ADT/mesinkata/mesinkata.c ADT/mesinkata/mesinkar.c ADT/mesinkata/arrKata/arrKata.c ADT/space/grafRuangan/grafRuangan.c ADT/customer/prioQueueCustomer.c ADT/jam/jam.c -lncursesw
+	gcc -Wall -o main main.c ADT/food/stackFood/stacktfood.c ADT/point/point.c ADT/arrInt/arrInt.c ADT/order/order.c ADT/order/arrOrder/arrOrder.c ADT/food/food.c ADT/food/treeFood/treeFood.c ADT/space/space.c ADT/space/arrMeja/arrMeja.c ADT/space/matTile/matTile.c Modul/UI/UI.c Modul/eksternal/eksternal.c ADT/mesinkata/mesinkata.c ADT/mesinkata/mesinkar.c ADT/mesinkata/arrKata/arrKata.c ADT/space/grafRuangan/grafRuangan.c ADT/customer/prioQueueCustomer.c ADT/jam/jam.c -lncursesw
   mv main bin/main
   ./bin/main
 	;;
@@ -10,7 +10,7 @@ test)
 	case $2 in
   UI)
     cd Modul/UI
-    gcc -Wall -o test-ui UI.c UItest.c ../../ADT/customer/prioQueueCustomer.c ../../ADT/space/matTile/matTile.c ../../ADT/mesinkata/mesinka*.c ../../ADT/mesinkata/arrKata/arrKata.c ../../ADT/food/stackFood/stacktfood.c ../../ADT/food/food.c ../../ADT/food/treeFood/treeFood.c ../../ADT/arrOrder/arrOrder.c ../../ADT/arrOrder/order.c -lncursesw
+    gcc -Wall -o test-ui UI.c UItest.c ../../ADT/customer/prioQueueCustomer.c ../../ADT/space/matTile/matTile.c ../../ADT/mesinkata/mesinka*.c ../../ADT/mesinkata/arrKata/arrKata.c ../../ADT/food/stackFood/stacktfood.c ../../ADT/food/food.c ../../ADT/food/treeFood/treeFood.c ../../ADT/order/arrOrder/arrOrder.c ../../ADT/order/order.c -lncursesw
     mv test-ui ../../bin/test-ui
     cd ../..
     ./bin/test-ui
@@ -44,10 +44,10 @@ test)
     ./bin/test-PQC
     ;;
   arrOrder)
-    cd ADT/arrOrder
-    gcc -Wall driverArrOrder.c arrOrder.c order.c ../mesinkata/mesinkata.c ../mesinkata/mesinkar.c
-    mv a.out ../../bin/test-arrOrder
-    cd ../..
+    cd ADT/order/arrOrder
+    gcc -Wall driverArrOrder.c arrOrder.c ../order.c ../../mesinkata/mesinkata.c ../../mesinkata/mesinkar.c
+    mv a.out ../../../bin/test-arrOrder
+    cd ../../..
     ./bin/test-arrOrder
     ;;
   treeFood)
@@ -68,7 +68,7 @@ test)
     echo "PQC                 - ADT Priority Queue Customer"
     echo "treeFood            - ADT Tree Food"
     ;;
-    
+
   esac
 	;;
 *)

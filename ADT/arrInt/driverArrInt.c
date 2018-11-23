@@ -16,16 +16,17 @@ int main (){
 
   do {
     /* Menu */
+    printf("Menu\n");
+    printf("0. Exit\n");
     printf("1. Info elemen\n");
     printf("2. Info indeks\n");
     printf("3. AddAsLastEl\n");
     printf("4. DelLastEl\n");
     printf("5. Cek Tabel\n");
     printf("6. Cek Indeks\n");
-    printf("7. Exit\n");
     printf("\n");
 
-    printf("Input = ");
+    printf("Choice = ");
     scanf("%d", &input);
 
     /* Info element */
@@ -87,7 +88,7 @@ int main (){
     printf("\n");
 
     /* Cetak array */
-    if(input!=7){
+    if(input!=0){
       if(AI_IsEmpty(T))
         printf("Array = []\n");
       else{
@@ -102,8 +103,8 @@ int main (){
       printf("\n");
     }
 
-  } while (input != 7);
-  /* input == 7 (exit)*/
+  } while (input != 0);
+  /* input == 0 (exit)*/
 
   return 0;
 }

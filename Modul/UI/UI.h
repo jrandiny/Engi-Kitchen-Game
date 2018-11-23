@@ -11,7 +11,7 @@
 #include "../../ADT/customer/prioQueueCustomer.h"
 #include "../../ADT/food/stackFood/stacktfood.h"
 #include "../../ADT/food/treeFood/treeFood.h"
-#include "../../ADT/arrOrder/arrOrder.h"
+#include "../../ADT/order/arrOrder/arrOrder.h"
 //#include "../../ADT/listlinier/listlinier.h"
 #include <ncurses.h>
 

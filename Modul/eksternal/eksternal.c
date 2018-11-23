@@ -156,9 +156,9 @@ Customer ParseCustomer(Kata scanned)
   int pos1,pos2;
   Customer hasil;
   ParserLocate(scanned,&pos1,&pos2);
-  PQC_Prio(hasil)=K_KataToInt(K_CopySubKata(scanned,1,pos1-1));
-  PQC_Jumlah(hasil)=K_KataToInt(K_CopySubKata(scanned,pos1+1,pos2-1));
-  PQC_Waktu(hasil)=K_KataToInt(K_CopySubKata(scanned,pos2+1,scanned.Length));
+  C_Prio(hasil)=K_KataToInt(K_CopySubKata(scanned,1,pos1-1));
+  C_Jumlah(hasil)=K_KataToInt(K_CopySubKata(scanned,pos1+1,pos2-1));
+  C_Waktu(hasil)=K_KataToInt(K_CopySubKata(scanned,pos2+1,scanned.Length));
   return hasil;
 }
 
@@ -428,7 +428,7 @@ void WriteCustomer(FILE* namafile,Customer customer)
 /* I.S. namafile dan customer terdefinisi
    F.S. tertulis customer di namafile tanpa diawali atau diakhiri karakter apapun sesuai format*/
 {
-  fprintf(namafile,"%d/%d/%d",PQC_Prio(customer),PQC_Jumlah(customer),PQC_Waktu(customer));
+  fprintf(namafile,"%d/%d/%d",C_Prio(customer),C_Jumlah(customer),C_Waktu(customer));
 }
 
 void WriteDoor(FILE* namafile,Door door)

@@ -59,10 +59,10 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
   chance = rand()%50;
   if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ //chance customer : 1/10 kemungkinan
     chance = rand()%4;
-    PQC_Prio(pelanggan) = (chance==0)? 1:0; //chance prio : 1/4 kemungkinan
+    C_Prio(pelanggan) = (chance==0)? 1:0; //chance prio : 1/4 kemungkinan
     chance = rand()%3;
-    PQC_Jumlah(pelanggan) = (chance==0)? 4:2; //chance 4 orang : 1/3 kemungkinan
-    PQC_Waktu(pelanggan) = waktuNow + 30; //kesabaran selalu 30 tik
+    C_Jumlah(pelanggan) = (chance==0)? 4:2; //chance 4 orang : 1/3 kemungkinan
+    C_Waktu(pelanggan) = waktuNow + 30; //kesabaran selalu 30 tik
     PQC_Add(pqc, pelanggan);
   }
 }
@@ -81,7 +81,7 @@ void PelangganPergi(PrioQueueCustomer *pqc,int waktuNow,int *jumlah)
   *jumlah = 0;
   while (!PQC_IsEmpty(*pqc)) {
     PQC_Del(pqc,&pelanggan);
-    if (PQC_Waktu(pelanggan)==waktuNow) {
+    if (C_Waktu(pelanggan)==waktuNow) {
       *jumlah += 1;
     } else {
       PQC_Add(&Q2,pelanggan);
@@ -359,22 +359,22 @@ int main() {
             if (nomorMeja!=0) { //artinya deket meja
               if(K_IsKataSama(input,K_MakeKata("PLACE"))){
                 PQC_CreateEmpty(&Q2);
-                while(!CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room) && !PQC_IsEmpty(Q1)){
+                while(!CanPlace(C_Jumlah(PQC_InfoHead(Q1)),P,*room) && !PQC_IsEmpty(Q1)){
                   PQC_Del(&Q1,&pelanggan);
                   PQC_Add(&Q2,pelanggan);
                 }//bisa place atau sudah dicek semua
 
-                if (CanPlace(PQC_Jumlah(PQC_InfoHead(Q1)),P,*room)) { //ada yang bisa di place
+                if (CanPlace(C_Jumlah(PQC_InfoHead(Q1)),P,*room)) { //ada yang bisa di place
                   aksiValid = true;
                   PQC_Del(&Q1,&pelanggan);
-                  if(PQC_Prio(pelanggan)==1){
+                  if(C_Prio(pelanggan)==1){
                     waktuOut = waktu + (rand()%40+81); //[81..120]
                   }
                   else{
                     waktuOut = waktu + (rand()%60+121); //[121..180]
                   }
 
-                  Placing(PQC_Jumlah(pelanggan),waktuOut,&P,room);
+                  Placing(C_Jumlah(pelanggan),waktuOut,&P,room);
 
                   while(!PQC_IsEmpty(Q1)) {
                     PQC_Del(&Q1,&pelanggan);

@@ -67,7 +67,7 @@ void PQC_Add (PrioQueueCustomer * Q, Customer X)
 	else {
 		i=PQC_Head(*Q);
 		j=PQC_Tail(*Q);
-		while (PQC_Prio(PQC_Elmt(*Q,j))<PQC_Prio(X) && j!=i) {
+		while (C_Prio(PQC_Elmt(*Q,j))<C_Prio(X) && j!=i) {
 			indeks = j+1;
 			if (indeks > PQC_MaxEl) indeks%=PQC_MaxEl;
 			PQC_Elmt(*Q,indeks) = PQC_Elmt(*Q,j);
@@ -76,7 +76,7 @@ void PQC_Add (PrioQueueCustomer * Q, Customer X)
 		}
 		indeks = j+1;
 		if (indeks > PQC_MaxEl) indeks%=PQC_MaxEl;
-		if (PQC_Prio(PQC_Elmt(*Q,j))<PQC_Prio(X)) {
+		if (C_Prio(PQC_Elmt(*Q,j))<C_Prio(X)) {
 		PQC_Elmt(*Q,indeks) = PQC_Elmt(*Q,j);
 		PQC_Elmt(*Q,j) = X;
 		} else {
@@ -119,7 +119,7 @@ void PQC_PrintQueue (PrioQueueCustomer Q)
 	/* ALGORITMA */
 	while (!PQC_IsEmpty(Q)) {
 		PQC_Del(&Q,&X);
-		printf("%d %d %d\n",PQC_Prio(X),PQC_Jumlah(X), PQC_Waktu(X));
+		printf("%d %d %d\n",C_Prio(X),C_Jumlah(X), C_Waktu(X));
 	}
 	printf("#\n");
 }

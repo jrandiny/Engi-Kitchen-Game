@@ -395,9 +395,9 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
     idx = 1;
 
     while(idx<=PQC_NBElmt(waitQueue)){
-      ch = PQC_Jumlah(PQC_Elmt(waitQueue, idx))+'0';
-      jumlahOrang = PQC_Jumlah(PQC_Elmt(waitQueue, idx));
-      if(PQC_Prio(PQC_Elmt(waitQueue, idx))==1){
+      ch = C_Jumlah(PQC_Elmt(waitQueue, idx))+'0';
+      jumlahOrang = C_Jumlah(PQC_Elmt(waitQueue, idx));
+      if(C_Prio(PQC_Elmt(waitQueue, idx))==1){
         if(doubleCol){
           // mvwaddch(Waiting_Panel(*gs), ycol2, 15, ch);
           if (jumlahOrang == 2) {

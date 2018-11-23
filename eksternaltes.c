@@ -63,7 +63,7 @@ int main(){
     // for(i=1;i<=n;i++){
     //     printf("%d ",i);
     //     PQC_Del(&prioqueue,&customer);
-    //     printf("%d\n",PQC_Prio(customer));
+    //     printf("%d\n",C_Prio(customer));
     // }
     // SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue);
     // LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue);

@@ -10,18 +10,19 @@ int main () {
 	Customer X;
 	char tipecustomer;
 
-	printf("MENU PRIO QUEUE CUSTOMER\n");
+	printf("Menu\n");
+  printf("0. Exit\n");
 	printf("1. IsEmpty\n");
 	printf("2. IsFull\n");
 	printf("3. NBElmt\n");
 	printf("4. Add\n");
 	printf("5. Del\n");
 	printf("6. PrintQueue\n");
-	printf("Masukkan pilihan menu : \n");
+	printf("Choice = \n");
 	PQC_CreateEmpty(&C);
 
 	scanf("%d", &menu);
-	while ((menu>0) && (menu<=6))
+	while (menu!=0)
 	{
 		switch (menu) {
 			case 1 :
@@ -56,18 +57,18 @@ int main () {
 			case 4 :
 			{
 				printf("masukkan jumlah costumer : ");
-				scanf("%d", &PQC_Jumlah(X));
+				scanf("%d", &C_Jumlah(X));
                 printf("masukkan prioritas costumer : ");
-				scanf("%d", &PQC_Prio(X));
+				scanf("%d", &C_Prio(X));
 				printf("masukkan durasi kesabaran : ");
-				scanf("%d", &PQC_Waktu(X));
+				scanf("%d", &C_Waktu(X));
 				PQC_Add(&C,X);
 			}
 			break;
 			case 5 :
 			{
 				PQC_Del(&C,&X);
-				printf("%d %d %d\n", PQC_Prio(X), PQC_Jumlah(X), PQC_Waktu(X));
+				printf("%d %d %d\n", C_Prio(X), C_Jumlah(X), C_Waktu(X));
             }
 			break;
 			case 6 :
@@ -79,5 +80,6 @@ int main () {
 		printf("Masukkan pilihan menu : \n");
 		scanf("%d", &menu);
 	}
+  /* menu >6 || menu<1*/
 	return 0;
 }

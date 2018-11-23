@@ -1,5 +1,7 @@
-//File : order.h
-/* merupakan tipe data order */
+/* Kelompok  : UAS
+   Nama file : order.h
+   Deskripsi : ADT untuk tipe order makanan */
+
 
 #ifndef ORDER_H
 #define ORDER_H
@@ -7,9 +9,9 @@
 #include "../mesinkata/mesinkata.h"
 
 typedef struct {
-  int idMakanan; //indeks makanan
-  Kata namaMakanan; //nama makanan sesuai tree makanan
-  int noMeja; //nomor meja
+  int idMakanan; /* ID makanan pada order*/
+  Kata namaMakanan; /* Nama makanan */
+  int noMeja; /* Nomor meja order */
 } Order;
 
 // Misal : X adalah variabel bertipe Order
