@@ -24,7 +24,7 @@ test)
     ;;
   space)
     cd ADT/space
-		gcc -Wall -o mspace mspace.c ../food/stacktfood.c ../food/treeFood/treeFood.c ../point/point.c ../arrInt/arrInt.c ../arrOrder/order.c ../arrOrder/arrOrder.c ../food/food.c space.c arrMeja/arrMeja.c matTile/matTile.c  ../../Modul/eksternal/eksternal.c ../mesinkata/mesinkata.c ../mesinkata/mesinkar.c ../mesinkata/arrKata/arrKata.c grafRuangan/grafRuangan.c ../customer/prioQueueCustomer.c
+		gcc -Wall -o mspace mspace.c ../food/stackFood/stacktfood.c ../food/treeFood/treeFood.c ../point/point.c ../arrInt/arrInt.c ../order/order.c ../order/arrOrder/arrOrder.c ../food/food.c space.c arrMeja/arrMeja.c matTile/matTile.c  ../../Modul/eksternal/eksternal.c ../mesinkata/mesinkata.c ../mesinkata/mesinkar.c ../mesinkata/arrKata/arrKata.c grafRuangan/grafRuangan.c ../customer/prioQueueCustomer.c
     mv mspace ../../bin/test-space
     cd ../..
     ./bin/test-space
@@ -65,12 +65,9 @@ test)
     echo "arrInt              - ADT Array Integer"
     echo "arrOrder            - ADT Array Order"
     echo "grafRuangan         - ADT Graf Ruangan"
-<<<<<<< Updated upstream
     echo "PQC                 - ADT Priority Queue Customer"
     echo "treeFood            - ADT Tree Food"
-=======
 		echo "space               - ADT Space"
->>>>>>> Stashed changes
     ;;
 
   esac
