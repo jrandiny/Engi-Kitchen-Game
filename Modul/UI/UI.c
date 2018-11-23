@@ -62,12 +62,15 @@ void InitScreen(GameScreen *gs)
   int top2Width;
 
   /* ALGORITMA */
+  /* Untuk emoji support */
   setlocale(LC_ALL, "");
 
+  /* Setup layar */
   initscr();
   noecho();
   getmaxyx(stdscr, parentY, parentX);
 
+  /* Kalkulasi ukuran */
   topBarHeight = 3;
 
   sideWidth = parentX*UIC_Side;
@@ -77,6 +80,7 @@ void InitScreen(GameScreen *gs)
 
   top2Width = mainWidth*6/10;
 
+  /* Setup window */
   Top_1_Panel(*gs) = newwin(topBarHeight,sideWidth,0,0);
   Top_2_Panel(*gs) = newwin(topBarHeight,top2Width,0,sideWidth);
   Top_3_Panel(*gs) = newwin(topBarHeight, mainWidth-top2Width, 0,sideWidth+top2Width);
@@ -109,6 +113,9 @@ void RefreshBorder(GameScreen *gs)
 /* I.S. : Bebas sudah initScreen */
 /* F.S. : Dicetak semua border */
 {
+  /* KAMUS */
+
+  /* ALGORITMA */
   clear();
 
   refresh();
@@ -163,6 +170,7 @@ void refreshLayout(GameScreen *gs)
   int top2Width;
 
   /* ALGORITMA */
+  /* Kalkulasi ukuran */
   getmaxyx(stdscr, parentY, parentX);
 
   topBarHeight = 3;
@@ -174,6 +182,7 @@ void refreshLayout(GameScreen *gs)
 
   top2Width = mainWidth*6/10;
 
+  /* Resize window */
   wresize(Top_1_Panel(*gs), topBarHeight, sideWidth);
   wresize(Top_2_Panel(*gs), topBarHeight, top2Width);
   wresize(Top_3_Panel(*gs), topBarHeight, mainWidth-top2Width);
