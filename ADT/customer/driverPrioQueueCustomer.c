@@ -8,7 +8,6 @@ int main () {
 	int menu;
 	PrioQueueCustomer C;
 	Customer X;
-	char tipecustomer;
 
 	printf("Menu\n");
   printf("0. Exit\n");

@@ -22,7 +22,7 @@ int PQC_NBElmt (PrioQueueCustomer Q)
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 {
 	/* KAMUS */
-	PQC_address count;
+
 	/* ALGORITMA */
 	if (PQC_IsEmpty(Q)) return 0;
 	else {
