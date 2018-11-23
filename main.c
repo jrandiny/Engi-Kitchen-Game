@@ -158,8 +158,6 @@ int JadiApa(StackFood sf, TreeFood tf)
 
 int main() {
   /* KAMUS */
-  const int maxHand=10;
-  const int maxTray=5;
   int money,life,waktu; //uang dan nyawa yang dimiliki pemain dan tik waktu
   int nomorMeja; //nomor meja di dekat pelayan
   int jumlahKabur; //jumlah pelanggan yang kabur (sudah duduk)
@@ -168,7 +166,6 @@ int main() {
   int waktuOut; //waktu saat pelanggan akan kabur
   int kodeArah; //1==up, 2==right, 3==down, 4==left
   int status; //menyatakan berhasil load file atau tidak
-  int harga; //harga makanan sesuai kedalaman food tree
   time_t t; //variabel random
   Restoran R; //tipe restoran dengan graf
   Ruangan *room; //tipe ruangan pada restoran

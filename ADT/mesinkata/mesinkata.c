@@ -99,8 +99,12 @@ void K_SalinKata()
 Kata K_MakeKata(char* S)
 /* Membuat kata dari string */
 {
+  /* KAMUS LOKAL */
   Kata hasil;
-  int i=0;
+  int i;
+
+  /* ALGORITMA */
+  i=0;
   while(S[i]!='\0'){
     hasil.TabKata[i+1]=S[i];
     i++;
@@ -114,7 +118,10 @@ void K_LowercaseKata(Kata *input)
    F.S. input menjadi K_LowercaseKata
 */
 {
+  /* KAMUS LOKAL */
   int i;
+
+  /* ALGORITMA */
   for(i=1;i<=(*input).Length;i++){
       if((*input).TabKata[i]>=65&&(*input).TabKata[i]<=90){
         (*input).TabKata[i]+=32;
@@ -125,7 +132,10 @@ void K_LowercaseKata(Kata *input)
 boolean K_IsKataSama(Kata kata1,Kata kata2)
 /*true jika kata1 sama kata2, dan sebaliknya*/
 {
+  /* KAMUS LOKAL */
   boolean sama;
+
+  /* ALGORITMA */
   if(kata1.Length==kata2.Length){
     sama=true;
     int i=1;
@@ -147,7 +157,11 @@ void K_CopyKata(Kata sumber,Kata* hasil)
   F.S. hasil terisi sumber
 */
 {
-  int i=1;
+  /* KAMUS LOKAL */
+  int i;
+
+  /* ALGORITMA */
+  i=1;
   (*hasil).Length=sumber.Length;
   while(i<=sumber.Length){
     (*hasil).TabKata[i]=sumber.TabKata[i];
@@ -158,10 +172,12 @@ void K_CopyKata(Kata sumber,Kata* hasil)
 int K_KataToInt(Kata input)
 /*mengubah input menjadi tipe integer*/
 {
+  /* KAMUS LOKAL */
   int hasil;
   int i;
   boolean negatif;
 
+  /* ALGORITMA */
   hasil=0;
   i=1;
   negatif=false;
@@ -184,8 +200,11 @@ int K_KataToInt(Kata input)
 Kata K_CopySubKata(Kata input,int idxmulai,int idxakhir)
 /*mengcopy sebagian dari input sesuai parameter*/
 {
+  /* KAMUS LOKAL */
   Kata hasil;
   int i,j;
+
+  /* ALGORITMA */
   hasil.Length=idxakhir-idxmulai+1;
   j=1;
   for(i=idxmulai;i<=idxakhir;i++){
@@ -200,7 +219,10 @@ void K_PrintKata(Kata S)
    F.S. S terprint di layar dengan tanpa enter di akhir
 */
 {
+  /* KAMUS LOKAL */
   int i;
+
+  /* ALGORITMA */
   for(i=1;i<=S.Length;i++){
     printf("%c",S.TabKata[i]);
   }
@@ -209,8 +231,11 @@ void K_PrintKata(Kata S)
 char* K_KataToChar(Kata S)
 /*mengubah tipe kata menjadi string*/
 {
+  /* KAMUS LOKAL */
   char* hasil;
   int i;
+
+  /* ALGORITMA */
   hasil=(char*)malloc(S.Length*sizeof(char));
   for(i=1;i<=S.Length;i++){
     hasil[i-1]=S.TabKata[i];
@@ -222,8 +247,12 @@ char* K_KataToChar(Kata S)
 Point K_KataToPoint(Kata S)
 /*mengubah tipe kata menjadi point*/
 {
+  /* KAMUS LOKAL */
   Point hasil;
-  int pos=1;
+  int pos;
+
+  /* ALGORITMA */
+  pos = 1;
   while(S.TabKata[pos]!=','){
     pos++;
   }
@@ -237,11 +266,13 @@ void K_KonkatKata(Kata *kata1, Kata kata2)
    F.S. kata1 berisi hasil konkat kata 1 dan kata 2
 */
 {
+  /* KAMUS LOKAL */
   int i,j,max;
-  i=(*kata1).Length+1;
+
+  /* ALGORITMA */
   max=(*kata1).Length+kata2.Length;
   j=1;
-  for(i;i<=max;i++){
+  for(i=(*kata1).Length+1;i<=max;i++){
     (*kata1).TabKata[i]=kata2.TabKata[j];
     j++;
   }
@@ -253,7 +284,10 @@ void K_ReplaceSpace(Kata* kata)
 /* I.S. kata terdefinisi
    F.S. semua _ yang terdapat di kata diubah menjadi ' '*/
 {
+  /* KAMUS LOKAL */
   int i;
+
+  /* ALGORITMA */
   for(i=1;i<=(*kata).Length;i++){
     if((*kata).TabKata[i]=='_'){
       (*kata).TabKata[i]=' ';
@@ -265,7 +299,10 @@ void K_RemoveSpace(Kata* kata)
 /* I.S. kata terdefinisi
    F.S. semua ' ' yang terdapat di kata diubah menjadi _*/
 {
+  /* KAMUS LOKAL */
   int i;
+
+  /* ALGORITMA */
   for(i=1;i<=(*kata).Length;i++){
     if((*kata).TabKata[i]==' '){
       (*kata).TabKata[i]='_';
@@ -276,8 +313,10 @@ void K_RemoveSpace(Kata* kata)
 Kata K_JamToKata(Jam jam)
 /* mengembalikan tipe kata dari jam*/
 {
-
+  /* KAMUS LOKAL */
   Kata hasil;
+
+  /* ALGORITMA */
   hasil.Length = 8;
   hasil.TabKata[1]=(char)(J_Hour(jam)/10)+'0';
   hasil.TabKata[2]=(char)(J_Hour(jam)%10)+'0';

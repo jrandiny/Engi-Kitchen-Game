@@ -103,7 +103,7 @@ void MT_BacaMatriks (MatTile * M, int NB, int NK)
   indeks i,j;
   char kar;
   int val;
-  Tile elmt;
+  
   /* ALGORITMA */
   MT_MakeMatriks(NB,NK,M);
   for(i=MT_GetFirstIdxBrs(*M);i<=MT_GetLastIdxBrs(*M);i++){
