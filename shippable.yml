@@ -3,6 +3,10 @@ language: c
 compiler:
   - gcc
 
+install:
+  - shippable_retry sudo apt-get update
+  - shippable_retry sudo apt-get install libncursesw5-dev libncurses5-dev
+
 build:
   ci:
     - chmod +x run.sh
