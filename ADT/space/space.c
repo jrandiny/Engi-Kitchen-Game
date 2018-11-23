@@ -14,28 +14,6 @@
 #include "pelayan.h"
 #include "restoran.h"
 
-// *** KONSTRUKTOR ***
-// void InitPelayan(Pelayan *P)
-// /* membuat Pelayan baru
-//   I.S. Sembarang
-//   F.S. terbentuk Pelayan dengan posisi di 0,0
-//       semua karakter bernilai CharUndeff
-//       semua value bernilai ValUndeff
-//       semua deskripsi berniali ""
-// */
-// {
-//   //ALGORITMA
-//   //posisi
-//   P_SetXY(&Pelayan_Posisi(*P),0,0);
-//   //up
-//   Up(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-//   //down
-//   Down(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-//   //left
-//   Left(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-//   //right
-//   Right(*P) = MT_CreateTile(CharUndeff,ValUndeff);
-// }
 void PlacePelayan(Pelayan *P,int x,int y, MatTile M)
 /*
   menaruh Pelayan di posisi (x,y) di ruangan di Restoran r
@@ -50,22 +28,6 @@ void PlacePelayan(Pelayan *P,int x,int y, MatTile M)
   SetTile(P,M,3); //mengecek karakter di bawahnya
   SetTile(P,M,4); //mengecek karakter di kirinya
 }
-// void InitRestoran(Restoran *R)
-// /*
-//   menyiapkan ruangan kosong dan menghubungkan semua ruangan
-//   I.S. R Sembarang
-//   F.S. setiap room.karakter terisi "",
-//       room.value berisi ValUndeff
-//       room.deskripsi berisi ""
-//       lokasi pusat meja sudah ada nomornya,
-//       ruangan berniali 0,
-//       hubungan telah menghubungkan semua ruangan.
-// */
-// {
-//   //ALGORITMA
-//   GR_CreateEmpty(&Ruangan(*R));
-//   RoomNow(*R) = 0;
-// }
 
 // *** PINDAH ***
 void Move(Pelayan *P,Restoran *R, int code, boolean *status,boolean *justMove)
@@ -195,19 +157,6 @@ boolean CanOrder(Pelayan P, Ruangan R)
   //bisa order jika status mejanya adalah 1, sudah duduk dan
   return Status(AM_Elmt(Meja(R),nomorMeja)) ==  1;
 }
-// boolean CanGive(Pelayan P, Ruangan R, int nomorMeja)
-// /*
-//   fungsi akan bernilai true jika nomorMeja sama dengan nomor dari
-//   meja di dekat P
-// */
-// {
-//   //KAMUS
-//   Tile lantai;
-//   //ALGORITMA
-//   lantai = GetTableTile(P,R);
-//   //bisa give jika nomormejanya
-//   return nomorMeja == Value(lantai);
-// }
 boolean CanTake(Pelayan P)
 /*
   fungsi bernilai true jika di dekat P ada M yang bisa diambil idnya
@@ -329,8 +278,6 @@ void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int *nomorMeja)
   F.S.
 */
 {
-  //KAMUS
-  Tile table;
   //ALGORITMA
   //merandom id makanan dari -1 - -8
   *idMakanan = (rand()%8-8); //[-1..-8]
@@ -443,7 +390,6 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah,ArrInt *arr
   int nomorMeja;
   Ruangan *tmp;
   Ruangan room;
-  GR_address p;
   GR_address p1;
   //ALGORITMA
   *jumlah = 0;

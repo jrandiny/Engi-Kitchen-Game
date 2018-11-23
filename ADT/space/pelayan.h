@@ -5,6 +5,7 @@
 #define PELAYAN_H
 
 #include "../point/point.h"
+#include "matTile/matTile.h"
 
 typedef struct {
   Point posisi; //posisi Pelayan mengikuti baris dan kolom matriks

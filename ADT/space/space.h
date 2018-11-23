@@ -14,32 +14,12 @@
 #include "pelayan.h"
 #include "restoran.h"
 
-// *** KONSTRUKTOR ***
-// void InitPelayan(Pelayan *P);
-// /* membuat Pelayan baru
-//   I.S. Sembarang
-//   F.S. terbentuk Pelayan dengan posisi di 0,0
-//       semua karakter bernilai CharUndeff
-//       semua value bernilai ValUndeff
-//       semua deskripsi berniali ""
-// */
 void PlacePelayan(Pelayan *P,int x,int y, MatTile M);
 /*
   menaruh Pelayan di posisi (x,y) di ruangan di Restoran r
   I.S. Pelayan,x,y,R terdefinisi
   F.S. Pelayan terletak di posisi x,y di ruangan R semua sisi terupdate
 */
-// void InitRestoran(Restoran *R);
-// /*
-//   menyiapkan ruangan kosong dan menghubungkan semua ruangan
-//   I.S. R Sembarang
-//   F.S. setiap room.karakter terisi "",
-//       room.value berisi ValUndeff
-//       room.deskripsi berisi ""
-//       lokasi pusat meja sudah ada nomornya,
-//       ruangan berniali 0,
-//       hubungan telah menghubungkan semua ruangan.
-// */
 
 // *** PINDAH ***
 void Move(Pelayan *P,Restoran *R, int code, boolean *status, boolean *justMove);
@@ -60,11 +40,6 @@ boolean CanOrder(Pelayan P, Ruangan R);
 /*
   fungsi akan bernialai true jika meja dekat p dapat memesan
 */
-// boolean CanGive(Pelayan P, Ruangan R, int nomorMeja);
-// /*
-//   fungsi akan bernilai true jika nomorMeja sama dengan nomor dari
-//   meja di dekat P
-// */
 boolean CanTake(Pelayan P);
 /*
   fungsi bernilai true jika di dekat P ada m yang bisa diambil idnya
