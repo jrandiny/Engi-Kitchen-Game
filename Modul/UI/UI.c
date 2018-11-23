@@ -31,19 +31,19 @@ void DrawBordersCC(WINDOW *screen, BorderType border)
   /* ALGORITMA */
   getmaxyx(screen, y, x);
 
-  // Pojok
+  /* Pojok */
   mvwaddch(screen, 0, 0, UL(border));
   mvwaddch(screen, y - 1, 0, LL(border));
   mvwaddch(screen, 0, x - 1, UR(border));
   mvwaddch(screen, y - 1, x - 1, LR(border));
 
-  // sisi
+  /* Sisi */
   for (i = 1; i < (y - 1); i++) {
     mvwaddch(screen, i, 0, ACS_VLINE);
     mvwaddch(screen, i, x - 1, ACS_VLINE);
   }
 
-  // atas bawah
+  /* Atas bawah */
   for (i = 1; i < (x - 1); i++) {
     mvwaddch(screen, 0, i, ACS_HLINE);
     mvwaddch(screen, y - 1, i, ACS_HLINE);
@@ -218,7 +218,6 @@ void WriteText(GameScreen *gs,ArrKata ak)
 {
   /* KAMUS LOKAL */
   AK_IdxType i;
-  int j;
   char* output;
 
   /* ALGORITMA */
@@ -368,7 +367,7 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
 /* F.S. : Digambar panel daftar pelanggan menunggu */
 {
   /* KAMUS LOKAL */
-  char ch;
+  /*char ch;*/
   int idx;
   int jumlahOrang;
   int ycol1,ycol2;
@@ -395,7 +394,7 @@ void RefreshWaitingPanel(GameScreen *gs, PrioQueueCustomer waitQueue)
     idx = 1;
 
     while(idx<=PQC_NBElmt(waitQueue)){
-      ch = C_Jumlah(PQC_Elmt(waitQueue, idx))+'0';
+      /*ch = C_Jumlah(PQC_Elmt(waitQueue, idx))+'0';*/
       jumlahOrang = C_Jumlah(PQC_Elmt(waitQueue, idx));
       if(C_Prio(PQC_Elmt(waitQueue, idx))==1){
         if(doubleCol){
@@ -559,7 +558,6 @@ Kata GetInput(GameScreen *gs,Kata prompt)
   Kata output;
   int tempInput;
   boolean finishReading;
-  int kataLength;
   int i;
 
   /* ALGORITMA */
@@ -706,7 +704,6 @@ void RefreshOrderPanel(GameScreen *gs, ArrOrder orderList)
 /* F.S. : Digambar panel daftar order */
 {
   /* KAMUS LOKAL */
-  Food temp;
   char *tempKata;
   int i;
 

@@ -3,37 +3,32 @@
 
 #include "../../ADT/point/point.h"
 #include "../../ADT/mesinkata/mesinkata.h"
-// #include "../../ADT/matriks/matriks.h"
-// #include "../../ADT/queue/queue.h"
-// #include "../../ADT/stack/stackt.h"
 #include "../../ADT/mesinkata/arrKata/arrKata.h"
 #include "../../ADT/space/matTile/matTile.h"
 #include "../../ADT/customer/prioQueueCustomer.h"
 #include "../../ADT/food/stackFood/stacktfood.h"
 #include "../../ADT/food/treeFood/treeFood.h"
 #include "../../ADT/order/arrOrder/arrOrder.h"
-//#include "../../ADT/listlinier/listlinier.h"
 #include <ncurses.h>
 
 /* Definisi GameScreen */
 typedef struct{
-  WINDOW *mainPanel;
-  WINDOW *topPanel1;
-  WINDOW *topPanel2;
-  WINDOW *topPanel3;
-  WINDOW *topPanel4;
-  WINDOW *commandPanel;
-  WINDOW *waitingPanel;
-  WINDOW *handPanel;
-  WINDOW *bottomPanel;
-  WINDOW *orderPanel;
-  WINDOW *foodPanel;
-  WINDOW *tooltipPanel;
+  WINDOW *mainPanel;      /* Window utama (peta dan menu) */
+  WINDOW *topPanel1;      /* Window atas 1 (nama) */
+  WINDOW *topPanel2;      /* Window atas 2 (uang) */
+  WINDOW *topPanel3;      /* Window atas 3 (nyawa) */
+  WINDOW *topPanel4;      /* Window atas 4 (Waktu) */
+  WINDOW *commandPanel;   /* Window command */
+  WINDOW *waitingPanel;   /* Window antrian pelanggan */
+  WINDOW *handPanel;      /* Window stack di tangan */
+  WINDOW *orderPanel;     /* Window daftar order */
+  WINDOW *foodPanel;      /* Window stack di nampan */
+  WINDOW *tooltipPanel;   /* Window tooltip */
 
-  int mainWidth;
-  int mainHeight;
-  int sideWidth;
-  int sideHeight;
+  int mainWidth;  /* Ukuran lebar main window */
+  int mainHeight; /* Ukuran tinggi main window */
+  int sideWidth;  /* Ukuran lebar sidebar */
+  int sideHeight; /* Ukuran tinggi satu sidebar */
 }GameScreen;
 
 /* Notasi akses: Selektor GameScreen */
@@ -53,6 +48,7 @@ typedef struct{
 #define Side_Panel_Width(GS) (GS).sideWidth
 #define Side_Panel_Height(GS) (GS).sideHeight
 
+/* Fraksi lebar sidebar */
 #define UIC_Side 30/100;
 
 /* Definisi BorderType untuk gambar persegi panjang */
