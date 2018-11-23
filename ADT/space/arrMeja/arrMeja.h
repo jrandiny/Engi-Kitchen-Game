@@ -1,4 +1,7 @@
 /* MODUL TABEL meja */
+/* Kelompok  : UAS
+   Nama file : arrMeja.h
+   Deskripsi : ADT untuk tipe array Meja*/
 /* Berisi definisi dan semua primitif pemrosesan tabel meja */
 /* Idx awal tidak di idxmin */
 /* Versi I : dengan banyaknya elemen didefinisikan secara eksplisit,

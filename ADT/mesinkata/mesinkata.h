@@ -2,9 +2,7 @@
 /* Definisi Mesin Kata: Model Akuisisi Versi I */
 /* Kelompok  : UAS
    Nama file : mesinkata.h
-   Topik     : Tugas Besar Alstrukdat
-   Tanggal   : 25 Oktober 2018
-   Deskripsi : Implementasi mesin kata*/
+   Deskripsi : ADT mesin kata*/
 
 #ifndef __MESINKATA_H__
 #define __MESINKATA_H__
@@ -34,7 +32,7 @@ void K_STARTKATA(char* nama,int *status);
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
-          CC karakter pertama sesudah karakter terakhir kata 
+          CC karakter pertama sesudah karakter terakhir kata
           status 1 jika file ada, 0 jika tidak ada*/
 
 void K_ADVKATA();

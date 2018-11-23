@@ -1,3 +1,7 @@
+/* Kelompok  : UAS
+   Nama file : eksternaltes.c
+   Deskripsi : Tester modul eksternal */
+
 #include "../../ADT.h"
 #include "../../std.h"
 #include "eksternal.h"

@@ -1,3 +1,6 @@
+/* Kelompok  : UAS
+   Nama file : driverArrMeja.h
+   Deskripsi : Driver ADT untuk tipe array Meja*/
 #include "arrMeja.h"
 
 int main(){
@@ -17,14 +20,14 @@ int main(){
     printf("T\n");
     AM_TulisIsi(T);
 
-    printf("\n1 = I/O\n2 = Indeks\n3 = Status\n");
-    printf("4 = Exit\nChoice = ");
+    printf("\n0. Exit\n1. I/O\n2. Indeks\n3. Status\n");
+    printf("Choice = ");
     scanf("%d",&input);
 
     switch(input){
       case 1:
-      printf("\n1 = Baca T\n2 = Tulis T\n3 = AddAsLastEl(T)\n");
-      printf("4 = AddEli(T)\n5 = DelLastEl(T)\n6 = DelEli(T)\nChoice = ");
+      printf("\n1. Baca T\n2. Tulis T\n3. AddAsLastEl(T)\n");
+      printf("4. AddEli(T)\n5. DelLastEl(T)\n6. DelEli(T)\nChoice = ");
 
         scanf("%d",&temp);
 

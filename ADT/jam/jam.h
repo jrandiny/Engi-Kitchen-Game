@@ -1,6 +1,6 @@
 /* Kelompok : UAS
    Nama File : jam.h
-   Deskripsi : ADT untuk tipe food */
+   Deskripsi : ADT untuk tipe Jam */
 
 
 #ifndef JAM_H

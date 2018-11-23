@@ -2,9 +2,7 @@
 /* Implementasi Mesin Karakter */
 /* Kelompok  : UAS
    Nama file : mesinkar.c
-   Topik     : Tugas Besar Alstrukdat
-   Tanggal   : 25 Oktober 2018
-   Deskripsi : Implementasi mesin kata*/
+   Deskripsi : Implementasi mesin karakter*/
 
 #include "mesinkar.h"
 
@@ -19,9 +17,9 @@ void K_START(char* namafile,int* status) {
    Karakter pertama yang ada pada pita posisinya adalah pada jendela.
    I.S. : sembarang
    F.S. : CC adalah karakter pertama pada pita. Jika CC != MARK maka EOP akan padam (false).
-          Jika CC = MARK maka EOP akan menyala (true) 
+          Jika CC = MARK maka EOP akan menyala (true)
           status 1 jika file ada, 0 jika tidak ada*/
-          
+
 
 	/* Algoritma */
 	pita = fopen(namafile,"r");
@@ -31,7 +29,7 @@ void K_START(char* namafile,int* status) {
       }else{
             *status=0;
       }
-	
+
 }
 
 void K_ADV() {

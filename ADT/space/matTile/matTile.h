@@ -1,3 +1,6 @@
+/* Kelompok  : UAS
+   Nama file : MatTile.h
+   Deskripsi : ADT untuk tipe MatTile*/
 /* ********** Definisi TYPE MatTile dengan indeks dan elemen integer ********** */
 
 #ifndef MATRIKSROOM_H

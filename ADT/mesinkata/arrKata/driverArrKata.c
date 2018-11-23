@@ -1,8 +1,6 @@
 /* Kelompok  : UAS
-   Nama file : marraykata.h
-   Topik     : Engi's Kitchen Game
-   Tanggal   : 31 Oktober 2018
-   Deskripsi : driver untuk ADT untuk tipe array kata*/
+   Nama file : driverArrKata.c
+   Deskripsi : Driver ADT untuk tipe array kata*/
 
 #include "arrKata.h"
 #include <stdio.h>

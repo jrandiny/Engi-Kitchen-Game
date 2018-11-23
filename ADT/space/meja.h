@@ -1,4 +1,6 @@
-//File : restoran.h
+/* Kelompok  : UAS
+   Nama file : meja.h
+   Deskripsi : ADT untuk tipe meja */
 /* merupakan tipe data restoran */
 
 #ifndef MEJA_H
@@ -6,6 +8,7 @@
 
 #include "../point/point.h"
 
+/* Definisi Struktur */
 typedef struct {
   int bangku; //jumlah bangku
   Point posisi; //x,y menyatakan posisi di matriks
@@ -17,6 +20,7 @@ typedef struct {
   */
 } Meja;
 
+/* SELEKTOR */
 #define Bangku(M) (M).bangku
 #define Meja_Posisi(M) (M).posisi
 #define Status(M) (M).status

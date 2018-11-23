@@ -1,3 +1,7 @@
+/* Kelompok  : UAS
+   Nama file : grafRuangan.c
+   Deskripsi : Implementasi ADT untuk tipe Graf*/
+
 #include "grafRuangan.h"
 
 boolean GR_IsEmpty(GrafRuangan GR)

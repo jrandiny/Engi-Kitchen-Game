@@ -1,5 +1,6 @@
-/* File: point.h */
-/* Tanggal: 26 Oktober 2018 */
+/* Kelompok  : UAS
+   Nama file : point.h
+   Deskripsi : ADT untuk tipe Point*/
 
 /* *** Definisi ABSTRACT DATA TYPE Point *** */
 

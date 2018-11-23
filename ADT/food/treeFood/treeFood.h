@@ -1,8 +1,6 @@
 /* Kelompok  : UAS
    Nama file : treefood.h
-   Topik     : Engi's Kitchen Game
-   Tanggal   : 5 November 2018
-   Deskripsi : ADT untuk tipe array kata*/
+   Deskripsi : ADT untuk tipe tree makanan*/
 #ifndef TREEFOOD_H
 #define TREEFOOD_H
 
@@ -43,12 +41,18 @@ void TF_Dealokasi(TF_address P);
 /* F.S. : P dikembalikan ke sistem */
 
 boolean TF_IsEmpty(TreeFood tf);
+/* Mengembalikan true jika tf kosong */
 
 int TF_DeepestLeaf(TreeFood tf);
+/* Mengembalikan kedalaman dari tree di titik terdalamanya */
 
 void TF_AddLeafS(TreeFood *tf,int pangkal,boolean kiri,TF_infotype X);
+/* I.S. : tf, pangkal, td, x terdefinisi. Pangkal berada pada tf */
+/* F.S. : Ditambahkan daun X pada node dengan id pangkal, pada kiri atau kanan sesuai variabel kiri */
 
 void TF_AddLeaf(TreeFood *tf,TF_address pangkal,boolean kiri,TF_infotype X);
+/* I.S. : tf, pangkal, td, x terdefinisi. Pangkal berada pada tf */
+/* F.S. : Ditambahkan daun X pada pangkal, pada kiri atau kanan sesuai variabel kiri */
 
 /* Search */
 TF_address TF_Search(TreeFood tf,int foodId);

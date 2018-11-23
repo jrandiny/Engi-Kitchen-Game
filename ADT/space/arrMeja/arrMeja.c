@@ -1,12 +1,6 @@
 /* Kelompok  : UAS
    Nama file : arrMeja.c
-   Topik     : Engi's Kitchen Game
-   Tanggal   : 1 November 2018
-   Deskripsi : ADT untuk tipe array Meja*/
-/* Berisi definisi dan semua primitif pemrosesan tabel meja */
-/* Idx awal tidak di idxmin */
-/* Versi I : dengan banyaknya elemen didefinisikan secara eksplisit,
-   memori tabel statik */
+   Deskripsi : Implementasi ADT untuk tipe array Meja*/
 
 #include "arrMeja.h"
 

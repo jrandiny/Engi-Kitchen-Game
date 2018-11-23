@@ -1,4 +1,6 @@
-/* File : stackt.h */
+/* Kelompok  : UAS
+   Nama file : stacktfood.h
+   Deskripsi : ADT untuk stack food */
 /* deklarasi stack yang diimplementasi dengan tabel kontigu dan ukuran sama */
 /* TOP adalah alamat elemen puncak */
 /* Implementasi dalam bahasa C dengan alokasi statik */
@@ -22,7 +24,7 @@ typedef struct {
 	SF_address TOP;  /* alamat TOP: elemen puncak */
 	int Max;
 } StackFood;
-/* Definisi stack S kosong : S.TOP = Nil */
+/* Definisi stack S kosong : S.TOP = Nol */
 /* Elemen yang dipakai menyimpan nilai StackFood T[1]..T[SF_MaxEl] */
 /* Jika S adalah StackFood maka akses elemen : */
    /* S.T[(S.TOP)] untuk mengakses elemen TOP */
@@ -39,7 +41,7 @@ void SF_CreateEmpty (StackFood *S, int max);
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas SF_MaxEl */
 /* jadi indeksnya antara 1.. SF_MaxEl+1 karena 0 tidak dipakai */
-/* Ciri stack kosong : TOP bernilai Nil */
+/* Ciri stack kosong : TOP bernilai Nol */
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean SF_IsEmpty (StackFood S);

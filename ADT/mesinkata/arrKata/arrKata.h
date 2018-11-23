@@ -1,7 +1,5 @@
 /* Kelompok  : UAS
-   Nama file : arraykata.h
-   Topik     : Engi's Kitchen Game
-   Tanggal   : 31 Oktober 2018
+   Nama file : arrKata.h
    Deskripsi : ADT untuk tipe array kata*/
 
 #ifndef ARRAYKATAK_H
@@ -13,6 +11,7 @@
 #define AK_IdxMax 100
 #define AK_IdxMin 1
 
+/* Definisi struktur */
 typedef Kata AK_ElType;
 typedef int AK_IdxType;
 typedef struct{

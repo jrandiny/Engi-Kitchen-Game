@@ -2,9 +2,7 @@
 /* Implementasi Mesin Karakter */
 /* Kelompok  : UAS
    Nama file : drivermesinkata.c
-   Topik     : Tugas Besar Alstrukdat
-   Tanggal   : 25 Oktober 2018
-   Deskripsi : Driver mesin kata*/
+   Deskripsi : Driver ADT untuk mesin kata*/
 
 #include "mesinkata.h"
 #include "mesinkar.h"

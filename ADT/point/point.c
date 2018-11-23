@@ -1,8 +1,6 @@
 /* Kelompok  : UAS
    Nama file : point.c
-   Topik     : Engi's Kitchen Game
-   Tanggal   : 26-10-2018
-   Deskripsi : ADT untuk tipe Point*/
+   Deskripsi : Implementasi ADT untuk tipe Point*/
 /* *** Definisi ABSTRACT DATA TYPE Point *** */
 
 #include "point.h"

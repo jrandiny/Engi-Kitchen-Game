@@ -1,7 +1,5 @@
 /* Kelompok  : UAS
-   Nama file : driver_point.c
-   Topik     : Engi's Kitchen Game
-   Tanggal   : 26-10-2018
+   Nama file : driverPoint.c
    Deskripsi : driver untuk ADT tipe Point*/
 
 #include "point.h"

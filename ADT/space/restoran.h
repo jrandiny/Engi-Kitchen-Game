@@ -1,4 +1,6 @@
-//File : restoran.h
+/* Kelompok  : UAS
+   Nama file : restoran.h
+   Deskripsi : ADT untuk tipe restoran */
 /* merupakan tipe data restoran */
 
 #ifndef RESTORAN_H

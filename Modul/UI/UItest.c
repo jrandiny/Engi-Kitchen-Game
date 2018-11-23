@@ -1,3 +1,7 @@
+/* Kelompok  : UAS
+   Nama file : UItest.c
+   Deskripsi : Tester modul UI */
+
 #include "UI.h"
 #include <ncurses.h>
 #include <unistd.h>

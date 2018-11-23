@@ -1,8 +1,6 @@
 /* Kelompok  : UAS
-   Nama file : treefood.h
-   Topik     : Engi's Kitchen Game
-   Tanggal   : 5 November 2018
-   Deskripsi : ADT untuk tipe array kata*/
+   Nama file : treefood.c
+   Deskripsi : Implementasi ADT untuk tipe tree makanan*/
 
 #include "../food.h"
 #include "../../../std.h"
@@ -55,6 +53,8 @@ void TF_Dealokasi(TF_address P)
 }
 
 void TF_AddLeaf(TreeFood *tf,TF_address pangkal,boolean kiri,TF_infotype X)
+/* I.S. : tf, pangkal, td, x terdefinisi. Pangkal berada pada tf */
+/* F.S. : Ditambahkan daun X pada pangkal, pada kiri atau kanan sesuai variabel kiri */
 {
   /* KAMUS LOKAL */
   TF_address addTemp;
@@ -71,6 +71,8 @@ void TF_AddLeaf(TreeFood *tf,TF_address pangkal,boolean kiri,TF_infotype X)
 }
 
 void TF_AddLeafS(TreeFood *tf,int pangkal,boolean kiri,TF_infotype X)
+/* I.S. : tf, pangkal, td, x terdefinisi. Pangkal berada pada tf */
+/* F.S. : Ditambahkan daun X pada node dengan id pangkal, pada kiri atau kanan sesuai variabel kiri */
 {
   /* KAMUS LOKAL */
   TF_address searchTemp;
@@ -83,13 +85,13 @@ void TF_AddLeafS(TreeFood *tf,int pangkal,boolean kiri,TF_infotype X)
 }
 
 boolean TF_IsEmpty(TreeFood tf)
-/* mereturn true jika tf kosong*/
+/* Mengembalikan true jika tf kosong */
 {
   return (tf==Nil);
 }
 
 int TF_DeepestLeaf(TreeFood tf)
-/* Mengembalikan tingkat tree terdalam*/
+/* Mengembalikan kedalaman dari tree di titik terdalamanya */
 {
   /* KAMUS LOKAL */
   int leftCount;

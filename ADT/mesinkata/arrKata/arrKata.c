@@ -1,8 +1,6 @@
 /* Kelompok  : UAS
-   Nama file : arraykata.c
-   Topik     : Engi's Kitchen Game
-   Tanggal   : 31 Oktober 2018
-   Deskripsi : ADT untuk tipe array kata*/
+   Nama file : arrKata.c
+   Deskripsi : Implementasi ADT untuk tipe array kata*/
 
 #include "../mesinkata.h"
 #include "../../../boolean.h"

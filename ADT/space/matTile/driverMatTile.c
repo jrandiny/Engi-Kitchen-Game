@@ -1,14 +1,12 @@
 /* Kelompok  : UAS
-   Nama file : driver_matriks.c
-   Topik     : Engi's Kitchen Game
-   Tanggal   : 27-10-2018
-   Deskripsi : driver untuk ADT tipe Matriks*/
+   Nama file : driverMatTile.c
+   Deskripsi : driver untuk ADT tipe Matriks tile*/
 
 #include "matTile.h"
 
 int main () {
 	// Kamus driver_matriks
-	MatTile M1,M2,MCopy;
+	MatTile M1,MCopy;
 	int menu;
 	indeks NB,NK,IdxBrs,IdxKol;
 
@@ -19,10 +17,12 @@ int main () {
 	scanf("%d", &NK);
 	MT_BacaMatriks(&M1,NB,NK);
 
-	// Algoritma driver_matriks
-	while(true) {
+	/* Algoritma driver_matriks */
+  menu = -99;
+	while(menu!=0) {
 		MT_TulisMatriks(M1);
 		printf("\nMENU :\n");
+    printf("0. Exit\n");
 		printf("1. MT_IsIdxValid\n");
 		printf("2. MT_GetFirstIdxBrs\n");
 		printf("3. MT_GetFirstIdxKol\n");

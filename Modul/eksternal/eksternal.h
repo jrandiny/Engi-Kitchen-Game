@@ -1,3 +1,7 @@
+/* Kelompok  : UAS
+   Nama file : eksternal.h
+   Deskripsi : Modul eksternal */
+
 #ifndef EKSTERNAL_H
 #define EKSTERNAL_H
 

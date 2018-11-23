@@ -1,3 +1,7 @@
+/* Kelompok  : UAS
+   Nama file : UI.c
+   Deskripsi : Implementasi modul UI */
+
 #include "UI.h"
 #include <ncurses.h>
 #include "../../ADT/point/point.h"

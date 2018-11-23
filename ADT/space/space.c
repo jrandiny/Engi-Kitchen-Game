@@ -1,8 +1,6 @@
 /* Kelompok  : UAS
    Nama file : space.c
-   Topik     : Engi's Kitchen Game
-   Tanggal   : 1 November 2018
-   Deskripsi : ADT untuk tipe space*/
+   Deskripsi : Implementasi ADT untuk tipe space*/
 
 #include "space.h"
 #include "../../std.h"

@@ -1,11 +1,18 @@
+/* Kelompok  : UAS
+   Nama file : driverGraf.h
+   Deskripsi : Driver ADT untuk tipe Graf*/
 #include "grafRuangan.h"
 #include <stdio.h>
 #include "../matTile/matTile.h"
 #include "../arrMeja/arrMeja.h"
 
 void printGraf(GrafRuangan GR);
+/* I.S. : GR terdefinisi */
+/* F.S. : Tercetak di layar graf */
 
 void printGrafInfo(GR_address g);
+/* I.S. : g terdefinisi */
+/* F.S. : Tercetak di layar isi dari node g */
 
 int main(){
   /* KAMUS */
@@ -131,10 +138,11 @@ int main(){
 }
 
 void printGraf(GrafRuangan GR)
+/* I.S. : GR terdefinisi */
+/* F.S. : Tercetak di layar graf */
 {
   /* KAMUS LOKAL */
   GR_address pt;
-  Ruangan r;
 
   /* ALGORITMA */
   printf("\nIsi Graf\n");
@@ -153,7 +161,10 @@ void printGraf(GrafRuangan GR)
 
 }
 
-void printGrafInfo(GR_address pt){
+void printGrafInfo(GR_address pt)
+/* I.S. : g terdefinisi */
+/* F.S. : Tercetak di layar isi dari node g */
+{
   /* KAMUS LOKAL */
   GRD_address ptd;
   Point p,p2;

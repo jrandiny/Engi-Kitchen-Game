@@ -1,6 +1,5 @@
 /* Kelompok  : UAS
    Nama file : grafRuangan.h
-   Tanggal   : 2 November 2018
    Deskripsi : ADT Graf Ruangan dengan implementasi multilist*/
 
 #ifndef GRAFRUANGAN_H

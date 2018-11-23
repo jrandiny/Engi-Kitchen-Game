@@ -1,4 +1,6 @@
-//File : tile.h
+/* Kelompok  : UAS
+   Nama file : tile.h
+   Deskripsi : ADT untuk tipe Tile */
 /* merupakan tipe data tile */
 
 #ifndef TILE_H
@@ -6,8 +8,9 @@
 
 #include "../mesinkata/mesinkata.h"
 
+/* Definisi struktur */
 typedef struct {
-	char karakter; //merupakan karakter yang ditampilkan di layar
+	char karakter; /* merupakan karakter yang ditampilkan di layar */
 	int value;
 	/* angka kesabaran untuk pengunjung duduk, ValUndeff untuk tile, nomor meja
 	dan nampan, id makanan untuk meja di dapur
@@ -28,6 +31,8 @@ typedef struct {
 		[1..12] jika nomor meja
 		ValUndeff untuk sisanya
 */
+
+/* SELEKTOR */
 #define Karakter(M) (M).karakter
 #define Value(M) (M).value
 

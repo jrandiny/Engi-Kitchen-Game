@@ -1,10 +1,13 @@
+/* Kelompok  : UAS
+   Nama file : stacktfood.c
+   Deskripsi : Implementasi ADT untuk stack food */
 #include "stacktfood.h"
 
 void SF_CreateEmpty (StackFood *S, int max)
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas SF_MaxEl */
 /* jadi indeksnya antara 1.. SF_MaxEl+1 karena 0 tidak dipakai */
-/* Ciri stack kosong : TOP bernilai Nil */
+/* Ciri stack kosong : TOP bernilai Nol */
 {
   SF_Top(*S)=Nol;
   SF_Max(*S) = max;
@@ -43,7 +46,6 @@ void SF_Pop (StackFood * S, SF_infotype* X)
   SF_Top(*S)--;
 }
 
-// fungsi lain
 StackFood SF_ReversStack(StackFood S)
 /*
 	fungsi mengembalikan S yang di balikkan,

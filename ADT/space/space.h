@@ -1,4 +1,6 @@
-//File: space.h
+/* Kelompok  : UAS
+   Nama file : space.h
+   Deskripsi : ADT untuk tipe space */
 /*merupakan implementasi bentuk lokasi ruangan dengan map dan matriks dan posisi
   Pelayan dengan menggunakan point */
 
@@ -21,7 +23,7 @@ void PlacePelayan(Pelayan *P,int x,int y, MatTile M);
   F.S. Pelayan terletak di posisi x,y di ruangan R semua sisi terupdate
 */
 
-// *** PINDAH ***
+/* *** PINDAH *** */
 void Move(Pelayan *P,Restoran *R, int code, boolean *status, boolean *justMove);
 /*
   I.S. Pelayan dan Restoran terdifinsi, Pelayang dapat bergerak ke arah code
@@ -35,7 +37,7 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status, boolean *justMove);
         4 = Left
 */
 
-// *** BOOLEAN PELAYAN ***
+/* *** BOOLEAN PELAYAN *** */
 boolean CanOrder(Pelayan P, Ruangan R);
 /*
   fungsi akan bernialai true jika meja dekat p dapat memesan
@@ -49,14 +51,14 @@ boolean CanPut(Pelayan P);
   fungsi bernilai true jika di dekat P ada t yang bisa diput
 */
 
-// *** Tile Set ***
+/* *** Tile Set *** */
 void SetTile(Pelayan *P,MatTile M, int kode);
 /*
   I.S. P, M, kode terdefinisi
   F.S. Tile pada pelayan diisi dengan elemt yang sesuai dengan M menurut kode
 */
 
-// *** BOOLEAN RUANGAN ***
+/* *** BOOLEAN RUANGAN *** */
 boolean IsTableEmpty(int nomorMeja, Ruangan R);
 /*
   mengirimkan true jika meja dengan nomor meja nomorMeja adalah kosong dan bisa
@@ -69,7 +71,7 @@ boolean CanPlace(int pelanggan,Pelayan P, Ruangan R);
   P harus sebelah bangku ('x')
 */
 
-// *** ACTION ***
+/* *** ACTION *** */
 void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int nomorMeja);
 /*
   I.S. P dan *R terdefinisi, dilakukan jika sudah dipastikan dapat order dan P
@@ -93,7 +95,7 @@ void Placing(int pelanggan,int waktuOut, Pelayan *P, Ruangan *R);
       karakter jadi 'c', value jadi waktuOut
 */
 
-// *** LAIN LAIN ***
+/* *** LAIN LAIN *** */
 Tile GetTableTile(Pelayan P, Ruangan R);
 /*
   mengembalikan Tile meja yang bersebelahan dengan Pelayan
@@ -114,7 +116,8 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah,ArrInt *arr
     menjadi x deskripsi menjadi "-" dan Value menjadi ValUndeff
 */
 Point IndeksMeja(int nomor,Ruangan R);
-// mengembalikan koordinat dari nomor meja yang diinput. nomor [1..12]
+/* mengembalikan koordinat dari nomor meja yang diinput. nomor [1..12] */
+
 void SetTableEmpty(int nomorMeja, Ruangan *R);
 /*
   I.S. P dan R terdefinisi, dipanggil jika p dekat meja

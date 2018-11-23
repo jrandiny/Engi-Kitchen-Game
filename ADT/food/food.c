@@ -1,6 +1,6 @@
 /* Kelompok : UAS
    Nama File : food.c
-   Deskripsi : ADT untuk tipe food */
+   Deskripsi : Implementasi ADT untuk tipe food */
 
 #include "food.h"
 

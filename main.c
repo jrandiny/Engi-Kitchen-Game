@@ -1,6 +1,5 @@
 /* Kelompok  : UAS
    Nama file : main.c
-   Tanggal   : 3 November 2018
    Deskripsi : Program utama Engi's Kitchen Expansion */
 
 #include "std.h"

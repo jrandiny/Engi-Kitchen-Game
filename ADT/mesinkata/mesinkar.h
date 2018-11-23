@@ -2,9 +2,7 @@
 /* Definisi Mesin Karakter */
 /* Kelompok  : UAS
    Nama file : mesinkar.h
-   Topik     : Tugas Besar Alstrukdat
-   Tanggal   : 25 Oktober 2018
-   Deskripsi : Implementasi mesin kata*/
+   Deskripsi : ADT mesin karakter*/
 
 #ifndef __MESIN_KAR_H_
 #define __MESIN_KAR_H_

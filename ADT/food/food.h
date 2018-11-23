@@ -7,12 +7,14 @@
 
 #include "../mesinkata/mesinkata.h"
 
+/* Definisi struktur */
 typedef struct {
   int idMakanan;    /* indeks makanan */
   Kata namaMakanan; /* nama makanan sesuai tree makanan */
   int harga;        /* harga makanan */
 }Food;
 
+/* SELEKTOR */
 #define F_IDMakanan(F) (F).idMakanan
 #define F_NamaMakanan(F) (F).namaMakanan
 #define F_Harga(F) (F).harga

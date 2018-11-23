@@ -2,8 +2,6 @@
 /* Definisi Mesin Kata: Model Akuisisi Versi I */
 /* Kelompok  : UAS
    Nama file : mesinkata.c
-   Topik     : Tugas Besar Alstrukdat
-   Tanggal   : 25 Oktober 2018
    Deskripsi : Implementasi mesin kata*/
 
 #include "mesinkar.h"

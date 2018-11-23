@@ -1,3 +1,7 @@
+/* Kelompok  : UAS
+   Nama file : eksternal.c
+   Deskripsi : Implementasi modul eksternal */
+
 #include "eksternal.h"
 #include <time.h>
 
