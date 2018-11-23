@@ -1,7 +1,7 @@
 #include "prioqueue.h"
 
 int main() {
-  //kamus
+  /* KAMUS LOKAL */
   PrioQueue q;
   int input,prio,info; //input user
   PQ_infotype elmt; //elmt queue

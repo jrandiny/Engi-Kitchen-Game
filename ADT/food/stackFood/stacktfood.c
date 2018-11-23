@@ -50,10 +50,10 @@ StackFood SF_ReversStack(StackFood S)
 	misalnya inputnya 1 2 3 menjadi 3 2 1
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   StackFood s1,s2;
   SF_infotype info;
-  //ALGORITMA
+  /* ALGORITMA */
   s1 = S;
   SF_CreateEmpty(&s2,SF_Max(S));
   while (!SF_IsEmpty(s1)) {

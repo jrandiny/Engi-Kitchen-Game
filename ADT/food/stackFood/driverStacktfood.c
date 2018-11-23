@@ -5,17 +5,18 @@ int main() {
     SF_infotype X;
     StackFood F;
 
-    SF_CreateEmpty(&F);
-    printf("MENU STACK FOOD\n");
+    SF_CreateEmpty(&F,10);
+    printf("Menu\n");
+    printf("0. Exit\n");
     printf("1. IsEmpty\n");
     printf("2. IsFull\n");
     printf("3. Push\n");
     printf("4. Pop\n");
 
-    printf("Masukkan pilihan menu : ");
+    printf("Choice = ");
     scanf("%d", &menu);
 
-    while ((menu>0) && (menu<=4))
+    while (menu!=0)
     {
         switch (menu) {
             case 1 :
@@ -42,14 +43,14 @@ int main() {
             {
                 printf("id makanan : ");
                 scanf("%d", &idmkn);
-                SF_IDMakanan(X) = idmkn;
+                F_IDMakanan(X) = idmkn;
                 SF_Push(&F,X);
             }
             break;
             case 4 :
             {
                 SF_Pop(&F,&X);
-                printf("Pop : %d\n", SF_IDMakanan(X));
+                printf("Pop : %d\n", F_IDMakanan(X));
             }
             break;
         }

@@ -16,10 +16,10 @@ void AM_CreateEmpty (ArrMeja * T)
 /* I.S. T sembarang */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas AM_AM_IdxMax-AM_AM_IdxMin+1 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   Meja tmp;
   Point pos;
-  //ALGORITMA
+  /* ALGORITMA */
   AM_Neff(*T) = 0;
   P_CreatePoint(&pos);
   tmp = AM_CreateMeja(0,pos,0);
@@ -47,7 +47,7 @@ IdxType AM_GetFirstIdx (ArrMeja T)
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T pertama */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   IdxType i;
   //ALGORTIMA
   i = AM_IdxMin;
@@ -183,9 +183,9 @@ Meja AM_CreateMeja(int bangku,Point pos,int status)
 	fungsi menhasilkan meja yang sudah di set berdasarkan input
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   Meja tmp;
-  //ALGORITMA
+  /* ALGORITMA */
   Bangku(tmp) = bangku;
   Meja_Posisi(tmp) = pos;
   Status(tmp) = status;

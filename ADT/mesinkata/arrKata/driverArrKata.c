@@ -25,8 +25,9 @@ int main(){
   /* ALGORITMA */
   AK_CreateEmpty(&ak);
   do {
+    printf("Array kata:\n");
     PrintArrKata(ak);
-    printf("1)Add kata\n2)Length\n3)Exit\nChoice = ");
+    printf("\nMenu\n0. Exit\n1. Add kata\n2. Length\nChoice = ");
     scanf("%d",&pil);
     if(pil==1){
       scanf("%s",temp);
@@ -34,7 +35,7 @@ int main(){
     }else if(pil==2){
       printf("Length = %d\n",AK_NbElmt(ak));
     }
-  } while(pil!=3);
+  } while(pil!=0);
 
   return 0;
 }

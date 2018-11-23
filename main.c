@@ -8,9 +8,9 @@
 
 //tampilan main menu
 ArrKata MainMenu(){
-  //KAMUS
+  /* KAMUS LOKAL */
   ArrKata hasil;
-  //ALGORITMA
+  /* ALGORITMA */
   AK_CreateEmpty(&hasil);
   AK_AddAsLastEl(&hasil,K_MakeKata("Engi's Kitchen"));
   AK_AddAsLastEl(&hasil,K_MakeKata(""));
@@ -24,9 +24,9 @@ ArrKata MainMenu(){
 
 //tampilan credit
 ArrKata Credit(){
-  //KAMUS
+  /* KAMUS LOKAL */
   ArrKata isicredit;
-  //ALGORITMA
+  /* ALGORITMA */
   AK_CreateEmpty(&isicredit);
   AK_AddAsLastEl(&isicredit,K_MakeKata("GAME OVER"));
   AK_AddAsLastEl(&isicredit,K_MakeKata(""));
@@ -52,10 +52,10 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
   F.S. me-random kedatangan pelanggan
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   int chance;
   Customer pelanggan;
-  //ALGORITMA
+  /* ALGORITMA */
   chance = rand()%50;
   if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ //chance customer : 1/10 kemungkinan
     chance = rand()%4;
@@ -73,10 +73,10 @@ void PelangganPergi(PrioQueueCustomer *pqc,int waktuNow,int *jumlah)
   F.S. jumlah = jumlah pelanggan yang waktu == waktuNow
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   PrioQueueCustomer Q2;
   Customer pelanggan;
-  //ALGORITMA
+  /* ALGORITMA */
   PQC_CreateEmpty(&Q2);
   *jumlah = 0;
   while (!PQC_IsEmpty(*pqc)) {
@@ -97,12 +97,12 @@ void CekToolTip(Restoran R, Pelayan P,boolean pindahRuang, Kata*IsiToolTip, Tree
        boolean pindah ruang bernilai true jika pelayan baru pindah ruangan
 */
 {
-  //Kamus lokal
+  /* KAMUS LOKAL */
   int idtemp; //variabel idmakanan sementara
   char roomtemp[2]; //variabel nomor ruangan sementara
   Kata room, idroom;
 
-  //Algoritma
+  /* ALGORITMA */
   if(pindahRuang){
     roomtemp[0] = (char) RoomNow(R) + '0';
     roomtemp[1] = '\0';
@@ -157,7 +157,7 @@ int JadiApa(StackFood sf, TreeFood tf)
 }
 
 int main() {
-  //KAMUS PROGRAM UTAMA
+  /* KAMUS */
   const int maxHand=10;
   const int maxTray=5;
   int money,life,waktu; //uang dan nyawa yang dimiliki pemain dan tik waktu
@@ -196,7 +196,7 @@ int main() {
   boolean pindahRuang; //menyatakan pelayan baru saja pindah ruangan
   GameScreen gs; //tipe untuk GameScreen ncruses
 
-  //ALGORITMA PROGRAM UTAMA
+  /* ALGORITMA */
 
   //inisialisasi awal
   srand((unsigned) time(&t)); //inisiasi random

@@ -16,25 +16,22 @@ void K_TulisPita();
 
 int main ()
 {
-  //KAMUS
-  int i,input,count;
+  /* KAMUS */
+  int i,input,count,status;
 
-  //ALGORITMA
-  printf("DRIVER MESIN KATA\n");
-  printf("\n");
-
-  do {
-
-  printf("Tekan 1 untuk membaca pita karakter.\n");
-  printf("Tekan 2 untuk menulis pita karakter.\n");
-  printf("Tekan 3 untuk keluar.\n");
+  /* ALGORITMA */
+  do{
+  printf("Menu\n");
+  printf("0. Exit\n");
+  printf("1. membaca pita karakter.\n");
+  printf("2. menulis pita karakter.\n");
   printf("\n");
   printf("Input : ");
   scanf("%d", &input);
 
   if(input==1)
   {
-    K_STARTKATA("pitakar.txt");
+    K_STARTKATA("pitakar.txt",&status);
     count = 0;
     while(!EndKata)
     {
@@ -57,17 +54,17 @@ int main ()
     K_TulisPita();
   }
 
-} while(input != 3);
+} while(input != 0);
 
   return 0;
 }
 
 void K_TulisPita()
 {
-  //Kamus LOKAL
+  /* KAMUS LOKAL */
   char kalimat[NMax];
 
-  //Algoritma
+  /* ALGORITMA */
   printf("Tuliskan kalimat dibawah untuk ditulis pada pita karakter (maksimal 50 karakter).\n");
   scanf("%s", kalimat);
 

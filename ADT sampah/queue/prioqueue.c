@@ -17,7 +17,7 @@ boolean PQ_IsFull (PrioQueue Q)
 int PQ_NBElmt (PrioQueue Q)
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 {
-	//kamus
+	/* KAMUS LOKAL */
   address count;
   /* ALGORITMA */
   if (PQ_IsEmpty(Q)) return 0;
@@ -62,7 +62,7 @@ void PQ_Add (PrioQueue * Q, PQ_infotype X)
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer;
         elemen baru disisipkan pada posisi yang tepat sesuai dengan prioritas */
 {
-  //kamus
+  /* KAMUS LOKAL */
   int i,j;
   int indeks;
 	/* ALGORITMA */
@@ -118,7 +118,7 @@ void PQ_PrintQueue (PrioQueue Q)
 #
 */
 {
-  //kamus
+  /* KAMUS LOKAL */
 	PQ_infotype X;
   /* ALGORITMA */
 	while (!PQ_IsEmpty(Q)) {

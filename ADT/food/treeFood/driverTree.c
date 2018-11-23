@@ -28,7 +28,7 @@ int main(){
     printf("\n\n");
     printGraf(tf);
     printf("\n\n");
-    printf("0) Exit\n1) Add\n2) Search\n3) Depth\nInput = ");
+    printf("0. Exit\n1. Add\n2. Search\n3. Depth\nChoice = ");
     scanf("%d",&opsi);
 
     switch(opsi){

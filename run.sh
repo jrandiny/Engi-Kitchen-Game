@@ -43,6 +43,13 @@ test)
     cd ../..
     ./bin/test-arrInt
     ;;
+  stackFood)
+    cd ADT/food/stackFood
+    gcc -Wall stacktfood.c driverStacktfood.c
+    mv a.out ../../../bin/test-stackFood
+    cd ../../..
+    ./bin/test-stackFood
+    ;;
   PQC)
     cd ADT/customer
     gcc -Wall driverPrioQueueCustomer.c prioQueueCustomer.c
@@ -50,12 +57,40 @@ test)
     cd ../..
     ./bin/test-PQC
     ;;
+  treeFood)
+    cd ADT/food/treeFood
+    gcc -Wall treeFood.c driverTree.c ../../mesinkata/mesinkata.c ../../mesinkata/mesinkar.c ../food.c
+    mv a.out ../../../bin/test-treeFood
+    cd ../../..
+    ./bin/test-treeFood
+    ;;
+  mesinkata)
+    cd ADT/mesinkata
+    gcc -Wall mesinkata.c mesinkar.c driverMesinkata.c
+    mv a.out ../../bin/test-mesinkata
+    cd ../..
+    ./bin/test-mesinkata
+    ;;
   arrOrder)
     cd ADT/order/arrOrder
     gcc -Wall driverArrOrder.c arrOrder.c ../order.c ../../mesinkata/mesinkata.c ../../mesinkata/mesinkar.c
     mv a.out ../../../bin/test-arrOrder
     cd ../../..
     ./bin/test-arrOrder
+    ;;
+  arrKata)
+    cd ADT/mesinkata/arrKata
+    gcc -Wall arrKata.c driverArrKata.c
+    mv a.out ../../../bin/test-arrKata
+    cd ../../..
+    ./bin/test-arrKata
+    ;;
+  point)
+    cd ADT/point
+    gcc -Wall driverPoint.c  point.c
+    mv a.out ../../bin/test-point
+    cd ../..
+    ./bin/test-point
     ;;
   treeFood)
     cd ADT/food/treeFood
@@ -70,11 +105,16 @@ test)
     echo "Implemented tester"
     echo "UI                  - Modul UI"
     echo "arrInt              - ADT Array Integer"
+    echo "arrKata             - ADT Array Kata"
     echo "arrOrder            - ADT Array Order"
     echo "grafRuangan         - ADT Graf Ruangan"
+    echo "mesinkata           - ADT Mesin Kata"
+    echo "point               - ADT Point"
     echo "PQC                 - ADT Priority Queue Customer"
+    echo "space               - ADT Space"
+    echo "stackFood           - ADT Stack Food"
     echo "treeFood            - ADT Tree Food"
-		echo "space               - ADT Space"
+
     ;;
 
   esac

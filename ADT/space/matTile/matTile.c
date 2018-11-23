@@ -79,9 +79,9 @@ void MT_CopyMatriks (MatTile MIn, MatTile * MHsl)
 Tile MT_CreateTile(char karakter,int value)
 /* fungsi menghasilkan tile yang sudah di set berdasarkan input */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   Tile tmp;
-  //ALGORITMA
+  /* ALGORITMA */
   Karakter(tmp) = karakter;
   Value(tmp) = value;
   return tmp;
@@ -99,12 +99,12 @@ void MT_BacaMatriks (MatTile * M, int NB, int NK)
 8 9 10
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   indeks i,j;
   char kar;
   int val;
   Tile elmt;
-  //ALGORITMA
+  /* ALGORITMA */
   MT_MakeMatriks(NB,NK,M);
   for(i=MT_GetFirstIdxBrs(*M);i<=MT_GetLastIdxBrs(*M);i++){
     for(j=MT_GetFirstIdxKol(*M);j<=MT_GetLastIdxKol(*M);j++){
@@ -127,9 +127,9 @@ void MT_TulisMatriks (MatTile M)
 8 9 10
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   indeks i,j;
-  //ALGORITMA
+  /* ALGORITMA */
   printf("Karakter:\n");
   for(i=MT_GetFirstIdxBrs(M);i<=MT_GetLastIdxBrs(M);i++){
     for(j=MT_GetFirstIdxKol(M);j<=MT_GetLastIdxKol(M);j++){

@@ -21,7 +21,7 @@ void PlacePelayan(Pelayan *P,int x,int y, MatTile M)
   F.S. Pelayan terletak di posisi x,y di ruangan di R Tile bersampingan terupdate
 */
 {
-  //ALGORITMA
+  /* ALGORITMA */
   P_SetXY(&Pelayan_Posisi(*P),x,y); //merubah posisi
   SetTile(P,M,1); //mengecek karakter di atasnya
   SetTile(P,M,2); //mengencek karakter di kanannya
@@ -40,7 +40,7 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status,boolean *justMove)
         4 = Left
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   int x,y;
   int i,j;
   boolean found;
@@ -50,7 +50,7 @@ void Move(Pelayan *P,Restoran *R, int code, boolean *status,boolean *justMove)
   Point tujuan;
   int arah,nomorRuangBaru;
   MatTile M;
-  //ALGORITMA
+  /* ALGORITMA */
   //cek apakah sekarang pelayan ada di pintu
   found = false;
   p = GR_First(Ruangan(*R)); //GR_address dari ruangan pertama
@@ -150,9 +150,9 @@ boolean CanOrder(Pelayan P, Ruangan R)
   fungsi akan bernialai true jika meja dekat p dapat memesan
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   int nomorMeja;
-  //ALGORITMA
+  /* ALGORITMA */
   nomorMeja = GetTableNumber(P,R);
   //bisa order jika status mejanya adalah 1, sudah duduk dan
   return Status(AM_Elmt(Meja(R),nomorMeja)) ==  1;
@@ -162,9 +162,9 @@ boolean CanTake(Pelayan P)
   fungsi bernilai true jika di dekat P ada M yang bisa diambil idnya
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   boolean up,down,left,right;
-  //ALGORITMA
+  /* ALGORITMA */
   //jika karakter di dekatnya adalah 'm'
   up = Karakter(Up(P)) == 'm';
   down = Karakter(Down(P)) == 'm';
@@ -177,9 +177,9 @@ boolean CanPut(Pelayan P)
   fungsi bernilai true jika di dekat P ada t yang bisa diput
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   boolean up,down,left,right;
-  //ALGORITMA
+  /* ALGORITMA */
   //jika karakter di dekatnya adalah 'm'
   up = Karakter(Up(P)) == 't';
   down = Karakter(Down(P)) == 't';
@@ -195,10 +195,10 @@ void SetTile(Pelayan *P,MatTile M, int kode)
   F.S. Tile pada pelayan diisi dengan elemt yang sesuai dengan M menurut kode
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   int x,y;
   Tile tmp;
-  //ALGORITMA
+  /* ALGORITMA */
   P_GetXY(Pelayan_Posisi(*P),&x,&y);
   switch (kode) {
     case 1:
@@ -247,7 +247,7 @@ boolean IsTableEmpty(int nomorMeja, Ruangan R)
   di duduki, mengirimkan false jika tidak
 */
 {
-  //ALGORITMA
+  /* ALGORITMA */
   //empty jika status mejanya 0
   return Status(AM_Elmt(Meja(R),nomorMeja)) ==  0;
 }
@@ -258,11 +258,11 @@ boolean CanPlace(int pelanggan,Pelayan P, Ruangan R)
   P harus sebelah bangku ('x')
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   boolean empty;
   int jumlahBangku;
   int nomorMeja;
-  //ALGORITMA
+  /* ALGORITMA */
   nomorMeja = GetTableNumber(P,R);
   jumlahBangku = Bangku(AM_Elmt(Meja(R),nomorMeja));
   empty = IsTableEmpty(nomorMeja,R);
@@ -278,7 +278,7 @@ void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int nomorMeja)
   F.S. status meja yang di order menjadi 2, idMakanan berisi id Makanan random
 */
 {
-  //ALGORITMA
+  /* ALGORITMA */
   //merandom id makanan dari -1 - -8
   *idMakanan = (rand()%8-8); //[-1..-8]
   // *nomorMeja = GetTableNumber(P,*R);
@@ -290,9 +290,9 @@ int Taking(Pelayan P)
   satu meja bahan ('m')
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   int makanan;
-  //ALGORITMA
+  /* ALGORITMA */
   if (Karakter(Up(P)) == 'm'){ // 'm' ada di atas
     makanan = Value(Up(P));
   } else if (Karakter(Down(P)) == 'm'){ // 'm' ada di bawah
@@ -315,12 +315,12 @@ void Placing(int pelanggan,int waktuOut,Pelayan *P, Ruangan *R)
       karakter jadi 'c', value jadi waktuOut
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   int nomorMeja;
   int x,y;
   int i,j;
   int jumlahBangku;
-  //ALGORITMA
+  /* ALGORITMA */
   P_GetXY(Pelayan_Posisi(*P),&x,&y);
 
   nomorMeja = GetTableNumber(*P,*R);
@@ -350,10 +350,10 @@ Tile GetTableTile(Pelayan P, Ruangan R)
   mengembalikan nilai meja yang bersebelahan dengan Pelayan
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   int nomor;
   int i,j;
-  //ALGORITMA
+  /* ALGORITMA */
   nomor = GetTableNumber(P,R);
   P_GetXY(IndeksMeja(nomor,R),&i,&j);
   return MT_Elmt(Room(R),i,j);
@@ -363,9 +363,9 @@ MatTile GetMatTileSekarang(Restoran R)
   fungsi mengembalikan suatu matriks yang sedang digunakan berdasarkan Ruangan(R)
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   GR_address P;
-  //ALGORITMA
+  /* ALGORITMA */
   P = GR_Search(Ruangan(R),RoomNow(R));
   return (Room(GR_Info(P)));
 }
@@ -384,14 +384,14 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah,ArrInt *arr
     menjadi x deskripsi menjadi "-" dan Value menjadi ValUndeff
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   int x,y;
   int a,b;
   int nomorMeja;
   Ruangan *tmp;
   Ruangan room;
   GR_address p1;
-  //ALGORITMA
+  /* ALGORITMA */
   *jumlah = 0;
   p1 = GR_First(Ruangan(*R));
   AI_CreateEmpty(arrinteger);
@@ -418,7 +418,7 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah,ArrInt *arr
 Point IndeksMeja(int nomor,Ruangan R)
 // mengembalikan koordinat dari nomor meja yang diinput. nomor [1..12]
 {
-  //ALGORITMA
+  /* ALGORITMA */
   return Meja_Posisi(AM_Elmt(Meja(R),nomor));
 }
 void SetTableEmpty(int nomorMeja, Ruangan *R)
@@ -427,10 +427,10 @@ void SetTableEmpty(int nomorMeja, Ruangan *R)
   F.S. membuat meja dengan nomor meja nomorMeja menjadi kosong
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   int i,j;
   int jumlahBangku;
-  //ALGORITMA
+  /* ALGORITMA */
   P_GetXY(IndeksMeja(nomorMeja,*R),&i,&j);
   jumlahBangku = Bangku(AM_Elmt(Meja(*R),nomorMeja));
 
@@ -449,7 +449,7 @@ int GetTableNumber (Pelayan P, Ruangan R)
   akan mengembalikan 0 jika tidak
 */
 {
-  //KAMUS
+  /* KAMUS LOKAL */
   ArrMeja arrmeja;
   Meja meja;
   int x,y;
@@ -457,7 +457,7 @@ int GetTableNumber (Pelayan P, Ruangan R)
   int a,b;
   boolean found;
   int tmp;
-  //ALGORITMA
+  /* ALGORITMA */
   P_GetXY(Pelayan_Posisi(P),&x,&y);
   arrmeja = Meja(R);
   found = false;

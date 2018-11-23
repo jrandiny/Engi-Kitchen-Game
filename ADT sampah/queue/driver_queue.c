@@ -25,7 +25,7 @@ void Q_Print(Queue q){
 }
 
 int main() {
-  //kamus
+  /* KAMUS LOKAL */
   Queue q;
   int input; //input user
   Q_infotype elmt; //elmt queue
