@@ -12,7 +12,7 @@ int main(){
     Restoran restoran;
     Pelayan pelayan;
     PrioQueueCustomer prioqueue;
-    customer customer;
+    Customer customer;
     Food food;
     boolean kiri;
     int parentid;
@@ -50,10 +50,13 @@ int main(){
     // K_PrintKata(temp222);
     nama=K_MakeKata("STEVE");
     LoadFile(&status,&nama,&money,&life,&waktu,&restoran,&pelayan,&prioqueue,&hand,&tray,&arrorder);
-    nama=K_MakeKata("TESSAVED4");
+    nama=K_MakeKata("TESSAVED3");
     SaveFile(nama,money,life,waktu,restoran,pelayan,prioqueue,hand,tray,arrorder);
-    
-    
+    ArrKata temparr=AppendUsername(GetAllUserName());
+    int i;
+    for(i=AK_GetFirstIdx(temparr);i<=AK_Neff(temparr);i++){
+        K_PrintKata(AK_Elmt(temparr,i));printf("\n");
+    }
     // K_PrintKata(nama);printf("\n");
     // printf("money=%d\n",money);
     // printf("life=%d\n",life);

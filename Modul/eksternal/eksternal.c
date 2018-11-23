@@ -23,6 +23,27 @@ index genap untuk username, index ganjil untuk jam
   return hasil;
 }
 
+ArrKata AppendUsername(ArrKata arrkata)
+/*
+membuat satu indeks arrkata berisi - <namauser> <jam save>, parameter diisikan dari
+hasil fungsi getallusername
+*/
+{
+  int i;
+  ArrKata hasil;
+  Kata hubung = K_MakeKata("- ");
+  Kata tab = K_MakeKata("     ");
+  AK_CreateEmpty(&hasil);
+  for(i=1;i<=AK_Neff(arrkata);i+=2){
+    Kata hasilkata=K_MakeKata("");
+    K_KonkatKata(&hasilkata,hubung);
+    K_KonkatKata(&hasilkata,AK_Elmt(arrkata,i));
+    K_KonkatKata(&hasilkata,tab);
+    K_KonkatKata(&hasilkata,AK_Elmt(arrkata,i+1)); 
+    AK_AddAsLastEl(&hasil,hasilkata); 
+  }
+  return hasil;
+}
 
 /*Bagian Load File Eksternal*/
 

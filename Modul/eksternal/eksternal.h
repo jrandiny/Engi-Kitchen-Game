@@ -17,6 +17,11 @@ mengambil semua username dan jam kemudian dimasukkan ke arrkata
 index genap untuk username, index ganjil untuk jam
 */
 
+ArrKata AppendUsername(ArrKata arrkata);
+/*
+membuat satu indeks arrkata berisi - <namauser> <jam save>, parameter diisikan dari
+hasil fungsi getallusername
+*/
 
 /*Bagian Load File Eksternal*/
 
