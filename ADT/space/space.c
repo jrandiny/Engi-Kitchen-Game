@@ -271,18 +271,18 @@ boolean CanPlace(int pelanggan,Pelayan P, Ruangan R)
 }
 
 // *** ACTION ***
-void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int *nomorMeja)
+void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int nomorMeja)
 /*
   I.S. P dan *R terdefinisi, dilakukan jika sudah dipastikan dapat order dan P
     dekat Meja
-  F.S.
+  F.S. status meja yang di order menjadi 2, idMakanan berisi id Makanan random
 */
 {
   //ALGORITMA
   //merandom id makanan dari -1 - -8
   *idMakanan = (rand()%8-8); //[-1..-8]
-  *nomorMeja = GetTableNumber(P,*R);
-  Status(AM_Elmt(Meja(*R),*nomorMeja)) = 2; //merubah status meja menjadi 2, sudah order
+  // *nomorMeja = GetTableNumber(P,*R);
+  Status(AM_Elmt(Meja(*R),nomorMeja)) = 2; //merubah status meja menjadi 2, sudah order
 }
 int Taking(Pelayan P)
 /*

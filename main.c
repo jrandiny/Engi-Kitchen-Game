@@ -227,23 +227,25 @@ int main() {
         } while(K_IsKataSama(username,K_MakeKata("RESIZE")));
       }
       else if (K_IsKataSama(input,start)) { //START
-        do {
-          WriteText(&gs,MainMenu()); //main menu
-          username=GetInput(&gs,K_MakeKata("NEW USERNAME : "));
-        } while(K_IsKataSama(username,K_MakeKata("RESIZE")));
+        if (username.Length==0){
+          do {
+            WriteText(&gs,MainMenu()); //main menu
+            username=GetInput(&gs,K_MakeKata("NEW USERNAME : "));
+          } while(K_IsKataSama(username,K_MakeKata("RESIZE")));
+        }
       }
       else if (K_IsKataSama(input,load)) { //LOAD
         //prosedure load
         loaded = true;
         do {
           do {
-            WriteText(&gs, GetAllUserName());
+            WriteText(&gs, AppendUsername(GetAllUserName()));
             username = GetInput(&gs,K_MakeKata("SAVED USERNAME: "));
           } while(K_IsKataSama(username,K_MakeKata("RESIZE")));
           LoadFile(&status,&username,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
           if (status ==0 && !K_IsKataSama(username,keluar)) {
             do {
-              // WriteText(&gs, GetAllUserName());
+              // WriteText(&gs, AppendUsername());
               input = GetInput(&gs,K_MakeKata("USERNAME SALAH!"));
             } while(!K_IsKataSama(input,K_MakeKata("")));
           }
@@ -399,7 +401,7 @@ int main() {
               else if(K_IsKataSama(input,K_MakeKata("ORDER"))){ //nunggu stack dan converter idmakanan
                 if(CanOrder(P,*room)){
                   aksiValid = true;
-                  Ordering(P,room,&idMakanan,&nomorMeja);
+                  Ordering(P,room,&idMakanan,nomorMeja);
                   masakan = TF_Search(tree,idMakanan);
                   namaMakanan = F_NamaMakanan(TF_Akar(masakan));
                   order = O_CreateOrder(idMakanan,namaMakanan,nomorMeja); //tree pada namaMakanan

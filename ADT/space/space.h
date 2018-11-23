@@ -70,7 +70,7 @@ boolean CanPlace(int pelanggan,Pelayan P, Ruangan R);
 */
 
 // *** ACTION ***
-void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int *nomorMeja);
+void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int nomorMeja);
 /*
   I.S. P dan *R terdefinisi, dilakukan jika sudah dipastikan dapat order dan P
     dekat Meja
