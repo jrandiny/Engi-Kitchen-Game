@@ -96,10 +96,6 @@ void Placing(int pelanggan,int waktuOut, Pelayan *P, Ruangan *R);
 */
 
 /* *** LAIN LAIN *** */
-Tile GetTableTile(Pelayan P, Ruangan R);
-/*
-  mengembalikan Tile meja yang bersebelahan dengan Pelayan
-*/
 MatTile GetMatTileSekarang(Restoran R);
 /*
   fungsi mengembalikan suatu tipe MatTile yang sedang digunakan berdasarkan Ruangan(R)
@@ -116,7 +112,9 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah,ArrInt *arr
     menjadi x deskripsi menjadi "-" dan Value menjadi ValUndeff
 */
 Point IndeksMeja(int nomor,Ruangan R);
-/* mengembalikan koordinat dari nomor meja yang diinput. nomor [1..12] */
+/*
+  mengembalikan koordinat dari nomor meja yang diinput. nomor [1..12]
+*/
 
 void SetTableEmpty(int nomorMeja, Ruangan *R);
 /*

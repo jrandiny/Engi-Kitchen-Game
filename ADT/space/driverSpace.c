@@ -1,3 +1,7 @@
+/* Kelompok  : UAS
+   Nama file : driverSpace.c
+   Deskripsi : Driver ADT untuk tipe space*/
+
 #include "space.h"
 #include "../../Modul/eksternal/eksternal.h"
 #include <string.h>
@@ -15,10 +19,11 @@ void PrintSurround(Pelayan P){
 }
 
 int main() {
-  //KAMUS
+  /* KAMUS */
   Pelayan P;
   Restoran R;
   int input;
+  int i;
   int x,y;
   int status,money,life,waktu;
   int kodeArah;
@@ -27,26 +32,23 @@ int main() {
   StackFood hand,tray;
   ArrOrder arrorder;
   Ruangan *room;
-  MatTile M;
   char masukan[3];
   boolean aksiValid,pindahRuang;
   int nomorMeja;
-  char kar;
-  int val;
-  Tile t;
   int pelanggan;
   int idMakanan;
+  ArrInt mejaKabur;
   time_t saat;
-  //ALGORITMA
+
+  /* ALGORITMA */
   Inisiasi(&status,&nama,&money,&life,&waktu,&R,&P,&prioqueue,&hand,&tray,&arrorder);
   srand((unsigned) time(&saat));
   do {
     printf("\n0. Exit\n1. PlacePelayan\n2. Move\n3. CanOrder\n");
     printf("4. CanTake\n5. CanPut\n6. SetTile\n7. IsTableEmpty\n");
     printf("8. CanPlace\n9. Ordering\n10. Taking\n11. Placing\n");
-    printf("12. GetTableTile\n13. GetMatTileSekarang\n14. GetRuanganSekarang\n");
-    printf("15. PelangganKabur\n16. IndeksMeja\n17. SetTableEmpty\n");
-    printf("18. GetTableNumber\nCHOICE= ");
+    printf("12. GetMatTileSekarang\n13. GetRuanganSekarang\n14. PelangganKabur\n");
+    printf("15. IndeksMeja\n16. SetTableEmpty\n17. GetTableNumber\nCHOICE= ");
     scanf("%d",&input);
     printf("\n");
 
@@ -64,7 +66,7 @@ int main() {
                 if (!MT_IsIdxValid(x,y))
                   printf("invalid!\n");
               } while(!MT_IsIdxValid(x,y));
-              PlacePelayan(&P, x, y,M);
+              PlacePelayan(&P, x, y,GetMatTileSekarang(R));
               PrintSurround(P);
               break;
       case 2:
@@ -75,36 +77,34 @@ int main() {
               if (!(!strcmp(masukan,"u")||!strcmp(masukan,"d")||!strcmp(masukan,"r")||!strcmp(masukan,"l")))
                 printf("invalid!\n");
             } while(!(!strcmp(masukan,"u")||!strcmp(masukan,"d")||!strcmp(masukan,"r")||!strcmp(masukan,"l")));
-            if(masukan[0]=='G'){ //masukannya move
-              if(masukan[1]=='U'){ //u
+              if(masukan[0]=='u'){ //u
                 kodeArah=1;
               }
-              else if(masukan[1]=='R'){ //r
+              else if(masukan[0]=='r'){ //r
                 kodeArah=2;
               }
-              else if(masukan[1]=='D'){ //d
+              else if(masukan[0]=='d'){ //d
                 kodeArah=3;
               }
-              else if(masukan[1]=='L'){ //l
+              else if(masukan[0]=='l'){ //l
                 kodeArah=4;
               }
               Move(&P,&R,kodeArah,&aksiValid,&pindahRuang);
-            }
             PrintSurround(P);
             printf("aksiValid= %d\npindahRuang= %d\n",aksiValid,pindahRuang);
               break;
       case 3:
-              MT_TulisMatriks(M);
+              MT_TulisMatriks(GetMatTileSekarang(R));
               PrintSurround(P);
               printf("CanOrder= %d\n",nomorMeja!=0&&CanOrder(P,*room));
               break;
       case 4:
-              MT_TulisMatriks(M);
+              MT_TulisMatriks(GetMatTileSekarang(R));
               PrintSurround(P);
               printf("CanTake= %d\n",CanTake(P));
               break;
       case 5:
-              MT_TulisMatriks(M);
+              MT_TulisMatriks(GetMatTileSekarang(R));
               PrintSurround(P);
               printf("CanPut= %d\n",CanPut(P));
               break;
@@ -117,11 +117,11 @@ int main() {
                 if (!MT_IsIdxValid(x,y))
                   printf("invalid!\n");
               } while(!MT_IsIdxValid(x,y));
-              PlacePelayan(&P, x, y,M);
+              PlacePelayan(&P, x, y,GetMatTileSekarang(R));
               PrintSurround(P);
               break;
       case 7:
-              MT_TulisMatriks(M);
+              MT_TulisMatriks(GetMatTileSekarang(R));
               PrintSurround(P);
               if (nomorMeja!=0)
                 printf("IsTableEmpty= %d\n",IsTableEmpty(nomorMeja,*room));
@@ -129,7 +129,7 @@ int main() {
                 printf("Tidak dekat meja\n");
               break;
       case 8:
-            MT_TulisMatriks(M);
+            MT_TulisMatriks(GetMatTileSekarang(R));
             PrintSurround(P);
             pelanggan = (rand()%2)?2:4;
             printf("pelanggan= %d\n",pelanggan);
@@ -139,44 +139,91 @@ int main() {
               printf("Tidak dekat meja\n");
             break;
       case 9:
+            MT_TulisMatriks(GetMatTileSekarang(R));
+            PrintSurround(P);
             if (nomorMeja!=0) {
-              if (CanPlace(pelanggan,P,*room)){
-                Ordering(P,room,&idMakanan,nomorMeja);
-                printf("idMakanan= %d\n",idMakanan);
-              }
-              else
-                printf("cant't place\n");
+              Ordering(P,room,&idMakanan,nomorMeja);
+              printf("idMakanan= %d\n",idMakanan);
             }
             else
               printf("Tidak dekat meja\n");
             break;
       case 10:
-
+            MT_TulisMatriks(GetMatTileSekarang(R));
+            PrintSurround(P);
+            if (CanTake(P)){
+              printf("Id yang diambil= %d\n",Taking(P));
+            } else {
+              printf("cant take\n");
+            }
               break;
       case 11:
-
+              MT_TulisMatriks(GetMatTileSekarang(R));
+              PrintSurround(P);
+              if (nomorMeja!=0) {
+                pelanggan = (rand()%2)?2:4;
+                printf("pelanggan= %d\n",pelanggan);
+                if (CanPlace(pelanggan,P,*room)){
+                  do{
+                    printf("waktu now= %d\nwaktu keluar= ",waktu);
+                    scanf("%d",&i);
+                    if (i <= waktu)
+                      printf("waktu harus lebih besar dari %d\n",waktu);
+                  }while(i <= waktu);
+                  Placing(pelanggan,i, &P, room);
+                  MT_TulisMatriks(GetMatTileSekarang(R));
+                  PrintSurround(P);
+                }
+                else
+                  printf("cant't place\n");
+              }
+              else
+                printf("Tidak dekat meja\n");
               break;
       case 12:
-
+              MT_TulisMatriks(GetMatTileSekarang(R));
               break;
       case 13:
-              M = GetMatTileSekarang(R);
-              MT_TulisMatriks(M);
-              break;
-      case 14:
               room = GetRuanganSekarang(R);
               printf("nomor ruangan sekarang= %d\n",RoomID(*room));
               break;
+      case 14:
+              do{
+                printf("waktu tadi= %d\nwaktu sekarang= ",waktu);
+                scanf("%d",&i);
+                if (i <= waktu)
+                  printf("waktu harus lebih besar dari %d\n",waktu);
+              }while(i <= waktu);
+              waktu = i;
+              PelangganKabur(waktu,&P,&R,&i,&mejaKabur);
+              printf("jumlah kabur= %d\n",i);
+              for (i=AI_GetFirstIdx(mejaKabur);i<=AI_GetLastIdx(mejaKabur);i++){
+                printf("%d. meja nomor %d\n",i,AI_Elmt(mejaKabur, i));
+              }
+              break;
       case 15:
-
+              do{
+                printf("tuliskan nomor meja= ");
+                scanf("%d",&i);
+                if (i>AM_GetLastIdx(Meja(*room))&&i<AM_GetFirstIdx(Meja(*room)))
+                  printf("indeks out of bound\n");
+              } while(i>AM_GetLastIdx(Meja(*room))&&i<AM_GetFirstIdx(Meja(*room)));
+              printf("posisi meja= ");
+              P_TulisPoint(IndeksMeja(i, *room));
+              printf("\n");
               break;
       case 16:
-
+              MT_TulisMatriks(GetMatTileSekarang(R));
+              do{
+                printf("tuliskan nomor meja= ");
+                scanf("%d",&i);
+                if (i>AM_GetLastIdx(Meja(*room))&&i<AM_GetFirstIdx(Meja(*room)))
+                  printf("indeks out of bound\n");
+              } while(i>AM_GetLastIdx(Meja(*room))&&i<AM_GetFirstIdx(Meja(*room)));
+              SetTableEmpty(i,room);
+              MT_TulisMatriks(GetMatTileSekarang(R));
               break;
       case 17:
-
-              break;
-      case 18:
               nomorMeja = GetTableNumber(P,*room);
               printf("nomor meja terdekat= %d\n",nomorMeja);
               break;
