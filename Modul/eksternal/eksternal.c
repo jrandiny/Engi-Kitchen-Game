@@ -23,8 +23,6 @@ index genap untuk username, index ganjil untuk jam
       AK_AddAsLastEl(&hasil,CKata);
       K_ADVKATA();
     }
-  }else{
-    AK_AddAsLastEl(&hasil,K_MakeKata("No save file found."));
   }
   return hasil;
 }
@@ -40,13 +38,17 @@ hasil fungsi getallusername
   Kata hubung = K_MakeKata("- ");
   Kata tab = K_MakeKata("     ");
   AK_CreateEmpty(&hasil);
-  for(i=1;i<=AK_Neff(arrkata);i+=2){
-    Kata hasilkata=K_MakeKata("");
-    K_KonkatKata(&hasilkata,hubung);
-    K_KonkatKata(&hasilkata,AK_Elmt(arrkata,i));
-    K_KonkatKata(&hasilkata,tab);
-    K_KonkatKata(&hasilkata,AK_Elmt(arrkata,i+1));
-    AK_AddAsLastEl(&hasil,hasilkata);
+  if(AK_Neff(arrkata)!=0){
+    for(i=1;i<=AK_Neff(arrkata);i+=2){
+      Kata hasilkata=K_MakeKata("");
+      K_KonkatKata(&hasilkata,hubung);
+      K_KonkatKata(&hasilkata,AK_Elmt(arrkata,i));
+      K_KonkatKata(&hasilkata,tab);
+      K_KonkatKata(&hasilkata,AK_Elmt(arrkata,i+1));
+      AK_AddAsLastEl(&hasil,hasilkata);
+    }
+  }else{
+    AK_AddAsLastEl(&hasil,K_MakeKata("No save file found."));
   }
   return hasil;
 }
