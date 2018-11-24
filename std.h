@@ -5,6 +5,7 @@
 
 #define Nil NULL
 #define Nol 0
+#define Multiplier 3000
 
 #define IdxUndeff -999 /* Indeks tak terdefinisi*/
 #define ValUndeff -999 /* Value tak terdefinisi*/

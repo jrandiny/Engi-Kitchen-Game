@@ -119,7 +119,11 @@ test)
 		mv a.out ../../bin/test/test-jam
 		cd ../..
 		./bin/test-jam
+<<<<<<< Updated upstream
 		;;
+=======
+    ;;
+>>>>>>> Stashed changes
   *)
 
     echo "Unimplemented tester '$2'"

@@ -23,6 +23,8 @@ index genap untuk username, index ganjil untuk jam
       AK_AddAsLastEl(&hasil,CKata);
       K_ADVKATA();
     }
+  }else{
+    AK_AddAsLastEl(&hasil,K_MakeKata("No save file found."));
   }
   return hasil;
 }
@@ -304,10 +306,10 @@ TreeFood ParseTreeFood(Kata X)
 /*Ckata berada di kata tree*/
 {
   Food tempfood;
-  int jumlah,i,parentid;
+  int jumlah,i,parentid,level;
   boolean kiri;
   TreeFood hasil;
-  TF_address temptf;
+  TF_address temptf,parentaddress;
   TF_CreateEmpty(&hasil);
   K_ADVKATA();//Ckata berada di jumlah node tree
   jumlah=K_KataToInt(CKata);
@@ -318,7 +320,9 @@ TreeFood ParseTreeFood(Kata X)
     if(parentid==0){
       hasil=temptf;
     }else{
-      TF_AddLeafS(&hasil,parentid,kiri,tempfood);
+      TF_SearchL(hasil,parentid,&parentaddress,&level);
+      F_Harga(tempfood)=Multiplier*(level+1);
+      TF_AddLeaf(&hasil,parentaddress,kiri,tempfood);
     }
   }
   return hasil;
