@@ -398,6 +398,7 @@ void PelangganKabur(int waktuNow,Pelayan *P,Restoran *R, int *jumlah,ArrInt *arr
   }
   if (*jumlah > 0) { /* hanya dilakukan jika ada pelanggan kabur */
     tmp = GetRuanganSekarang(*R);
+    P_GetXY(Pelayan_Posisi(*P), &x,&y);
     PlacePelayan(P,x,y,Room(*tmp));
   }
 }
