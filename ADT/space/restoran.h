@@ -10,10 +10,11 @@
 
 typedef struct {
   int roomNow;
-  GrafRuangan ruangan; //array yang berisi ruangan
+  GrafRuangan ruangan; /* array yang berisi ruangan */
 } Restoran;
-//tipe Restoran dengan 4 ruangan berukuran 8x8
-// dengan terdapat 4 pintu yang menghubungkan keempat ruangan tersebut
+/* tipe Restoran dengan 4 ruangan berukuran 8x8
+   dengan terdapat 4 pintu yang menghubungkan keempat ruangan tersebut
+*/
 /*
   room1 (5,8) -> (2,1) room2
   room1 (8,5) -> (1,5) room4

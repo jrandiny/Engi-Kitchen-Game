@@ -43,7 +43,7 @@ IdxType AM_GetFirstIdx (ArrMeja T)
 {
   /* KAMUS LOKAL */
   IdxType i;
-  //ALGORTIMA
+  /* ALGORTIMA */
   i = AM_IdxMin;
   while (i<AM_IdxMax && Bangku(AM_Elmt(T,i))==0) {
     i++;

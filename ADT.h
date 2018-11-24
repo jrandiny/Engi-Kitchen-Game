@@ -1,5 +1,5 @@
 /* Definisi file ADT.h */
-// berisi include semua ADT
+/* berisi include semua ADT */
 
 #ifndef ADT_H
 #define ADT_H

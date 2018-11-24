@@ -5,7 +5,7 @@
 #include "std.h"
 #include "ADT.h"
 
-//tampilan main menu
+/* tampilan main menu */
 ArrKata MainMenu(){
   /* KAMUS LOKAL */
   ArrKata hasil;

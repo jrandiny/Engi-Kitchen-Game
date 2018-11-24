@@ -180,7 +180,6 @@ void printGrafInfo(GR_address pt)
       p = DoorLocation(GRD_Info(ptd));
       p2 = DoorLocation(GRD_Info(GRD_To(ptd)));
       rid = RoomID(GR_Info(GRD_Parent(GRD_To(ptd))));
-      // rid = 1;
       printf("(%d,%d) -> %d (%d,%d)\n",P_Baris(p),P_Kolom(p),rid,P_Baris(p2),P_Kolom(p2));
       ptd = GRD_Next(ptd);
     } while(ptd!=Nil);

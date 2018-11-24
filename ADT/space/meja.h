@@ -10,9 +10,9 @@
 
 /* Definisi Struktur */
 typedef struct {
-  int bangku; //jumlah bangku
-  Point posisi; //x,y menyatakan posisi di matriks
-  int status; //[0,1,2]
+  int bangku; /* jumlah bangku */
+  Point posisi; /* x,y menyatakan posisi di matriks */
+  int status; /* [0,1,2] */
   /*
     0 : kosong
     1 : ada pelanggan belum order

@@ -85,7 +85,6 @@ int main(){
         break;
       case 3:
         printf("\nIsEmpty(T) = %d\n",AM_IsEmpty(T));
-        //printf("IsFull(T) = %d\n",AM_IsFull(T));
         printf("NbElmt(T) = %d\n",AM_NbElmt(T));
         printf("MaxNbEl(T) = %d\n",AM_MaxNbEl(T));
         printf("GetFirstIdx(T) = %d\n",AM_GetFirstIdx(T));

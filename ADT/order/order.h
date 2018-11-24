@@ -14,7 +14,7 @@ typedef struct {
   int noMeja; /* Nomor meja order */
 } Order;
 
-// Misal : X adalah variabel bertipe Order
+/* Misal : X adalah variabel bertipe Order */
 #define O_IDMakanan(X) (X).idMakanan
 #define O_NamaMakanan(X) (X).namaMakanan
 #define O_NoMeja(X) (X).noMeja

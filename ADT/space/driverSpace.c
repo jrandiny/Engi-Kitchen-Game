@@ -77,16 +77,16 @@ int main() {
               if (!(!strcmp(masukan,"u")||!strcmp(masukan,"d")||!strcmp(masukan,"r")||!strcmp(masukan,"l")))
                 printf("invalid!\n");
             } while(!(!strcmp(masukan,"u")||!strcmp(masukan,"d")||!strcmp(masukan,"r")||!strcmp(masukan,"l")));
-              if(masukan[0]=='u'){ //u
+              if(masukan[0]=='u'){ /* u */
                 kodeArah=1;
               }
-              else if(masukan[0]=='r'){ //r
+              else if(masukan[0]=='r'){ /* r */
                 kodeArah=2;
               }
-              else if(masukan[0]=='d'){ //d
+              else if(masukan[0]=='d'){ /* d */
                 kodeArah=3;
               }
-              else if(masukan[0]=='l'){ //l
+              else if(masukan[0]=='l'){ /* l */
                 kodeArah=4;
               }
               Move(&P,&R,kodeArah,&aksiValid,&pindahRuang);

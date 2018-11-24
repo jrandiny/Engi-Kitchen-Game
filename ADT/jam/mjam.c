@@ -13,7 +13,7 @@ int main (){
 
   /* Algoritma */
 
-  // baca tulis jam
+  /* baca tulis jam */
 	printf("Masukkan jam : ");
 	J_BacaJam(&j1);
 	J_TulisJam(j1);

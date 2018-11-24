@@ -240,7 +240,7 @@ void SetTile(Pelayan *P,MatTile M, int kode)
   };
 }
 
-// *** BOOLEAN RUANGAN***
+/* *** BOOLEAN RUANGAN*** */
 boolean IsTableEmpty(int nomorMeja, Ruangan R)
 /*
   mengirimkan true jika meja dengan nomor meja nomor adalah kosong dan bisa
@@ -269,7 +269,7 @@ boolean CanPlace(int pelanggan,Pelayan P, Ruangan R)
   return (empty && (jumlahBangku>=pelanggan && pelanggan != 0));
 }
 
-// *** ACTION ***
+/* *** ACTION *** */
 void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int nomorMeja)
 /*
   I.S. P dan *R terdefinisi, dilakukan jika sudah dipastikan dapat order dan P
@@ -281,7 +281,7 @@ void Ordering(Pelayan P,Ruangan *R, int *idMakanan,int nomorMeja)
 
   /* ALGORITMA */
   /* merandom id makanan dari -1 - -8 */
-  *idMakanan = (rand()%8-8); //[-1..-8]
+  *idMakanan = (rand()%8-8); /* [-1..-8] */
   Status(AM_Elmt(Meja(*R),nomorMeja)) = 2; /* merubah status meja menjadi 2, sudah order */
 }
 int Taking(Pelayan P)

@@ -5,7 +5,7 @@
 #include "matTile.h"
 
 int main () {
-	// Kamus driver_matriks
+	/* Kamus driver_matriks */
 	MatTile M1,MCopy;
 	int menu;
 	indeks NB,NK,IdxBrs,IdxKol;
