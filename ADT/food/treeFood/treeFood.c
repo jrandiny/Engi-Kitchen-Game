@@ -115,23 +115,42 @@ TF_address TF_Search(TreeFood tf,int foodId)
 /* Mengembalikan address yang id makanannya sesuai */
 {
   /* KAMUS LOKAL */
+  TF_address add;
+  int temp;
+
+  /* AGORITMA */
+  TF_SearchL(tf, foodId, &add,&temp);
+  return add;
+}
+
+void TF_SearchL(TreeFood tf,int foodId,TF_address *result, int *level)
+/* Mengembalikan address yang id makanannya sesuai dan level dari node itu */
+
+{
+  /* KAMUS LOKAL */
   TF_address P1,P2;
+  int levelTempL,levelTempR;
 
   /* ALGORITMA */
   if(TF_IsEmpty(tf)){
-    return Nil;
+    *result =  Nil;
   }else{
     if(F_IDMakanan(TF_Akar(tf))==foodId){
-      return tf;
+      *level = 1;
+      *result = tf;
     }else{
-      P1 = TF_Search(TF_Left(tf),foodId);
-      P2 = TF_Search(TF_Right(tf),foodId);
+      TF_SearchL(TF_Left(tf),foodId,&P1,&levelTempL);
+      TF_SearchL(TF_Right(tf),foodId,&P2,&levelTempR);
       if(P1!=Nil){
-        return P1;
+        levelTempL++;
+        *result = P1;
+        *level = levelTempL;
       }else if(P2!=Nil){
-        return P2;
+        levelTempR++;
+        *result = P2;
+        *level = levelTempR;
       }else{
-        return Nil;
+        *result = Nil;
       }
 
     }

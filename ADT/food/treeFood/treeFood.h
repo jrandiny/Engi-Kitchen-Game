@@ -58,4 +58,8 @@ void TF_AddLeaf(TreeFood *tf,TF_address pangkal,boolean kiri,TF_infotype X);
 TF_address TF_Search(TreeFood tf,int foodId);
 /* Mengembalikan address yang id makanannya sesuai */
 
+void TF_SearchL(TreeFood tf,int foodId,TF_address *result, int *level);
+/* Mengembalikan address yang id makanannya sesuai dan level dari node itu */
+
+
 #endif

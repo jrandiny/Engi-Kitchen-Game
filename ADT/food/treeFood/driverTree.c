@@ -5,16 +5,16 @@
 #include "treeFood.h"
 #include "../food.h"
 
-void printGraf(TreeFood tf)
+void printTree(TreeFood tf)
 {
   if(TF_IsEmpty(tf)){
 
   }else{
     printf("-> %d\n",F_IDMakanan(TF_Akar(tf)));
     printf("left\n");
-    printGraf(TF_Left(tf));
+    printTree(TF_Left(tf));
     printf("right\n");
-    printGraf(TF_Right(tf));
+    printTree(TF_Right(tf));
   }
 }
 
@@ -24,13 +24,14 @@ int main(){
   TreeFood tf;
   Food tempFood;
   TF_address temp;
+  int level;
 
   /* ALGORITMA */
   TF_CreateEmpty(&tf);
 
   do {
     printf("\n\n");
-    printGraf(tf);
+    printTree(tf);
     printf("\n\n");
     printf("0. Exit\n1. Add\n2. Search\n3. Depth\nChoice = ");
     scanf("%d",&opsi);
@@ -61,11 +62,13 @@ int main(){
       case 2:
         printf("search id = ");
         scanf("%d",&opsi2);
-        temp = TF_Search(tf, opsi3);
+        level = 10;
+        TF_SearchL(tf, opsi2,&temp,&level);
 
         if(temp!=Nil){
           printf("found\n");
-          printGraf(temp);
+          printf("level = %d\n",level);
+          printTree(temp);
         }else{
           printf("not found \n");
         }
