@@ -113,7 +113,14 @@ test)
     cd ../../..
     ./bin/test-treeFood
     ;;
+	jam)
+		cd ADT/jam
+		gcc -Wall mjam.c. jam.c
+		mv a.out ../../bin/test/test-jam
+		cd ../..
+		./bin/test-jam
   *)
+
     echo "Unimplemented tester '$2'"
     echo ""
     echo "Implemented tester"
@@ -130,6 +137,7 @@ test)
     echo "space               - ADT Space"
     echo "stackFood           - ADT Stack Food"
     echo "treeFood            - ADT Tree Food"
+		echo "jam 								- ADT Jam"
 
     ;;
 
