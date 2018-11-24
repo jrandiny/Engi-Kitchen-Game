@@ -288,7 +288,7 @@ int main() {
             }
             Move(&P,&R,kodeArah,&aksiValid,&pindahRuang);
           }
-          else if(K_IsKataSama(input,K_MakeKata("PUT"))){ /* nunggu stack dan tree */
+          else if(K_IsKataSama(input,K_MakeKata("PUT"))){
             if(CanPut(P)){
               if(!SF_IsFull(tray)){
                 idMakanan = JadiApa(SF_ReversStack(hand),tree);
@@ -300,7 +300,7 @@ int main() {
               }
             }
           } /* akhir command put */
-          else if(K_IsKataSama(input,K_MakeKata("TAKE"))){ /* nunggu stack tree */
+          else if(K_IsKataSama(input,K_MakeKata("TAKE"))){
             if (CanTake(P)) {
               if(!SF_IsFull(hand)){
                 idMakanan = Taking(P);
@@ -310,19 +310,19 @@ int main() {
               }
             }
           } /* akhir command take */
-          else if(K_IsKataSama(input,K_MakeKata("CH"))){ /* nunggu stack */
+          else if(K_IsKataSama(input,K_MakeKata("CH"))){
             if(!SF_IsEmpty(hand)){
               SF_CreateEmpty(&hand,10);
               aksiValid = true;
             }
           } /* akhir command ch */
-          else if(K_IsKataSama(input,K_MakeKata("CT"))){ /* nunggu stack */
+          else if(K_IsKataSama(input,K_MakeKata("CT"))){ 
             if(!SF_IsEmpty(tray)){
               SF_CreateEmpty(&tray,5);
               aksiValid = true;
             }
           } /* akhir command ct */
-          else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ /* nunggu tree makanan */
+          else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ 
             InitScreen(&gs);
             ShowTree(&gs,tree);
           } /* akhir command recipe */
@@ -392,7 +392,7 @@ int main() {
                     }
                   }
               } /* akhir command give */
-              else if(K_IsKataSama(input,K_MakeKata("ORDER"))){ /* nunggu stack dan converter idmakanan */
+              else if(K_IsKataSama(input,K_MakeKata("ORDER"))){ 
                 if(CanOrder(P,*room)){
                   aksiValid = true;
                   Ordering(P,room,&idMakanan,nomorMeja);
