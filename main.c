@@ -48,8 +48,8 @@ boolean InputBenar(Kata input,Kata new,Kata start,Kata load,Kata keluar){
 
 void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow, ArrOrder ao)
 /*
-  I.S. pqc dan waktuNow terdefinisi
-  F.S. me-random kedatangan pelanggan
+  I.S. pqc dan waktuNow serta ao terdefinisi
+  F.S. me-random kedatangan pelanggan diisi ke pqc dengan memperhitungkan order dan antrian yang ada serta waktu
 */
 {
   /* KAMUS LOKAL */
@@ -328,7 +328,6 @@ int main() {
             }
           } /* akhir command ct */
           else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){
-            InitScreen(&gs);
             ShowTree(&gs,tree);
           } /* akhir command recipe */
           else if(K_IsKataSama(input,K_MakeKata("SAVE"))){
