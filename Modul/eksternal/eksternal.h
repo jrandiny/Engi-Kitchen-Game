@@ -14,6 +14,7 @@
 #include "../../ADT/space/space.h"
 #include "../../ADT/jam/jam.h"
 #include "../../ADT/mesinkata/arrKata/arrKata.h"
+#include "../../gameConstant.h"
 
 ArrKata GetAllUserName();
 /*

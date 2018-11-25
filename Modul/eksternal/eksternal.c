@@ -336,9 +336,9 @@ StackFood ParseStackFood(Kata X)
   StackFood hasil;
   int jumlah,i;
   if(K_IsKataSama(X,K_MakeKata("stackhand"))){
-    SF_CreateEmpty(&hasil,5);
+    SF_CreateEmpty(&hasil,GC_DEF_HAND_SIZE);
   }else{//ckata bernilai stacktray
-    SF_CreateEmpty(&hasil,10);
+    SF_CreateEmpty(&hasil,GC_DEF_TRAY_SIZE);
   }
   K_ADVKATA();//Ckata berada di jumlah stack
   jumlah=K_KataToInt(CKata);

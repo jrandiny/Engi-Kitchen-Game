@@ -111,22 +111,6 @@ Kata K_MakeKata(char* S)
   return hasil;
 }
 
-void K_LowercaseKata(Kata *input)
-/* I.S. input tidak kosong
-   F.S. input menjadi K_LowercaseKata
-*/
-{
-  /* KAMUS LOKAL */
-  int i;
-
-  /* ALGORITMA */
-  for(i=1;i<=(*input).Length;i++){
-      if((*input).TabKata[i]>=65&&(*input).TabKata[i]<=90){
-        (*input).TabKata[i]+=32;
-      }
-  }
-}
-
 boolean K_IsKataSama(Kata kata1,Kata kata2)
 /*true jika kata1 sama kata2, dan sebaliknya*/
 {
@@ -148,23 +132,6 @@ boolean K_IsKataSama(Kata kata1,Kata kata2)
     sama=false;
   }
   return sama;
-}
-
-void K_CopyKata(Kata sumber,Kata* hasil)
-/*I.S. sumber terdefinisi
-  F.S. hasil terisi sumber
-*/
-{
-  /* KAMUS LOKAL */
-  int i;
-
-  /* ALGORITMA */
-  i=1;
-  (*hasil).Length=sumber.Length;
-  while(i<=sumber.Length){
-    (*hasil).TabKata[i]=sumber.TabKata[i];
-    i++;
-  }
 }
 
 int K_KataToInt(Kata input)

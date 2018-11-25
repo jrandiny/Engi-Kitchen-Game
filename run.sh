@@ -69,7 +69,7 @@ test)
     ;;
   mesinkata)
     cd ADT/mesinkata
-    gcc -Wall mesinkata.c mesinkar.c driverMesinkata.c
+    gcc -Wall mesinkata.c mesinkar.c driverMesinkata.c ../jam/jam.c
     mv a.out ../../bin/test-mesinkata
     cd ../..
     ./bin/test-mesinkata
