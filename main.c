@@ -45,7 +45,7 @@ boolean InputBenar(Kata input,Kata new,Kata start,Kata load,Kata keluar){
   return (K_IsKataSama(input,new)||K_IsKataSama(input,start)||K_IsKataSama(input,load)||K_IsKataSama(input,keluar));
 }
 
-void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
+void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow, ArrOrder ao)
 /*
   I.S. pqc dan waktuNow terdefinisi
   F.S. me-random kedatangan pelanggan
@@ -53,10 +53,13 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow)
 {
   /* KAMUS LOKAL */
   int chance;
+  int hardLevel;
   Customer pelanggan;
   /* ALGORITMA */
-  chance = rand()%50;
-  if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){ /* chance customer : 1/10 kemungkinan */
+  hardLevel = waktuNow/100;
+  chance = (AO_Neff(ao)*15+PQC_NBElmt(*pqc)*15 -((hardLevel>20)?20:hardLevel));
+  chance = rand()%((chance<=0)?1:chance);
+  if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){
     chance = rand()%4;
     C_Prio(pelanggan) = (chance==0)? 1:0; /* chance prio : 1/4 kemungkinan */
     chance = rand()%3;
@@ -316,13 +319,13 @@ int main() {
               aksiValid = true;
             }
           } /* akhir command ch */
-          else if(K_IsKataSama(input,K_MakeKata("CT"))){ 
+          else if(K_IsKataSama(input,K_MakeKata("CT"))){
             if(!SF_IsEmpty(tray)){
               SF_CreateEmpty(&tray,5);
               aksiValid = true;
             }
           } /* akhir command ct */
-          else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){ 
+          else if(K_IsKataSama(input,K_MakeKata("RECIPE"))){
             InitScreen(&gs);
             ShowTree(&gs,tree);
           } /* akhir command recipe */
@@ -364,10 +367,10 @@ int main() {
                   aksiValid = true;
                   PQC_Del(&Q1,&pelanggan);
                   if(C_Prio(pelanggan)==1){
-                    waktuOut = waktu + (rand()%40+81); /* [81..120] */
+                    waktuOut = waktu + (rand()%30+((2000-waktu>100)?2000-waktu:100));
                   }
                   else{
-                    waktuOut = waktu + (rand()%60+121); /* [121..180] */
+                    waktuOut = waktu + (rand()%30+((2000-waktu>200)?2000-waktu:200));
                   }
 
                   Placing(C_Jumlah(pelanggan),waktuOut,&P,room);
@@ -392,7 +395,7 @@ int main() {
                     }
                   }
               } /* akhir command give */
-              else if(K_IsKataSama(input,K_MakeKata("ORDER"))){ 
+              else if(K_IsKataSama(input,K_MakeKata("ORDER"))){
                 if(CanOrder(P,*room)){
                   aksiValid = true;
                   Ordering(P,room,&idMakanan,nomorMeja);
@@ -406,8 +409,7 @@ int main() {
           } /* akhir proses validasi command */
 
           if(aksiValid){/* proses yang terjadi jika inputnya valid */
-            RandomPelanggan(&Q1,waktu);
-            waktu++; /* tik bertambah */
+
             PelangganKabur(waktu,&P,&R,&jumlahKabur,&arrayNomorMeja);
             while(!AI_IsEmpty(arrayNomorMeja)){
               AI_DelLastEl(&arrayNomorMeja,&nomorMeja);
@@ -421,6 +423,9 @@ int main() {
             saved = false; /* saved false karena ada aksi yang berhasil */
             if(life<=0){ /* jika nyawa==0 maka kalah */
               lose = true;
+            } else {
+              RandomPelanggan(&Q1,waktu,arrayOrder);
+              waktu++; /* tik bertambah */
             }
           }/* akhir proses aksiValid */
         }
