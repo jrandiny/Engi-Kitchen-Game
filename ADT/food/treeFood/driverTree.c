@@ -10,11 +10,12 @@ void printTree(TreeFood tf)
   if(TF_IsEmpty(tf)){
 
   }else{
-    printf("-> %d\n",F_IDMakanan(TF_Akar(tf)));
-    printf("left\n");
+    printf("(%d",F_IDMakanan(TF_Akar(tf)));
+    printf("(");
     printTree(TF_Left(tf));
-    printf("right\n");
+    printf(")(");
     printTree(TF_Right(tf));
+    printf("))");
   }
 }
 
@@ -33,7 +34,7 @@ int main(){
     printf("\n\n");
     printTree(tf);
     printf("\n\n");
-    printf("0. Exit\n1. Add\n2. Search\n3. Depth\nChoice = ");
+    printf("0. Exit\n1. Add\n2. Search\n3. Depth\n4. IsEmpty\nChoice = ");
     scanf("%d",&opsi);
 
     switch(opsi){
@@ -75,6 +76,9 @@ int main(){
         break;
       case 3:
         printf("depth = %d\n",TF_DeepestLeaf(tf));
+        break;
+      case 4:
+        printf("isempty = %d\n",TF_IsEmpty(tf));
         break;
     }
 
