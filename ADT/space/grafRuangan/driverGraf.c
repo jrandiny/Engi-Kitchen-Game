@@ -50,7 +50,7 @@ int main(){
     printGraf(GR);
     printf("\n");
     printf("Menu\n");
-    printf("0) Exit\n1) GR_InsVFirst\n2) GRD_InsVFirst\n3) Search\nChoice = ");
+    printf("0. Exit\n1. GR_InsVFirst\n2. GRD_InsVFirst\n3. Search\nChoice = ");
     scanf("%d",&opsi);
 
     switch (opsi) {
@@ -62,6 +62,7 @@ int main(){
         count++;
         break;
       case 2:
+        printf("Insert ke node pertama dan kedua\n");
         if(count>=2){
           printf("X1 = ");
           scanf("%d",&opsi2);
