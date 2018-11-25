@@ -118,8 +118,8 @@ test)
     ;;
 	jam)
 		cd ADT/jam
-		gcc -Wall mjam.c. jam.c
-		mv a.out ../../bin/test/test-jam
+		gcc -Wall mjam.c jam.c
+		mv a.out ../../bin/test-jam
 		cd ../..
 		./bin/test-jam
 		;;
