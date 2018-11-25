@@ -2,6 +2,7 @@
    Nama file : main.c
    Deskripsi : Program utama Engi's Kitchen Expansion */
 
+#include "gameConstant.h"
 #include "std.h"
 #include "ADT.h"
 
@@ -60,10 +61,10 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow, ArrOrder ao)
   chance = (AO_Neff(ao)*15+PQC_NBElmt(*pqc)*15 -((hardLevel>20)?20:hardLevel));
   chance = rand()%((chance<=0)?1:chance);
   if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){
-    chance = rand()%4;
-    C_Prio(pelanggan) = (chance==0)? 1:0; /* chance prio : 1/4 kemungkinan */
-    chance = rand()%3;
-    C_Jumlah(pelanggan) = (chance==0)? 4:2; /* chance 4 orang : 1/3 kemungkinan */
+    chance = rand()%GC_CHANCE_PRIO;
+    C_Prio(pelanggan) = (chance==0)? 1:0; /* chance prio : default 1/4 kemungkinan */
+    chance = rand()%GC_CHANCE_4P;
+    C_Jumlah(pelanggan) = (chance==0)? 4:2; /* chance 4 orang : default 1/3 kemungkinan */
     C_Waktu(pelanggan) = waktuNow + 30; /* kesabaran selalu 30 tik */
     PQC_Add(pqc, pelanggan);
   }
@@ -253,8 +254,8 @@ int main() {
           /* load konfigurasi normal */
           usernameSaved = K_MakeKata("basic");
           LoadFile(&status,&usernameSaved,&money,&life,&waktu,&R,&P,&Q1,&hand,&tray,&arrayOrder);
-          SF_CreateEmpty(&hand,10);
-          SF_CreateEmpty(&tray,5);
+          SF_CreateEmpty(&hand,GC_DEF_HAND_SIZE);
+          SF_CreateEmpty(&tray,GC_DEF_TRAY_SIZE);
           AO_CreateEmpty(&arrayOrder);
         }
 
@@ -296,7 +297,7 @@ int main() {
               if(!SF_IsFull(tray)){
                 idMakanan = JadiApa(SF_ReversStack(hand),tree);
                 if(idMakanan<0){
-                  SF_CreateEmpty(&hand,10);
+                  SF_CreateEmpty(&hand,GC_DEF_HAND_SIZE);
                   SF_Push(&tray,TF_Akar(TF_Search(tree,idMakanan)));
                   aksiValid = true;
                 }
@@ -315,13 +316,13 @@ int main() {
           } /* akhir command take */
           else if(K_IsKataSama(input,K_MakeKata("CH"))){
             if(!SF_IsEmpty(hand)){
-              SF_CreateEmpty(&hand,10);
+              SF_CreateEmpty(&hand,GC_DEF_HAND_SIZE);
               aksiValid = true;
             }
           } /* akhir command ch */
           else if(K_IsKataSama(input,K_MakeKata("CT"))){
             if(!SF_IsEmpty(tray)){
-              SF_CreateEmpty(&tray,5);
+              SF_CreateEmpty(&tray,GC_DEF_TRAY_SIZE);
               aksiValid = true;
             }
           } /* akhir command ct */
