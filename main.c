@@ -54,18 +54,19 @@ void RandomPelanggan(PrioQueueCustomer *pqc,int waktuNow, ArrOrder ao)
 {
   /* KAMUS LOKAL */
   int chance;
-  int hardLevel;
+  int hardLevel; /* variabel untuk memperbesar kemungkinan kemunculan pelanggan */
   Customer pelanggan;
   /* ALGORITMA */
-  hardLevel = waktuNow/100;
-  chance = (AO_Neff(ao)*15+PQC_NBElmt(*pqc)*15 -((hardLevel>20)?20:hardLevel));
-  chance = rand()%((chance<=0)?1:chance);
+  hardLevel = waktuNow/GC_STEP_HARDLEVEL; /* untuk setiap kelipatan hardLevel akan bertambah 1 */
+  chance = ((AO_Neff(ao)+PQC_NBElmt(*pqc))*GC_CHANCE_MULTIPLIER - hardLevel);
+  chance = rand()%((chance<=0)?1:chance); /* chance dibuat 1 jika hasil perhitungannya < 0 */
+  /* hanya terjadi jika tidak ada order maupun pengunjung yang mengantre */
   if (chance==0 && PQC_Tail(*pqc)<PQC_MaxEl){
     chance = rand()%GC_CHANCE_PRIO;
     C_Prio(pelanggan) = (chance==0)? 1:0; /* chance prio : default 1/4 kemungkinan */
     chance = rand()%GC_CHANCE_4P;
     C_Jumlah(pelanggan) = (chance==0)? 4:2; /* chance 4 orang : default 1/3 kemungkinan */
-    C_Waktu(pelanggan) = waktuNow + 30; /* kesabaran selalu 30 tik */
+    C_Waktu(pelanggan) = waktuNow + ((C_Prio(pelanggan)==1)?GC_QUEUE_PRIO_WAITTICK:GC_QUEUE_NORMAL_WAITTICK); /* kesabaran tergantung prioritas */
     PQC_Add(pqc, pelanggan);
   }
 }
@@ -368,10 +369,10 @@ int main() {
                   aksiValid = true;
                   PQC_Del(&Q1,&pelanggan);
                   if(C_Prio(pelanggan)==1){
-                    waktuOut = waktu + (rand()%30+((2000-waktu>100)?2000-waktu:100));
+                    waktuOut = waktu + (rand()%30+((GC_SEAT_MAXTIME-waktu>GC_SEAT_PRIO_MINWAITTICK)?GC_SEAT_MAXTIME-waktu:GC_SEAT_PRIO_MINWAITTICK));
                   }
                   else{
-                    waktuOut = waktu + (rand()%30+((2000-waktu>200)?2000-waktu:200));
+                    waktuOut = waktu + (rand()%30+((GC_SEAT_MAXTIME-waktu>GC_SEAT_NORMAL_MINWAITTICK)?GC_SEAT_MAXTIME-waktu:GC_SEAT_NORMAL_MINWAITTICK));
                   }
 
                   Placing(C_Jumlah(pelanggan),waktuOut,&P,room);
