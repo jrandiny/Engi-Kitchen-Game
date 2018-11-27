@@ -614,10 +614,14 @@ Kata GetInput(GameScreen *gs,Kata prompt)
       finishReading = true;
     }else if(((tempInput>='A')&&(tempInput<='Z'))||((tempInput>='0')&&(tempInput<='9'))){
       output.TabKata[output.Length+1] = tempInput;
-      output.Length++;
+      if(output.Length<50){
+        output.Length++;
+      }
     }else if((tempInput>='a')&&(tempInput<='z')){
       output.TabKata[output.Length+1] = tempInput-32;
-      output.Length++;
+      if(output.Length<50){
+        output.Length++;
+      }
     }
 
   }
