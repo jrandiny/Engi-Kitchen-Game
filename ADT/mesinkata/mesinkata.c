@@ -201,7 +201,7 @@ char* K_KataToChar(Kata S)
   int i;
 
   /* ALGORITMA */
-  hasil=(char*)malloc(S.Length*sizeof(char));
+  hasil=(char*)malloc((S.Length+1)*sizeof(char));
   for(i=1;i<=S.Length;i++){
     hasil[i-1]=S.TabKata[i];
   }
